@@ -30,8 +30,9 @@ import javax.swing.UIManager;
 
 import org.testng.annotations.*;
 
-import com.tvokids.common.*;
-import com.tvokids.test.helper.*;
+import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.common.Locators;
+import com.tvokids.common.Email;
 
 @SuppressWarnings("static-access")
 public class Mail {
@@ -87,12 +88,17 @@ public class Mail {
 		int sec = (int) updateDelay/1000;
 		
 		// TEST HOST APPLICATION SERVER MANAGEMENT:
+	 // int server = devBox();
 		if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
 		helper.fileWriter("server.info", Locators.homeURL);
 		System.out.println("Scheduled to start in: " + helper.convertTimeSecondsToHoursMinSeconds(sec));
 		System.out.println("Scheduled to start at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay));
 		
-		// E-MAIL PERMEATION MANAGEMENT:
+		// GIT BRANCH MANAGEMENT
+		String branch = gitBranch();
+		System.out.println("Update will be started on: \"" + branch + "\" GiT Branch");
+		
+		// E-MAIL PERMEATION MANAGEMENT
 		boolean send = emailOptionDouble();
 		if(helper.fileExist("email.opt", false)) { helper.fileCleaner("email.opt"); }
 		helper.fileWriter("email.opt", send);
@@ -123,8 +129,9 @@ public class Mail {
 	 // System.out.println("\n" + date + "\n" + time + "\n");
 	 // System.out.println(command);
 		
-		clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clpbrd.setContents(stringSelection, null);
+	 // stringSelection = new StringSelection(command);
+	 // clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+	 // clpbrd.setContents(stringSelection, null);
 		
 		long sleep = (helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay + testDelay*60*1000)) -
 				      helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(helper.getCurrentDateTimeHourMinSec()));
@@ -516,6 +523,48 @@ public class Mail {
 				 }     
 			 return str;				 
 			 }
+		 
+		 /**
+		  * GiT Branch entry dialogue 
+		  * @throws IOException 
+		  * @throws NumberFormatException
+		  */
+		 public String gitBranch() throws NumberFormatException, IOException{
+		 	 ImageIcon icon = new ImageIcon(Locators.testIconFileDir + "web.server.pc.png");
+		 	 
+		 	 // DETECTING DEFAULT SERVER:
+		 	 String branch = null, Default = null;
+		 	 if(helper.fileExist("branch.info", false)) { Default = helper.fileScanner("branch.info"); }
+		 	 else { Default = "develop"; }
+		 	 
+		 		StringSelection stringSelection = new StringSelection(Default);
+		 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+		 		clpbrd.setContents(stringSelection, null);
+		 	 boolean isCorrect = false;
+		 	 while(isCorrect == false) {
+		 		 branch = (String) JOptionPane.showInputDialog(
+		 				 null, 
+		 				 "Enter GiT Branch \n(\"" + Default + "\")\n\nor paste,\nor click \"CANCEL\" for \"develop\" as a default\n ",
+		 				 "\"" + Default + "\" GiT Branch",
+		 				 1,
+		 				 icon, null, Default
+		 				 );
+		 		 if(branch != null){
+		 		       // JOptionPane.showMessageDialog(null, "You entered: " + branch, "\"develop\" Server", 1);
+		 		       // System.out.println("\nYou entered: " + branch + "\n");
+		 			 }
+		 		 else {
+		 			   branch = "develop";
+		 		       // JOptionPane.showMessageDialog(null, "You pressed cancel button...", "\"branch\" Server", 1);
+		 		       // System.out.println("\nYou pressed cancel button...\n");
+		 			 }
+		 		 isCorrect = ( !helper.isInteger(branch) );
+		 	  // System.out.println("Is the entry of \"" + branch + "\" satisfying the acceptance criteria? \nAnswer: " + isCorrect + "\n");
+		 		 } 
+		 	 if(helper.fileExist("branch.info", false)) { helper.fileCleaner("branch.info"); }
+		 	 helper.fileWriter("branch.info", branch);
+		 	 return branch;
+		 	 }
 		 
 //		 /**
 //		  * 'dev' Server number entry dialogue 
