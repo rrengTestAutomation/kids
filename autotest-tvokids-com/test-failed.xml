@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="test-failed">
+  <listeners>
+    <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
+  </listeners>
+  <test name="test-failed">
+    <classes>
+      <class name="com.tvokids.email.All"></class>
+      <class name="com.tvokids.test.plan.Iteration2"><methods><include name="testCustomBrandTitleFieldContentLimit"/></methods></class>
+    </classes>
+  </test>
+</suite>

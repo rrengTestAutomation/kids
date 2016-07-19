@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="test-send-all">
+
+    <listeners>
+    <!-- <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/> -->
+         <listener class-name="com.tvokids.extentreporter.ExtentAllReporterNG"/>
+    </listeners>
+    
+    <test name="test-send-all">
+        <classes>
+           <!-- <class name="com.tvokids.report.Log"></class> -->
+           <!-- <class name="com.tvokids.send.Mail"></class> -->
+           <class name="com.tvokids.email.All"></class>
+
+<!--
+COVERED BY AUTOMATED TEST: -->
+<class name="com.tvokids.test.plan.Iteration2">
+<methods>
+<include name="testCustomBrandFieldsExist"/>
+<include name="testCustomBrandTitleFieldContentLimit"/>
+</methods>
+</class>
+     
+        </classes>
+     </test>
+  
+</suite>
