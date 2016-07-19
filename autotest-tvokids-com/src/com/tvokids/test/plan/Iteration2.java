@@ -65,7 +65,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131"})
+	@Test(groups = {"TC-35131","BUG-35502","OPEN"}, enabled = false)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
