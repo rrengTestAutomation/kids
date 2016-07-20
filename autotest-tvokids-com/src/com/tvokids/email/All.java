@@ -81,6 +81,7 @@ public class All {
 		int sec = (int) updateDelay/1000;
 		
 		// TEST HOST APPLICATION SERVER MANAGEMENT:
+	 // @SuppressWarnings("unused") int server = devBox();
 		
 		// GIT BRANCH MANAGEMENT:
 		String branch = gitBranch();
@@ -281,7 +282,7 @@ public void finish() throws NumberFormatException, IOException, AddressException
 	helper.fileWriter("email.cont", "FYI:"); 
 	helper.fileWriter("email.cont", "TVOKids.com - AUTOMATED " + helper.fileScanner("test.type").toUpperCase() + " RESULT");
 	helper.fileWriter("email.cont", "");
-	helper.fileWriter("email.cont", "     APP SERVER: " + helper.fileScanner("server.info"));
+	helper.fileWriter("email.cont", "     APP SERVER: " + Locators.homeURL);
 	helper.fileWriter("email.cont", "     GiT BRANCH: " + helper.fileScanner("branch.info"));
 	helper.fileWriter("email.cont", "");
 
@@ -424,21 +425,21 @@ public String testType() throws NumberFormatException, IOException {
 /** Date and Time entry dialogue */
 public String dateBox(){ return helper.getCurrentDateTimeHourMinSec(); }
 
-/**
- * 'dev' Server log recorder
- * @throws IOException 
- * @throws NumberFormatException 
- */
-public int devBox() throws NumberFormatException, IOException {
-	 // DETECTING DEFAULT SERVER:
-	 String server, dev;
-	 server =	Locators.homeURL;
-	 server = server.substring(server.indexOf(":") + 3, server.length());
-	 dev = server.substring(server.indexOf("dev") + 3, server.indexOf("."));
-	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-	 helper.fileWriter("server.info", server);
-	 return Integer.valueOf(dev);
-}
+///**
+// * 'dev' Server log recorder
+// * @throws IOException 
+// * @throws NumberFormatException 
+// */
+//public int devBox() throws NumberFormatException, IOException {
+//	 // DETECTING DEFAULT SERVER:
+//	 String server, dev;
+//	 server =	Locators.homeURL;
+//	 server = server.substring(server.indexOf(":") + 3, server.length());
+//	 dev = server.substring(server.indexOf("dev") + 3, server.indexOf("."));
+//	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
+//	 helper.fileWriter("server.info", server);
+//	 return Integer.valueOf(dev);
+//}
 
 /**
  * GiT Branch log recorder
