@@ -283,56 +283,56 @@ public class UtilitiesTestHelper{
 	   return iteration;
 	   }
 	
-//	/**
-//	 * Create a Custom Brand
-//	 * @throws AWTException 
-//	 * @throws IOException
-//	 */
-//	@SuppressWarnings("finally")
-//	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver) throws AWTException, InterruptedException, IOException
-//	  {
-//	   long fingerprint = System.currentTimeMillis();
-//	   By browse, upload;
-//       try {
-//            getUrlWaitUntil(driver, 15, DrupalAddContentLocators.customBrand);
-//			waitUntilElementPresence(driver, 15, By.id(DrupalAddContentLocators.title), "Title", new Exception().getStackTrace()[0]);
-//			
-//			driver.findElement(By.id(DrupalAddContentLocators.title)).clear();
-//			driver.findElement(By.id(DrupalAddContentLocators.title)).sendKeys(title);
-//			
-//			driver.findElement(By.xpath(DrupalAddContentLocators.description)).clear();
-//			driver.findElement(By.xpath(DrupalAddContentLocators.description)).sendKeys("This is \"" + title + "\" Description");
-//
-//			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-//			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-//			
-//			driver.findElement(By.id(DrupalAddContentLocators.keywords)).clear();
-//			driver.findElement(By.id(DrupalAddContentLocators.keywords)).sendKeys(title + " (keywords)");
-//			
-//			driver.findElement(By.xpath(DrupalAddContentLocators.characterBannerVerticalTab)).click();
-//			browse = By.xpath(DrupalAddContentLocators.characterBannerBrowse);
-//			upload = By.xpath(DrupalAddContentLocators.characterBannerUpload);					
-//			uploader(driver, "bubble.jpg", browse, upload, "thumbnail");
-//			
-//		    driver.findElement(By.xpath(DrupalAddContentLocators.heroBoxVerticalTab)).click();
-//			browse = By.xpath(DrupalAddContentLocators.heroBoxBrowse);
-//			upload = By.xpath(DrupalAddContentLocators.heroBoxUpload);
-//			uploader(driver, "hero.jpg", browse, upload, "image");
-//		    
-//		    driver.findElement(By.xpath(DrupalAddContentLocators.tileVerticalTab)).click();
-//			browse = By.xpath(DrupalAddContentLocators.tileSmallBrowse);
-//			upload = By.xpath(DrupalAddContentLocators.tileSmallUpload);
-//			uploader(driver, "small.jpg", browse, upload, "image");
-//		    
-//		    driver.findElement(By.xpath(DrupalAddContentLocators.tileVerticalTab)).click();
-//			browse = By.xpath(DrupalAddContentLocators.tileLargeBrowse);
-//			upload = By.xpath(DrupalAddContentLocators.tileLargeUpload);
-//			uploader(driver, "large.jpg", browse, upload, "image");
-//
-//			driver.findElement(By.id(DrupalAddContentLocators.submit)).click();
-//			
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
-//	  }
+	/**
+	 * Create a Custom Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+	@SuppressWarnings("finally")
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit) throws AWTException, InterruptedException, IOException
+	  {
+	   long fingerprint = System.currentTimeMillis();
+	   By browse, upload;
+       try {
+            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+			
+			driver.findElement(By.id(DrupalLocators.title)).clear();
+			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			
+			driver.findElement(By.xpath(DrupalLocators.description)).clear();
+			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys(description);
+
+			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			
+			driver.findElement(By.id(DrupalLocators.keywords)).clear();
+			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			
+			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
+			browse = By.xpath(DrupalLocators.characterBannerBrowse);
+			upload = By.xpath(DrupalLocators.characterBannerUpload);					
+			uploader(driver, "bubble.jpg", browse, upload, "thumbnail");
+			
+		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
+			browse = By.xpath(DrupalLocators.heroBoxBrowse);
+			upload = By.xpath(DrupalLocators.heroBoxUpload);
+			uploader(driver, "hero.jpg", browse, upload, "image");
+		    
+		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
+			browse = By.xpath(DrupalLocators.tileSmallBrowse);
+			upload = By.xpath(DrupalLocators.tileSmallUpload);
+			uploader(driver, "small.jpg", browse, upload, "image");
+		    
+		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
+			browse = By.xpath(DrupalLocators.tileLargeBrowse);
+			upload = By.xpath(DrupalLocators.tileLargeUpload);
+			uploader(driver, "large.jpg", browse, upload, "image");
+
+			if(ifSubmit) { driver.findElement(By.id(DrupalLocators.submit)).click(); }
+			
+		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+	  }
 	
 	/**
 	 * Create a Custom Brand

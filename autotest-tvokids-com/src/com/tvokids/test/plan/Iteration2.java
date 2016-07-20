@@ -1,6 +1,6 @@
 package com.tvokids.test.plan;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -10,16 +10,19 @@ import com.tvokids.common.DrupalLocators;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/*
 import java.awt.Robot;
+import java.io.File;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+*/
 
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public class Iteration2 {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
@@ -74,7 +77,7 @@ public class Iteration2 {
 
            // DECLARATION:
            int actual, expected, number;
-           String actualText, expectedText, expectedURL, text, xpath;
+           String actualText, expectedText, expectedURL, text;
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
            helper.logIn(driver,"content_editor","changeme");
@@ -157,7 +160,101 @@ public class Iteration2 {
 //         helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
            
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-   }
+       }
+
+	/**
+	 * Test attempt to create a Custom Brand without a description is rejected
+	 * <p>Date Created: 2016-07-20</p>
+	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35153</p>
+	 */
+	@Test(groups = {"TC-35153"})
+    public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
+       try{
+    	   // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+
+           // DECLARATION:
+           String expectedURL, title;
+           
+           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           helper.logIn(driver,"content_editor","changeme");
+           
+           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+           helper.getUrlWaitUntil(driver, 10, DrupalLocators.customBrand);
+           driver.manage().window().maximize();
+           
+           // CREATE TITLE FOR CONTENT:
+           long fingerprint = System.currentTimeMillis();
+           title = String.valueOf(fingerprint) + " " +  helper.randomText(DrupalLocators.titleMaxCharsNumber + 10);
+
+           // CREATE CONTENT WITH NO DESCRIPTION:
+           helper.createCustomBrand(driver, title, "", true, true, true);
+          
+           // ASSERT CONTENT URL DID NOT CHANGE:
+           expectedURL = DrupalLocators.customBrand;
+           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
+           
+           // ASSERT ERROR MESSAGE APPEARS:
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], DrupalLocators.errorDescription);
+           
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
+	
+	/**
+	 * Test attempt to create a Brand Page Description that is longer than 135 characters is rejected
+	 * <p>Date Created: 2016-07-20</p>
+	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35153</p>
+	 */
+	@SuppressWarnings({ "static-access", "unused" })
+	@Test(groups = {"TC-35153"})
+    public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+
+	           // DECLARATION:
+	           int max = 135;
+	           String expectedURL, title, description;
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, DrupalLocators.customBrand);
+	           driver.manage().window().maximize();
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomText(DrupalLocators.titleMaxCharsNumber + 10);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(max + helper.randomInt(5, 15));
+	           helper.fileWriterPrinter("\n" + description + "\n");
+	           
+	           // CREATE CONTENT WITH DESCRIPTION:
+	           helper.createCustomBrand(driver, title, description, true, true, false);
+	           
+	           helper.getScreenShot(new Exception().getStackTrace()[0], "Description; Length is " + description.length(), driver);
+	           
+//	           // ASSERT CONTENT URL DID NOT CHANGE:
+//	           expectedURL = DrupalLocators.customBrand;
+//	           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
+	           
+//	           // ASSERT ERROR MESSAGE APPEARS:
+//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], DrupalLocators.errorDescription);
+	           
+	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
 	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }

@@ -25,8 +25,10 @@ public class DrupalLocators{
       public static String deleteOperationInDropDown = "//*[@id='edit-operation']/option[text()='Delete']";
       public static String confirmButton             = "//*[@id='edit-submit']";
       public static String errorConsole              = "//div[@id='console']";
+      public static String error                     = "//*[@id='console']/div[@class='messages error']";
       public static String errorMessage              = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
       public static String errorAjax                 = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
+      public static String errorDescription          = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";
       public static String logout                    = "//a[text()='Log out']";
 	  public static String drupalHomeIcon            = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton          = "//*[@id='tabs']/descendant::a[text()='Edit']";

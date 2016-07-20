@@ -11,9 +11,11 @@ public class Locators {
 	  public static String contentEditorPassword = "changeme";
 	
 	  /**********common url*******************/
-	  public static String homeURL           = System.getProperty("URL");
-	  public static String userLoginPage     = homeURL + "/user"; 
-	  public static String adminContentURL   = homeURL + "/admin/content";
+	  public static String homeURL         = System.getProperty("URL");
+	  public static String userLoginPage   = homeURL + "/user"; 
+	  public static String adminContentURL = homeURL + "/admin/content";
+	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
+	  public static String sixAndOvererURL = homeURL + "/6-and-over";
 	  
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
