@@ -89,10 +89,10 @@ public class Mail {
 		
 		// TEST HOST APPLICATION SERVER MANAGEMENT:
 	 // int server = devBox();
-		if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-		helper.fileWriter("server.info", Locators.homeURL);
-		System.out.println("Scheduled to start in: " + helper.convertTimeSecondsToHoursMinSeconds(sec));
-		System.out.println("Scheduled to start at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay));
+		String server = devServer();
+		System.out.println("Update will be started in: " + helper.convertTimeSecondsToHoursMinSeconds(sec));
+		System.out.println("Update will be started at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay));
+		System.out.println("Update will be started on: " + server);
 		
 		// GIT BRANCH MANAGEMENT
 		String branch = gitBranch();
@@ -125,10 +125,9 @@ public class Mail {
 		
 	 // String date = start.substring(0,start.indexOf(" "));
 	 // String time = start.substring(start.indexOf(" ") + 1, start.length());
-
+	 
 	 // System.out.println("\n" + date + "\n" + time + "\n");
-	 // System.out.println(command);
-		
+	 // System.out.println(command);		
 	 // stringSelection = new StringSelection(command);
 	 // clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 	 // clpbrd.setContents(stringSelection, null);
@@ -238,6 +237,7 @@ public class Mail {
 		
 	    // STORE LAST TEST NUMBER:
 		helper.fileCopy("test.num", "last.num");
+		helper.fileCleaner("test.num");
 	}
  
 		/** 
@@ -310,8 +310,8 @@ public class Mail {
 			helper.fileWriter("email.cont", "FYI:"); 
 			helper.fileWriter("email.cont", "TVOKids.com - AUTOMATED " + helper.fileScanner("test.type").toUpperCase() + " RESULT");
 			helper.fileWriter("email.cont", "");
-			helper.fileWriter("email.cont", "  SERVER DOMAIN: " + Locators.homeURL);
-			helper.fileWriter("email.cont", "     GiT BRANCH: develop");
+			helper.fileWriter("email.cont", "     APP SERVER: " + helper.fileScanner("server.info"));
+			helper.fileWriter("email.cont", "     GiT BRANCH: " + helper.fileScanner("branch.info"));
 			helper.fileWriter("email.cont", "");
 
 			// E-MAIL CONTENT TOTAL TESTS NUMBER:
@@ -524,6 +524,35 @@ public class Mail {
 			 return str;				 
 			 }
 		 
+//		 /**
+//		  * 'dev' Box number reader
+//		  * @throws IOException 
+//		  * @throws NumberFormatException 
+//		  */
+//		 public int devBox() throws NumberFormatException, IOException {
+//		 	 // DETECTING DEFAULT SERVER:
+//		 	 String server, dev;
+//		 	 server = Locators.homeURL;
+//		 	 server = server.substring(server.indexOf(":") + 3, server.length());
+//		 	 if(server.contains("dev")) { dev = server.substring(server.indexOf("dev") + 3, server.indexOf(".")); } else { dev = "0"; }
+//		 	 return Integer.valueOf(dev);
+//		 }
+
+		 /**
+		  * 'dev' Server log recorder
+		  * @throws IOException 
+		  * @throws NumberFormatException 
+		  */
+		 public String devServer() throws NumberFormatException, IOException {
+		 	 // DETECTING DEFAULT SERVER:
+		 	 String server;
+		 	 server = Locators.homeURL;
+		 	 server = server.substring(server.indexOf(":") + 3, server.length());
+		 	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
+		 	 helper.fileWriter("server.info", server);
+		 	 return server;
+		 }
+
 		 /**
 		  * GiT Branch entry dialogue 
 		  * @throws IOException 
@@ -855,7 +884,7 @@ public class Mail {
 				}
 		 
 		 /** Sends e-mail with multi-file attachment */
-		 public static boolean sendEmail(
+		 public boolean sendEmail(
 					String userName,
 					String passWord,
 					String host,
