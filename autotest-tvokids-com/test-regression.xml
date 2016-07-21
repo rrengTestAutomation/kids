@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="test-regression">
+    
+    <listeners>
+        <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
+    </listeners>
+    
+    <test verbose="1" name="test-regression">
+        <packages>
+        
+      <!-- <package name="com.tvokids.report.*"></package> -->
+           <package name="com.tvokids.send.*"></package>
+      <!-- <package name="com.tvokids.email.*"></package> -->
+           
+           <package name="com.tvokids.test.*"></package>
+        </packages>   
+    </test>
+  
+</suite>
