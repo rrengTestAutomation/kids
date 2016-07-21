@@ -37,13 +37,13 @@ public class DrupalLocators{
       public static String selectAllCheckBox         = "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
       public static String selectAllRowsButton       = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
 
-      /************id*********************/
+      /************common once*********************/
 	  public static String title   = "edit-title";
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
 	  public static int titleMaxCharsNumber       = 26;
+	  	  
+	  public static String description = "//*[contains(@id,'-description-und-0-value')]";	  
 	  
-      /************common once*********************/	  
-	  public static String description = "//*[contains(@id,'-description-und-0-value')]";
 	  public static String ageGroup5   = "edit-field-age-group-und-1";
 	  public static String ageGroup6   = "edit-field-age-group-und-2";
 	  public static String keywords    = "edit-field-keywords-und";
@@ -81,7 +81,10 @@ public class DrupalLocators{
 	  public static String tileLargeUpload  = tileFieldSet + subSet2 +  upload;
 
 	  /************content******************/
-	  public static String brandPageDescriptionID = "edit-field-brand-page-description-und-0-value";
+	  public static String brandPageDescriptionID                 =     "edit-field-brand-page-description-und-0-value";	  
+	  public static String brandPageDescriptionContentLimitMsgCSS = "div#edit-field-brand-page-description-und-0-value-counter.counter";
+	  public static String brandPageDescriptionCounterCSS         = "div#edit-field-brand-page-description-und-0-value-counter.counter strong";
+	  public static    int descriptionMaxCharsNumber              = 135;
 	  
 	  /************meta*********************/
 	  public static String metaTagsTab            = "//a/strong[text()='Meta tags']";

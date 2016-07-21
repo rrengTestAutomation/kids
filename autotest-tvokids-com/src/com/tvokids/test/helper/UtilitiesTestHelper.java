@@ -207,7 +207,9 @@ public class UtilitiesTestHelper{
 				driver.findElement(By.id(DrupalLocators.submit)).click(); // 'Confirm' button
 				waitUntilElementInvisibility(driver, 5, By.id(DrupalLocators.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
 				waitUntilElementInvisibility(driver, 600, By.id(DrupalLocators.progress), "Progress Bar", new Exception().getStackTrace()[0]);
-				    assertWebElementNotExist(driver, t, DrupalLocators.errorAjax);
+				
+				if(driver.findElements(By.xpath(DrupalLocators.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, DrupalLocators.errorAjax); }
+				    
 				waitUntilElementVisibility(driver, 30, DrupalLocators.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
 				By message = By.xpath(DrupalLocators.statusPerformedMessage);
 				if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
@@ -2336,6 +2338,24 @@ public class UtilitiesTestHelper{
 			    // if (printLine instanceof Boolean) {}
 			    // if (printLine instanceof Double) {}
 			    System.out.print("\n");		    
+			}
+            
+			/** Writes an Object line into "print.log" File, as well as through System Out Print Line */
+            public static void fileWriterPrinter(String printLine) throws NumberFormatException, IOException {
+             // Create File:
+				File f = new File(Locators.testOutputFileDir + "print.log");				                                                                      
+			 // Write or add a String line into File:	
+			    FileWriter fw = new FileWriter(f,true);
+			    PrintWriter pw = new PrintWriter(fw);
+			    pw.println(printLine);
+			    pw.close();
+			 // System Out Print Line:
+			    // if (printLine instanceof String) {}
+			    // if (printLine instanceof Integer) {}
+			    // if (printLine instanceof Long) {}
+			    // if (printLine instanceof Boolean) {}
+			    // if (printLine instanceof Double) {}
+			    System.out.print(printLine + "\n");		    
 			}
             
 			/** Writes an Object line into "print.log" File, as well as through System Out Print Line */

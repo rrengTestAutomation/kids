@@ -68,7 +68,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131","BUG-35502","OPEN"}, enabled = false)
+	@Test(groups = {"TC-35131","BUG-35502","OPEN"}, enabled = true)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -77,7 +77,7 @@ public class Iteration2 {
 
            // DECLARATION:
            int actual, expected, number;
-           String actualText, expectedText, expectedURL, text;
+           String actualText, expectedText, expectedURL, title;
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
            helper.logIn(driver,"content_editor","changeme");
@@ -95,19 +95,19 @@ public class Iteration2 {
            expected = DrupalLocators.titleMaxCharsNumber;
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
            
-           // ASSERT TITLE FIELD CAPACITY COUNTER:
-           driver.findElement(By.id(DrupalLocators.title)).clear();
+           // ASSERT TITLE FIELD CAPACITY COUNTER:          
            number = helper.randomInt(1, (DrupalLocators.titleMaxCharsNumber -1));
-           text = helper.randomEnglishText(number);
-           driver.findElement(By.id(DrupalLocators.title)).sendKeys(text);
+           title = helper.randomEnglishText(number);
+           driver.findElement(By.id(DrupalLocators.title)).clear();
+           driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
            actual = Integer.valueOf( driver.findElement(By.xpath(DrupalLocators.titleRemainCharsNumber)).getText() );
            expected = DrupalLocators.titleMaxCharsNumber - number;
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
            
-           // ASSERT TITLE FIELD MAXIMUM CAPACITY:
+           // ASSERT TITLE FIELD MAXIMUM CAPACITY:           
+           title = helper.randomEnglishText(DrupalLocators.titleMaxCharsNumber);
            driver.findElement(By.id(DrupalLocators.title)).clear();
-           text = helper.randomEnglishText(DrupalLocators.titleMaxCharsNumber);
-           driver.findElement(By.id(DrupalLocators.title)).sendKeys(text);
+           driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
            actual = Integer.valueOf( driver.findElement(By.xpath(DrupalLocators.titleRemainCharsNumber)).getText() );
            expected = 0;
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
@@ -119,9 +119,9 @@ public class Iteration2 {
 //           text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
 //           text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
            long fingerprint = System.currentTimeMillis();
-           text = String.valueOf(fingerprint) + " " +  helper.randomText(DrupalLocators.titleMaxCharsNumber + 10);
+           title = String.valueOf(fingerprint) + " " +  helper.randomText(DrupalLocators.titleMaxCharsNumber + 10);
              
-           driver.findElement(By.id(DrupalLocators.title)).sendKeys(text);
+           driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
            actual = Integer.valueOf( driver.findElement(By.xpath(DrupalLocators.titleRemainCharsNumber)).getText() );
            expected = 0;
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
@@ -129,10 +129,10 @@ public class Iteration2 {
            // CREATE CONTENT:
 //           Robot robot = new Robot();
 //           helper.createCustomBrand(driver, text, true, true, robot, fingerprint);
-           helper.createCustomBrand(driver, text, true, true, fingerprint);
+           helper.createCustomBrand(driver, title, true, true, fingerprint);
           
            // ACCEPTANCE CRITERIA:
-           expectedText = text.substring(0, DrupalLocators.titleMaxCharsNumber);
+           expectedText = title.substring(0, DrupalLocators.titleMaxCharsNumber);
            expectedURL = Locators.homeURL + "/" + expectedText.toLowerCase().replace(" ", "-");
 
            // ASSERT CONTENT URL USES A LIMITED TITLE:
@@ -214,45 +214,64 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153</p>
 	 */
-	@SuppressWarnings({ "static-access", "unused" })
+	@SuppressWarnings("static-access")
 	@Test(groups = {"TC-35153"})
     public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
-
-	           // DECLARATION:
-	           int max = 135;
-	           String expectedURL, title, description;
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, DrupalLocators.customBrand);
-	           driver.manage().window().maximize();
 	           
-	           // CREATE TITLE FOR CONTENT:
-	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomText(DrupalLocators.titleMaxCharsNumber + 10);
+	           // DECLARATION:
+	           int actual, expected, number;
+	           String description = "";
+	    
+	           // ASSERT EMPTY DESCRIPTION FIELD:
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).clear();
+	           helper.fileWriterPrinter();
+	           helper.fileWriterPrinter("DESCRIPTION: " + description);
+	           helper.fileWriterPrinter("     LENGTH: " + description.length());
+	           actual = Integer.valueOf( driver.findElement(By.cssSelector(DrupalLocators.brandPageDescriptionCounterCSS)).getText() );
+	           expected = DrupalLocators.descriptionMaxCharsNumber;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           // CREATE DESCRIPTION FOR CONTENT:
-	           description = helper.randomEnglishText(max + helper.randomInt(5, 15));
-	           helper.fileWriterPrinter("\n" + description + "\n");
+	           // ASSERT TITLE FIELD CAPACITY COUNTER:	           
+	           number = helper.randomInt(1, (DrupalLocators.descriptionMaxCharsNumber -1));
+	           description = helper.randomEnglishText(number);
+	           helper.fileWriterPrinter("DESCRIPTION: " + description);
+	           helper.fileWriterPrinter("     LENGTH: " + description.length());
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).clear();
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).sendKeys(description);
+	           actual = Integer.valueOf( driver.findElement(By.cssSelector(DrupalLocators.brandPageDescriptionCounterCSS)).getText() );
+	           expected = DrupalLocators.descriptionMaxCharsNumber - number;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           // CREATE CONTENT WITH DESCRIPTION:
-	           helper.createCustomBrand(driver, title, description, true, true, false);
+	           // ASSERT TITLE FIELD MAXIMUM CAPACITY:           
+	           description = helper.randomEnglishText(DrupalLocators.descriptionMaxCharsNumber);
+	           helper.fileWriterPrinter("DESCRIPTION: " + description);
+	           helper.fileWriterPrinter("     LENGTH: " + description.length());
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).clear();
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).sendKeys(description);
+	           actual = Integer.valueOf( driver.findElement(By.cssSelector(DrupalLocators.brandPageDescriptionCounterCSS)).getText() );
+	           expected = 0;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           helper.getScreenShot(new Exception().getStackTrace()[0], "Description; Length is " + description.length(), driver);
-	           
-//	           // ASSERT CONTENT URL DID NOT CHANGE:
-//	           expectedURL = DrupalLocators.customBrand;
-//	           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
-	           
-//	           // ASSERT ERROR MESSAGE APPEARS:
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], DrupalLocators.errorDescription);
-	           
+	           // ASSERT TITLE FIELD OVERLOAD ENTRY:
+	           description = helper.randomEnglishText(DrupalLocators.descriptionMaxCharsNumber + 10);
+	           helper.fileWriterPrinter("DESCRIPTION: " + description);
+	           helper.fileWriterPrinter("     LENGTH: " + description.length());
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).clear();
+	           driver.findElement(By.id(DrupalLocators.brandPageDescriptionID)).sendKeys(description);
+	           actual = Integer.valueOf( driver.findElement(By.cssSelector(DrupalLocators.brandPageDescriptionCounterCSS)).getText() );
+	           expected = 0;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+
 	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	
