@@ -6,15 +6,21 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -26,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -37,14 +45,16 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
+import java.util.zip.ZipOutputStream;
 
 import javax.swing.JTextField;
 
-import com.tvokids.common.Locators;
-import com.tvokids.common.Dictionary;
-import com.tvokids.common.DrupalLocators;
+import com.tvokids.locator.Dictionary;
+import com.tvokids.locator.Drupal;
+import com.tvokids.locator.Common;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.tools.zip.ZipEntry;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -83,7 +93,7 @@ public class UtilitiesTestHelper{
 				driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), DesiredCapabilities.firefox());
 			}
 			else if (remoteOrLocal.equalsIgnoreCase("local") && browser.equalsIgnoreCase("chrome")){
-				System.setProperty("webdriver.chrome.driver", Locators.localDriversDir + "chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", Common.localDriversDir + "chromedriver.exe");
 				driver = new ChromeDriver();
 			}
 			else if (remoteOrLocal.equalsIgnoreCase("remote") && browser.equalsIgnoreCase("chrome")){
@@ -110,16 +120,16 @@ public class UtilitiesTestHelper{
 	 * @throws InterruptedException 
 	 */
 	public void logIn(WebDriver driver) throws IOException, InterruptedException {
-		getUrlWaitUntil(driver, 15, Locators.userLoginPage);		
+		getUrlWaitUntil(driver, 15, Common.userLoginPage);		
 		waitUntilElementPresence(driver, 60, By.id("edit-name"), "\"Username\" ", new RuntimeException().getStackTrace()[0]);		
-		driver.findElement(By.id("edit-name")).sendKeys(Locators.adminUsername);
-		driver.findElement(By.id("edit-pass")).sendKeys(Locators.adminPassword);
-		driver.findElement(By.id(DrupalLocators.submit)).click();
+		driver.findElement(By.id("edit-name")).sendKeys(Common.adminUsername);
+		driver.findElement(By.id("edit-pass")).sendKeys(Common.adminPassword);
+		driver.findElement(By.id(Drupal.submit)).click();
 		Thread.sleep(500);
         if (driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1   ) {
         	throw new IOException("Sorry, unrecognized username or password");
         }
-		waitUntilElementPresence(driver, 30, By.xpath(DrupalLocators.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
+		waitUntilElementPresence(driver, 30, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
 	}
 	
 	/**
@@ -127,26 +137,26 @@ public class UtilitiesTestHelper{
 	 * @throws InterruptedException 
 	 */
 	public void logIn(WebDriver driver, String username, String password) throws IOException, InterruptedException {
-		getUrlWaitUntil(driver, 15, Locators.userLoginPage);		
+		getUrlWaitUntil(driver, 15, Common.userLoginPage);		
 		waitUntilElementPresence(driver, 60, By.id("edit-name"), "\"Username\" ", new RuntimeException().getStackTrace()[0]);		
 		driver.findElement(By.id("edit-name")).sendKeys(username);
 		driver.findElement(By.id("edit-pass")).sendKeys(password);
-		driver.findElement(By.id(DrupalLocators.submit)).click();
+		driver.findElement(By.id(Drupal.submit)).click();
 		Thread.sleep(500);
         if (driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1   ) {
         	throw new IOException("Sorry, unrecognized username or password");
         }
-		waitUntilElementPresence(driver, 30, By.xpath(DrupalLocators.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
+		waitUntilElementPresence(driver, 30, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
 	}
 	
 	/**
 	 * @throws IOException
 	 */
 	public void logOut(WebDriver driver) throws IOException {		
-		while ( (driver.findElements(By.xpath(Locators.logout)).size() > 0) || (driver.findElements(By.xpath(Locators.notFoundError)).size() > 0) ) {
-			getUrlWaitUntil(driver, 15, Locators.homeURL);
-			driver.findElement(By.xpath(Locators.logout)).click();
-			waitUntilElementInvisibility(driver, 15, By.xpath(Locators.logout), "\"Log out\" Button", new RuntimeException().getStackTrace()[0]);
+		while ( (driver.findElements(By.xpath(Common.logout)).size() > 0) || (driver.findElements(By.xpath(Common.notFoundError)).size() > 0) ) {
+			getUrlWaitUntil(driver, 15, Common.homeURL);
+			driver.findElement(By.xpath(Common.logout)).click();
+			waitUntilElementInvisibility(driver, 15, By.xpath(Common.logout), "\"Log out\" Button", new RuntimeException().getStackTrace()[0]);
 			}
 		}
 	
@@ -160,7 +170,7 @@ public class UtilitiesTestHelper{
 				fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
 				fileWriterPrinter("Delete Content Title:  " + title);
 				fileWriterPrinter("Delete Content Author: " + user);
-				getUrlWaitUntil(driver, 15, Locators.adminContentURL);
+				getUrlWaitUntil(driver, 15, Common.adminContentURL);
 				
 				WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
 				Select clickThis = new Select(dropwDownListBox);
@@ -173,25 +183,25 @@ public class UtilitiesTestHelper{
 				
 				driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
 				driver.findElement(By.id("edit-author")).sendKeys(user);  //typing the Author name filter as User Name
-				int size = waitUntilElementList(driver, 5, Locators.autoComplete, "auto-complete").size();
-	            if (size == 1) { try { driver.findElement(By.xpath(Locators.autoComplete)).click(); } catch(Exception e) { } }
-	            waitUntilElementInvisibility(driver, 15, Locators.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+				int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+	            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+	            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
 	            
 				driver.findElement(By.id("edit-submit-admin-views-node")).click(); //apply button;
-	            waitUntilElementInvisibility(driver, 30, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+	            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 				
 				List<WebElement> list = driver.findElements(By.xpath("//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]"));
 
 				int i = 1;
-				while ((list.size() == 0) && (driver.findElements(By.xpath(DrupalLocators.errorAjax)).size() < 1)) {
+				while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
 				fileWriterPrinter("\nPAGE-" + i + ": DELETING...");
-				waitUntilElementVisibility(driver, 30, DrupalLocators.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-				driver.findElement(By.xpath(DrupalLocators.selectAllCheckBox)).click();  //check "Select All"
+				waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+				driver.findElement(By.xpath(Drupal.selectAllCheckBox)).click();  //check "Select All"
 				
 				// all rows selection			
-				List<WebElement> elements = driver.findElements(By.xpath(DrupalLocators.selectAllRowsButton));
+				List<WebElement> elements = driver.findElements(By.xpath(Drupal.selectAllRowsButton));
 				if (elements.size() > 0) {
-				   WebElement element = driver.findElement(By.xpath(DrupalLocators.selectAllRowsButton));
+				   WebElement element = driver.findElement(By.xpath(Drupal.selectAllRowsButton));
 				   fileWriterPrinter(element.getAttribute("value"));
 				   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
 				}
@@ -204,14 +214,14 @@ public class UtilitiesTestHelper{
 	
 				driver.findElement(By.id("edit-submit--2")).click(); // 'Execute' button;
 				waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
-				driver.findElement(By.id(DrupalLocators.submit)).click(); // 'Confirm' button
-				waitUntilElementInvisibility(driver, 5, By.id(DrupalLocators.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
-				waitUntilElementInvisibility(driver, 600, By.id(DrupalLocators.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+				driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+				waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+				waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
 				
-				if(driver.findElements(By.xpath(DrupalLocators.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, DrupalLocators.errorAjax); }
+				if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }
 				    
-				waitUntilElementVisibility(driver, 30, DrupalLocators.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
-				By message = By.xpath(DrupalLocators.statusPerformedMessage);
+				waitUntilElementVisibility(driver, 30, Drupal.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
+				By message = By.xpath(Drupal.statusPerformedMessage);
 				if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
 				list = driver.findElements(By.xpath("//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]"));
 				i++;
@@ -228,7 +238,7 @@ public class UtilitiesTestHelper{
 	public int contentSubmit(WebDriver driver, int iteration, long fingerprint) throws IOException, NumberFormatException, InterruptedException {
 	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
 	   String previousURL = driver.getCurrentUrl();
-	   driver.findElement(By.id(DrupalLocators.submit)).click();
+	   driver.findElement(By.id(Drupal.submit)).click();
 	   waitUntilUrl(driver, 15, previousURL);
 	   iteration++;
 	   String suffix = "-" + getNumberSuffix(iteration);
@@ -237,8 +247,8 @@ public class UtilitiesTestHelper{
 	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
 	   if (! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) { 
 	   	fileWriterPrinter(issue);
-	   	if( driver.findElements(By.xpath(DrupalLocators.errorMessage)).size() > 0 ) {
-	   		String text = driver.findElement(By.xpath(DrupalLocators.errorConsole)).getText();
+	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
 	   		String[] error = text.split("\\n");
 	   		String message, prompt;
 	   		if( error.length > 1) { 
@@ -261,7 +271,7 @@ public class UtilitiesTestHelper{
 	public int contentSubmit(WebDriver driver, long fingerprint, int iteration) throws IOException, NumberFormatException, InterruptedException {
 	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
 	   String previousURL = driver.getCurrentUrl();
-	   driver.findElement(By.id(DrupalLocators.submit)).click();
+	   driver.findElement(By.id(Drupal.submit)).click();
 	   waitUntilUrl(driver, 15, previousURL);
 	   iteration++;
 	   String suffix = "-" + getNumberSuffix(iteration);
@@ -270,8 +280,8 @@ public class UtilitiesTestHelper{
 	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
 	   if (! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) { 
 	   	fileWriterPrinter(issue);
-	   	if( driver.findElements(By.xpath(DrupalLocators.errorMessage)).size() > 0 ) {
-	   		String text = driver.findElement(By.xpath(DrupalLocators.errorConsole)).getText();
+	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
 	   		String[] error = text.split("\\n");
 	   		String message, prompt;
 	   		if( error.length > 1) { 
@@ -291,47 +301,47 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit) throws AWTException, InterruptedException, IOException
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   By browse, upload;
        try {
-            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
-			driver.findElement(By.id(DrupalLocators.title)).clear();
-			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
 			
-			driver.findElement(By.xpath(DrupalLocators.description)).clear();
-			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys(description);
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
 
 			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
 			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
 			
-			driver.findElement(By.id(DrupalLocators.keywords)).clear();
-			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 			
-			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.characterBannerBrowse);
-			upload = By.xpath(DrupalLocators.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail");
+			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+			browse = By.xpath(Drupal.characterBannerBrowse);
+			upload = By.xpath(Drupal.characterBannerUpload);					
+			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
 			
-		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.heroBoxBrowse);
-			upload = By.xpath(DrupalLocators.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+			browse = By.xpath(Drupal.heroBoxBrowse);
+			upload = By.xpath(Drupal.heroBoxUpload);
+			uploader(driver, "hero.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileSmallBrowse);
-			upload = By.xpath(DrupalLocators.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileSmallBrowse);
+			upload = By.xpath(Drupal.tileSmallUpload);
+			uploader(driver, "small.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileLargeBrowse);
-			upload = By.xpath(DrupalLocators.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileLargeBrowse);
+			upload = By.xpath(Drupal.tileLargeUpload);
+			uploader(driver, "large.jpg", browse, upload, "image", t);
 
-			if(ifSubmit) { driver.findElement(By.id(DrupalLocators.submit)).click(); }
+			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
 			
 		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
 	  }
@@ -342,47 +352,47 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver) throws AWTException, InterruptedException, IOException
+	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   By browse, upload;
 	   try {
 	    	int i = 0;
 	    	while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
-			driver.findElement(By.id(DrupalLocators.title)).clear();
-			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
 			
-			driver.findElement(By.xpath(DrupalLocators.description)).clear();
-			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys("This is \"" + title + "\" Description");
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
 
 			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
 			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
 			
-			driver.findElement(By.id(DrupalLocators.keywords)).clear();
-			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 			
-			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.characterBannerBrowse);
-			upload = By.xpath(DrupalLocators.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail");
+			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+			browse = By.xpath(Drupal.characterBannerBrowse);
+			upload = By.xpath(Drupal.characterBannerUpload);					
+			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
 			
-		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.heroBoxBrowse);
-			upload = By.xpath(DrupalLocators.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+			browse = By.xpath(Drupal.heroBoxBrowse);
+			upload = By.xpath(Drupal.heroBoxUpload);
+			uploader(driver, "hero.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileSmallBrowse);
-			upload = By.xpath(DrupalLocators.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileSmallBrowse);
+			upload = By.xpath(Drupal.tileSmallUpload);
+			uploader(driver, "small.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileLargeBrowse);
-			upload = By.xpath(DrupalLocators.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileLargeBrowse);
+			upload = By.xpath(Drupal.tileLargeUpload);
+			uploader(driver, "large.jpg", browse, upload, "image", t);
 
 			i = contentSubmit(driver, i, fingerprint);			
             }
@@ -395,46 +405,46 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, long fingerprint) throws AWTException, InterruptedException, IOException
+	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, long fingerprint, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   By browse, upload;
 	   try {
 	    	int i = 0;
 	    	while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
-			driver.findElement(By.id(DrupalLocators.title)).clear();
-			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
 			
-			driver.findElement(By.xpath(DrupalLocators.description)).clear();
-			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys("This is \"" + title + "\" Description");
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
 
 			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
 			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
 			
-			driver.findElement(By.id(DrupalLocators.keywords)).clear();
-			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 			
-			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.characterBannerBrowse);
-			upload = By.xpath(DrupalLocators.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail");
+			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+			browse = By.xpath(Drupal.characterBannerBrowse);
+			upload = By.xpath(Drupal.characterBannerUpload);					
+			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
 			
-		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.heroBoxBrowse);
-			upload = By.xpath(DrupalLocators.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+			browse = By.xpath(Drupal.heroBoxBrowse);
+			upload = By.xpath(Drupal.heroBoxUpload);
+			uploader(driver, "hero.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileSmallBrowse);
-			upload = By.xpath(DrupalLocators.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileSmallBrowse);
+			upload = By.xpath(Drupal.tileSmallUpload);
+			uploader(driver, "small.jpg", browse, upload, "image", t);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileLargeBrowse);
-			upload = By.xpath(DrupalLocators.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image");
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileLargeBrowse);
+			upload = By.xpath(Drupal.tileLargeUpload);
+			uploader(driver, "large.jpg", browse, upload, "image", t);
 
 			i = contentSubmit(driver, fingerprint, i);			
             }
@@ -454,39 +464,39 @@ public class UtilitiesTestHelper{
        try {
     	    int i = 0;
     	    while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
-			driver.findElement(By.id(DrupalLocators.title)).clear();
-			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
 			
-			driver.findElement(By.xpath(DrupalLocators.description)).clear();
-			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys("This is \"" + title + "\" Description");
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
 
 			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
 			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
 			
-			driver.findElement(By.id(DrupalLocators.keywords)).clear();
-			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 			
-			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.characterBannerBrowse);
-			upload = By.xpath(DrupalLocators.characterBannerUpload);					
+			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+			browse = By.xpath(Drupal.characterBannerBrowse);
+			upload = By.xpath(Drupal.characterBannerUpload);					
 			uploader(driver, "bubble.jpg", browse, upload, robot);
 			
-		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.heroBoxBrowse);
-			upload = By.xpath(DrupalLocators.heroBoxUpload);
+		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+			browse = By.xpath(Drupal.heroBoxBrowse);
+			upload = By.xpath(Drupal.heroBoxUpload);
 			uploader(driver, "hero.jpg", browse, upload, robot);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileSmallBrowse);
-			upload = By.xpath(DrupalLocators.tileSmallUpload);
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileSmallBrowse);
+			upload = By.xpath(Drupal.tileSmallUpload);
 			uploader(driver, "small.jpg", browse, upload, robot);
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileLargeBrowse);
-			upload = By.xpath(DrupalLocators.tileLargeUpload);
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileLargeBrowse);
+			upload = By.xpath(Drupal.tileLargeUpload);
 			uploader(driver, "large.jpg", browse, upload, robot);
 
 			i = contentSubmit(driver, i, fingerprint);			
@@ -506,39 +516,39 @@ public class UtilitiesTestHelper{
        try {
     	    int i = 0;
     	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, DrupalLocators.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(DrupalLocators.title), "Title", new Exception().getStackTrace()[0]);
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
-			driver.findElement(By.id(DrupalLocators.title)).clear();
-			driver.findElement(By.id(DrupalLocators.title)).sendKeys(title);
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
 			
-			driver.findElement(By.xpath(DrupalLocators.description)).clear();
-			driver.findElement(By.xpath(DrupalLocators.description)).sendKeys("This is \"" + title + "\" Description");
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
 
 			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
 			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
 			
-			driver.findElement(By.id(DrupalLocators.keywords)).clear();
-			driver.findElement(By.id(DrupalLocators.keywords)).sendKeys(title + " (keywords)");
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 			
-			driver.findElement(By.xpath(DrupalLocators.characterBannerVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.characterBannerBrowse);
-			upload = By.xpath(DrupalLocators.characterBannerUpload);					
+			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+			browse = By.xpath(Drupal.characterBannerBrowse);
+			upload = By.xpath(Drupal.characterBannerUpload);					
 			uploader(driver, "bubble.jpg", browse, upload, robot, "thumbnail");
 			
-		    driver.findElement(By.xpath(DrupalLocators.heroBoxVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.heroBoxBrowse);
-			upload = By.xpath(DrupalLocators.heroBoxUpload);
+		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+			browse = By.xpath(Drupal.heroBoxBrowse);
+			upload = By.xpath(Drupal.heroBoxUpload);
 			uploader(driver, "hero.jpg", browse, upload, robot, "image");
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileSmallBrowse);
-			upload = By.xpath(DrupalLocators.tileSmallUpload);
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileSmallBrowse);
+			upload = By.xpath(Drupal.tileSmallUpload);
 			uploader(driver, "small.jpg", browse, upload, robot, "image");
 		    
-		    driver.findElement(By.xpath(DrupalLocators.tileVerticalTab)).click();
-			browse = By.xpath(DrupalLocators.tileLargeBrowse);
-			upload = By.xpath(DrupalLocators.tileLargeUpload);
+		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+			browse = By.xpath(Drupal.tileLargeBrowse);
+			upload = By.xpath(Drupal.tileLargeUpload);
 			uploader(driver, "large.jpg", browse, upload, robot, "image");
 
 			i = contentSubmit(driver, fingerprint, i);			
@@ -914,8 +924,8 @@ public class UtilitiesTestHelper{
 			  if (ifBack) {
 				  driver.navigate().back();
 				  waitUntilUrl(driver, 15, actualURL, ifPrompt);
-			  }		  
-	  }	 
+			  }			  
+	  }
 	  
 	  /**
 	   * In current page, click a link/tab/locator, verify the page goes to an URL as expected.
@@ -1074,13 +1084,13 @@ public class UtilitiesTestHelper{
 	   * @throws InterruptedException
 	   */
       public void uploader(WebDriver driver, String image, By browse, By upload) throws InterruptedException {
-		  String imageDir = Locators.localImageDir;
+		  String imageDir = Common.localImageDir;
 		  String imagePath = imageDir + File.separator + image;
 		  try{
         	  driver.findElement(browse).sendKeys(imagePath);
         	  Thread.sleep(1000);
         	  driver.findElement(upload).click();
-        	  waitUntilElementInvisibility(driver, 10, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+        	  waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
           }catch(Throwable e) { e.printStackTrace(); }
       }
 	  
@@ -1094,27 +1104,31 @@ public class UtilitiesTestHelper{
 	   * @throws IOException 
 	   * @throws NumberFormatException 
 	   */
-      public void uploader(WebDriver driver, String image, By browse, By upload, String name) throws InterruptedException, NumberFormatException, IOException {
-		  String imageDir = Locators.localImageDir;
+      public void uploader(WebDriver driver, String image, By browse, By upload, String name, StackTraceElement t) throws InterruptedException, NumberFormatException, IOException {
+		  String imageDir = Common.localImageDir;
 		  String imagePath = imageDir + File.separator + image;
 		  
 		  int i = 0;
 		  String xpath = "//a[contains(@type,'image/jpeg;')][text()='" + image + "']";
 		  By element = By.xpath(xpath);
-		  int size = driver.findElements(element).size();
-		  
-		  while (size == 0) {
-		         try {
-		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..."); }
-
+		  int size = 0;
+		  int errors = 0;
+		  while ((size == 0) && (errors == 0)) {			  
+		      // try {		        	 
+		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..." + "[Attempt #" + (i+1) + "]"); }
 		        	 driver.findElement(browse).sendKeys(imagePath);
 		        	 Thread.sleep(1000);
 		        	 driver.findElement(upload).click();
-		        	 waitUntilElementInvisibility(driver, 10, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-		        	 
-		         } catch(Throwable e) { e.printStackTrace(); }
+		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+		        	 errors = driver.findElements(By.xpath(Drupal.errorUpload)).size();
+		        	 if (errors > 0) { 
+		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
+		        		              moveToElement(driver, Drupal.confirmButton);
+		        		              }
+		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); driver.quit(); }
+		      // } catch(Throwable e) {  	}	         
 		         i++;
-		         size = driver.findElements(element).size();         
+		         size = driver.findElements(element).size();    
 	      }
 		  if (size == 1) { fileWriterPrinter("Successful \"" + image + "\" " + name + " upload!"); }
 	  }
@@ -1148,7 +1162,7 @@ public class UtilitiesTestHelper{
 		             closeAllOtherWindows(driver, parentWindowHandle);// driver.switchTo().window(parentWindowHandle);
 		             
 			         driver.findElement(upload).click();
-			         waitUntilElementInvisibility(driver, 10, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			         waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		         } catch(Exception e) {}
 		         i++;
 		         size = driver.findElements(element).size();         
@@ -1185,7 +1199,7 @@ public class UtilitiesTestHelper{
 		             closeAllOtherWindows(driver, parentWindowHandle);// driver.switchTo().window(parentWindowHandle);
 		             
 			         driver.findElement(upload).click();
-			         waitUntilElementInvisibility(driver, 10, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			         waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		         } catch(Exception e) {}
 		         i++;
 		         size = driver.findElements(element).size();         
@@ -1348,7 +1362,7 @@ public class UtilitiesTestHelper{
             String previousURL = driver.getCurrentUrl();
 		    alertHandler(driver);
 
-		    String imageDir = Locators.localImageDir;
+		    String imageDir = Common.localImageDir;
 		  	String imagePath = imageDir + File.separator + image;
 		  	
 		  	keyTypeRobot(robot, " ");             // pressing Space in the beginning
@@ -1726,7 +1740,7 @@ public class UtilitiesTestHelper{
 		   public static void getScreenShot(String description, WebDriver driver) throws IOException {
 		   DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 		   File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		   String outputFile = Locators.outputFileDir + description + " (" + dateFormat.format(new Date()) + ").png";
+		   String outputFile = Common.outputFileDir + description + " (" + dateFormat.format(new Date()) + ").png";
 		   fileWriterPrinter(outputFile);
 		   FileUtils.copyFile(scrFile, new File(outputFile));
 		  }
@@ -1739,7 +1753,7 @@ public class UtilitiesTestHelper{
 		   public static void getScreenShot(String description, WebDriver driver, long milliseconds) throws IOException {
 		   DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 		   File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		   String outputFile = Locators.outputFileDir + description + " (" + dateFormat.format(milliseconds) + ").png";
+		   String outputFile = Common.outputFileDir + description + " (" + dateFormat.format(milliseconds) + ").png";
 		   fileWriterPrinter(outputFile);
 		   FileUtils.copyFile(scrFile, new File(outputFile));
 		  } 
@@ -1755,7 +1769,7 @@ public class UtilitiesTestHelper{
 		   String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 		   String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
 		   String screenshotName = classNameOnly + "." + l.getMethodName() + ", " + description +", line # " + l.getLineNumber();
-		   String outputFile = Locators.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
+		   String outputFile = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
 		   fileWriterPrinter(outputFile);
 		   FileUtils.copyFile(scrFile, new File(outputFile));
 		   }
@@ -1786,7 +1800,7 @@ public class UtilitiesTestHelper{
 			String description = exceptionThrown;
 			String screenshotName = classNameOnly + "." + l.getMethodName() + ", " + description +", line # " + l.getLineNumber();
 
-			String outputFile = Locators.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
+			String outputFile = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
 			fileWriterPrinter(outputFile);
 			FileUtils.copyFile(scrFile, new File(outputFile));
 			}
@@ -1818,7 +1832,7 @@ public class UtilitiesTestHelper{
 				String exception = exceptionThrown;
 				String screenshotName = classNameOnly + "." + l.getMethodName() + ", " + exception + ", " + description + ", line # " + l.getLineNumber();
 
-				String outputFile = Locators.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
+				String outputFile = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator + screenshotName + " (" + dateFormat.format(new Date()) + ").png";
 				fileWriterPrinter(outputFile);
 				FileUtils.copyFile(scrFile, new File(outputFile));
 				}
@@ -2183,7 +2197,7 @@ public class UtilitiesTestHelper{
 			public static String fileScanner(String fileName) throws NumberFormatException, IOException {				
 				String n = null;
 				if (fileExist(fileName, false)) {
-				   File f = new File(Locators.testOutputFileDir + fileName);
+				   File f = new File(Common.testOutputFileDir + fileName);
 				   scanner = new Scanner(f);
 				   n = scanner.useDelimiter("\\Z").next();
 				   scanner.close();
@@ -2195,7 +2209,7 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException */
 			public static void fileCleaner(String fileName) throws NumberFormatException, IOException {
 				if (fileExist(fileName, false))
-				 { (new File(Locators.testOutputFileDir + fileName)).delete(); }
+				 { (new File(Common.testOutputFileDir + fileName)).delete(); }
 			}
 			
 			/* @throws IOException
@@ -2212,7 +2226,7 @@ public class UtilitiesTestHelper{
 			   // if Counter File does not exist - create new it with counter "1";
                //                      otherwise - update existing by increasing the counter by "1";
 		       int n = 1;
-		       File f = new File(Locators.testOutputFileDir + counterFileName);
+		       File f = new File(Common.testOutputFileDir + counterFileName);
 		       if (f.exists() && f.isFile()) { n = Integer.valueOf(fileScanner(counterFileName)) + 1; }
 		       FileUtils.writeStringToFile(f, String.valueOf(n));
 		       return n;
@@ -2223,7 +2237,7 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String fileName) throws NumberFormatException, IOException {
-				File f = new File(Locators.testOutputFileDir + fileName);
+				File f = new File(Common.testOutputFileDir + fileName);
 				if (! (f.exists() && f.isFile()) ) { fileWriterPrinter(f + " is missing..."); }
 				return (f.exists() && f.isFile());
 			}
@@ -2243,7 +2257,7 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String fileName, Boolean silentMode) throws NumberFormatException, IOException {
-				File f = new File(Locators.testOutputFileDir + fileName);
+				File f = new File(Common.testOutputFileDir + fileName);
 				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
 				return (f.exists() && f.isFile());
 			}
@@ -2260,8 +2274,8 @@ public class UtilitiesTestHelper{
 			
 			/** @throws IOException */ 
 			public static void fileCopy(String fileSource, String fileDest) throws IOException {
-				File s = new File(Locators.testOutputFileDir + fileSource);
-				File d = new File(Locators.testOutputFileDir + fileDest);
+				File s = new File(Common.testOutputFileDir + fileSource);
+				File d = new File(Common.testOutputFileDir + fileDest);
 				if (s.exists() && s.isFile()) { FileUtils.copyFile(s, d); }
 			}
 			
@@ -2303,7 +2317,7 @@ public class UtilitiesTestHelper{
 			/** Writes a String line into File */
             public static void fileWriter(String fileName, Object printLine) throws NumberFormatException, IOException {
              // Create File:
-				File f = new File(Locators.testOutputFileDir + fileName);				                                                                      
+				File f = new File(Common.testOutputFileDir + fileName);				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);
 			    PrintWriter pw = new PrintWriter(fw);
@@ -2325,7 +2339,7 @@ public class UtilitiesTestHelper{
 			/** Writes an empty line into "print.log" File, as well as through System Out Print Line */
             public static void fileWriterPrinter() throws NumberFormatException, IOException {
              // Create File:
-				File f = new File(Locators.testOutputFileDir + "print.log");				                                                                      
+				File f = new File(Common.testOutputFileDir + "print.log");				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);
 			    PrintWriter pw = new PrintWriter(fw);
@@ -2343,7 +2357,7 @@ public class UtilitiesTestHelper{
 			/** Writes an Object line into "print.log" File, as well as through System Out Print Line */
             public static void fileWriterPrinter(String printLine) throws NumberFormatException, IOException {
              // Create File:
-				File f = new File(Locators.testOutputFileDir + "print.log");				                                                                      
+				File f = new File(Common.testOutputFileDir + "print.log");				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);
 			    PrintWriter pw = new PrintWriter(fw);
@@ -2361,7 +2375,7 @@ public class UtilitiesTestHelper{
 			/** Writes an Object line into "print.log" File, as well as through System Out Print Line */
             public static void fileWriterPrinter(Object printLine) throws NumberFormatException, IOException {
              // Create File:
-				File f = new File(Locators.testOutputFileDir + "print.log");				                                                                      
+				File f = new File(Common.testOutputFileDir + "print.log");				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);
 			    PrintWriter pw = new PrintWriter(fw);
@@ -2379,7 +2393,7 @@ public class UtilitiesTestHelper{
 			/** Writes an Object line into File, as well as through System Out Print Line */
             public static void fileWriterPrinter(String fileName, Object printLine) throws NumberFormatException, IOException {
              // Create File:
-				File f = new File(Locators.testOutputFileDir + fileName);				                                                                      
+				File f = new File(Common.testOutputFileDir + fileName);				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);
 			    PrintWriter pw = new PrintWriter(fw);
@@ -2491,7 +2505,7 @@ public class UtilitiesTestHelper{
         	 */
         	@SuppressWarnings("resource")
         	public String[] readTestNgXmlFileOutputLinesArray(String fileName) throws IOException{
-        	    BufferedReader in = new BufferedReader(new FileReader(Locators.testOutputFileDir + fileName));
+        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
@@ -2587,7 +2601,7 @@ public class UtilitiesTestHelper{
         	 */
         	@SuppressWarnings("resource")
         	public String[] readTextFileOutputLinesArray(String fileName) throws IOException{
-        	    BufferedReader in = new BufferedReader(new FileReader(Locators.testOutputFileDir + fileName));
+        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
@@ -4867,4 +4881,141 @@ public class UtilitiesTestHelper{
 		return space;
 	}
 	
+	/**
+	 * Create a Zip File from given Directory using ZipOutputStream CLASS, keeping Structure
+	 */
+	 public void zipDirectoryKeepStructure(String sourceDirectoryPath, String zipOutputPath) throws Exception {
+     	   // DECLARATION:
+     	   if(sourceDirectoryPath.endsWith("\\")) { sourceDirectoryPath = sourceDirectoryPath.substring(0, sourceDirectoryPath.length() - 1); }
+     	   sourceDirectoryPath = sourceDirectoryPath.replace("\\", "/");
+     	   zipOutputPath = zipOutputPath.replace("\\", "/");
+     	   // MESSAGE:
+     	   fileWriterPrinter("\nSOURCE DIRECTORY: " + sourceDirectoryPath);
+     	   fileWriterPrinter(" ZIP OUTPUT PATH: " + zipOutputPath + "\n");
+		  
+		   File dirObj = new File(sourceDirectoryPath);
+		   ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipOutputPath));
+		   System.out.println("Creating : " + zipOutputPath);
+		   addDir(dirObj, out);
+		   out.close();		    
+		  }
+	 
+	/**
+	 * Add File to Zip
+	 */
+	 public void addDir(File dirObj, ZipOutputStream out) throws IOException {
+		    File[] files = dirObj.listFiles();
+		    byte[] tmpBuf = new byte[1024];
+		    for (int i = 0; i < files.length; i++) {
+		      if (files[i].isDirectory()) {
+		        addDir(files[i], out);
+		        continue;
+		      }
+		      FileInputStream in = new FileInputStream(files[i].getAbsolutePath());
+		      System.out.println(" Adding: " + files[i].getAbsolutePath());
+		      out.putNextEntry(new ZipEntry(files[i].getAbsolutePath()));
+		      int len;
+		      while ((len = in.read(tmpBuf)) > 0) {
+		        out.write(tmpBuf, 0, len);
+		      }
+		      out.closeEntry();
+		      in.close();
+		    }
+		  }
+	 
+	   /**
+	     * This class gets file size
+	     * @param args
+	     * @throws IOException 
+	     * @throws NumberFormatException 
+	     */
+	    public double fileGetSizeMB(String filePath) throws NumberFormatException, IOException {
+	    	File file = new File(filePath.replace("\\", "/"));
+	        if(file.exists()) {
+	         // fileWriterPrinter("FILE SIZE: " + file.length() + " Bit");
+	         // fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
+	            fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
+	            return (double) file.length()/(1024*1024);
+	        } else { fileWriterPrinter("File doesn't exist"); return 0; }
+	         
+	    }
+
+	    /**
+	     * Create a Zip File from given Directory, no keeping Structure
+	     */
+		public void zipDirectory(String sourceDirectoryPath, String zipOutputPath) throws IOException {
+		  	   // DECLARATION:
+		  	   if(sourceDirectoryPath.endsWith("\\")) { sourceDirectoryPath = sourceDirectoryPath.substring(0, sourceDirectoryPath.length() - 1); }
+		  	   sourceDirectoryPath = sourceDirectoryPath.replace("\\", "/");
+		  	   zipOutputPath = zipOutputPath.replace("\\", "/");
+		  	   // MESSAGE:
+		  	   fileWriterPrinter("\nSOURCE DIRECTORY: " + sourceDirectoryPath);
+		  	   fileWriterPrinter(" ZIP OUTPUT PATH: " + zipOutputPath + "\n");
+		  	   
+		        File dir = new File(sourceDirectoryPath);
+		    	File file = new File(zipOutputPath);
+		    	
+		    	// System.out.println(mydir.toURI().relativize(myfile.toURI()).getPath());	
+		    	zip(dir, file);
+			}
+
+			@SuppressWarnings("resource")
+			public static void zip(File directory, File zipfile) throws IOException {
+			    URI base = directory.toURI();
+			    Deque<File> queue = new LinkedList<File>();
+			    queue.push(directory);
+			    OutputStream out = new FileOutputStream(zipfile);
+			    Closeable res = out;
+			    try {
+			    	ZipOutputStream zout = new ZipOutputStream(out);
+			    	res = zout;
+			    	while (!queue.isEmpty()) {
+			    		directory = queue.pop();
+			    		for (File kid : directory.listFiles()) {
+			    			String name = base.relativize(kid.toURI()).getPath();
+			    			if (kid.isDirectory()) {
+			    				queue.push(kid);
+			    				name = name.endsWith("/") ? name : name + "/";
+			    				zout.putNextEntry(new ZipEntry(name));
+			    			} else {
+			    				zout.putNextEntry(new ZipEntry(name));
+			    				copy(kid, zout);
+			    				zout.closeEntry();
+			    				}
+			    			}
+			    		}
+			    	} finally { res.close(); }
+			    }
+			  	  
+			private static void copy(InputStream in, OutputStream out) throws IOException { 
+				byte[] buffer = new byte[1024];
+				while (true) {
+				      int readCount = in.read(buffer);
+				      if (readCount < 0) {  break; }
+				      out.write(buffer, 0, readCount);
+				      }
+				}
+		  
+			private static void copy(File file, OutputStream out) throws IOException {  
+				InputStream in = new FileInputStream(file);    
+				try { copy(in, out); } finally { in.close(); }
+				}
+
+			@SuppressWarnings("unused")	
+			private static void copy(InputStream in, File file) throws IOException {   
+				OutputStream out = new FileOutputStream(file);
+				try { copy(in, out); } finally { out.close(); }
+				}
+			
+		/**
+	     * This class renames file
+	     * @param args
+	     * @throws IOException 
+	     * @throws NumberFormatException 
+	     */
+	    public void fileFileRename(String sourcePath, String targetPath) {
+	    	File file = new File(sourcePath); 
+	    	file.renameTo(new File(targetPath));
+	    	}
+	    
 }

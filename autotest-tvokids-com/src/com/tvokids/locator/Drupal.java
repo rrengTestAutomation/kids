@@ -1,16 +1,16 @@
-package com.tvokids.common;
+package com.tvokids.locator;
 
-public class DrupalLocators{
+public class Drupal{
 
 	  /**********common url*******************/
-	  public static String userURL = Locators.homeURL + "/user";
+	  public static String userURL = Common.homeURL + "/user";
 	  
 	  /**********content type add url*******************/
-	  public static String characterBrand = Locators.homeURL + "/node/add/program";
-	  public static String customBrand    = Locators.homeURL + "/node/add/custom-brand";
-	  public static String playList       = Locators.homeURL + "/node/add/playlist";
-	  public static String scheduleItem   = Locators.homeURL + "/node/add/schedule-item";
-	  public static String video          = Locators.homeURL + "/node/add/video"; 
+	  public static String characterBrand = Common.homeURL + "/node/add/program";
+	  public static String customBrand    = Common.homeURL + "/node/add/custom-brand";
+	  public static String playList       = Common.homeURL + "/node/add/playlist";
+	  public static String scheduleItem   = Common.homeURL + "/node/add/schedule-item";
+	  public static String video          = Common.homeURL + "/node/add/video"; 
 	  
 	  /**************content admin*******************/
 	  public static String adminContentRowFirst    = "/descendant::tr[@class='odd views-row-first views-row-last']";
@@ -29,6 +29,7 @@ public class DrupalLocators{
       public static String errorMessage              = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
       public static String errorAjax                 = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
       public static String errorDescription          = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";
+      public static String errorUpload               = "//div[@class='messages error'][contains(.,'The file could not be uploaded')]";
       public static String logout                    = "//a[text()='Log out']";
 	  public static String drupalHomeIcon            = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton          = "//*[@id='tabs']/descendant::a[text()='Edit']";

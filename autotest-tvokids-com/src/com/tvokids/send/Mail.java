@@ -28,11 +28,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeSuite;
 
+import com.tvokids.locator.Common;
+import com.tvokids.locator.Email;
 import com.tvokids.test.helper.UtilitiesTestHelper;
-import com.tvokids.common.Locators;
-import com.tvokids.common.Email;
 
 @SuppressWarnings("static-access")
 public class Mail {
@@ -267,13 +267,10 @@ public class Mail {
 	
 		/** 
 		 * Test Report management;
-		 * @throws IOException 
-		 * @throws NumberFormatException 
-		 * @throws MessagingException 
-		 * @throws AddressException 
+		 * @throws Exception
 		 */
 		//@AfterSuite /** (groups = {"FINISH",}) */
-		public void finish() throws NumberFormatException, IOException, AddressException, MessagingException {
+		public void finish() throws Exception {
 			// CLOSE TEST LOG RECORD:
 			logClose();
 			
@@ -362,10 +359,16 @@ public class Mail {
 		    for (int i = 0; i < 8; i++) { helper.fileWriter("email.cont", ""); }
 		    for (int i = 0; i < Email.footer.length; i++) { helper.fileWriter("email.cont", "* " + Email.footer[i]); }
 		    }
-				
+		    
 		// E-MAIL SENDING:
 		if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
-		sendEmail(
+			if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
+			if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+		    helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip");
+		    if( helper.fileGetSizeMB(Common.testOutputFileDir + "screen-shots.zip") < 5 ) {
+		    	helper.fileFileRename(Common.testOutputFileDir + "screen-shots.zip", Common.testOutputFileDir + "screen-shots.renameToZip");
+		    	}
+		    sendEmail(
 				Email.autoTesterUsername,
 				Email.autoTesterPassword,
 				Email.gmailHost,
@@ -383,7 +386,9 @@ public class Mail {
 				Email.attachmentFullPaths(),
 				Email.attachmentFileNames()
 		        );
-		}
+			if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
+			if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+		    }
 		 
 		// RECORD HIGHEST TEST NUMBER:
 		if(helper.fileExist("test.num", false)) {			
@@ -429,7 +434,7 @@ public class Mail {
 		
 		/** Test Number dialoge */
 		public int testNum(){
-			 ImageIcon icon = new ImageIcon(Locators.testIconFileDir + "tests.number.1-9.png");
+			 ImageIcon icon = new ImageIcon(Common.testIconFileDir + "tests.number.1-9.png");
 			 String Default = "0";
 			 String number = null;
 			 boolean isTrue = false;
@@ -459,7 +464,7 @@ public class Mail {
 		public String testType() throws NumberFormatException, IOException {		  
 			  Component frame = null;
 		      Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-			  icon = new ImageIcon(Locators.testIconFileDir + "question.round.png");
+			  icon = new ImageIcon(Common.testIconFileDir + "question.round.png");
 			      Object[] possibilities = { "As Previous",
 	                                         "Regression Test", 
 	                                         "Test Failures Re-Run",
@@ -495,7 +500,7 @@ public class Mail {
 		
 		 /** Date and Time entry dialogue */
 		 public String dateBox(){
-			 ImageIcon icon = new ImageIcon(Locators.testIconFileDir + "shedule.date.time.png");
+			 ImageIcon icon = new ImageIcon(Common.testIconFileDir + "shedule.date.time.png");
 			 String str = null;
 			 boolean isDate = false;
 			 while(isDate == false) {
@@ -546,7 +551,7 @@ public class Mail {
 		 public String devServer() throws NumberFormatException, IOException {
 		 	 // DETECTING DEFAULT SERVER:
 		 	 String server;
-		 	 server = Locators.homeURL;
+		 	 server = Common.homeURL;
 		 	 server = server.substring(server.indexOf(":") + 3, server.length());
 		 	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
 		 	 helper.fileWriter("server.info", server);
@@ -559,7 +564,7 @@ public class Mail {
 		  * @throws NumberFormatException
 		  */
 		 public String gitBranch() throws NumberFormatException, IOException{
-		 	 ImageIcon icon = new ImageIcon(Locators.testIconFileDir + "web.server.pc.png");
+		 	 ImageIcon icon = new ImageIcon(Common.testIconFileDir + "web.server.pc.png");
 		 	 
 		 	 // DETECTING DEFAULT SERVER:
 		 	 String branch = null, Default = null;
@@ -637,7 +642,7 @@ public class Mail {
 		 /** Test Delay entry dialogue */
 		 public int minBox(){		 
 		  // Icon questionIcon = UIManager.getIcon("OptionPane.questionIcon");
-			 Icon icon = new ImageIcon(Locators.testIconFileDir + "timer.watch.when.png");
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "timer.watch.when.png");
 			 String min = null;
 			 
 //			 String message = "When do you want to run your test?";	
@@ -663,7 +668,7 @@ public class Mail {
 					
 				    boolean isTrue = false;
 			        while(isTrue == false) {
-			        icon = new ImageIcon(Locators.testIconFileDir + "timer.min.png");
+			        icon = new ImageIcon(Common.testIconFileDir + "timer.min.png");
 				    min = (String) JOptionPane.showInputDialog(
 						  null, 
 						  "Enter Test Delay, minutes \n(integer positive value only)\n\nor paste,\nor click \"CANCEL\" for " + Default + " min as a default delay\n ",
@@ -681,7 +686,7 @@ public class Mail {
 		 
 		 /** Test E-mail Notification Option dialogue with "Yes" checkbox */
 		 public boolean emailOption(){
-			 Icon icon = new ImageIcon(Locators.testIconFileDir + "envelope.open.letter.png");
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "envelope.open.letter.png");
 			 JCheckBox checkbox = new JCheckBox("Yes!");
 			 String message = "Do you want to send automated E-Mail notification about Test Results?";
 			 Object[] params = { message, checkbox };
@@ -692,7 +697,7 @@ public class Mail {
 		 
 		 /** Test E-mail Notification Option dialogue with "Yes" and "No" smart-checkbox */
 		 public boolean emailOptionDouble(){
-			 Icon icon = new ImageIcon(Locators.testIconFileDir + "envelope.open.email.png");
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "envelope.open.email.png");
 		     JCheckBox checkboxYes = new JCheckBox("Yes !");
 		     JCheckBox checkboxNo = new JCheckBox("No !");
 		     checkboxNo.setSelected(true);
@@ -710,7 +715,7 @@ public class Mail {
 		 
 		 /** Test E-mail Addresses Option dialogue with "All" and "Tester" smart-checkbox */
 		 public boolean emailAddresses(){
-			 Icon icon = new ImageIcon(Locators.testIconFileDir + "envelope.front.address.png");
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "envelope.front.address.png");
 		     JCheckBox checkboxAll = new JCheckBox("Send E-Mail to All !");
 		     JCheckBox checkboxTester = new JCheckBox("Send E-Mail to Tester Only !");
 		     checkboxTester.setSelected(true);
@@ -783,7 +788,7 @@ public class Mail {
 		 /** Test E-mail Notification Option dialogue with "Yes" checkbox */
 		 public boolean addTestOption(){
 		  // Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-			 Icon icon = new ImageIcon(Locators.testIconFileDir + "question.round.png");
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "question.round.png");
 			 JCheckBox checkbox = new JCheckBox("Yes!");
 			 String message = "Do you want to show the number of difference between last and previous Tests?";
 			 Object[] params = { message, checkbox };
@@ -919,7 +924,7 @@ public class Mail {
 				    if(!"".equals(fallback)){ properties.put("mail.smtp.socketFactory.fallback", fallback); }
 
 				try{
-				    // CREATES A NEW SESSION:
+					// CREATES A NEW SESSION:
 				    Session session = Session.getDefaultInstance(properties, null);
 				    session.setDebug(debug);
 

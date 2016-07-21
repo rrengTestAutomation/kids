@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.tvokids.common.Locators;
+import com.tvokids.locator.Common;
 
 
 /**
@@ -36,7 +36,7 @@ public class HtmlToCsvConverter {
      */
     public static void main(String[] args) {
 		try{
-			String filePath = System.getProperty("user.dir") + Locators.localFileDir + File.separator + "testList.csv";
+			String filePath = System.getProperty("user.dir") + Common.localFileDir + File.separator + "testList.csv";
 			File file = new File(filePath);
 
 		 // if file doesnt exists, then create it:

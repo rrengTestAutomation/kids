@@ -22,14 +22,20 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+
+
+
+
+
 /*
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 */
 import org.testng.annotations.BeforeSuite;
+
+import com.tvokids.locator.Email;
+import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
-import com.tvokids.common.Locators;
-import com.tvokids.common.Email;
 
 @SuppressWarnings({ "static-access" })
 public class All {
@@ -239,13 +245,10 @@ public void logCleaner() throws NumberFormatException, IOException{
 
 /** 
  * Test Report management;
- * @throws IOException 
- * @throws NumberFormatException 
- * @throws MessagingException 
- * @throws AddressException 
+ * @throws Exception 
  */
 //@AfterSuite /** (groups = {"FINISH",}) */
-public void finish() throws NumberFormatException, IOException, AddressException, MessagingException {
+public void finish() throws Exception {
 	// CLOSE TEST LOG RECORD:
 	logClose();
 	
@@ -282,7 +285,7 @@ public void finish() throws NumberFormatException, IOException, AddressException
 	helper.fileWriter("email.cont", "FYI:"); 
 	helper.fileWriter("email.cont", "TVOKids.com - AUTOMATED " + helper.fileScanner("test.type").toUpperCase() + " RESULT");
 	helper.fileWriter("email.cont", "");
-	helper.fileWriter("email.cont", "     APP SERVER: " + Locators.homeURL);
+	helper.fileWriter("email.cont", "     APP SERVER: " + Common.homeURL);
 	helper.fileWriter("email.cont", "     GiT BRANCH: " + helper.fileScanner("branch.info"));
 	helper.fileWriter("email.cont", "");
 
@@ -337,7 +340,13 @@ public void finish() throws NumberFormatException, IOException, AddressException
 		
 // E-MAIL SENDING
 if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
-sendEmail(
+	if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
+	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+    helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip");
+    if( helper.fileGetSizeMB(Common.testOutputFileDir + "screen-shots.zip") < 5 ) {
+    	helper.fileFileRename(Common.testOutputFileDir + "screen-shots.zip", Common.testOutputFileDir + "screen-shots.renameToZip");
+    	}
+    sendEmail(
 		Email.autoTesterUsername,
 		Email.autoTesterPassword,
 		Email.gmailHost,
@@ -354,8 +363,10 @@ sendEmail(
 		helper.fileScanner("email.cont"),
 		Email.attachmentFullPaths(),
 		Email.attachmentFileNames()
-        );
-}
+            );
+    if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
+	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+	}
 
 // CREATING TEST-FAILED.XML:
 /*
@@ -458,7 +469,7 @@ public static int minBox(){	return 0; }
 
 /** Test E-mail Notification Option dialogue with "Yes" checkbox */
 public boolean emailOption(){
-	 Icon icon = new ImageIcon(Locators.testIconFileDir + "envelope.open.letter.png");
+	 Icon icon = new ImageIcon(Common.testIconFileDir + "envelope.open.letter.png");
 	 JCheckBox checkbox = new JCheckBox("Yes!");
 	 String message = "Do you want to send automated E-Mail notification about Test Results?";
 	 Object[] params = { message, checkbox };

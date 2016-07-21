@@ -1,4 +1,4 @@
-package com.tvokids.common;
+package com.tvokids.locator;
 
 public class Dictionary {
 	

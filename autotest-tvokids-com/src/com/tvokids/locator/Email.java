@@ -1,7 +1,8 @@
-package com.tvokids.common;
+package com.tvokids.locator;
 
 import java.io.File;
 import java.io.IOException;
+
 import com.tvokids.test.helper.UtilitiesTestHelper;
 
 @SuppressWarnings("static-access")
@@ -68,7 +69,7 @@ public class Email {
 	  public static String text = "This is content";
 	  
 	  /**********common email single attachment***********/
-	  public static String attachmentFullPath = Locators.testOutputFileDir + "emailable-report.html";
+	  public static String attachmentFullPath = Common.testOutputFileDir + "emailable-report.html";
 	  public static String attachmentFileName = attachmentFullPath.substring(
 				                                attachmentFullPath.lastIndexOf("\\") + 1,
 				                                attachmentFullPath.length()
@@ -76,10 +77,12 @@ public class Email {
 	  
 	  /**********common email multi attachments***********/
 	  public static String[] attachments = { 
-		                                     Locators.testOutputFileDir + "emailable-report.html",
-		                                     Locators.testOutputFileDir + "extent-test-report.html",
-		                                     Locators.testOutputFileDir + "run.log",
-		                                     Locators.testOutputFileDir + "failed.log"
+		                                     Common.testOutputFileDir + "emailable-report.html",
+		                                     Common.testOutputFileDir + "extent-test-report.html",
+		                                     Common.testOutputFileDir + "run.log",
+		                                     Common.testOutputFileDir + "failed.log",
+		                                     Common.testOutputFileDir + "screen-shots.renameToZip"
+		                			         
 		                                    };
 	  
 	  // ATTACHMENT PATHS VALIDATION

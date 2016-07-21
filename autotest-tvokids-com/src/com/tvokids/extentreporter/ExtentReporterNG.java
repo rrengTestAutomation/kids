@@ -1,14 +1,14 @@
 package com.tvokids.extentreporter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+/*
+import java.io.IOException;
 import javax.mail.MessagingException;
-
+*/
 import org.testng.IReporter;
 import org.testng.IResultMap;
 import org.testng.ISuite;
@@ -16,11 +16,9 @@ import org.testng.ISuiteResult;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.xml.XmlSuite;
-
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-
 import com.tvokids.send.Mail;
 import com.tvokids.email.All;
 import com.tvokids.test.helper.UtilitiesTestHelper;
@@ -57,7 +55,7 @@ public class ExtentReporterNG implements IReporter {
         	if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all"))  ) { new All().finish(); }
         	if( helper.fileExist("email.all", false) && !Boolean.valueOf(helper.fileScanner("email.all")) ) { new Mail().finish(); }
         	}
-        catch ( NullPointerException | NumberFormatException | IOException | MessagingException e ) { /* e.printStackTrace(); */ }
+        catch ( Exception e) { /* e.printStackTrace(); */ }
         
     }
  

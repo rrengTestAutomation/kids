@@ -1,8 +1,8 @@
-package com.tvokids.common;
+package com.tvokids.locator;
 
 import java.io.File;
 
-public class Locators {
+public class Common {
 
 	  /**********common credentiald***********/
 	  public static String adminUsername = "dev";
