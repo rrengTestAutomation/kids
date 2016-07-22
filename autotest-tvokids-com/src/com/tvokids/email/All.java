@@ -363,7 +363,7 @@ if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("
 		helper.fileScanner("email.cont"),
 		Email.attachmentFullPaths(),
 		Email.attachmentFileNames()
-            );
+        );
     if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
 	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
 	}
