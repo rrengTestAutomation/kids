@@ -5018,7 +5018,7 @@ public class UtilitiesTestHelper{
 				}
 			
 		/**
-	     * This class renames file
+	     * This Method renames file
 	     * @param args
 	     * @throws IOException 
 	     * @throws NumberFormatException 
