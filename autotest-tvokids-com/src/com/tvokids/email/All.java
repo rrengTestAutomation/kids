@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 
 
 
+
 /*
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -340,12 +341,11 @@ public void finish() throws Exception {
 		
 // E-MAIL SENDING
 if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
-	if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
-	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
-    helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip");
-    if( helper.fileGetSizeMB(Common.testOutputFileDir + "screen-shots.zip") < 5 ) {
-    	helper.fileFileRename(Common.testOutputFileDir + "screen-shots.zip", Common.testOutputFileDir + "screen-shots.renameToZip");
-    	}
+	helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
+	while( !helper.fileExist("emailable-report.html", false) &&
+		   !helper.fileExist("extent-test-report.html", false) &&
+		   !(helper.fileExist("screen-shots.zip", false) || helper.fileExist("screen-shots.renameToZip", false))
+		   ) { Thread.sleep(1000); }
     sendEmail(
 		Email.autoTesterUsername,
 		Email.autoTesterPassword,

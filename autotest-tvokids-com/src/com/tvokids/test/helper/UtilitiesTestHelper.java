@@ -4882,9 +4882,37 @@ public class UtilitiesTestHelper{
 	}
 	
 	/**
-	 * Create a Zip File from given Directory using ZipOutputStream CLASS, keeping Structure
+     * This class gets file size
+     * @param args
+     * @throws IOException 
+     * @throws NumberFormatException 
+     */
+    public double fileSizeMB(String filePath) throws NumberFormatException, IOException {
+    	File file = new File(filePath.replace("\\", "/"));
+        if(file.exists()) {
+         // fileWriterPrinter("FILE SIZE: " + file.length() + " Bit");
+         // fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
+            fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
+            return (double) file.length()/(1024*1024);
+        } else { fileWriterPrinter("File doesn't exist"); return 0; }
+         
+    }
+    
+	/**
+	 * Create a Zip File from given Directory using ZipOutputStream CLASS with Path Structure and Protection choise
 	 */
-	 public void zipDirectoryKeepStructure(String sourceDirectoryPath, String zipOutputPath) throws Exception {
+	 public void zipDirectory(String sourceDirectoryPath, String zipOutputPath, Boolean ifAbsolutePath, Boolean ifProtect, int maxZipMbSizeToProtect) throws Exception {		  
+		   if(ifAbsolutePath) { zipOutputPath = zipDirectoryFullPath(sourceDirectoryPath, zipOutputPath); }
+		   else { zipOutputPath = zipDirectoryInternalPath(sourceDirectoryPath, zipOutputPath); }		   
+		   if(fileSizeMB(zipOutputPath) < maxZipMbSizeToProtect) {
+			   if(ifProtect){ fileFileRename(zipOutputPath,zipOutputPath.replace(".zip",".renameToZip")); }
+			   }
+		  }
+	
+	/**
+	 * Create a Zip File from given Directory using ZipOutputStream CLASS with keeping Full Path Structure
+	 */
+	 public String zipDirectoryFullPath(String sourceDirectoryPath, String zipOutputPath) throws Exception {
      	   // DECLARATION:
      	   if(sourceDirectoryPath.endsWith("\\")) { sourceDirectoryPath = sourceDirectoryPath.substring(0, sourceDirectoryPath.length() - 1); }
      	   sourceDirectoryPath = sourceDirectoryPath.replace("\\", "/");
@@ -4897,7 +4925,8 @@ public class UtilitiesTestHelper{
 		   ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipOutputPath));
 		   System.out.println("Creating : " + zipOutputPath);
 		   addDir(dirObj, out);
-		   out.close();		    
+		   out.close();
+		   return zipOutputPath;
 		  }
 	 
 	/**
@@ -4911,39 +4940,20 @@ public class UtilitiesTestHelper{
 		        addDir(files[i], out);
 		        continue;
 		      }
-		      FileInputStream in = new FileInputStream(files[i].getAbsolutePath());
+	    	  FileInputStream in = new FileInputStream(files[i].getAbsolutePath());
 		      System.out.println(" Adding: " + files[i].getAbsolutePath());
 		      out.putNextEntry(new ZipEntry(files[i].getAbsolutePath()));
 		      int len;
-		      while ((len = in.read(tmpBuf)) > 0) {
-		        out.write(tmpBuf, 0, len);
-		      }
+		      while ((len = in.read(tmpBuf)) > 0) { out.write(tmpBuf, 0, len); }
 		      out.closeEntry();
 		      in.close();
-		    }
+		      }
 		  }
-	 
-	   /**
-	     * This class gets file size
-	     * @param args
-	     * @throws IOException 
-	     * @throws NumberFormatException 
-	     */
-	    public double fileGetSizeMB(String filePath) throws NumberFormatException, IOException {
-	    	File file = new File(filePath.replace("\\", "/"));
-	        if(file.exists()) {
-	         // fileWriterPrinter("FILE SIZE: " + file.length() + " Bit");
-	         // fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
-	            fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
-	            return (double) file.length()/(1024*1024);
-	        } else { fileWriterPrinter("File doesn't exist"); return 0; }
-	         
-	    }
 
 	    /**
-	     * Create a Zip File from given Directory, no keeping Structure
+	     * Create a Zip File from given Directory with keeping Internal Path Structure only
 	     */
-		public void zipDirectory(String sourceDirectoryPath, String zipOutputPath) throws IOException {
+		public String zipDirectoryInternalPath(String sourceDirectoryPath, String zipOutputPath) throws IOException {
 		  	   // DECLARATION:
 		  	   if(sourceDirectoryPath.endsWith("\\")) { sourceDirectoryPath = sourceDirectoryPath.substring(0, sourceDirectoryPath.length() - 1); }
 		  	   sourceDirectoryPath = sourceDirectoryPath.replace("\\", "/");
@@ -4952,11 +4962,11 @@ public class UtilitiesTestHelper{
 		  	   fileWriterPrinter("\nSOURCE DIRECTORY: " + sourceDirectoryPath);
 		  	   fileWriterPrinter(" ZIP OUTPUT PATH: " + zipOutputPath + "\n");
 		  	   
-		        File dir = new File(sourceDirectoryPath);
-		    	File file = new File(zipOutputPath);
-		    	
-		    	// System.out.println(mydir.toURI().relativize(myfile.toURI()).getPath());	
-		    	zip(dir, file);
+		       File dir = new File(sourceDirectoryPath);
+		       File file = new File(zipOutputPath);
+		       // System.out.println(mydir.toURI().relativize(myfile.toURI()).getPath());	
+		       zip(dir, file);
+		       return zipOutputPath;
 			}
 
 			@SuppressWarnings("resource")
