@@ -263,6 +263,7 @@ public class Mail {
 			
 		    helper.fileCleaner("test.num"   );
 			helper.fileCleaner("failed.num" );
+			helper.fileCleaner("emailable-report.html" );
 			}
 	
 		/** 
@@ -360,34 +361,37 @@ public class Mail {
 		    for (int i = 0; i < Email.footer.length; i++) { helper.fileWriter("email.cont", "* " + Email.footer[i]); }
 		    }
 		    
-		// E-MAIL SENDING:
+		// E-MAIL SENDING
 		if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
-			helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
-			while( !helper.fileExist("emailable-report.html", false) &&
-				   !helper.fileExist("extent-test-report.html", false) &&
-				   !(helper.fileExist("screen-shots.zip", false) || helper.fileExist("screen-shots.renameToZip", false))
-				   ) { Thread.sleep(1000); }
-		    sendEmail(
-				Email.autoTesterUsername,
-				Email.autoTesterPassword,
-				Email.gmailHost,
-				Email.gmailPort,
-				Email.gmailStarttls,
-				Email.gmailAuth,
-				Email.gmailDebug,
-				Email.gmailSocketFactoryClass,
-				Email.gmailFallback,
-				Email.to(),
-				Email.cc(),
-				Email.bcc(),
-				subject,
-				helper.fileScanner("email.cont"),
-				Email.attachmentFullPaths(),
-				Email.attachmentFileNames()
-		        );
-			if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
-			if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
-		    }
+	    	// ZIP SCREEN-SHOTS:
+	    	helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
+	    	while( !helper.fileExist("emailable-report.html", false) &&
+	    		   !helper.fileExist("extent-test-report.html", false) &&
+	    		   !(helper.fileExist("screen-shots.zip", false) || helper.fileExist("screen-shots.renameToZip", false))
+	    		   ) { Thread.sleep(1000); }
+	    	// SENDING:
+	    	sendEmail(
+	    		Email.autoTesterUsername,
+	    		Email.autoTesterPassword,
+	    		Email.gmailHost,
+	    		Email.gmailPort,
+	    		Email.gmailStarttls,
+	    		Email.gmailAuth,
+	    		Email.gmailDebug,
+	    		Email.gmailSocketFactoryClass,
+	    		Email.gmailFallback,
+	    		Email.to(),
+	    		Email.cc(),
+	    		Email.bcc(),
+	    		subject,
+	    		helper.fileScanner("email.cont"),
+	    		Email.attachmentFullPaths(),
+	    		Email.attachmentFileNames()
+	            );
+	    	// CLEAN-UP ZIP:
+	        if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
+	    	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+	    	}  
 		 
 		// RECORD HIGHEST TEST NUMBER:
 		if(helper.fileExist("test.num", false)) {			

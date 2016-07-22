@@ -39,6 +39,7 @@ public class Log {
 		helper.fileCleaner("xml.path");
 		helper.fileCleaner("source.html");
 		helper.fileCleaner("email.all"  );
+		helper.fileCleaner("emailable-report.html" );
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: "
 												       // + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));

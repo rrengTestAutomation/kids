@@ -242,6 +242,7 @@ public void logCleaner() throws NumberFormatException, IOException{
 	
     helper.fileCleaner("test.num"   );
 	helper.fileCleaner("failed.num" );
+	helper.fileCleaner("emailable-report.html" );
 	}	
 
 /** 
@@ -341,12 +342,14 @@ public void finish() throws Exception {
 		
 // E-MAIL SENDING
 if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
+	// ZIP SCREEN-SHOTS:
 	helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
 	while( !helper.fileExist("emailable-report.html", false) &&
 		   !helper.fileExist("extent-test-report.html", false) &&
 		   !(helper.fileExist("screen-shots.zip", false) || helper.fileExist("screen-shots.renameToZip", false))
 		   ) { Thread.sleep(1000); }
-    sendEmail(
+	// SENDING:
+	sendEmail(
 		Email.autoTesterUsername,
 		Email.autoTesterPassword,
 		Email.gmailHost,
@@ -364,6 +367,7 @@ if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("
 		Email.attachmentFullPaths(),
 		Email.attachmentFileNames()
         );
+	// CLEAN-UP ZIP:
     if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
 	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
 	}
