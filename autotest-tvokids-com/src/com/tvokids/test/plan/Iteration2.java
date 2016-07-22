@@ -116,8 +116,8 @@ public class Iteration2 {
            driver.findElement(By.id(Drupal.title)).clear();
            
            // CREATE TITLE FOR CONTENT:
-//           text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
-//           text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
+//            text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
+//            text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
            long fingerprint = System.currentTimeMillis();
            title = String.valueOf(fingerprint) + " " +  helper.randomText(Drupal.titleMaxCharsNumber + 10);
              
@@ -127,8 +127,8 @@ public class Iteration2 {
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 
            // CREATE CONTENT:
-//           Robot robot = new Robot();
-//           helper.createCustomBrand(driver, text, true, true, robot, fingerprint);
+//            Robot robot = new Robot();
+//            helper.createCustomBrand(driver, text, true, true, robot, fingerprint);
            helper.createCustomBrand(driver, title, true, true, fingerprint, new Exception().getStackTrace()[0]);
           
            // ASSERT CONTENT URL USES A LIMITED TITLE:

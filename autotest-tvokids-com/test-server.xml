@@ -9,8 +9,8 @@
     
     <test name="test-server">
         <classes>
-           <!-- <class name="com.tvokids.report.Log"></class> -->
-                <class name="com.tvokids.send.Mail"></class>
+                <class name="com.tvokids.report.Log"></class>
+           <!-- <class name="com.tvokids.send.Mail"></class> -->
            <!-- <class name="com.tvokids.email.All"></class> -->
 
 <!--

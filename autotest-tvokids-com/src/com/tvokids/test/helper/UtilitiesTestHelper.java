@@ -1125,7 +1125,7 @@ public class UtilitiesTestHelper{
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
 		        		              moveToElement(driver, Drupal.confirmButton);
 		        		              }
-		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); driver.quit(); }
+		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); driver.quit(); new Exception(); }
 		      // } catch(Throwable e) {  	}	         
 		         i++;
 		         size = driver.findElements(element).size();    
