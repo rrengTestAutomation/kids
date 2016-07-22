@@ -96,7 +96,7 @@ public class Iteration2 {
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
            
            // ASSERT TITLE FIELD CAPACITY COUNTER:          
-           number = helper.randomInt(1, (Drupal.titleMaxCharsNumber -1));
+           number = helper.randomInt(1, (Drupal.titleMaxCharsNumber - 1));
            title = helper.randomEnglishText(number);
            driver.findElement(By.id(Drupal.title)).clear();
            driver.findElement(By.id(Drupal.title)).sendKeys(title);
@@ -204,7 +204,7 @@ public class Iteration2 {
        }
 	
 	/**
-	 * Test attempt to create a Brand Page Description that is longer than 135 characters is rejected
+	 * Test attempt to create a Custom Brand Page Description that is longer than 135 characters is rejected
 	 * <p>Date Created: 2016-07-20</p>
 	 * <p>Date Modified: 2016-07-20<p>
 	 * <p>Original Version: V1</p>
@@ -239,8 +239,8 @@ public class Iteration2 {
 	           expected = Drupal.descriptionMaxCharsNumber;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           // ASSERT TITLE FIELD CAPACITY COUNTER:	           
-	           number = helper.randomInt(1, (Drupal.descriptionMaxCharsNumber -1));
+	           // ASSERT DESCRIPTION FIELD CAPACITY COUNTER:	           
+	           number = helper.randomInt(1, (Drupal.descriptionMaxCharsNumber - 1));
 	           description = helper.randomEnglishText(number);
 	           helper.fileWriterPrinter("DESCRIPTION: " + description);
 	           helper.fileWriterPrinter("     LENGTH: " + description.length());
@@ -250,7 +250,7 @@ public class Iteration2 {
 	           expected = Drupal.descriptionMaxCharsNumber - number;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           // ASSERT TITLE FIELD MAXIMUM CAPACITY:           
+	           // ASSERT DESCRIPTION FIELD MAXIMUM CAPACITY:           
 	           description = helper.randomEnglishText(Drupal.descriptionMaxCharsNumber);
 	           helper.fileWriterPrinter("DESCRIPTION: " + description);
 	           helper.fileWriterPrinter("     LENGTH: " + description.length());
@@ -260,7 +260,7 @@ public class Iteration2 {
 	           expected = 0;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
-	           // ASSERT TITLE FIELD OVERLOAD ENTRY:
+	           // ASSERT DESCRIPTION FIELD OVERLOAD ENTRY:
 	           description = helper.randomEnglishText(Drupal.descriptionMaxCharsNumber + 10);
 	           helper.fileWriterPrinter("DESCRIPTION: " + description);
 	           helper.fileWriterPrinter("     LENGTH: " + description.length());
@@ -270,6 +270,70 @@ public class Iteration2 {
 	           expected = 0;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 
+	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	// Navigate to the appropriate page (on both 5 and Under & 6 and Over) and locate your newly created Custom Brand.
+	/**
+	 * Test create a Custom Brand Page on both 5 and Under & 6 and Over is located on the appropriate front end age page and navigatation link is correct
+	 * <p>Date Created: 2016-07-22</p>
+	 * <p>Date Modified: 2016-07-22<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35153</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-35153"})
+    public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath, expectedURL;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO "AGE 5 AND UNDER":
+	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
+	           helper.fileWriterPrinter(xpath);
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           // ASSERT LINK IS CORRECT:
+	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
+	           helper.clickLinkAndCheckURL(driver, xpath, expectedURL);
+	           
+	           // NAVIGATE TO "AGE 6 AND OVER":
+	           xpath = Common.sixAndOvererLinkBase + titleURL + Common.XpathEqualsEnd;
+	           helper.fileWriterPrinter(xpath);
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOvererURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           // ASSERT LINK IS CORRECT:
+	           expectedURL = Common.sixAndOvererURL + "/" + titleURL;
+	           helper.clickLinkAndCheckURL(driver, xpath, expectedURL);
+	           
 	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	

@@ -43,6 +43,10 @@ public class Common {
 	  public static String image            = "/descendant::img[@typeof='foaf:Image']";
 	  public static String filterSelected   = "/descendant::option[@selected]";
 	  
+	  public static String fiveAndUnderLinkBase = "//a[@href='/5-and-under/";
+	  public static String sixAndOvererLinkBase = "//a[@href='/6-and-over/";
+	  
+	  
 	  public static String metaTag            = "//meta[@name]";
 	  public static String metaTagDescription = "//meta[@name='description']";	  
 	  public static String XpathEqualsStart       = "//*[.='";

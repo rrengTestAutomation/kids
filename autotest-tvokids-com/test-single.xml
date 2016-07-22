@@ -15,7 +15,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2"><methods><include name="testCustomBrandDescriptionIsLimited"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2"><methods><include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/></methods></class>
      
         </classes>
      </test>
