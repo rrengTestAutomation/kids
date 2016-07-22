@@ -4905,7 +4905,7 @@ public class UtilitiesTestHelper{
 		   if(ifAbsolutePath) { zipOutputPath = zipDirectoryFullPath(sourceDirectoryPath, zipOutputPath); }
 		   else { zipOutputPath = zipDirectoryInternalPath(sourceDirectoryPath, zipOutputPath); }		   
 		   if(fileSizeMB(zipOutputPath) < maxZipMbSizeToProtect) {
-			   if(ifProtect){ fileFileRename(zipOutputPath,zipOutputPath.replace(".zip",".renameToZip")); }
+			   if(ifProtect){ fileRename(zipOutputPath,zipOutputPath.replace(".zip",".renameToZip")); }
 			   }
 		  }
 	
@@ -5023,7 +5023,7 @@ public class UtilitiesTestHelper{
 	     * @throws IOException 
 	     * @throws NumberFormatException 
 	     */
-	    public void fileFileRename(String sourcePath, String targetPath) {
+	    public void fileRename(String sourcePath, String targetPath) {
 	    	File file = new File(sourcePath); 
 	    	file.renameTo(new File(targetPath));
 	    	}
