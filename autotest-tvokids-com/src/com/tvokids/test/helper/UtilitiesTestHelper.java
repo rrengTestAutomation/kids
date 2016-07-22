@@ -401,14 +401,14 @@ public class UtilitiesTestHelper{
 	
 	/**
 	 * Create a Custom Brand
+	 * @throws InterruptedException 
+	 * @throws NumberFormatException 
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, long fingerprint, StackTraceElement t) throws AWTException, InterruptedException, IOException
-	  {
+	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, long fingerprint, StackTraceElement t)
+    throws NumberFormatException, InterruptedException, IOException	{
 	   By browse, upload;
-	   try {
 	    	int i = 0;
 	    	while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
@@ -448,7 +448,7 @@ public class UtilitiesTestHelper{
 
 			i = contentSubmit(driver, fingerprint, i);			
             }
-		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+	    	return fingerprint;
 	  }
 	
 	/**
@@ -1113,8 +1113,7 @@ public class UtilitiesTestHelper{
 		  By element = By.xpath(xpath);
 		  int size = 0;
 		  int errors = 0;
-		  while ((size == 0) && (errors == 0)) {			  
-		      // try {		        	 
+		  while ((size == 0) && (errors == 0)) {			  		        	 
 		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..." + "[Attempt #" + (i+1) + "]"); }
 		        	 driver.findElement(browse).sendKeys(imagePath);
 		        	 Thread.sleep(1000);
@@ -1125,8 +1124,7 @@ public class UtilitiesTestHelper{
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
 		        		              moveToElement(driver, Drupal.confirmButton);
 		        		              }
-		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); driver.quit(); new Exception(); }
-		      // } catch(Throwable e) {  	}	         
+		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); }	         
 		         i++;
 		         size = driver.findElements(element).size();    
 	      }
