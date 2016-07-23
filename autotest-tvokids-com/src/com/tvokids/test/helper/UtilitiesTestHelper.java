@@ -582,6 +582,25 @@ public class UtilitiesTestHelper{
 			  }
 	  
 	  /**
+	   * Verify the page URL ends as expected.
+	   * StackTraceElement "t" = to be delivered from external method using "t"-variable;
+	   * @throws IOException
+	   */
+	  public void checkCurrentURLendsWith(WebDriver driver, StackTraceElement t, String expectedURL) throws IOException {
+			  String actualURL = driver.getCurrentUrl();
+			  if (actualURL.endsWith("/")) {
+				  if (! expectedURL.endsWith("/")) { expectedURL += "/"; }
+				  }
+			  if (expectedURL.endsWith("/")) {
+				  if (! actualURL.endsWith("/")) { actualURL += "/"; }
+				  }
+			  actualURL = actualURL.substring(actualURL.lastIndexOf("/"), actualURL.length());
+			  Assert.assertEquals(actualURL.toLowerCase(), expectedURL.toLowerCase(),
+		                          getAssertEquals(t, driver, "Wrong URL ending!",
+		                          actualURL.toLowerCase(), expectedURL.toLowerCase()));
+			  }
+	  
+	  /**
 	   * In current page, check a link/tab/locator by verifying that it links to the expected URL.
 	   * @throws IOException
 	   */

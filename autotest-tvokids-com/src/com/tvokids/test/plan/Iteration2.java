@@ -10,6 +10,8 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -62,10 +64,10 @@ public class Iteration2 {
 	/**
 	 * Test Custom Brand Meta-Data Attributes - Title field content is limited
 	 * <p>Date Created: 2016-07-06</p>
-	 * <p>Date Modified: 2016-07-06<p>
+	 * <p>Date Modified: 2016-07-22<p>
 	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
-	 * <p>Xpath: 1</p>
+	 * <p>Modified Version: V3</p>
+	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131</p>
 	 */
 	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true)
@@ -77,7 +79,7 @@ public class Iteration2 {
 
            // DECLARATION:
            int actual, expected, number;
-           String actualText, expectedText, expectedURL, title;
+           String actualText, expectedText, expectedURLend, title, xpath;
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
            helper.logIn(driver,"content_editor","changeme");
@@ -133,29 +135,30 @@ public class Iteration2 {
           
            // ASSERT CONTENT URL USES A LIMITED TITLE:
            expectedText = title.substring(0, Drupal.titleMaxCharsNumber);
-           expectedURL = Common.homeURL + "/" + expectedText.toLowerCase().replace(" ", "-");
-           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL); 
-          
+           expectedURLend = "/" + expectedText.toLowerCase().replace(" ", "-"); 
+           helper.checkCurrentURLendsWith(driver, new Exception().getStackTrace()[0], expectedURLend);
+           
            // ASSERT TITLE FIELD OVERLOAD CONTENT IS LIMITED:
            actualText = driver.findElement(By.xpath(Common.title)).getText();
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);
            
-//         helper.getUrlWaitUntil(driver, 15, Locators.adminContentURL);          
-//		   WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
-//		   Select clickThis = new Select(dropwDownListBox);
-//		   Thread.sleep(2000);
-//		   clickThis.selectByVisibleText("Custom Brand");
-//		   Thread.sleep(2000);		   
-//		   driver.findElement(By.id("edit-author")).clear();
-//		   driver.findElement(By.id("edit-author")).sendKeys("content_editor");
-//		   int size = helper.waitUntilElementList(driver, 5, Locators.autoComplete, "auto-complete").size();
-//         if (size == 1) { try { driver.findElement(By.xpath(Locators.autoComplete)).click(); } catch(Exception e) { } }
-//         helper.waitUntilElementInvisibility(driver, 15, Locators.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
-//		   driver.findElement(By.id("edit-submit-admin-views-node")).click();
-//		   helper.waitUntilElementInvisibility(driver, 30, Locators.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);          
-//		   xpath = DrupalAddContentLocators.adminContentRowFirst + DrupalAddContentLocators.adminContentFieldTitles;
-//		   actualText = driver.findElement(By.xpath(xpath)).getText();
-//         helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
+           // ASSERT TITLE FIELD OVERLOAD ON CONTENT ADMIN IS LIMITED:
+           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);          
+		   WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
+		   Select clickThis = new Select(dropwDownListBox);
+		   Thread.sleep(2000);
+		   clickThis.selectByVisibleText("Custom Brand");
+		   Thread.sleep(2000);
+		   driver.findElement(By.id("edit-author")).clear();
+		   driver.findElement(By.id("edit-author")).sendKeys("content_editor");
+		   int size = helper.waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+           if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+           helper.waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+		   driver.findElement(By.id("edit-submit-admin-views-node")).click();
+		   helper.waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);          
+		   xpath = Drupal.adminContentRowFirst + Drupal.adminContentFieldTitles;
+		   actualText = driver.findElement(By.xpath(xpath)).getText();
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
            
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
