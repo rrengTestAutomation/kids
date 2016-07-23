@@ -166,7 +166,7 @@ public class UtilitiesTestHelper{
 		*/
 		public void deleteAllContent(WebDriver driver, String type, String title, String user, StackTraceElement t) throws InterruptedException, IOException{
 			try {
-				if (type.equals("")) { type = "- Any -"; }
+				if (type.length() == 0) { type = "- Any -"; }
 				fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
 				fileWriterPrinter("Delete Content Title:  " + title);
 				fileWriterPrinter("Delete Content Author: " + user);
@@ -179,14 +179,16 @@ public class UtilitiesTestHelper{
 				Thread.sleep(2000);
 							
 				driver.findElement(By.id("edit-title")).clear();          //pre-clear the Title filter field
-				driver.findElement(By.id("edit-title")).sendKeys(title);  //typing selected title name - full or partial
+				if(title.length() > 0) { driver.findElement(By.id("edit-title")).sendKeys(title); }  //typing selected title name - full or partial
 				
 				driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
-				driver.findElement(By.id("edit-author")).sendKeys(user);  //typing the Author name filter as User Name
-				int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
-	            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
-	            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
-	            
+				if(user.length() > 0) { 
+					driver.findElement(By.id("edit-author")).sendKeys(user); 
+					int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+		            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+		            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+		            } //typing the Author name filter as User Name
+
 				driver.findElement(By.id("edit-submit-admin-views-node")).click(); //apply button;
 	            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 				
@@ -1138,16 +1140,19 @@ public class UtilitiesTestHelper{
 		        	 Thread.sleep(1000);
 		        	 driver.findElement(upload).click();
 		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-		        	 errors = driver.findElements(By.xpath(Drupal.errorUpload)).size();
+		        	 if (i > 2) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
 		        	 if (errors > 0) { 
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
 		        		              moveToElement(driver, Drupal.confirmButton);
 		        		              }
 		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); }	         
 		         i++;
-		         size = driver.findElements(element).size();    
-	      }
+		         Thread.sleep(1000);
+		         waitUntilElementPresence(driver, 2, element, "\"" + image + "\"", t);
+		         size = driver.findElements(element).size();		         
+		         }
 		  if (size == 1) { fileWriterPrinter("Successful \"" + image + "\" " + name + " upload!"); }
+		  Thread.sleep(1000);
 	  }
 
 	  /**

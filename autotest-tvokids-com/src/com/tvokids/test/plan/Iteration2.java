@@ -201,6 +201,7 @@ public class Iteration2 {
            helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
            
            // ASSERT ERROR MESSAGE APPEARS:
+           driver.findElement(By.id(Drupal.submit)).click();
            helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.errorDescription);
            
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
