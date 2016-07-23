@@ -363,8 +363,10 @@ public class Mail {
 		    
 		// E-MAIL SENDING
 		if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
-	    	// ZIP SCREEN-SHOTS:
-	    	helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
+			// ZIP SCREEN-SHOTS:
+	    	if (helper.fileExist("failed.log", false)) {
+	    		helper.zipDirectory(Common.outputFileDir, Common.testOutputFileDir + "screen-shots.zip", false, true, 5);
+	    		}
 	    	while( !helper.fileExist("emailable-report.html", false) &&
 	    		   !helper.fileExist("extent-test-report.html", false) &&
 	    		   !(helper.fileExist("screen-shots.zip", false) || helper.fileExist("screen-shots.renameToZip", false))

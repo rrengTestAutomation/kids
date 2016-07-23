@@ -10,7 +10,7 @@ public class FailedLogToXmlConvertor {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
 	public static void main(String[] args) throws IOException {
-		String reporterClass = "<class name=\"kids.rebuild.email.All\"></class>";		
+		String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";		
 		helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
 	}
 

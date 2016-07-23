@@ -10,7 +10,7 @@ public class TestNgFailedToTestFailedConvertor {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
 	public static void main(String[] args) throws IOException {
-	String reporterClass = "<class name=\"kids.rebuild.email.All\"></class>";		
+	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";		
 	helper.testNgFailedToTestFailedConvertor("test-failed", "test-failed", "test-failed.xml", reporterClass);
 	}
 
