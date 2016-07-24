@@ -28,6 +28,8 @@ import javax.swing.JOptionPane;
 
 
 
+
+
 /*
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -88,7 +90,7 @@ public class All {
 		int sec = (int) updateDelay/1000;
 		
 		// TEST HOST APPLICATION SERVER MANAGEMENT:
-	 // @SuppressWarnings("unused") int server = devBox();
+		@SuppressWarnings("unused") String server = devServer();
 		
 		// GIT BRANCH MANAGEMENT:
 		String branch = gitBranch();
@@ -242,7 +244,8 @@ public void logCleaner() throws NumberFormatException, IOException{
 	
     helper.fileCleaner("test.num"   );
 	helper.fileCleaner("failed.num" );
-	helper.fileCleaner("emailable-report.html" );
+	helper.fileCleaner("emailable-report.html");
+	helper.fileCleaner("extent-test-report.html");
 	}	
 
 /** 
@@ -287,7 +290,7 @@ public void finish() throws Exception {
 	helper.fileWriter("email.cont", "FYI:"); 
 	helper.fileWriter("email.cont", "TVOKids.com - AUTOMATED " + helper.fileScanner("test.type").toUpperCase() + " RESULT");
 	helper.fileWriter("email.cont", "");
-	helper.fileWriter("email.cont", "     APP SERVER: " + Common.homeURL);
+	helper.fileWriter("email.cont", "     APP SERVER: " + helper.fileScanner("server.info"));
 	helper.fileWriter("email.cont", "     GiT BRANCH: " + helper.fileScanner("branch.info"));
 	helper.fileWriter("email.cont", "");
 
@@ -443,20 +446,31 @@ public String testType() throws NumberFormatException, IOException {
 public String dateBox(){ return helper.getCurrentDateTimeHourMinSec(); }
 
 ///**
-// * 'dev' Server log recorder
-// * @throws IOException 
-// * @throws NumberFormatException 
-// */
+//* 'dev' Box number reader
+//* @throws IOException 
+//* @throws NumberFormatException 
+//*/
 //public int devBox() throws NumberFormatException, IOException {
 //	 // DETECTING DEFAULT SERVER:
 //	 String server, dev;
-//	 server =	Locators.homeURL;
+//	 server = Locators.homeURL;
 //	 server = server.substring(server.indexOf(":") + 3, server.length());
-//	 dev = server.substring(server.indexOf("dev") + 3, server.indexOf("."));
-//	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-//	 helper.fileWriter("server.info", server);
+//	 if(server.contains("dev")) { dev = server.substring(server.indexOf("dev") + 3, server.indexOf(".")); } else { dev = "0"; }
 //	 return Integer.valueOf(dev);
 //}
+
+/**
+ * 'dev' Server log recorder
+ * @throws IOException 
+ * @throws NumberFormatException 
+ */
+public String devServer() throws NumberFormatException, IOException {
+	 // DETECTING DEFAULT SERVER:
+	 String server = Common.homeURL.substring(Common.homeURL.indexOf(":") + 3, Common.homeURL.length());
+	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
+	 helper.fileWriter("server.info", server);
+	 return server;
+}
 
 /**
  * GiT Branch log recorder

@@ -22,27 +22,27 @@ public class Email {
 	  // MANAGERS E-MAIL ADDRESSES  			  
 	  public static String managerEmail = "nweinstein@tvo.org";
 			  
-	  // PRODUCTION E-MAIL ADDRESSES
-	  public static String[] toAll = { managerEmail };
-	  public static String[] ccAll = {
-		                               testerWorkEmail,
-		                               "pbandas@tvo.org",
-		                               "jroberts@tvo.org",
-		                               "aporretta@tvo.org",
-		                               "ckatz@tvo.org",
-		                               "ssrinivasan@tvo.org",
-		                               "pdrinkwater@tvo.org",
-		                               "ltrotsky@tvo.org",
-		                               "lkumar@tvo.org",
-		                               "sreeves@echidna.ca",
-		                               "ukhan@tvo.org"
-		                              };
-	  public static String[] bccAll = { /** autoTesterEmail,*/ testerHomeEmail };
+//	  // PRODUCTION E-MAIL ADDRESSES
+//	  public static String[] toAll = { managerEmail };
+//	  public static String[] ccAll = {
+//		                               testerWorkEmail,
+//		                               "pbandas@tvo.org",
+//		                               "jroberts@tvo.org",
+//		                               "aporretta@tvo.org",
+//		                               "ckatz@tvo.org",
+//		                               "ssrinivasan@tvo.org",
+//		                               "pdrinkwater@tvo.org",
+//		                               "ltrotsky@tvo.org",
+//		                               "lkumar@tvo.org",
+//		                               "sreeves@echidna.ca",
+//		                               "ukhan@tvo.org"
+//		                              };
+//	  public static String[] bccAll = { /** autoTesterEmail,*/ testerHomeEmail };
 	  
-//	  // UNIT TEST E-MAIL ADDRESSES
-//	  public static String[] toAll = { testerWorkEmail };
-//	  public static String[] ccAll = { "123@abc.org" };	  
-//	  public static String[] bccAll = {"456@abc.org" };
+	  // UNIT TEST E-MAIL ADDRESSES
+	  public static String[] toAll = { testerWorkEmail };
+	  public static String[] ccAll = { "123@abc.org" };	  
+	  public static String[] bccAll = {"456@abc.org" };
 	  
       // DEBUGGING E-MAIL ADDRESSES
 	  public static String[] toTester  = { testerWorkEmail };

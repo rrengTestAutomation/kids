@@ -263,7 +263,8 @@ public class Mail {
 			
 		    helper.fileCleaner("test.num"   );
 			helper.fileCleaner("failed.num" );
-			helper.fileCleaner("emailable-report.html" );
+			helper.fileCleaner("emailable-report.html");
+	helper.fileCleaner("extent-test-report.html");
 			}
 	
 		/** 
@@ -555,9 +556,7 @@ public class Mail {
 		  */
 		 public String devServer() throws NumberFormatException, IOException {
 		 	 // DETECTING DEFAULT SERVER:
-		 	 String server;
-		 	 server = Common.homeURL;
-		 	 server = server.substring(server.indexOf(":") + 3, server.length());
+		 	 String server = Common.homeURL.substring(Common.homeURL.indexOf(":") + 3, Common.homeURL.length());
 		 	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
 		 	 helper.fileWriter("server.info", server);
 		 	 return server;
@@ -604,45 +603,6 @@ public class Mail {
 		 	 helper.fileWriter("branch.info", branch);
 		 	 return branch;
 		 	 }
-		 
-//		 /**
-//		  * 'dev' Server number entry dialogue 
-//		  * @throws IOException 
-//		  * @throws NumberFormatException
-//		  */
-//		 public int devBox() throws NumberFormatException, IOException{
-//			 ImageIcon icon = new ImageIcon(Locator.testIconFileDir + "web.server.pc.png");
-//			 String Default = "24";
-//				StringSelection stringSelection = new StringSelection(Default);
-//				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-//				clpbrd.setContents(stringSelection, null);
-//			 String dev = null;
-//			 boolean isCorrect = false;
-//			 while(isCorrect == false) {
-//				 dev = (String) JOptionPane.showInputDialog(
-//						 null, 
-//						 "Enter \"dev\" Server number \n(\"24\" or \"25\")\n\nor paste,\nor click \"CANCEL\" for \"dev24\" as a default\n ",
-//						 "\"dev\" Server",
-//						 1,
-//						 icon, null, Default
-//						 );
-//				 if(dev != null){
-//				     // JOptionPane.showMessageDialog(null, "You entered: " + dev, "\"dev\" Server", 1);
-//				     // System.out.println("\nYou entered: " + dev + "\n");
-//					 }
-//				 else {
-//					    dev = "24";
-//				     // JOptionPane.showMessageDialog(null, "You pressed cancel button...", "\"dev\" Server", 1);
-//				     // System.out.println("\nYou pressed cancel button...\n");
-//					 }
-//				 String datePattern = "\\d{2}";
-//				 isCorrect = ( dev.matches(datePattern) && ( dev.equals("24") || dev.equals("25") ) );
-//			  // System.out.println("Is the entry of \"" + dev + "\" satisfying the acceptance criteria? \nAnswer: " + isCorrect + "\n");
-//				 } 
-//			 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-//			 helper.fileWriter("server.info", Locators.cpadServerDomain);
-//			 return Integer.valueOf(dev);
-//			 }
 		 
 		 /** Test Delay entry dialogue */
 		 public int minBox(){		 

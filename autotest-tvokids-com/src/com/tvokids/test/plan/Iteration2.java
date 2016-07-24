@@ -3,11 +3,9 @@ package com.tvokids.test.plan;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,7 +14,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -38,7 +35,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131"})
+	@Test(groups = {"TC-35131"}, priority = 1)
     public void testCustomBrandFieldsExist() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -70,7 +67,7 @@ public class Iteration2 {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true)
+	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true, priority = 2)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -172,7 +169,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153</p>
 	 */
-	@Test(groups = {"TC-35153"})
+	@Test(groups = {"TC-35153"}, priority = 3)
     public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -217,7 +214,7 @@ public class Iteration2 {
 	 * <p>Test Cases: 35153</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-35153"})
+	@Test(groups = {"TC-35153"}, priority = 4)
     public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -288,7 +285,7 @@ public class Iteration2 {
 	 * <p>Test Cases: 35153</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-35153"})
+	@Test(groups = {"TC-35153"}, priority = 5)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -318,25 +315,29 @@ public class Iteration2 {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
 	           
+	           // LINK GENERIC XPATH
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\\" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           
 	           // NAVIGATE TO "AGE 5 AND UNDER":
-	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
-	           helper.fileWriterPrinter(xpath);
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+//	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
-	           helper.clickLinkAndCheckURL(driver, xpath, expectedURL);
+	           helper.moveToElement(driver, xpath);
+	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
 	           // NAVIGATE TO "AGE 6 AND OVER":
-	           xpath = Common.sixAndOvererLinkBase + titleURL + Common.XpathEqualsEnd;
-	           helper.fileWriterPrinter(xpath);
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOvererURL);
+//	           xpath = Common.sixAndOvererLinkBase + titleURL + Common.XpathEqualsEnd;
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.sixAndOvererURL + "/" + titleURL;
-	           helper.clickLinkAndCheckURL(driver, xpath, expectedURL);
+	           helper.moveToElement(driver, xpath);
+	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
 	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }

@@ -1140,7 +1140,7 @@ public class UtilitiesTestHelper{
 		        	 Thread.sleep(1000);
 		        	 driver.findElement(upload).click();
 		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-		        	 if (i > 2) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
+		        	 if (i > 1) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
 		        	 if (errors > 0) { 
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
 		        		              moveToElement(driver, Drupal.confirmButton);
@@ -1148,7 +1148,7 @@ public class UtilitiesTestHelper{
 		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); }	         
 		         i++;
 		         Thread.sleep(1000);
-		         waitUntilElementPresence(driver, 2, element, "\"" + image + "\"", t);
+		         waitUntilElementPresence(driver, 2, element, "\"" + image + "\"", t, false);
 		         size = driver.findElements(element).size();		         
 		         }
 		  if (size == 1) { fileWriterPrinter("Successful \"" + image + "\" " + name + " upload!"); }
@@ -3935,6 +3935,20 @@ public class UtilitiesTestHelper{
 					catch(Exception e) {
 					if (list.size() == 0) { fileWriterPrinter("\n" + elementName + " not found!\n\"By\" ELEMENT: " + element); }
 					getScreenShot(t, elementName.replace("\"", "''") + " presence Time-Out", driver);
+					}
+				    fileWriterPrinter("Waiting time for " + padRight(elementName, 30 - elementName.length()) + " presence: " + waitTimeConroller(start, seconds, elementName) + " sec");
+				    return (list.size() > 0);
+				}
+				
+				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final By element, String elementName, StackTraceElement t, Boolean ifScreenshot) throws IOException {
+					long start = System.currentTimeMillis();					
+					// SOURCE EXAMPLE of "element" VARIABLE ENTRY:     By element = By.xpath("xpath string");     By element = By.id("id string")   etc.	
+					WebDriverWait wait = new WebDriverWait(driver, seconds);
+					List<WebElement> list = driver.findElements(element);					
+					try { wait.until(ExpectedConditions.presenceOfElementLocated(element)); }										
+					catch(Exception e) {
+					if (list.size() == 0) { fileWriterPrinter("\n" + elementName + " not found!\n\"By\" ELEMENT: " + element); }
+					if (ifScreenshot) { getScreenShot(t, elementName.replace("\"", "''") + " presence Time-Out", driver); }
 					}
 				    fileWriterPrinter("Waiting time for " + padRight(elementName, 30 - elementName.length()) + " presence: " + waitTimeConroller(start, seconds, elementName) + " sec");
 				    return (list.size() > 0);
