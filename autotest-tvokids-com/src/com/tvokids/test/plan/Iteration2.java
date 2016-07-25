@@ -59,6 +59,50 @@ public class Iteration2 {
    }
 	
 	/**
+	 * Test attempt to create a Custom Brand without a title is rejected
+	 * <p>Date Created: 2016-07-20</p>
+	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35131</p>
+	 */
+	@Test(groups = {"TC-35153"}, priority = 2)
+    public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
+       try{
+    	   // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+
+           // DECLARATION:
+           String expectedURL, title, description;
+           
+           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           helper.logIn(driver,"content_editor","changeme");
+           
+           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+           driver.manage().window().maximize();
+           
+           // PREPARE CONTENT ENTRY:
+           title = "";
+           description = helper.randomEnglishText(helper.randomInt(125, (Drupal.descriptionMaxCharsNumber - 1)));
+           
+           // CREATE CONTENT WITH NO DESCRIPTION:
+           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+          
+           // ASSERT CONTENT URL DID NOT CHANGE:
+           expectedURL = Drupal.customBrand;
+           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
+           
+           // ASSERT ERROR MESSAGE APPEARS:
+           driver.findElement(By.id(Drupal.submit)).click();
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.errorTitle);
+           
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
+	
+	/**
 	 * Test Custom Brand Meta-Data Attributes - Title field content is limited
 	 * <p>Date Created: 2016-07-06</p>
 	 * <p>Date Modified: 2016-07-22<p>
@@ -67,7 +111,7 @@ public class Iteration2 {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true, priority = 2)
+	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -169,7 +213,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153</p>
 	 */
-	@Test(groups = {"TC-35153"}, priority = 3)
+	@Test(groups = {"TC-35153"}, priority = 4)
     public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -214,7 +258,7 @@ public class Iteration2 {
 	 * <p>Test Cases: 35153</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-35153"}, priority = 4)
+	@Test(groups = {"TC-35153"}, priority = 5)
     public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -285,7 +329,7 @@ public class Iteration2 {
 	 * <p>Test Cases: 35153</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-35153"}, priority = 5)
+	@Test(groups = {"TC-35153"}, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:

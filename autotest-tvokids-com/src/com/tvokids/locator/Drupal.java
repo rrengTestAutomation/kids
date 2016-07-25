@@ -28,6 +28,7 @@ public class Drupal{
       public static String error                     = "//*[@id='console']/div[@class='messages error']";
       public static String errorMessage              = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
       public static String errorAjax                 = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
+      public static String errorTitle                = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
       public static String errorDescription          = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";
       public static String errorUpload               = "//div[@class='messages error'][contains(.,'The file could not be uploaded')]";
       public static String logout                    = "//a[text()='Log out']";
