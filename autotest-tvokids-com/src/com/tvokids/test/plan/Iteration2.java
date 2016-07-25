@@ -386,6 +386,63 @@ public class Iteration2 {
 	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	
+	/**
+	 * Test Home Page elements exist
+	 * <p>Date Created: 2016-07-25</p>
+	 * <p>Date Modified: 2016-07-25<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34908</p>
+	 */
+	@Test(groups = {"TC-34908"}, priority = 7)
+    public void testHomePageElementsExist() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		          
+		       // ASSERT EXISTANCE:
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageLogo);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderImage);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverImage);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle);      
+		          
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
+	
+	/**
+	 * Test Home page by click on the specific age image takes under to corresponding age Landing page
+	 * <p>Date Created: 2016-07-25</p>
+	 * <p>Date Modified: 2016-07-25<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34908</p>
+	 */
+	@Test(groups = {"TC-34908"}, priority = 7)
+    public void testHomePageClickAgeImageNavigatesToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		          
+		       // ASSERT EXISTANCE:
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderImage, Common.fiveAndUnderURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, Common.fiveAndUnderURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverImage, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOvererURL,  true, false);     
+		          
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
+	           
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }

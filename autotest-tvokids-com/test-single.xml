@@ -16,7 +16,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2"><methods>
-<include name="testCustomBrandTitleIsMandatory"/>
+<include name="testHomePageClickAgeImageNavigatesToCorrectAgeLandingPage"/>
 </methods></class>
      
         </classes>
