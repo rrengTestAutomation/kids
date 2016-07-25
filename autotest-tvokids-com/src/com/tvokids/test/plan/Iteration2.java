@@ -67,7 +67,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35153"}, priority = 2)
+	@Test(groups = {"TC-35131","TC-35153"}, priority = 2)
     public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -111,7 +111,7 @@ public class Iteration2 {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131</p>
 	 */
-	@Test(groups = {"TC-35131","BUG-35502","BUG-528","OPEN"}, enabled = true, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","OPEN"}, enabled = true, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -213,7 +213,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153</p>
 	 */
-	@Test(groups = {"TC-35153"}, priority = 4)
+	@Test(groups = {"TC-35131","TC-35153"}, priority = 4)
     public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -258,7 +258,7 @@ public class Iteration2 {
 	 * <p>Test Cases: 35153</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-35153"}, priority = 5)
+	@Test(groups = {"TC-35131","TC-35153"}, priority = 5)
     public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
