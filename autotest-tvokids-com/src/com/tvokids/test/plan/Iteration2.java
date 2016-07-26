@@ -467,7 +467,6 @@ public class Iteration2 {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           Boolean acceptanceCriteria;
-	           //DecimalFormat f = new DecimalFormat("#.######");
 	           
 	           // NAVIGATE TO HOME PAGE:
 		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
@@ -479,15 +478,10 @@ public class Iteration2 {
 		       int ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
 		       int ageSixWidth = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
 		       
-//		       float ageFiveWidthPercents = (float) (ageFiveWidth*100/(ageFiveWidth + ageSixWidth));
-//		       float ageSixWidthPercents  = (float) (ageSixWidth*100/(ageFiveWidth + ageSixWidth));
-//		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + String.format("%.02f",ageFiveWidthPercents) + " %");
-//		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + String.format("%.02f",ageSixWidthPercents) + " %");
-		       
-		       int ageFiveWidthPercents = ageFiveWidth*100/(ageFiveWidth + ageSixWidth);
-		       int ageSixWidthPercents  = ageSixWidth*100/(ageFiveWidth + ageSixWidth);
-		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + ageFiveWidthPercents + " %");
-		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + ageSixWidthPercents + " %");
+		       float ageFiveWidthPercents = (float) (ageFiveWidth*100/(ageFiveWidth + ageSixWidth));
+		       float ageSixWidthPercents  = (float) (ageSixWidth*100/(ageFiveWidth + ageSixWidth));
+		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + String.format("%.02f",ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + String.format("%.02f",ageSixWidthPercents) + " %");
 		       
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
