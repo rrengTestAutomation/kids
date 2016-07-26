@@ -340,7 +340,7 @@ public class Iteration2 {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);

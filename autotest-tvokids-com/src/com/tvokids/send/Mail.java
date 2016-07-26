@@ -323,14 +323,14 @@ public class Mail {
 		    if ( (Integer.valueOf(helper.fileScanner("last.num")) > 1) && (Integer.valueOf(helper.fileScanner("prev.num")) > 0) ) {
 		    if ( helper.isInteger(addTestNum()) && Boolean.valueOf(helper.fileScanner("add.show")) ) {
 		    	if ( Integer.valueOf(addTestNum()) > 0 ) {
-		    		helper.fileWriterPrinter(" TOTAL PREVIOUS: " + prevTestNum());
+		    		helper.fileWriterPrinter(" TOTAL PREVIOUS: " + helper.fileScanner("prev.num")); //prevTestNum());
 		    		helper.fileWriterPrinter("NEW TESTS ADDED: " + addTestNum());
 		    		
-		    		helper.fileWriter("run.log", " TOTAL PREVIOUS: " + prevTestNum());
+		    		helper.fileWriter("run.log", " TOTAL PREVIOUS: " + helper.fileScanner("prev.num"));
 		    		helper.fileWriter("run.log", "NEW TESTS ADDED: " + addTestNum());
 		    		
 		    		if (helper.fileExist("email.cont", false)) {
-		    			helper.fileWriter("email.cont", " TOTAL PREVIOUS: " + prevTestNum());
+		    			helper.fileWriter("email.cont", " TOTAL PREVIOUS: " + helper.fileScanner("prev.num"));
 		    			helper.fileWriter("email.cont", "NEW TESTS ADDED: " + addTestNum());
 		    		    helper.fileWriter("email.cont", "");
 		    			}
@@ -739,8 +739,8 @@ public class Mail {
 		 public String addTestNum() throws NumberFormatException, IOException{
 			 String added = "N/A";
 			 if (helper.fileExist("add.num", false)) { helper.fileCleaner("add.num"); }
-			 if ( helper.fileExist("prev.num", false) && helper.fileExist("last.num", false) ) {
-				 String last = helper.fileScanner("last.num");
+			 if ( helper.fileExist("prev.num", false) && helper.fileExist("test.max", false) ) {
+				 String last = helper.fileScanner("test.max");
 				 String prev  = helper.fileScanner("prev.num");
 				 if ( helper.isInteger(last) && helper.isInteger(prev) ) {
 					 added = String.valueOf((Integer.valueOf(last) - Integer.valueOf(prev)));
