@@ -3,9 +3,13 @@ package com.tvokids.test.plan;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+
+// import java.text.DecimalFormat;
+
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -427,7 +431,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34908</p>
 	 */
-	@Test(groups = {"TC-34908"}, priority = 7)
+	@Test(groups = {"TC-34908"}, priority = 8)
     public void testHomePageClickAgeImageNavigatesToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -445,7 +449,55 @@ public class Iteration2 {
 		          
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
+	
+	/**
+	 * Test responsive Desktop and Tablet - Home page
+	 * <p>Date Created: 2016-07-26</p>
+	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34960</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34960"}, priority = 9)
+    public void testResponsiveDesktopAndTabletHomePage() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           Boolean acceptanceCriteria;
+	           //DecimalFormat f = new DecimalFormat("#.######");
 	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		       
+		       // DESKTOP:
+		       driver.manage().window().maximize();
+		       
+		       // ASSERT SCREEN DEVISION BY AGES IS HALF-HALF:
+		       int ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
+		       int ageSixWidth = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
+		       
+//		       float ageFiveWidthPercents = (float) (ageFiveWidth*100/(ageFiveWidth + ageSixWidth));
+//		       float ageSixWidthPercents  = (float) (ageSixWidth*100/(ageFiveWidth + ageSixWidth));
+//		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + String.format("%.02f",ageFiveWidthPercents) + " %");
+//		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + String.format("%.02f",ageSixWidthPercents) + " %");
+		       
+		       int ageFiveWidthPercents = ageFiveWidth*100/(ageFiveWidth + ageSixWidth);
+		       int ageSixWidthPercents  = ageSixWidth*100/(ageFiveWidth + ageSixWidth);
+		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + ageFiveWidthPercents + " %");
+		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + ageSixWidthPercents + " %");
+		       
+		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+    }
+		       
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
