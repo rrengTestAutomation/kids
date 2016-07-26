@@ -2732,7 +2732,57 @@ public class UtilitiesTestHelper{
         	return string;
         	}
         // ####################### TEST-NG XML EXTRACTOR-CREATER END #######################
-            
+        	
+        // ####################### LOG FILES HANDLER START #######################
+		/** 
+		 * Cleans all the Log records left from previous test executions
+		 * @throws NumberFormatException 
+		 * @throws IOException 
+		 */
+		public void beforeCleaner() throws NumberFormatException, IOException{
+		    // PRE-CLEANING:
+            fileCleaner("email.all"  );
+            fileCleaner("email.cont" );
+            fileCleaner("email.subj" );
+            fileCleaner("failed.log" );		
+            fileCleaner("finish.time");
+            fileCleaner("ini.time"   );
+            fileCleaner("print.log"  );
+            fileCleaner("run.log"    );
+            fileCleaner("stack.trace");
+            fileCleaner("start.time" );
+            fileCleaner("wait.log"   );
+            fileCleaner("xml.path"   );
+            fileCleaner("source.html");
+            fileCleaner("test.num"   );
+            fileCleaner("failed.num" );
+            fileCleaner("emailable-report.html");
+            fileCleaner("extent-test-report.html");
+			}
+
+    		
+    		/** 
+    		 * Cleans all the Log records after current test executions
+    		 * @throws NumberFormatException 
+    		 * @throws IOException 
+    		 */
+    		public void afterCleaner() throws NumberFormatException, IOException{
+			   fileCleaner("ini.time"   );
+			   fileCleaner("failed.num" );
+			   fileCleaner("test.num"   );
+			   fileCleaner("add.num"    );
+//			   fileCleaner("prev.num"   );
+			   fileCleaner("server.info");
+			   fileCleaner("email.opt"  );
+			   fileCleaner("email.all"  );
+			   fileCleaner("email.cont" );
+			   fileCleaner("email.subj" );
+			   fileCleaner("add.show"   );
+			   fileCleaner("screen-shots.zip");
+			   fileCleaner("screen-shots.renameToZip");
+    		   }
+        // ####################### LOG FILES HANDLER END #######################
+        	
             /** Returns Suffix based on Number */
 			public String getNumberSuffix(int num) {
 				String s = String.valueOf(num);

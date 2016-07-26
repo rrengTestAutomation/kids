@@ -47,13 +47,15 @@ public class ExtentReporterNG implements IReporter {
         extent.flush();
         extent.close(); 
 
-        try { 
-        	// CREATING TEST-FAILED.XML:
-        	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";
-        	helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
+        try {
         	// SEND E-MAIL:
         	if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all"))  ) { new All().finish(); }
         	if( helper.fileExist("email.all", false) && !Boolean.valueOf(helper.fileScanner("email.all")) ) { new Mail().finish(); }
+        	// CREATING TEST-FAILED.XML:
+        	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";
+        	helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
+        	// AFTER CLEANING:
+        	helper.afterCleaner();
         	}
         catch ( Exception e) { /* e.printStackTrace(); */ }
         

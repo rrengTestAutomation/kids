@@ -37,16 +37,7 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 @SuppressWarnings("static-access")
 public class Mail {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
-	
-	/**
-	 * Creates "test-failed.xml"
-	 */
- // @AfterTest
-	public void testFailedXML() throws IOException {
-	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";
-	helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
-	}
-	
+		
 	/** 
 	 * Test Start-Up management;
 	 * @throws IOException 
@@ -57,7 +48,8 @@ public class Mail {
 	@BeforeSuite /** (groups = {"START",}) */
 	public void start() throws IOException, ParseException, InterruptedException, NumberFormatException {
 		// ERASING PREVIOUS TEST LOGS AND RECORDS:
-		logCleaner();
+		// beforeCleaner();
+		helper.beforeCleaner();
 
 		// PREVIOUS NUMBER OF TESTS MANAGEMENT:
 		lastToPrev();
@@ -152,18 +144,19 @@ public class Mail {
 	 */
 	public void logOpen() throws IOException {
 		// INITIALIZATION:
-		helper.fileCleaner("failed.log");
-		helper.fileCleaner("failed.num");
-		helper.fileCleaner("finish.time");
-		helper.fileCleaner("ini.time");
-		helper.fileCleaner("run.log");
-		helper.fileCleaner("print.log");
-		helper.fileCleaner("start.time");
-		helper.fileCleaner("stack.trace");
-		helper.fileCleaner("test.num");
-		helper.fileCleaner("wait.log");
-		helper.fileCleaner("xml.path");
-		helper.fileCleaner("source.html");
+//		helper.fileCleaner("failed.log");
+//		helper.fileCleaner("failed.num");
+//		helper.fileCleaner("finish.time");
+//		helper.fileCleaner("ini.time");
+//		helper.fileCleaner("run.log");
+//		helper.fileCleaner("print.log");
+//		helper.fileCleaner("start.time");
+//		helper.fileCleaner("stack.trace");
+//		helper.fileCleaner("test.num");
+//		helper.fileCleaner("wait.log");
+//		helper.fileCleaner("xml.path");
+//		helper.fileCleaner("source.html");
+		
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));
 		// INITIAL LOG RECORD:
@@ -240,32 +233,30 @@ public class Mail {
 		helper.fileCleaner("test.num");
 	}
  
-		/** 
-		 * Cleans all the Log records left from previous test executions
-		 * @throws NumberFormatException 
-		 * @throws IOException 
-		 */
-		public void logCleaner() throws NumberFormatException, IOException{
-		    // PRE-CLEANING:
-			helper.fileCleaner("email.cont" );
-			helper.fileCleaner("email.subj" );
-			
-			helper.fileCleaner("failed.log" );		
-			helper.fileCleaner("finish.time");
-			helper.fileCleaner("ini.time"   );
-			helper.fileCleaner("print.log"  );
-			helper.fileCleaner("run.log"    );
-			helper.fileCleaner("source.html");
-			helper.fileCleaner("stack.trace");
-			helper.fileCleaner("start.time" );
-			helper.fileCleaner("wait.log"   );
-			helper.fileCleaner("xml.path"   );
-			
-		    helper.fileCleaner("test.num"   );
-			helper.fileCleaner("failed.num" );
-			helper.fileCleaner("emailable-report.html");
-	helper.fileCleaner("extent-test-report.html");
-			}
+//		/** 
+//		 * Cleans all the Log records left from previous test executions
+//		 * @throws NumberFormatException 
+//		 * @throws IOException 
+//		 */
+//		public void beforeCleaner() throws NumberFormatException, IOException{
+//		    // PRE-CLEANING:
+//			helper.fileCleaner("email.cont" );
+//			helper.fileCleaner("email.subj" );			
+//			helper.fileCleaner("failed.log" );		
+//			helper.fileCleaner("finish.time");
+//			helper.fileCleaner("ini.time"   );
+//			helper.fileCleaner("print.log"  );
+//			helper.fileCleaner("run.log"    );
+//			helper.fileCleaner("source.html");
+//			helper.fileCleaner("stack.trace");
+//			helper.fileCleaner("start.time" );
+//			helper.fileCleaner("wait.log"   );
+//			helper.fileCleaner("xml.path"   );			
+//		    helper.fileCleaner("test.num"   );
+//			helper.fileCleaner("failed.num" );
+//			helper.fileCleaner("emailable-report.html");
+//	        helper.fileCleaner("extent-test-report.html");
+//			}
 	
 		/** 
 		 * Test Report management;
@@ -323,14 +314,14 @@ public class Mail {
 		    if ( (Integer.valueOf(helper.fileScanner("last.num")) > 1) && (Integer.valueOf(helper.fileScanner("prev.num")) > 0) ) {
 		    if ( helper.isInteger(addTestNum()) && Boolean.valueOf(helper.fileScanner("add.show")) ) {
 		    	if ( Integer.valueOf(addTestNum()) > 0 ) {
-		    		helper.fileWriterPrinter(" TOTAL PREVIOUS: " + helper.fileScanner("prev.num")); //prevTestNum());
+		    		helper.fileWriterPrinter(" TOTAL PREVIOUS: " + prevTestNum());
 		    		helper.fileWriterPrinter("NEW TESTS ADDED: " + addTestNum());
 		    		
-		    		helper.fileWriter("run.log", " TOTAL PREVIOUS: " + helper.fileScanner("prev.num"));
+		    		helper.fileWriter("run.log", " TOTAL PREVIOUS: " + prevTestNum());
 		    		helper.fileWriter("run.log", "NEW TESTS ADDED: " + addTestNum());
 		    		
 		    		if (helper.fileExist("email.cont", false)) {
-		    			helper.fileWriter("email.cont", " TOTAL PREVIOUS: " + helper.fileScanner("prev.num"));
+		    			helper.fileWriter("email.cont", " TOTAL PREVIOUS: " + prevTestNum());
 		    			helper.fileWriter("email.cont", "NEW TESTS ADDED: " + addTestNum());
 		    		    helper.fileWriter("email.cont", "");
 		    			}
@@ -391,9 +382,6 @@ public class Mail {
 	    		Email.attachmentFullPaths(),
 	    		Email.attachmentFileNames()
 	            );
-	    	// CLEAN-UP ZIP:
-	        if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
-	    	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
 	    	}  
 		 
 		// RECORD HIGHEST TEST NUMBER:
@@ -418,25 +406,29 @@ public class Mail {
 					    }
 				   }
 		    }
-		
-		// CREATING TEST-FAILED.XML:
-		/*
-		testFailedXML();
-		*/
-		 
-		// CLEAN-UP UNNECESSARY FILE(S):
-		   helper.fileCleaner("ini.time"   );
-	       helper.fileCleaner("failed.num" );
-		   helper.fileCleaner("test.num"   );
-		   helper.fileCleaner("add.num"    );
-		   helper.fileCleaner("prev.num"   );
-		   helper.fileCleaner("server.info");
-		   helper.fileCleaner("email.opt"  );
-		   helper.fileCleaner("email.all"  );
-		   helper.fileCleaner("email.cont" );
-		   helper.fileCleaner("email.subj" );
-		   helper.fileCleaner("add.show"   );
 		}
+		
+//		/** 
+//		 * Cleans all the Log records left from previous test executions
+//		 * @throws NumberFormatException 
+//		 * @throws IOException 
+//		 */
+//		public void afterCleaner() throws NumberFormatException, IOException{
+//		    // AFTER-CLEANING:
+//			   helper.fileCleaner("ini.time"   );
+//		       helper.fileCleaner("failed.num" );
+//			   helper.fileCleaner("test.num"   );
+//			   helper.fileCleaner("add.num"    );
+//			   helper.fileCleaner("prev.num"   );
+//			   helper.fileCleaner("server.info");
+//			   helper.fileCleaner("email.opt"  );
+//			   helper.fileCleaner("email.all"  );
+//			   helper.fileCleaner("email.cont" );
+//			   helper.fileCleaner("email.subj" );
+//			   helper.fileCleaner("add.show"   );
+//			   helper.fileCleaner("screen-shots.zip");
+//			   helper.fileCleaner("screen-shots.renameToZip");
+//			}		
 		
 		/** Test Number dialoge */
 		public int testNum(){
@@ -739,8 +731,8 @@ public class Mail {
 		 public String addTestNum() throws NumberFormatException, IOException{
 			 String added = "N/A";
 			 if (helper.fileExist("add.num", false)) { helper.fileCleaner("add.num"); }
-			 if ( helper.fileExist("prev.num", false) && helper.fileExist("test.max", false) ) {
-				 String last = helper.fileScanner("test.max");
+			 if ( helper.fileExist("prev.num", false) && helper.fileExist("last.num", false) ) {
+				 String last = helper.fileScanner("last.num");
 				 String prev  = helper.fileScanner("prev.num");
 				 if ( helper.isInteger(last) && helper.isInteger(prev) ) {
 					 added = String.valueOf((Integer.valueOf(last) - Integer.valueOf(prev)));

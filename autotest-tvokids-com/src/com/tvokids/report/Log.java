@@ -8,16 +8,7 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 @SuppressWarnings("static-access")
 public class Log {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
-	
-	/**
-	 * Creates "test-failed.xml"
-	 */
- //	@AfterTest
-	public void testFailedXML() throws IOException {
-	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";
-	helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
-	}
-	
+		
 	/**
 	 * Creates a new Test Log record as a text file named "run.log" create file
 	 * example: File f = new File(<full path string>); f.createNewFile();
@@ -26,23 +17,24 @@ public class Log {
 	@BeforeSuite
 	public void logOpen() throws IOException {
 		// INITIALIZATION:
-		helper.fileCleaner("failed.log");
-		helper.fileCleaner("failed.num");
-		helper.fileCleaner("finish.time");
-		helper.fileCleaner("ini.time");
-		helper.fileCleaner("run.log");
-		helper.fileCleaner("print.log");
-		helper.fileCleaner("start.time");
-		helper.fileCleaner("stack.trace");
-		helper.fileCleaner("test.num");
-		helper.fileCleaner("wait.log");
-		helper.fileCleaner("xml.path");
-		helper.fileCleaner("source.html");
-		helper.fileCleaner("email.all"  );
-		helper.fileCleaner("emailable-report.html");
-	helper.fileCleaner("extent-test-report.html");
-		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: "
-												       // + time + "\n");
+//		helper.fileCleaner("failed.log");
+//		helper.fileCleaner("failed.num");
+//		helper.fileCleaner("finish.time");
+//		helper.fileCleaner("ini.time");
+//		helper.fileCleaner("run.log");
+//		helper.fileCleaner("print.log");
+//		helper.fileCleaner("start.time");
+//		helper.fileCleaner("stack.trace");
+//		helper.fileCleaner("test.num");
+//		helper.fileCleaner("wait.log");
+//		helper.fileCleaner("xml.path");
+//		helper.fileCleaner("source.html");
+//		helper.fileCleaner("email.all"  );
+//		helper.fileCleaner("emailable-report.html");
+//	    helper.fileCleaner("extent-test-report.html");
+		helper.beforeCleaner();
+	
+		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));
 		// INITIAL LOG RECORD:
 		helper.fileWriter("run.log", " TEST START: " + time);
@@ -94,13 +86,15 @@ public class Log {
 		*/
 		
 		// CLEAN-UP UNNECESSARY FILE(S):
+		/*
 		helper.fileCleaner("failed.num");
 		helper.fileCleaner("finish.time");
 		helper.fileCleaner("ini.time");
 		helper.fileCleaner("start.time");
 		helper.fileCleaner("stack.trace");
 		helper.fileCleaner("test.num");
-		helper.fileCleaner("xml.path");		
+		helper.fileCleaner("xml.path");	
+		*/	
 	}
 	
 }

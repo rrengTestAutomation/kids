@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 
 
 
+
 /*
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -44,15 +45,6 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 public class All {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
-	/**
-	 * Creates "test-failed.xml"
-	 */
- //	@AfterTest
-	public void testFailedXML() throws IOException {
-	String reporterClass = "<class name=\"" + this.getClass().getName() + "\"></class>";		
-	helper.testLogToXmlCreator("test-failed", "test-failed", "failed.log", "test-failed.xml", reporterClass);
-	}
-	
 	/** 
 	 * Test Start-Up management;
 	 * @throws IOException 
@@ -63,7 +55,8 @@ public class All {
 	@BeforeSuite /** (groups = {"START",}) */
 	public void start() throws IOException, ParseException, InterruptedException, NumberFormatException {
 		// ERASING PREVIOUS TEST LOGS AND RECORDS:
-		logCleaner();
+		// beforeCleaner();
+		helper.beforeCleaner();
 
 		// PREVIOUS NUMBER OF TESTS MANAGEMENT:
 		lastToPrev();
@@ -221,32 +214,30 @@ public class All {
 		helper.fileCleaner("test.num");
 	}
 
-/** 
- * Cleans all the Log records left from previous test executions
- * @throws NumberFormatException 
- * @throws IOException 
- */
-public void logCleaner() throws NumberFormatException, IOException{
- // PRE-CLEANING:
-	helper.fileCleaner("email.cont" );
-	helper.fileCleaner("email.subj" );
-	
-	helper.fileCleaner("failed.log" );		
-	helper.fileCleaner("finish.time");
-	helper.fileCleaner("ini.time"   );
-	helper.fileCleaner("print.log"  );
-	helper.fileCleaner("run.log"    );
-	helper.fileCleaner("source.html");
-	helper.fileCleaner("stack.trace");
-	helper.fileCleaner("start.time" );
-	helper.fileCleaner("wait.log"   );
-	helper.fileCleaner("xml.path"   );
-	
-    helper.fileCleaner("test.num"   );
-	helper.fileCleaner("failed.num" );
-	helper.fileCleaner("emailable-report.html");
-	helper.fileCleaner("extent-test-report.html");
-	}	
+///** 
+// * Cleans all the Log records left from previous test executions
+// * @throws NumberFormatException 
+// * @throws IOException 
+// */
+//public void beforeCleaner() throws NumberFormatException, IOException{
+// // PRE-CLEANING:
+//	helper.fileCleaner("email.cont" );
+//	helper.fileCleaner("email.subj" );	
+//	helper.fileCleaner("failed.log" );		
+//	helper.fileCleaner("finish.time");
+//	helper.fileCleaner("ini.time"   );
+//	helper.fileCleaner("print.log"  );
+//	helper.fileCleaner("run.log"    );
+//	helper.fileCleaner("source.html");
+//	helper.fileCleaner("stack.trace");
+//	helper.fileCleaner("start.time" );
+//	helper.fileCleaner("wait.log"   );
+//	helper.fileCleaner("xml.path"   );	
+//    helper.fileCleaner("test.num"   );
+//	helper.fileCleaner("failed.num" );
+//	helper.fileCleaner("emailable-report.html");
+//	helper.fileCleaner("extent-test-report.html");
+//	}	
 
 /** 
  * Test Report management;
@@ -371,30 +362,32 @@ if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("
 		helper.fileScanner("email.cont"),
 		Email.attachmentFullPaths(),
 		Email.attachmentFileNames()
-        );
-	// CLEAN-UP ZIP:
-    if( helper.fileExist("screen-shots.zip", false) ) { helper.fileCleaner("screen-shots.zip"); }
-	if( helper.fileExist("screen-shots.renameToZip", false) ) { helper.fileCleaner("screen-shots.renameToZip"); }
+        );  
 	}
 
-// CREATING TEST-FAILED.XML:
-/*
-testFailedXML();
-*/
-
-// CLEAN-UP UNNECESSARY FILE(S):
-   helper.fileCleaner("ini.time"   );
-   helper.fileCleaner("failed.num" );
-   helper.fileCleaner("test.num"   );
-   helper.fileCleaner("add.num"    );
-   helper.fileCleaner("prev.num"   );
-   helper.fileCleaner("server.info");
-   helper.fileCleaner("email.opt"  );
-   helper.fileCleaner("email.all"  );
-   helper.fileCleaner("email.cont" );
-   helper.fileCleaner("email.subj" );
-   helper.fileCleaner("add.show"   );
 }
+
+///** 
+// * Cleans all the Log records left from previous test executions
+// * @throws NumberFormatException 
+// * @throws IOException 
+// */
+//public void afterCleaner() throws NumberFormatException, IOException{
+//    // AFTER-CLEANING:
+//	   helper.fileCleaner("ini.time"   );
+//	   helper.fileCleaner("failed.num" );
+//	   helper.fileCleaner("test.num"   );
+//	   helper.fileCleaner("add.num"    );
+//	   helper.fileCleaner("prev.num"   );
+//	   helper.fileCleaner("server.info");
+//	   helper.fileCleaner("email.opt"  );
+//	   helper.fileCleaner("email.all"  );
+//	   helper.fileCleaner("email.cont" );
+//	   helper.fileCleaner("email.subj" );
+//	   helper.fileCleaner("add.show"   );
+//	   helper.fileCleaner("screen-shots.zip");
+//	   helper.fileCleaner("screen-shots.renameToZip");
+//	}
 
 /**
  * Test Number dialoge 

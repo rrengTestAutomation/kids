@@ -19,6 +19,7 @@ COVERED BY AUTOMATED TEST: -->
 <methods>
 <include name="testCustomBrandFieldsExist"/>
 <include name="testCustomBrandTitleFieldContentLimit"/>
+<include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/>
 </methods>
 </class>
      
