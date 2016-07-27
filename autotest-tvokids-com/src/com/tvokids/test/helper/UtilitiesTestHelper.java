@@ -2642,7 +2642,7 @@ public class UtilitiesTestHelper{
                 fileCleaner("failed.num" );
                 fileCleaner("emailable-report.html");
                 fileCleaner("extent-test-report.html");
-    			}
+    		}
         		
         		/** 
         		 * Cleans all the Log records after current test executions
@@ -2663,7 +2663,7 @@ public class UtilitiesTestHelper{
     			   fileCleaner("add.show"   );
     			   fileCleaner("screen-shots.zip");
     			   fileCleaner("screen-shots.renameToZip");
-        		   }
+        		}
         // ####################### LOG FILES HANDLER END #######################
         	
         	/**
