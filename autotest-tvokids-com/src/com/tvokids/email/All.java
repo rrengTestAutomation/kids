@@ -22,15 +22,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-
-
-
-
-
-
-
-
-
 /*
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -212,32 +203,7 @@ public class All {
 	 // STORE LAST TEST NUMBER:
 		helper.fileCopy("test.num", "last.num");
 		helper.fileCleaner("test.num");
-	}
-
-///** 
-// * Cleans all the Log records left from previous test executions
-// * @throws NumberFormatException 
-// * @throws IOException 
-// */
-//public void beforeCleaner() throws NumberFormatException, IOException{
-// // PRE-CLEANING:
-//	helper.fileCleaner("email.cont" );
-//	helper.fileCleaner("email.subj" );	
-//	helper.fileCleaner("failed.log" );		
-//	helper.fileCleaner("finish.time");
-//	helper.fileCleaner("ini.time"   );
-//	helper.fileCleaner("print.log"  );
-//	helper.fileCleaner("run.log"    );
-//	helper.fileCleaner("source.html");
-//	helper.fileCleaner("stack.trace");
-//	helper.fileCleaner("start.time" );
-//	helper.fileCleaner("wait.log"   );
-//	helper.fileCleaner("xml.path"   );	
-//    helper.fileCleaner("test.num"   );
-//	helper.fileCleaner("failed.num" );
-//	helper.fileCleaner("emailable-report.html");
-//	helper.fileCleaner("extent-test-report.html");
-//	}	
+	}	
 
 /** 
  * Test Report management;
@@ -367,28 +333,6 @@ if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("
 
 }
 
-///** 
-// * Cleans all the Log records left from previous test executions
-// * @throws NumberFormatException 
-// * @throws IOException 
-// */
-//public void afterCleaner() throws NumberFormatException, IOException{
-//    // AFTER-CLEANING:
-//	   helper.fileCleaner("ini.time"   );
-//	   helper.fileCleaner("failed.num" );
-//	   helper.fileCleaner("test.num"   );
-//	   helper.fileCleaner("add.num"    );
-//	   helper.fileCleaner("prev.num"   );
-//	   helper.fileCleaner("server.info");
-//	   helper.fileCleaner("email.opt"  );
-//	   helper.fileCleaner("email.all"  );
-//	   helper.fileCleaner("email.cont" );
-//	   helper.fileCleaner("email.subj" );
-//	   helper.fileCleaner("add.show"   );
-//	   helper.fileCleaner("screen-shots.zip");
-//	   helper.fileCleaner("screen-shots.renameToZip");
-//	}
-
 /**
  * Test Number dialoge 
  * @throws IOException 
@@ -437,20 +381,6 @@ public String testType() throws NumberFormatException, IOException {
 
 /** Date and Time entry dialogue */
 public String dateBox(){ return helper.getCurrentDateTimeHourMinSec(); }
-
-///**
-//* 'dev' Box number reader
-//* @throws IOException 
-//* @throws NumberFormatException 
-//*/
-//public int devBox() throws NumberFormatException, IOException {
-//	 // DETECTING DEFAULT SERVER:
-//	 String server, dev;
-//	 server = Locators.homeURL;
-//	 server = server.substring(server.indexOf(":") + 3, server.length());
-//	 if(server.contains("dev")) { dev = server.substring(server.indexOf("dev") + 3, server.indexOf(".")); } else { dev = "0"; }
-//	 return Integer.valueOf(dev);
-//}
 
 /**
  * 'dev' Server log recorder

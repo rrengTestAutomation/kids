@@ -142,21 +142,7 @@ public class Mail {
 	 * File f = new File(<full path string>); f.createNewFile();
 	 * @throws IOException
 	 */
-	public void logOpen() throws IOException {
-		// INITIALIZATION:
-//		helper.fileCleaner("failed.log");
-//		helper.fileCleaner("failed.num");
-//		helper.fileCleaner("finish.time");
-//		helper.fileCleaner("ini.time");
-//		helper.fileCleaner("run.log");
-//		helper.fileCleaner("print.log");
-//		helper.fileCleaner("start.time");
-//		helper.fileCleaner("stack.trace");
-//		helper.fileCleaner("test.num");
-//		helper.fileCleaner("wait.log");
-//		helper.fileCleaner("xml.path");
-//		helper.fileCleaner("source.html");
-		
+	public void logOpen() throws IOException {		
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));
 		// INITIAL LOG RECORD:
@@ -232,31 +218,6 @@ public class Mail {
 		helper.fileCopy("test.num", "last.num");
 		helper.fileCleaner("test.num");
 	}
- 
-//		/** 
-//		 * Cleans all the Log records left from previous test executions
-//		 * @throws NumberFormatException 
-//		 * @throws IOException 
-//		 */
-//		public void beforeCleaner() throws NumberFormatException, IOException{
-//		    // PRE-CLEANING:
-//			helper.fileCleaner("email.cont" );
-//			helper.fileCleaner("email.subj" );			
-//			helper.fileCleaner("failed.log" );		
-//			helper.fileCleaner("finish.time");
-//			helper.fileCleaner("ini.time"   );
-//			helper.fileCleaner("print.log"  );
-//			helper.fileCleaner("run.log"    );
-//			helper.fileCleaner("source.html");
-//			helper.fileCleaner("stack.trace");
-//			helper.fileCleaner("start.time" );
-//			helper.fileCleaner("wait.log"   );
-//			helper.fileCleaner("xml.path"   );			
-//		    helper.fileCleaner("test.num"   );
-//			helper.fileCleaner("failed.num" );
-//			helper.fileCleaner("emailable-report.html");
-//	        helper.fileCleaner("extent-test-report.html");
-//			}
 	
 		/** 
 		 * Test Report management;
@@ -406,29 +367,7 @@ public class Mail {
 					    }
 				   }
 		    }
-		}
-		
-//		/** 
-//		 * Cleans all the Log records left from previous test executions
-//		 * @throws NumberFormatException 
-//		 * @throws IOException 
-//		 */
-//		public void afterCleaner() throws NumberFormatException, IOException{
-//		    // AFTER-CLEANING:
-//			   helper.fileCleaner("ini.time"   );
-//		       helper.fileCleaner("failed.num" );
-//			   helper.fileCleaner("test.num"   );
-//			   helper.fileCleaner("add.num"    );
-//			   helper.fileCleaner("prev.num"   );
-//			   helper.fileCleaner("server.info");
-//			   helper.fileCleaner("email.opt"  );
-//			   helper.fileCleaner("email.all"  );
-//			   helper.fileCleaner("email.cont" );
-//			   helper.fileCleaner("email.subj" );
-//			   helper.fileCleaner("add.show"   );
-//			   helper.fileCleaner("screen-shots.zip");
-//			   helper.fileCleaner("screen-shots.renameToZip");
-//			}		
+		}		
 		
 		/** Test Number dialoge */
 		public int testNum(){

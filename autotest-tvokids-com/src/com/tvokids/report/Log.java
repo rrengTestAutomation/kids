@@ -17,23 +17,7 @@ public class Log {
 	@BeforeSuite
 	public void logOpen() throws IOException {
 		// INITIALIZATION:
-//		helper.fileCleaner("failed.log");
-//		helper.fileCleaner("failed.num");
-//		helper.fileCleaner("finish.time");
-//		helper.fileCleaner("ini.time");
-//		helper.fileCleaner("run.log");
-//		helper.fileCleaner("print.log");
-//		helper.fileCleaner("start.time");
-//		helper.fileCleaner("stack.trace");
-//		helper.fileCleaner("test.num");
-//		helper.fileCleaner("wait.log");
-//		helper.fileCleaner("xml.path");
-//		helper.fileCleaner("source.html");
-//		helper.fileCleaner("email.all"  );
-//		helper.fileCleaner("emailable-report.html");
-//	    helper.fileCleaner("extent-test-report.html");
-		helper.beforeCleaner();
-	
+		helper.beforeCleaner();	
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));
 		// INITIAL LOG RECORD:
