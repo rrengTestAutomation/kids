@@ -3,7 +3,6 @@ package com.tvokids.test.plan;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-
 import java.text.DecimalFormat;
 
 import com.tvokids.locator.Drupal;
@@ -414,9 +413,9 @@ public class Iteration2 {
 		          
 		       // ASSERT EXISTANCE:
 		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageLogo);
-		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderImage);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderBlock);
 		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle);
-		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverImage);
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverBlock);
 		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle);      
 		          
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -442,16 +441,16 @@ public class Iteration2 {
 		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
 		          
 		       // ASSERT EXISTANCE:
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderImage, Common.fiveAndUnderURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, Common.fiveAndUnderURL, true, false);
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverImage, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
 		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOvererURL,  true, false);     
 		          
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
 	
 	/**
-	 * Test responsive Desktop aand Tablet and Mobile Home page Age Titles position is compatible to the platform being used
+	 * Test responsive Desktop and Tablet and Mobile Home page Age Titles position is compatible to the platform being used
 	 * <p>Date Created: 2016-07-26</p>
 	 * <p>Date Modified: 2016-07-26<p>
 	 * <p>Original Version: V1</p>
@@ -459,6 +458,7 @@ public class Iteration2 {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
+	@SuppressWarnings("static-access")
 	@Test(groups = {"TC-34960"}, priority = 9)
     public void testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
@@ -473,15 +473,16 @@ public class Iteration2 {
 		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
 		       
 		       // DESKTOP:
+		       helper.fileWriterPrinter("\n" + "DESKTOP:");
 		       driver.manage().window().maximize();		       
 		       // ASSERT DESKTOP AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
 		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
-		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 
 		       // TABLET LANDSCAPE:
@@ -489,11 +490,11 @@ public class Iteration2 {
 		       // ASSERT TABLET LANDSCAPE AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
 		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT TABLET LANDSCAPE AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT TABLET LANDSCAPE AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT TABLET LANDSCAPE AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
-		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT TABLET LANDSCAPE AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 
 		       // TABLET PORTRAIT:
@@ -501,11 +502,11 @@ public class Iteration2 {
 		       // ASSERT TABLET PORTRAIT AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
 		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT TABLET PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT TABLET PORTRAIT AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT TABLET PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
-		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT TABLET PORTRAIT AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 		       
 		       // MOBILE LANDSCAPE:
@@ -513,11 +514,11 @@ public class Iteration2 {
 		       // ASSERT MOBILE LANDSCAPE AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
 		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT MOBILE LANDSCAPE AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT MOBILE LANDSCAPE AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT MOBILE LANDSCAPE AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
-		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT MOBILE LANDSCAPE AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 		       
 		       // MOBILE PORTRAIT:
@@ -525,25 +526,24 @@ public class Iteration2 {
 		       // ASSERT MOBILE PORTRAIT AGE 5 AND 6 TITLES ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
 		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       
-		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
-		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 BLOCK ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
 		       
         } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
     }
 	
 	/**
-	 * Test responsive Desktop aand Tablet and Mobile Home page Age Blocks sections are 50% of the browser width
+	 * Test responsive Desktop and Tablet and Mobile Home page Age Images position is compatible to the platform being used
 	 * <p>Date Created: 2016-07-26</p>
 	 * <p>Date Modified: 2016-07-26<p>
 	 * <p>Original Version: V1</p>
@@ -553,7 +553,110 @@ public class Iteration2 {
 	 */
 	@SuppressWarnings("static-access")
 	@Test(groups = {"TC-34960"}, priority = 10)
-    public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocks() throws IOException, IllegalArgumentException, MalformedURLException {
+    public void testResponsiveDesktopAndMobileDevicesHomePageAgeImagesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           int alignment, distance, symmetryRatio;
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		       
+		       // DESKTOP:
+		       helper.fileWriterPrinter("\n" + "DESKTOP:");
+		       driver.manage().window().maximize();			       
+		       // ASSERT DESKTOP AGE 5 TITLE IS MORE LEFT THEN AGE 5 IMAGE:
+		       distance = helper.getHorizontalDistanceBetweenTwoElements(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], distance > 0);		       
+		       // ASSERT DESKTOP AGE 6 TITLE IS MORE RIGHT THEN AGE 6 IMAGE:
+		       distance = helper.getHorizontalDistanceBetweenTwoElements(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverTitle);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], distance > 0);		       
+		       // ASSERT DESKTOP AGE 5 IMAGE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT DESKTOP AGE 6 IMAGE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+
+		       // TABLET LANDSCAPE:
+		       helper.switchWindowSizeToTabletLandscape(driver);
+		       
+		       // ASSERT TABLET LANDSCAPE AGE 5 TITLE IS SIMMETRIC TO AGE 5 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderTitle);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100) );		       
+		       // ASSERT TABLET LANDSCAPE AGE 6 TITLE IS SIMMETRIC TO AGE 6 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));		       
+		       // ASSERT TABLET LANDSCAPE AGE 5 IMAGE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT TABLET LANDSCAPE AGE 6 IMAGE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+
+		       // TABLET PORTRAIT:
+		       helper.switchWindowSizeToTabletPortrait(driver);
+		       // ASSERT TABLET PORTRAIT AGE 5 TITLE IS SIMMETRIC TO AGE 5 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderTitle);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));		       
+		       // ASSERT TABLET PORTRAIT AGE 6 TITLE IS SIMMETRIC TO AGE 6 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));	       
+		       // ASSERT TABLET PORTRAIT AGE 5 IMAGE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT TABLET PORTRAIT AGE 6 IMAGE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       // ASSERT MOBILE LANDSCAPE AGE 5 TITLE IS SIMMETRIC TO AGE 5 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderTitle);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));		       
+		       // ASSERT MOBILE LANDSCAPE AGE 6 TITLE IS SIMMETRIC TO AGE 6 IMAGE:
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));	       
+		       // ASSERT MOBILE LANDSCAPE AGE 5 IMAGE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT MOBILE LANDSCAPE AGE 6 IMAGE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverBlock);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+
+		       // MOBILE PORTRAIT:
+		       helper.switchWindowSizeToMobilePortrait(driver);		       
+		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);		       
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+	     
+        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+    }
+	
+	/**
+	 * Test responsive Desktop and Tablet and Mobile Home page Age Blocks sections are 50% of the browser width
+	 * <p>Date Created: 2016-07-26</p>
+	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34960</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34960"}, priority = 11)
+    public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocksOccupyHalfBrowser() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -569,114 +672,193 @@ public class Iteration2 {
 		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
 		       
 		       // DESKTOP:
+		       helper.fileWriterPrinter("\n" + "DESKTOP:");
 		       driver.manage().window().maximize();
-		       
 		       // ASSERT DESKTOP SCREEN DIVISION BY AGES IS HALF-HALF:
-		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
-		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
-		       
-		       helper.fileWriterPrinter("\nDESKTOP SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
-		       helper.fileWriterPrinter(  "DESKTOP SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
-		       
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderBlock);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverBlock);
+		       helper.fileWriterPrinter("\nDESKTOP SCREEN AGE 5 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "DESKTOP SCREEN AGE 6 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
 		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
 		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       
-		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
-		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
-		       
+		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 5 BLOCK = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 6 BLOCK = " + df.format(ageSixWidthPercents ) + " %");
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
-		       
 		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
 		       // TABLET LANDSCAPE:
 		       helper.switchWindowSizeToTabletLandscape(driver);
-		       
 		       // ASSERT TABLET LANDSCAPE SCREEN DIVISION BY AGES IS HALF-HALF:
-		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
-		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
-		       
-		       helper.fileWriterPrinter("\nTABLET LANDSCAPE SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
-		       helper.fileWriterPrinter(  "TABLET LANDSCAPE SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
-		       
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderBlock);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverBlock);	       
+		       helper.fileWriterPrinter("\nTABLET LANDSCAPE SCREEN AGE 5 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "TABLET LANDSCAPE SCREEN AGE 6 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));	       
 		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       
-		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
-		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
-		       
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );	       
+		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 5 BLOCK = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 6 BLOCK = " + df.format(ageSixWidthPercents ) + " %");	       
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
-		       
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);	       
 		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
 		       // TABLET PORTRAIT:
 		       helper.switchWindowSizeToTabletPortrait(driver);
-		       
 		       // ASSERT TABLET PORTRAIT SCREEN DIVISION BY AGES IS HALF-HALF:
-		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
-		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
-		       
-		       helper.fileWriterPrinter("\nTABLET PORTRAIT SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
-		       helper.fileWriterPrinter(  "TABLET PORTRAIT SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
-		       
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderBlock);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverBlock);	       
+		       helper.fileWriterPrinter("\nTABLET PORTRAIT SCREEN AGE 5 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "TABLET PORTRAIT SCREEN AGE 6 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));	       
 		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       
-		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
-		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
-		       
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );	       
+		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 5 BLOCK = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 6 BLOCK = " + df.format(ageSixWidthPercents ) + " %");	       
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
-		       
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);	       
 		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
-		       
 		       // ASSERT MOBILE LANDSCAPE SCREEN DIVISION BY AGES IS HALF-HALF:
-		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
-		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
-		       
-		       helper.fileWriterPrinter("\nMOBILE LANDSCAPE SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
-		       helper.fileWriterPrinter(  "MOBILE LANDSCAPE SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
-		       
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderBlock);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverBlock);	       
+		       helper.fileWriterPrinter("\nMOBILE LANDSCAPE SCREEN AGE 5 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "MOBILE LANDSCAPE SCREEN AGE 6 BLOCK WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));	       
 		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
-		       
-		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
-		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
-		       
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );	       
+		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 5 BLOCK = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 6 BLOCK = " + df.format(ageSixWidthPercents ) + " %");	       
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
-		       
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);	       
 		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
 		       // MOBILE PORTRAIT:
 		       helper.switchWindowSizeToMobilePortrait(driver);
-		       
 		       // ASSERT MOBILE PORTRAIT SCREEN DIVISION BY AGES IS HALF-HALF:
-		       ageFiveHeight = helper.getElementHeight(driver, Common.homePageFiveAndUnderImage);
-		       ageSixHeight  = helper.getElementHeight(driver, Common.homePageSixAndOverImage);
-		       
+		       ageFiveHeight = helper.getElementHeight(driver, Common.homePageFiveAndUnderBlock);
+		       ageSixHeight  = helper.getElementHeight(driver, Common.homePageSixAndOverBlock);	       
 		       helper.fileWriterPrinter("\nMOBILE PORTRAIT SCREEN AGE 5 HEIGHT (PIXELS) = " + Integer.valueOf(df.format(ageFiveHeight)));
-		       helper.fileWriterPrinter(  "MOBILE PORTRAIT SCREEN AGE 6 HEIGHT (PIXELS) = " + Integer.valueOf(df.format(ageSixHeight)));
-		       
+		       helper.fileWriterPrinter(  "MOBILE PORTRAIT SCREEN AGE 6 BLOCK HEIGHT (PIXELS) = " + Integer.valueOf(df.format(ageSixHeight)));	       
 		       ageFiveHeightPercents = (double) ( (ageFiveHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
-		       ageSixHeightPercents  = (double) (  (ageSixHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
-		       
+		       ageSixHeightPercents  = (double) (  (ageSixHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );	       
 		       helper.fileWriterPrinter("MOBILE PORTRAIT SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveHeightPercents) + " %");
-		       helper.fileWriterPrinter("MOBILE PORTRAIT SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixHeightPercents ) + " %");
-		       
+		       helper.fileWriterPrinter("MOBILE PORTRAIT SCREEN  - COVERAGE BY AGE 6 BLOCK = " + df.format(ageSixHeightPercents ) + " %");	       
 		       acceptanceCriteria = (ageFiveHeightPercents >= 49) && (ageFiveHeightPercents <= 51);
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
-		       
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);	       
 		       acceptanceCriteria = (ageSixHeightPercents >= 49) && (ageSixHeightPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+    }
+	
+	/**
+	 * Test responsive Desktop and Tablet and Mobile Home page TVOKids logo is not a hyperlink
+	 * <p>Date Created: 2016-07-26</p>
+	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34960</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34960"}, priority = 12)
+    public void testResponsiveDesktopAndMobileDevicesHomePageAgeLogoIsNotHyperlink() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		       
+		       // DESKTOP:
+		       helper.fileWriterPrinter("\n" + "DESKTOP:");
+		       driver.manage().window().maximize();
+		       // ASSERT DESKTOP SCREEN HOME PAGE LOGO IS NOT CLICKABLE:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageLogo, Common.homeURL, false, false);
+		       
+		       // TABLET LANDSCAPE:
+		       helper.switchWindowSizeToTabletLandscape(driver);
+		       // ASSERT TABLET LANDSCAPE SCREEN HOME PAGE LOGO IS NOT CLICKABLE:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageLogo, Common.homeURL, false, false);
+		       
+		       // TABLET PORTRAIT:
+		       helper.switchWindowSizeToTabletPortrait(driver);
+		       // ASSERT TABLET PORTRAIT SCREEN HOME PAGE LOGO IS NOT CLICKABLE:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageLogo, Common.homeURL, false, false);
+		       
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       // ASSERT MOBILE LANDSCAPE SCREEN HOME PAGE LOGO IS NOT CLICKABLE:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageLogo, Common.homeURL, false, false);
+		       
+		       // MOBILE PORTRAIT:
+		       helper.switchWindowSizeToMobilePortrait(driver);
+		       // ASSERT MOBILE PORTRAIT SCREEN HOME PAGE LOGO IS NOT CLICKABLE:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageLogo, Common.homeURL, false, false);
+		       
+        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+    }
+	
+	/**
+	 * Test responsive Desktop and Tablet and Mobile Home page both ages group blocks are hyperlinked to the corresponding landing page
+	 * <p>Date Created: 2016-07-26</p>
+	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34960</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34960"}, priority = 13)
+    public void testResponsiveDesktopAndMobileDevicesHomePageClickAgeBlocksOpensCorrectLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		       
+		       // DESKTOP:
+		       helper.fileWriterPrinter("\n" + "DESKTOP:");
+		       driver.manage().window().maximize();
+		       // ASSERT DESKTOP SCREEN CLICK ON AGE 5 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
+		       // ASSERT DESKTOP SCREEN CLICK ON AGE 6 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       
+		       // TABLET LANDSCAPE:
+		       helper.switchWindowSizeToTabletLandscape(driver);
+		       // ASSERT TABLET LANDSCAPE SCREEN CLICK ON AGE 5 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
+		       // ASSERT TABLET LANDSCAPE SCREEN CLICK ON AGE 6 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       
+		       // TABLET PORTRAIT:
+		       helper.switchWindowSizeToTabletPortrait(driver);
+		       // ASSERT TABLET PORTRAIT SCREEN CLICK ON AGE 5 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
+		       // ASSERT TABLET PORTRAIT SCREEN CLICK ON AGE 6 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       // ASSERT MOBILE LANDSCAPE SCREEN CLICK ON AGE 5 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
+		       // ASSERT MOBILE LANDSCAPE SCREEN CLICK ON AGE 6 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       
+		       // MOBILE PORTRAIT:
+		       helper.switchWindowSizeToMobilePortrait(driver);
+		       // ASSERT MOBILE PORTRAIT SCREEN CLICK ON AGE 5 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
+		       // ASSERT MOBILE PORTRAIT SCREEN CLICK ON AGE 6 BLOCK:
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
 		       
         } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
     }

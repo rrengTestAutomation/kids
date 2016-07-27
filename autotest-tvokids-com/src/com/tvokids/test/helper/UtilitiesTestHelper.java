@@ -4891,14 +4891,20 @@ public class UtilitiesTestHelper{
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public int getInternalElementVerticalSymmetry(WebDriver driver, String externalXpath, String internalXpath) throws NumberFormatException, IOException {
-		int Y = driver.findElement(By.xpath(externalXpath)).getLocation().getY();
-		int H = driver.findElement(By.xpath(externalXpath)).getSize().getHeight();
-		int y = driver.findElement(By.xpath(internalXpath)).getLocation().getY();
-		int h = driver.findElement(By.xpath(internalXpath)).getSize().getHeight();
+	public int getInternalElementVerticalSymmetry(WebDriver driver, String xpathExternal, String xpathInternal) throws NumberFormatException, IOException {
+		int Y = driver.findElement(By.xpath(xpathExternal)).getLocation().getY();
+		int H = driver.findElement(By.xpath(xpathExternal)).getSize().getHeight();
+		int y = driver.findElement(By.xpath(xpathInternal)).getLocation().getY();
+		int h = driver.findElement(By.xpath(xpathInternal)).getSize().getHeight();
+		int symmetryRatio = 0;
 		int upperSpace = Math.abs(Y - y);
 		int bottomSpace = Math.abs(Y + H - y - h);
-		int symmetryRatio = (bottomSpace/upperSpace)*100;
+		if((upperSpace != 0) && (bottomSpace != 0)) { symmetryRatio = (bottomSpace/upperSpace)*100; }		
+		if((upperSpace == 0) || (bottomSpace == 0)) { 
+			if(H > h) { symmetryRatio = 100*(H - Math.abs((Y+H/2)-(y+h/2)))/H; }
+			else      { symmetryRatio = 100*(h - Math.abs((Y+H/2)-(y+h/2)))/h; }
+			}		
+		if((upperSpace == 0) && (bottomSpace == 0)) { symmetryRatio = 100; }
 		fileWriterPrinter("\n" + "VERTICAL SIMMETRY = " + symmetryRatio + "%" + "\n");
 		return symmetryRatio;
 	}
@@ -4908,14 +4914,20 @@ public class UtilitiesTestHelper{
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public int getInternalElementHorizontalalSymmetry(WebDriver driver, String externalXpath, String internalXpath) throws NumberFormatException, IOException {
-		int X = driver.findElement(By.xpath(externalXpath)).getLocation().getX();
-		int W = driver.findElement(By.xpath(externalXpath)).getSize().getWidth();
-		int x = driver.findElement(By.xpath(internalXpath)).getLocation().getX();
-		int w = driver.findElement(By.xpath(internalXpath)).getSize().getWidth();
+	public int getInternalElementHorizontalalSymmetry(WebDriver driver, String xpathExternal, String xpathInternal) throws NumberFormatException, IOException {
+		int X = driver.findElement(By.xpath(xpathExternal)).getLocation().getX();
+		int W = driver.findElement(By.xpath(xpathExternal)).getSize().getWidth();
+		int x = driver.findElement(By.xpath(xpathInternal)).getLocation().getX();
+		int w = driver.findElement(By.xpath(xpathInternal)).getSize().getWidth();		
+		int symmetryRatio = 0;
 		int leftSpace = Math.abs(X - x);
 		int rightSpace = Math.abs(X + W - x - w);
-		int symmetryRatio = (rightSpace/leftSpace)*100;
+		if((leftSpace != 0) && (rightSpace != 0)) { symmetryRatio = (rightSpace/leftSpace)*100; }		
+		if((leftSpace == 0) || (rightSpace == 0)) { 
+			if(W > w) { symmetryRatio = 100*(W - Math.abs((X+W/2)-(x+w/2)))/W; }
+			else      { symmetryRatio = 100*(w - Math.abs((X+W/2)-(x+w/2)))/w; }
+			}		
+		if((leftSpace == 0) && (rightSpace == 0)) { symmetryRatio = 100; }
 		fileWriterPrinter("\n" + "HORIZONTAL SIMMETRY = " + symmetryRatio + "%" + "\n");
 		return symmetryRatio;
 	}
@@ -4983,10 +4995,10 @@ public class UtilitiesTestHelper{
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public int getHorizontalSpaceBetweenTwoElements(WebDriver driver, String xpathLeft, String xpathRight) throws NumberFormatException, IOException {
-		int X = driver.findElement(By.xpath(xpathRight)).getLocation().getX();
+	public int getHorizontalSpaceBetweenTwoElements(WebDriver driver, String xpathLeft, String xpathRight) throws NumberFormatException, IOException {		
 		int x = driver.findElement(By.xpath(xpathLeft)).getLocation().getX();
 		int w = driver.findElement(By.xpath(xpathLeft)).getSize().getWidth();
+		int X = driver.findElement(By.xpath(xpathRight)).getLocation().getX();
 		int space = X - x - w;
 		fileWriterPrinter("\n" + "HORIZONTAL SPACE = " + space);
 		return space;
@@ -5004,6 +5016,32 @@ public class UtilitiesTestHelper{
 		int space = Y - y - h;
 		fileWriterPrinter("\n" + "VERTICAL SPACE = " + space);
 		return space;
+	}
+	
+	/** 
+	 * Outputs horizontal distance between two elements
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getHorizontalDistanceBetweenTwoElements(WebDriver driver, String xpathLeft, String xpathRight) throws NumberFormatException, IOException {
+		int x = driver.findElement(By.xpath(xpathLeft)).getLocation().getX();
+		int X = driver.findElement(By.xpath(xpathRight)).getLocation().getX();
+		int distance = X - x;
+		fileWriterPrinter("\n" + "HORIZONTAL DISTANCE = " + distance);
+		return distance;
+	}
+	
+	/** 
+	 * Outputs vertical distance between two elements
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getVerticalDistanceBetweenTwoElements(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
+		int Y = driver.findElement(By.xpath(xpathLower)).getLocation().getY();
+		int y = driver.findElement(By.xpath(xpathUpper)).getLocation().getY();
+		int distance = Y - y;
+		fileWriterPrinter("\n" + "VERTICAL DISTANCE = " + distance);
+		return distance;
 	}
 	
 	/**
