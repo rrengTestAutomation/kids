@@ -451,7 +451,7 @@ public class Iteration2 {
        }
 	
 	/**
-	 * Test responsive Desktop and Tablet - Home page
+	 * Test responsive Desktop as well as Tablet and Mobile - Home page
 	 * <p>Date Created: 2016-07-26</p>
 	 * <p>Date Modified: 2016-07-26<p>
 	 * <p>Original Version: V1</p>
@@ -461,7 +461,7 @@ public class Iteration2 {
 	 */
 	@SuppressWarnings("static-access")
 	@Test(groups = {"TC-34960"}, priority = 9)
-    public void testResponsiveDesktopAndTabletHomePage() throws IOException, IllegalArgumentException, MalformedURLException {
+    public void testResponsiveDesktopAndMobileDevicesHomePage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
