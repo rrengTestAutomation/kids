@@ -4921,15 +4921,54 @@ public class UtilitiesTestHelper{
 	}
 	
 	/** 
-	 * Outputs internal Element horizontal location symmetry ratio in percents (ideal is 100%)
+	 * Outputs Elements Horizontal-Left borders alignment
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public int getElementHorizontalalAlignment(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
+	public int getElementHorizontalalAlignmentLeft(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
 		int X = driver.findElement(By.xpath(xpathUpper)).getLocation().getX();
 		int x = driver.findElement(By.xpath(xpathLower)).getLocation().getX();
 		int alignment = Math.abs(X - x);
 		fileWriterPrinter("\n" + "HORIZONTAL ALIGNMENT = " + alignment);
+		return alignment;
+		}
+	
+	/** 
+	 * Outputs Elements Horizontal-Right borders alignment
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getElementHorizontalalAlignmentRight(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
+		int X = driver.findElement(By.xpath(xpathUpper)).getLocation().getX() + driver.findElement(By.xpath(xpathUpper)).getSize().getWidth();
+		int x = driver.findElement(By.xpath(xpathLower)).getLocation().getX() + driver.findElement(By.xpath(xpathLower)).getSize().getWidth();
+		int alignment = Math.abs(X - x);
+		fileWriterPrinter("\n" + "HORIZONTAL ALIGNMENT = " + alignment);
+		return alignment;
+		}
+	
+	/** 
+	 * Outputs Elements Vertical-Top borders Alignment
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getElementVerticalAlignmentTop(WebDriver driver, String xpathLeft, String xpathRight) throws NumberFormatException, IOException {
+		int Y = driver.findElement(By.xpath(xpathLeft)).getLocation().getY();
+		int y = driver.findElement(By.xpath(xpathRight)).getLocation().getY();
+		int alignment = Math.abs(Y - y);
+		fileWriterPrinter("\n" + "VERTICAL ALIGNMENT = " + alignment);
+		return alignment;
+		}
+	
+	/** 
+	 * Outputs Elements Vertical-Bottom borders Alignment
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getElementVerticalAlignmentBottom(WebDriver driver, String xpathLeft, String xpathRight) throws NumberFormatException, IOException {
+		int Y = driver.findElement(By.xpath(xpathLeft)).getLocation().getY() + driver.findElement(By.xpath(xpathLeft)).getSize().getHeight();
+		int y = driver.findElement(By.xpath(xpathRight)).getLocation().getY() + driver.findElement(By.xpath(xpathRight)).getSize().getHeight();
+		int alignment = Math.abs(Y - y);
+		fileWriterPrinter("\n" + "VERTICAL ALIGNMENT = " + alignment);
 		return alignment;
 		}
 	

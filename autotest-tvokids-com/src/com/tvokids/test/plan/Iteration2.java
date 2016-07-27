@@ -451,7 +451,99 @@ public class Iteration2 {
        }
 	
 	/**
-	 * Test responsive Desktop as well as Tablet and Mobile - Home page
+	 * Test responsive Desktop aand Tablet and Mobile Home page Age Titles position is compatible to the platform being used
+	 * <p>Date Created: 2016-07-26</p>
+	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34960</p>
+	 */
+	@Test(groups = {"TC-34960"}, priority = 9)
+    public void testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           int alignment;
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+		       
+		       // DESKTOP:
+		       driver.manage().window().maximize();		       
+		       // ASSERT DESKTOP AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+
+		       // TABLET LANDSCAPE:
+		       helper.switchWindowSizeToTabletLandscape(driver);
+		       // ASSERT TABLET LANDSCAPE AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT TABLET LANDSCAPE AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT TABLET LANDSCAPE AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+
+		       // TABLET PORTRAIT:
+		       helper.switchWindowSizeToTabletPortrait(driver);
+		       // ASSERT TABLET PORTRAIT AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT TABLET PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT TABLET PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       // ASSERT MOBILE LANDSCAPE AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT MOBILE LANDSCAPE AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT MOBILE LANDSCAPE AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
+		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       
+		       // MOBILE PORTRAIT:
+		       helper.switchWindowSizeToMobilePortrait(driver);
+		       // ASSERT MOBILE PORTRAIT AGE 5 AND 6 TITLES ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       
+		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
+		       // ASSERT DESKTOP AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
+		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
+		       
+        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+    }
+	
+	/**
+	 * Test responsive Desktop aand Tablet and Mobile Home page Age Blocks sections are 50% of the browser width
 	 * <p>Date Created: 2016-07-26</p>
 	 * <p>Date Modified: 2016-07-26<p>
 	 * <p>Original Version: V1</p>
@@ -460,8 +552,8 @@ public class Iteration2 {
 	 * <p>Test Cases: 34960</p>
 	 */
 	@SuppressWarnings("static-access")
-	@Test(groups = {"TC-34960"}, priority = 9)
-    public void testResponsiveDesktopAndMobileDevicesHomePage() throws IOException, IllegalArgumentException, MalformedURLException {
+	@Test(groups = {"TC-34960"}, priority = 10)
+    public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocks() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
