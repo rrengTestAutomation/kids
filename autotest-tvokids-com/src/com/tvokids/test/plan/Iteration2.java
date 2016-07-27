@@ -4,7 +4,7 @@ package com.tvokids.test.plan;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-// import java.text.DecimalFormat;
+import java.text.DecimalFormat;
 
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
@@ -466,6 +466,11 @@ public class Iteration2 {
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           double ageFiveWidth, ageSixWidth, ageFiveWidthPercents, ageSixWidthPercents;
+	           double ageFiveHeight, ageSixHeight, ageFiveHeightPercents, ageSixHeightPercents;
+	           DecimalFormat df = new DecimalFormat("#.###");
 	           Boolean acceptanceCriteria;
 	           
 	           // NAVIGATE TO HOME PAGE:
@@ -474,19 +479,111 @@ public class Iteration2 {
 		       // DESKTOP:
 		       driver.manage().window().maximize();
 		       
-		       // ASSERT SCREEN DEVISION BY AGES IS HALF-HALF:
-		       int ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
-		       int ageSixWidth = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
+		       // ASSERT DESKTOP SCREEN DIVISION BY AGES IS HALF-HALF:
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
 		       
-		       float ageFiveWidthPercents = (float) (ageFiveWidth*100/(ageFiveWidth + ageSixWidth));
-		       float ageSixWidthPercents  = (float) (ageSixWidth*100/(ageFiveWidth + ageSixWidth));
-		       helper.fileWriterPrinter("\nWIDTH OF AGE 5: " + String.format("%.02f",ageFiveWidthPercents) + " %");
-		       helper.fileWriterPrinter("WIDTH OF AGE 6: " + String.format("%.02f",ageSixWidthPercents) + " %");
+		       helper.fileWriterPrinter("\nDESKTOP SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "DESKTOP SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
+		       
+		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       
+		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("DESKTOP SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
 		       
 		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
 		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       // TABLET LANDSCAPE:
+		       helper.switchWindowSizeToTabletLandscape(driver);
+		       
+		       // ASSERT TABLET LANDSCAPE SCREEN DIVISION BY AGES IS HALF-HALF:
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
+		       
+		       helper.fileWriterPrinter("\nTABLET LANDSCAPE SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "TABLET LANDSCAPE SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
+		       
+		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       
+		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("TABLET LANDSCAPE SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
+		       
+		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       // TABLET PORTRAIT:
+		       helper.switchWindowSizeToTabletPortrait(driver);
+		       
+		       // ASSERT TABLET PORTRAIT SCREEN DIVISION BY AGES IS HALF-HALF:
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
+		       
+		       helper.fileWriterPrinter("\nTABLET PORTRAIT SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "TABLET PORTRAIT SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
+		       
+		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       
+		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("TABLET PORTRAIT SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
+		       
+		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       
+		       // ASSERT MOBILE LANDSCAPE SCREEN DIVISION BY AGES IS HALF-HALF:
+		       ageFiveWidth = helper.getElementWidth(driver, Common.homePageFiveAndUnderImage);
+		       ageSixWidth  = helper.getElementWidth(driver, Common.homePageSixAndOverImage);
+		       
+		       helper.fileWriterPrinter("\nMOBILE LANDSCAPE SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveWidth)));
+		       helper.fileWriterPrinter(  "MOBILE LANDSCAPE SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixWidth)));
+		       
+		       ageFiveWidthPercents = (double) ( (ageFiveWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       ageSixWidthPercents  = (double) (  (ageSixWidth*100/(ageFiveWidth + ageSixWidth))*1000/1000.000   );
+		       
+		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveWidthPercents) + " %");
+		       helper.fileWriterPrinter("MOBILE LANDSCAPE SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixWidthPercents ) + " %");
+		       
+		       acceptanceCriteria = (ageFiveWidthPercents >= 49) && (ageFiveWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       acceptanceCriteria = (ageSixWidthPercents >= 49) && (ageSixWidthPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       // MOBILE PORTRAIT:
+		       helper.switchWindowSizeToMobilePortrait(driver);
+		       
+		       // ASSERT MOBILE PORTRAIT SCREEN DIVISION BY AGES IS HALF-HALF:
+		       ageFiveHeight = helper.getElementHeight(driver, Common.homePageFiveAndUnderImage);
+		       ageSixHeight  = helper.getElementHeight(driver, Common.homePageSixAndOverImage);
+		       
+		       helper.fileWriterPrinter("\nMOBILE PORTRAIT SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveHeight)));
+		       helper.fileWriterPrinter(  "MOBILE PORTRAIT SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixHeight)));
+		       
+		       ageFiveHeightPercents = (double) ( (ageFiveHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
+		       ageSixHeightPercents  = (double) (  (ageSixHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
+		       
+		       helper.fileWriterPrinter("MOBILE PORTRAIT SCREEN  - COVERAGE BY AGE 5 = " + df.format(ageFiveHeightPercents) + " %");
+		       helper.fileWriterPrinter("MOBILE PORTRAIT SCREEN  - COVERAGE BY AGE 6 = " + df.format(ageSixHeightPercents ) + " %");
+		       
+		       acceptanceCriteria = (ageFiveHeightPercents >= 49) && (ageFiveHeightPercents <= 51);
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
+		       
+		       acceptanceCriteria = (ageSixHeightPercents >= 49) && (ageSixHeightPercents <= 51);
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], acceptanceCriteria);
 		       
         } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
