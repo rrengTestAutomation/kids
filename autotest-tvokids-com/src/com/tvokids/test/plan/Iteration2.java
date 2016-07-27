@@ -571,8 +571,8 @@ public class Iteration2 {
 		       ageFiveHeight = helper.getElementHeight(driver, Common.homePageFiveAndUnderImage);
 		       ageSixHeight  = helper.getElementHeight(driver, Common.homePageSixAndOverImage);
 		       
-		       helper.fileWriterPrinter("\nMOBILE PORTRAIT SCREEN AGE 5 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageFiveHeight)));
-		       helper.fileWriterPrinter(  "MOBILE PORTRAIT SCREEN AGE 6 WIDTH (PIXELS) = " + Integer.valueOf(df.format(ageSixHeight)));
+		       helper.fileWriterPrinter("\nMOBILE PORTRAIT SCREEN AGE 5 HEIGHT (PIXELS) = " + Integer.valueOf(df.format(ageFiveHeight)));
+		       helper.fileWriterPrinter(  "MOBILE PORTRAIT SCREEN AGE 6 HEIGHT (PIXELS) = " + Integer.valueOf(df.format(ageSixHeight)));
 		       
 		       ageFiveHeightPercents = (double) ( (ageFiveHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
 		       ageSixHeightPercents  = (double) (  (ageSixHeight*100/(ageFiveHeight + ageSixHeight))*1000/1000.000   );
