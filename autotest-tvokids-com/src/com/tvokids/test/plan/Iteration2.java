@@ -862,7 +862,71 @@ public class Iteration2 {
 		       
         } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
     }
+		
+	/**
+	 * Test interactivity Home Page age block's background colour changes if mouse hover
+	 * <p>Date Created: 2016-07-29</p>
+	 * <p>Date Modified: 2016-07-29<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34969</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34969"}, priority = 14)
+    public void testInteractivityHomePageAgeBlockMouseHoverColourChanges() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           String colorDefaultBackground, colorDefaultTitle, colorHoverBackground, colorHoverTitleText;
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Common.homeURL);
 		       
+		       // AGE 5 AND UNDER:
+		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+		       
+		       // AGE 5 AND UNDER DEFAULT COLOR:
+		       colorDefaultBackground = helper.getColorHEX(driver, Common.homePageFiveAndUnderBlock, "background", true, "AGE 5 AND UNDER DEFAULT BACKGROUND COLOR");
+		       colorDefaultTitle = helper.getColorHEX(driver, Common.homePageFiveAndUnderTitle, "color", true, "AGE 5 AND UNDER DEFAULT TITLE TEXT COLOR"); 
+		       
+		       // AGE 5 AND UNDER MOUSE HOVER ACTION:
+		       helper.hoverElement(driver, Common.homePageFiveAndUnderBlock);
+		       Thread.sleep(1000);
+		       
+		       // AGE 5 AND UNDER AFTER HOVER COLOR:
+		       colorHoverBackground = helper.getColorHEX(driver, Common.homePageFiveAndUnderBlock, "background", true, "AGE 5 AND UNDER AFTER HOVER BACKGROUND COLOR");
+		       colorHoverTitleText = helper.getColorHEX(driver, Common.homePageFiveAndUnderTitle, "color", true, "AGE 5 AND UNDER AFTER HOVER TITLE TEXT COLOR");
+		       
+		       // ASSERT AGE 5 AND UNDER:
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultBackground, colorHoverTitleText);
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultTitle, colorHoverBackground);
+		       
+		       // AGE 6 AND OVER:
+		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+		       
+		       // AGE 6 AND OVER DEFAULT COLOR:
+		       colorDefaultBackground = helper.getColorHEX(driver, Common.homePageSixAndOverBlock, "background", true, "AGE 6 AND OVER DEFAULT BACKGROUND COLOR");
+		       colorDefaultTitle = helper.getColorHEX(driver, Common.homePageSixAndOverTitle, "color", true, "AGE 6 AND OVER DEFAULT TITLE TEXT COLOR"); 
+		       
+		       // AGE 6 AND OVER MOUSE HOVER ACTION:
+		       helper.hoverElement(driver, Common.homePageSixAndOverBlock);
+		       Thread.sleep(1000);
+		       
+		       // AGE 6 AND OVER AFTER HOVER COLOR:
+		       colorHoverBackground = helper.getColorHEX(driver, Common.homePageSixAndOverBlock, "background", true, "AGE 6 AND OVER AFTER HOVER BACKGROUND COLOR");
+		       colorHoverTitleText = helper.getColorHEX(driver, Common.homePageSixAndOverTitle, "color", true, "AGE 6 AND OVER AFTER HOVER TITLE TEXT COLOR");
+		       
+		       // ASSERT 6 AND OVER:
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultBackground, colorHoverTitleText);
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultTitle, colorHoverBackground);
+		       
+	        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	    }
+	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }

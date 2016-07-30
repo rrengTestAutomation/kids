@@ -4777,14 +4777,52 @@ public class UtilitiesTestHelper{
 	}
 	
 	/** 
+	 * Output HEX-color of Element identified by Element
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public String getColorHEX(WebDriver driver, By element, String css, Boolean ifPrint, String comment) throws NumberFormatException, IOException {
+		String color = driver.findElement(element).getCssValue(css), space = "";
+		       color = color.substring(0, color.indexOf(")") + 1);
+		if(comment.length() > 0) { space = ": "; }
+		if(ifPrint){ fileWriterPrinter("\n" + comment + space + Color.fromString(color).asHex()); }
+		return Color.fromString(color).asHex();		
+	}
+	
+	/** 
 	 * Output HEX-color of Element identified by Xpath
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public String getColorHEX(WebDriver driver, String xpath, String css, Boolean ifPrint) throws NumberFormatException, IOException {
-		String color = driver.findElement(By.xpath(xpath)).getCssValue(css);
-		if(ifPrint){ fileWriterPrinter(Color.fromString(color).asHex()); }
+	public String getColorHEX(WebDriver driver, String xpath, String css, Boolean ifPrint, String comment) throws NumberFormatException, IOException {
+		String color = driver.findElement(By.xpath(xpath)).getCssValue(css), space = "";
+		       color = color.substring(0, color.indexOf(")") + 1);
+		if(comment.length() > 0) { space = ": "; }
+		if(ifPrint){ fileWriterPrinter("\n" + comment + space + Color.fromString(color).asHex()); }
 		return Color.fromString(color).asHex();		
+	}
+	
+	/** 
+	 * Output integer array of RGB-color values of Element identified by Element
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int[] getColorRGBarray(WebDriver driver, By element, String css, Boolean ifPrint) throws NumberFormatException, IOException {
+		String color = driver.findElement(element).getCssValue(css);
+		       color = color.substring(0, color.indexOf(")") + 1);
+		String colorAfterRed = color.substring(color.indexOf(",") + 2, color.length());
+		String colorAfterGreen = colorAfterRed.substring(colorAfterRed.indexOf(",") + 2, colorAfterRed.length());		
+		int red   = Integer.valueOf(color.substring(color.indexOf("(") + 1, color.indexOf(",")));
+		int green = Integer.valueOf(colorAfterRed.substring(0, colorAfterRed.indexOf(",")));
+		int blue  = Integer.valueOf(colorAfterGreen.substring(0, colorAfterGreen.indexOf(",")));
+		String[] Name = {"RED = ", "GREEN = ", "BLUE = "};
+		int[] Color = {red, green, blue};
+		if(ifPrint){
+			for (int i = 0; i < Color.length; i++) {
+				fileWriterPrinter(Name[0] + Color[0]);
+			}
+		}
+		return Color;
 	}
 	
 	/** 
@@ -4793,7 +4831,8 @@ public class UtilitiesTestHelper{
 	 * @throws NumberFormatException 
 	 */
 	public int[] getColorRGBarray(WebDriver driver, String xpath, String css, Boolean ifPrint) throws NumberFormatException, IOException {
-		String color = driver.findElement(By.xpath(xpath)).getCssValue(css);		
+		String color = driver.findElement(By.xpath(xpath)).getCssValue(css);
+		       color = color.substring(0, color.indexOf(")") + 1);
 		String colorAfterRed = color.substring(color.indexOf(",") + 2, color.length());
 		String colorAfterGreen = colorAfterRed.substring(colorAfterRed.indexOf(",") + 2, colorAfterRed.length());		
 		int red   = Integer.valueOf(color.substring(color.indexOf("(") + 1, color.indexOf(",")));
