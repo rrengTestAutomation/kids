@@ -16,7 +16,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2"><methods>
-<include name="testInteractivityHomePageAgeBlockMouseHoverColourChanges"/>
+<include name="testDesktopCharacterBannerNavigationButtons"/>
 </methods></class>
      
         </classes>

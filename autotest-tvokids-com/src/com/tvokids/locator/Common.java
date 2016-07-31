@@ -37,6 +37,12 @@ public class Common {
 	  public static String homePageSixAndOverTitle   = homePageSixAndOverBlock + "/div[@class='splash-text']";
 	  public static String homePageSixAndOverImage   = homePageSixAndOverBlock + "/picture/img";
 	  
+	  /**********age pages elements*******************/
+	  public static String charBannerButtonLeft  = "//button[@class='character-banner-button-prev']";
+	  public static String charBannerButtonRight = "//button[@class='character-banner-button-next']";
+	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
+	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
+			  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";
 

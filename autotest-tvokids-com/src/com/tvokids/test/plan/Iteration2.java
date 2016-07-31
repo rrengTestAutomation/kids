@@ -367,7 +367,7 @@ public class Iteration2 {
 	           
 	           // LINK GENERIC XPATH
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\\" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // NAVIGATE TO "AGE 5 AND UNDER":
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
@@ -925,6 +925,76 @@ public class Iteration2 {
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultTitle, colorHoverBackground);
 		       
 	        } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	    }
+	
+	/**
+	 * Test Desktop - Character banner rotation
+	 * <p>Date Created: 2016-07-30</p>
+	 * <p>Date Modified: 2016-07-30<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34144</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34144"}, priority = 15)
+    public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath;
+	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           
+	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
+	           characterWidth = helper.getElementWidth(driver, xpath);	           
+		       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
+		       Thread.sleep(1000);		       
+		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       
+	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
+	           helper.fileWriterPrinter("CHARACTER DEFAULT COORDINATE = " + defaultCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER   MOVED COORDINATE = " + movedCoordinateX);		      
+		       helper.fileWriterPrinter("CHARACTER           MOVEMENT = " + (movedCoordinateX - defaultCoordinateX) + " %\n");
+		       
+		       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
+		       Thread.sleep(1000);
+		       
+		       backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       helper.fileWriterPrinter("CHARACTER BACK COORDINATE = " + backCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER          RETURN = " + (backCoordinateX - movedCoordinateX) + " %");
+
+	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
 	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
