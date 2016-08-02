@@ -6,7 +6,7 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 /**
  * Converts "failed.log" into "test-failed.xml"
  */
-public class FailedLogToXmlConvertor {
+public class FailedLogToXmlConverter {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
 	public static void main(String[] args) throws IOException {

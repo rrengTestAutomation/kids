@@ -2438,11 +2438,11 @@ public class UtilitiesTestHelper{
 			    fileWriterPrinter(printLine);
 			}
             
-        // ####################### TESTNG-FAILED XML CONVERTOR START #######################
+        // ####################### TESTNG-FAILED XML CONVERTER START #######################
             /**
         	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
         	 */
-            public void testNgFailedToTestFailedConvertor(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
+            public void testNgFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
            		// DECLARATION
 				String sourceFileName = "testng-failed.xml";
     		
@@ -2466,7 +2466,7 @@ public class UtilitiesTestHelper{
     			if (Integer.valueOf(fileScanner("last.num")) > 1 ) {
     			   if (failed > 0) {
     				   if (failed == Integer.valueOf(fileScanner("last.num")) ) { fileWriterPrinter("ALL FAILED..."); }
-    				   else { fileWriterPrinter("FAILED " + failed + " OF " + Integer.valueOf(fileScanner("last.num"))); }
+    				   else { fileWriterPrinter("FAILED " + Integer.valueOf(fileScanner("last.num")) + " OF " + failed); }
     			   }
       			   if (failed == 0) { fileWriterPrinter("ALL PASSED!"); }
       			   }			
@@ -2543,7 +2543,7 @@ public class UtilitiesTestHelper{
         	    String[] linesArray = lines.toArray(new String[lines.size()]);
         	    return linesArray;
         	}
-        // ######################## TESTNG-FAILED XML CONVERTOR END ########################
+        // ######################## TESTNG-FAILED XML CONVERTER END ########################
             
         // ####################### TEST-NG XML EXTRACTOR-CREATER START #######################
             /**

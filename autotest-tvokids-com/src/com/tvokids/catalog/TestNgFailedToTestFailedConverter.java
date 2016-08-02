@@ -6,12 +6,12 @@ import com.tvokids.test.helper.UtilitiesTestHelper;
 /**
  * Converts "failed.log" into "test-failed.xml"
  */
-public class TestNgFailedToTestFailedConvertor {
+public class TestNgFailedToTestFailedConverter {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
 	public static void main(String[] args) throws IOException {
 	String reporterClass = "<class name=\"com.tvokids.email.All\"></class>";		
-	helper.testNgFailedToTestFailedConvertor("test-failed", "test-failed", "test-failed.xml", reporterClass);
+	helper.testNgFailedToTestFailedConverter("test-failed", "test-failed", "test-failed.xml", reporterClass);
 	}
 
 }
