@@ -15,7 +15,7 @@ public class Common {
 	  public static String userLoginPage   = homeURL + "/user"; 
 	  public static String adminContentURL = homeURL + "/admin/content";
 	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
-	  public static String sixAndOvererURL = homeURL + "/6-and-over";
+	  public static String sixAndOverURL = homeURL + "/6-and-over";
 	  
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
@@ -59,7 +59,7 @@ public class Common {
 	  public static String filterSelected   = "/descendant::option[@selected]";
 	  
 	  public static String fiveAndUnderLinkBase = "//a[@href='/5-and-under/";
-	  public static String sixAndOvererLinkBase = "//a[@href='/6-and-over/";
+	  public static String sixAndOverLinkBase = "//a[@href='/6-and-over/";
 	  
 	  
 	  public static String metaTag            = "//meta[@name]";

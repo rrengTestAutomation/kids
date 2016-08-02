@@ -380,12 +380,12 @@ public class Iteration2 {
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
 	           // NAVIGATE TO "AGE 6 AND OVER":
-	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOvererURL);
-//	           xpath = Common.sixAndOvererLinkBase + titleURL + Common.XpathEqualsEnd;
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+//	           xpath = Common.sixAndOverLinkBase + titleURL + Common.XpathEqualsEnd;
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           
 	           // ASSERT LINK IS CORRECT:
-	           expectedURL = Common.sixAndOvererURL + "/" + titleURL;
+	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
 	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
@@ -443,8 +443,8 @@ public class Iteration2 {
 		       // ASSERT EXISTANCE:
 		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, Common.fiveAndUnderURL, true, false);
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOvererURL,  true, false);     
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOverURL,  true, false);     
 		          
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
@@ -830,35 +830,35 @@ public class Iteration2 {
 		       // ASSERT DESKTOP SCREEN CLICK ON AGE 5 BLOCK:
 		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       // ASSERT DESKTOP SCREEN CLICK ON AGE 6 BLOCK:
-		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
 		       
 		       // TABLET LANDSCAPE:
 		       helper.switchWindowSizeToTabletLandscape(driver);
 		       // ASSERT TABLET LANDSCAPE SCREEN CLICK ON AGE 5 BLOCK:
 		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       // ASSERT TABLET LANDSCAPE SCREEN CLICK ON AGE 6 BLOCK:
-		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
 		       
 		       // TABLET PORTRAIT:
 		       helper.switchWindowSizeToTabletPortrait(driver);
 		       // ASSERT TABLET PORTRAIT SCREEN CLICK ON AGE 5 BLOCK:
 		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       // ASSERT TABLET PORTRAIT SCREEN CLICK ON AGE 6 BLOCK:
-		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
 		       
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
 		       // ASSERT MOBILE LANDSCAPE SCREEN CLICK ON AGE 5 BLOCK:
 		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       // ASSERT MOBILE LANDSCAPE SCREEN CLICK ON AGE 6 BLOCK:
-		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
 		       
 		       // MOBILE PORTRAIT:
 		       helper.switchWindowSizeToMobilePortrait(driver);
 		       // ASSERT MOBILE PORTRAIT SCREEN CLICK ON AGE 5 BLOCK:
 		       helper.clickLinkAndCheckURL(driver, Common.homePageFiveAndUnderBlock, Common.fiveAndUnderURL, true, false);
 		       // ASSERT MOBILE PORTRAIT SCREEN CLICK ON AGE 6 BLOCK:
-		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOvererURL, true, false);
+		       helper.clickLinkAndCheckURL(driver, Common.homePageSixAndOverBlock, Common.sixAndOverURL, true, false);
 		       
         } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
     }
@@ -956,7 +956,9 @@ public class Iteration2 {
 	           // DECLARATION:
 	           String title, titleURL, description, xpath;
 	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth;
-	           
+	           double DefaultCoordinateX, MovedCoordinateX, CharacterWidth, MovementRatio, BackCoordinateX, ReturntRatio;
+		       DecimalFormat df = new DecimalFormat("#");
+		       
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
@@ -983,17 +985,61 @@ public class Iteration2 {
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
 		       
 	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
-	           helper.fileWriterPrinter("CHARACTER DEFAULT COORDINATE = " + defaultCoordinateX);
-		       helper.fileWriterPrinter("CHARACTER   MOVED COORDINATE = " + movedCoordinateX);		      
-		       helper.fileWriterPrinter("CHARACTER           MOVEMENT = " + (movedCoordinateX - defaultCoordinateX) + " %\n");
+	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);		      
 		       
+		       DefaultCoordinateX = Double.valueOf(defaultCoordinateX);
+		       MovedCoordinateX = Double.valueOf(movedCoordinateX);
+		       CharacterWidth = Double.valueOf(characterWidth);
+		       MovementRatio  = (double) ( ((MovedCoordinateX - DefaultCoordinateX)*100/CharacterWidth)*1000/1000.000 );
+		       helper.fileWriterPrinter("CHARACTER SIZE MOVEMENT RATIO = " + df.format(MovementRatio) + " %\n");
+
 		       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
 		       Thread.sleep(1000);
 		       
 		       backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
-		       helper.fileWriterPrinter("CHARACTER BACK COORDINATE = " + backCoordinateX);
-		       helper.fileWriterPrinter("CHARACTER          RETURN = " + (backCoordinateX - movedCoordinateX) + " %");
+		       helper.fileWriterPrinter("CHARACTER BACK   COORDINATE =  " + backCoordinateX);
+		       BackCoordinateX = Double.valueOf(backCoordinateX);
+		       ReturntRatio  = (double) ( ((BackCoordinateX - MovedCoordinateX)*100/CharacterWidth)*1000/1000.000 );
+		       helper.fileWriterPrinter("CHARACTER SIZE RETURN RATIO = " + df.format(ReturntRatio) + " %");
+		       
+		       // ASSERT 5 AND UNDER CHARACTER MOVEMENT AND RETURN:
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 300 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 300 );
 
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           
+	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
+	           characterWidth = helper.getElementWidth(driver, xpath);	           
+		       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
+		       Thread.sleep(1000);		       
+		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       
+	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
+	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);		      
+		       
+		       DefaultCoordinateX = Double.valueOf(defaultCoordinateX);
+		       MovedCoordinateX = Double.valueOf(movedCoordinateX);
+		       CharacterWidth = Double.valueOf(characterWidth);
+		       MovementRatio  = (double) ( ((MovedCoordinateX - DefaultCoordinateX)*100/CharacterWidth)*1000/1000.000 );
+		       helper.fileWriterPrinter("CHARACTER SIZE MOVEMENT RATIO = " + df.format(MovementRatio) + " %\n");
+
+		       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
+		       Thread.sleep(1000);
+		       
+		       backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       helper.fileWriterPrinter("CHARACTER BACK   COORDINATE =  " + backCoordinateX);
+		       BackCoordinateX = Double.valueOf(backCoordinateX);
+		       ReturntRatio  = (double) ( ((BackCoordinateX - MovedCoordinateX)*100/CharacterWidth)*1000/1000.000 );
+		       helper.fileWriterPrinter("CHARACTER SIZE RETURN RATIO = " + df.format(ReturntRatio) + " %");
+		       
+		       // ASSERT 6 AND OVER CHARACTER MOVEMENT AND RETURN:
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 300 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 300 );
+		       
 	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
 	
