@@ -5291,13 +5291,23 @@ public class UtilitiesTestHelper{
 	        defaultCoordinateY = element.getLocation().getY();
 	        elementWidth = getElementWidth(driver, element);
 	        elementHeight = getElementHeight(driver, element);
+	        movedCoordinateX = defaultCoordinateX;
+	        movedCoordinateY = defaultCoordinateY;
 	        
 	    	// DRAG AND DROP ELEMENT BY X PIXEL OFFSET IN HORIZONTAL DIRECTION X AND Y PIXEL IN VERTICAL DIRECTION:   	
-	    	new Actions(driver).dragAndDropBy(element, X, Y).release(element).build().perform();	    	
-	    	// AFTER DRAG AND DROP MESSAGE:	    	    
-		    Thread.sleep(waitMilliSeconds);
-		    movedCoordinateX = element.getLocation().getX();
-		    movedCoordinateY = element.getLocation().getY();
+	    	int i = 0;
+	        while ( (((X != 0) && (movedCoordinateX == defaultCoordinateX)) || ((Y != 0) && (movedCoordinateY == defaultCoordinateY))) && (i < 3) ) {
+	        	new Actions(driver).dragAndDropBy(element, X, Y).release(element).build().perform();
+	        	Thread.sleep(waitMilliSeconds);
+	        	movedCoordinateX = element.getLocation().getX();
+	        	movedCoordinateY = element.getLocation().getY();
+	        	i++;
+	        	}
+	        
+//		    if( (X != 0) && (movedCoordinateX == defaultCoordinateX) ) { Boolean reRun = true; }
+//		    if( (Y != 0) && (movedCoordinateY == defaultCoordinateY) ) { Boolean reRun = true; }
+		    
+	    	// AFTER DRAG AND DROP MESSAGE:	
 	    	if (ifPrompt) { 
 	    		fileWriterPrinter(dragAndDropMessage(X, Y));
 	    		fileWriterPrinter("ELEMENT                 WIDTH = " + elementWidth);
@@ -5306,6 +5316,7 @@ public class UtilitiesTestHelper{
 	            fileWriterPrinter("ELEMENT  DEFAULT Y-COORDINATE = " + defaultCoordinateY);
 		        fileWriterPrinter("ELEMENT MOVED TO X-COORDINATE = " + movedCoordinateX);		      
 		        fileWriterPrinter("ELEMENT MOVED TO Y-COORDINATE = " + movedCoordinateY);
+		        fileWriterPrinter("ELEMENT  MOVE ATTEMPTS NUMBER = " + i);
 		        }
 	    	DefaultCoordinateX = Double.valueOf(defaultCoordinateX);
 	    	DefaultCoordinateY = Double.valueOf(defaultCoordinateY);
