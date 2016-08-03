@@ -66,7 +66,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -5021,10 +5021,16 @@ public class UtilitiesTestHelper{
 		}
 	
 	/** Outputs element Hight */
-	public int getElementHeight(WebDriver driver, String xpath) { return driver.findElement(By.xpath(xpath)).getSize().getHeight(); }
+	public int getElementHeight(WebDriver driver, WebElement element) { return element.getSize().getHeight(); }
+	
+	/** Outputs element Hight */
+	public int getElementHeight(WebDriver driver, String xpath) { return getElementHeight(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** Outputs element Width */
-	public int getElementWidth(WebDriver driver, String xpath) { return driver.findElement(By.xpath(xpath)).getSize().getWidth(); }
+	public int getElementWidth(WebDriver driver, WebElement element) { return element.getSize().getWidth(); }
+	
+	/** Outputs element Width */
+	public int getElementWidth(WebDriver driver, String xpath) { return getElementWidth(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** 
 	 * Outputs horizontal space between two elements
@@ -5226,5 +5232,96 @@ public class UtilitiesTestHelper{
 	    	File file = new File(sourcePath); 
 	    	file.renameTo(new File(targetPath));
 	    	}
+	       
+		/**
+	     * This Method generates JavaScript Alert shown during user difined time in seconds
+	     * @param args
+	     * @throws InterruptedException 
+	     */
+	    public void javaScriptAlert(WebDriver driver, String alert, int seconds) throws InterruptedException {
+			  String handle = driver.getWindowHandle();		      
+	    	  JavascriptExecutor javascript = (JavascriptExecutor) driver;
+	    	  javascript.executeScript("alert('" + alert + "');");
+	    	  // SWITCHING BACK TO INITIAL TAB:
+	    	  Thread.sleep(seconds * 1000);
+	    	  driver.switchTo().alert().accept();
+	          driver.switchTo().window(handle);
+	    	  }
 	    
+		// ########### DRAG AND DROP START ############
+	    public String dragAndDropMessage(int X, int Y) {
+	    	// DECLARATION:
+	    	String alertX, alertY, and, alert = "", dir;
+	    	// AFTER DRAG AND DROP ALERT:
+  		    alertX = " by " + X + " pixel offset In horizontal";
+  		    alertY = " by " + Y + " pixel offset In vertical";
+  		    and = "";
+  		    alert = "";
+  		    dir = " direction";
+  		    if (X == 0) { alertX = ""; }
+  		    if (Y == 0) { alertY = ""; }
+  		    if ((X != 0) && (Y != 0)) { and = " and"; dir = " directions";}
+  		    if ((X == 0) && (Y == 0)) { and = " by nothing"; dir = "";}
+  		    alert = "Element has been Drag-And-Dropped:" + alertX + and + alertY + dir;
+	    	return alert;
+	    	}
+	    
+	    public double[] dragAndDrop(WebDriver driver, String xpath, int X, int Y, Boolean ifPrompt, int waitMilliSeconds) throws InterruptedException, NumberFormatException, IOException {
+	    	// LOCATING ELEMENT TO DRAG:	    	  
+	    	WebElement element = driver.findElement(By.xpath(xpath));
+	    	// DRAG AND DROP ELEMENT BY X PIXEL OFFSET IN HORIZONTAL DIRECTION X AND Y PIXEL IN VERTICAL DIRECTION:
+	    	return dragAndDrop(driver, element, X, Y, ifPrompt, waitMilliSeconds);
+	    	}
+	    
+	    public double[] dragAndDrop(WebDriver driver, By by, int X, int Y, Boolean ifPrompt, int waitMilliSeconds) throws InterruptedException, NumberFormatException, IOException {
+	    	// LOCATING AN ELEMENT TO DRAG:
+	    	WebElement element = driver.findElement(by);
+	    	// DRAG AND DROP ELEMENT BY X PIXEL OFFSET IN HORIZONTAL DIRECTION X AND Y PIXEL IN VERTICAL DIRECTION:
+	    	return dragAndDrop(driver, element, X, Y, ifPrompt, waitMilliSeconds);
+	    	}
+	    
+	    public double[] dragAndDrop(WebDriver driver, WebElement element, int X, int Y, Boolean ifPrompt, int waitMilliSeconds) throws InterruptedException, NumberFormatException, IOException {	
+	    	// DECLARATION:
+	    	int defaultCoordinateX, defaultCoordinateY, movedCoordinateX, movedCoordinateY, elementWidth, elementHeight;
+	    	double DefaultCoordinateX,  DefaultCoordinateY, MovedCoordinateX, MovedCoordinateY, ElementWidth, ElementHeight, MovementRatioX, MovementRatioY;
+	    	DecimalFormat df = new DecimalFormat("#");
+	    	
+	    	// BEFORE PARAMETERS:
+	        defaultCoordinateX = element.getLocation().getX();
+	        defaultCoordinateY = element.getLocation().getY();
+	        elementWidth = getElementWidth(driver, element);
+	        elementHeight = getElementHeight(driver, element);
+	        
+	    	// DRAG AND DROP ELEMENT BY X PIXEL OFFSET IN HORIZONTAL DIRECTION X AND Y PIXEL IN VERTICAL DIRECTION:   	
+	    	new Actions(driver).dragAndDropBy(element, X, Y).release(element).build().perform();	    	
+	    	// AFTER DRAG AND DROP MESSAGE:	    	    
+		    Thread.sleep(waitMilliSeconds);
+		    movedCoordinateX = element.getLocation().getX();
+		    movedCoordinateY = element.getLocation().getY();
+	    	if (ifPrompt) { 
+	    		fileWriterPrinter(dragAndDropMessage(X, Y));
+	    		fileWriterPrinter("ELEMENT                 WIDTH = " + elementWidth);
+	            fileWriterPrinter("ELEMENT                HEIGHT = " + elementWidth);
+	            fileWriterPrinter("ELEMENT  DEFAULT X-COORDINATE = " + defaultCoordinateX);
+	            fileWriterPrinter("ELEMENT  DEFAULT Y-COORDINATE = " + defaultCoordinateY);
+		        fileWriterPrinter("ELEMENT MOVED TO X-COORDINATE = " + movedCoordinateX);		      
+		        fileWriterPrinter("ELEMENT MOVED TO Y-COORDINATE = " + movedCoordinateY);
+		        }
+	    	DefaultCoordinateX = Double.valueOf(defaultCoordinateX);
+	    	DefaultCoordinateY = Double.valueOf(defaultCoordinateY);
+	    	MovedCoordinateX = Double.valueOf(movedCoordinateX);
+	    	MovedCoordinateY = Double.valueOf(movedCoordinateY);
+	    	ElementWidth = Double.valueOf(elementWidth);
+	    	ElementHeight = Double.valueOf(elementHeight);
+	    	MovementRatioX  = (double) ( ((MovedCoordinateX - DefaultCoordinateX)*100/ElementWidth)*1000/1000.000 );
+	    	MovementRatioY  = (double) ( ((MovedCoordinateY - DefaultCoordinateY)*100/ElementHeight)*1000/1000.000 );
+	    	if (ifPrompt) {
+	    		fileWriterPrinter("ELEMENT SIZE X-MOVEMENT RATIO = " + df.format(MovementRatioX) + " %");
+	    		fileWriterPrinter("ELEMENT SIZE Y-MOVEMENT RATIO = " + df.format(MovementRatioY) + " %\n");
+	    		}
+	    	double[] array = {MovementRatioX, MovementRatioY};
+	    	return array;
+	    	}
+	    // ########### DRAG AND DROP START ############
+	        
 }

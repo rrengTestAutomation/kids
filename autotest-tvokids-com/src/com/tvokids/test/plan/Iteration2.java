@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +21,8 @@ import java.awt.Robot;
 import java.io.File;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 */
 
 //@SuppressWarnings("unused")
@@ -928,7 +929,7 @@ public class Iteration2 {
 	    }
 	
 	/**
-	 * Test Desktop - Character banner rotation
+	 * Test Desktop - Character banner rotation using Banner Arrows
 	 * <p>Date Created: 2016-07-30</p>
 	 * <p>Date Modified: 2016-07-30<p>
 	 * <p>Original Version: V1</p>
@@ -1012,7 +1013,8 @@ public class Iteration2 {
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 	           
 	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
-	           characterWidth = helper.getElementWidth(driver, xpath);	           
+	           characterWidth = helper.getElementWidth(driver, xpath);
+	           
 		       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
 		       Thread.sleep(1000);		       
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
@@ -1040,6 +1042,81 @@ public class Iteration2 {
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 300 );
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 300 );
 		       
+	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	    }
+	
+	/**
+	 * Test Desktop - Character banner rotation using Click and Drug
+	 * <p>Date Created: 2016-07-30</p>
+	 * <p>Date Modified: 2016-07-30<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34144</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34144"}, priority = 16)
+    public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           driver.manage().window().maximize();
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath;
+	           double MovementRatioForward, MovementRatioBack;
+		       
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd; // + "/ancestor::li";
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           // DRAGGING RIGHT:
+	           helper.fileWriterPrinter("\n" + "DRAGGING RIGHT:");	           
+	           MovementRatioForward = helper.dragAndDrop(driver, xpath, 250, 0, true, 1000)[0];
+	           // DRAGGING LEFT:
+		       helper.fileWriterPrinter("DRAGGING LEFT TEST:");		       
+		       MovementRatioBack = helper.dragAndDrop(driver, xpath, -250, 0, true, 500)[0];		       
+		       // ASSERT 5 AND UNDER CHARACTER MOVEMENT AND RETURN:
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatioForward) > 0 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatioBack) > 0 );
+		       
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           // DRAGGING RIGHT:
+	           helper.fileWriterPrinter("\n" + "DRAGGING RIGHT:");	           
+	           MovementRatioForward = helper.dragAndDrop(driver, xpath, 250, 0, true, 1000)[0];
+	           // DRAGGING LEFT:
+		       helper.fileWriterPrinter("DRAGGING LEFT TEST:");		       
+		       MovementRatioBack = helper.dragAndDrop(driver, xpath, -250, 0, true, 500)[0];		       
+		       // ASSERT 6 AND OVER CHARACTER MOVEMENT AND RETURN:
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatioForward) > 0 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatioBack) > 0 );
+		       	       
 	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
 	
