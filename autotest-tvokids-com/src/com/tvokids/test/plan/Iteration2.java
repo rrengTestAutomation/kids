@@ -180,7 +180,7 @@ public class Iteration2 {
           
            // ASSERT CONTENT URL USES A LIMITED TITLE:
            expectedText = title.substring(0, Drupal.titleMaxCharsNumber);
-           expectedURLend = "/" + expectedText.toLowerCase().replace(" ", "-"); 
+           expectedURLend = "/" + helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
            helper.checkCurrentURLendsWith(driver, new Exception().getStackTrace()[0], expectedURLend);
            
            // ASSERT TITLE FIELD OVERLOAD CONTENT IS LIMITED:
@@ -358,7 +358,7 @@ public class Iteration2 {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -963,7 +963,7 @@ public class Iteration2 {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -1079,7 +1079,7 @@ public class Iteration2 {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           titleURL = title.replace(" ", "-").toLowerCase().substring(0, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));

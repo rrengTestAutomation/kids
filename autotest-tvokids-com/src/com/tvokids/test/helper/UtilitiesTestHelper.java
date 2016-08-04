@@ -565,6 +565,23 @@ public class UtilitiesTestHelper{
 			fileWriterPrinter("selection" + stringSelection);
 	  }
 	  
+	 /**
+	   * Re-formats a String as per syntacsis requirements of page URL (un-limited length)
+	   */
+	  public String reFormatStringForURL(String string) {
+		  string = string.toLowerCase().replace(" ", "-").replace("--", "-");
+		  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
+		  return string;
+		  }
+	  
+	 /**
+	   * Re-formats a String as per syntacsis requirements of page URL (limited length)
+	   */
+	  public String reFormatStringForURL(String string, int length) {
+		  string = string.substring(0, length);
+		  return reFormatStringForURL(string);
+		  }
+	 
 	  /**
 	   * Verify the page URL is as expected.
 	   * StackTraceElement "t" = to be delivered from external method using "t"-variable;
