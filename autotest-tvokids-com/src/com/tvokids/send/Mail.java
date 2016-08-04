@@ -28,7 +28,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Email;

@@ -22,11 +22,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-/*
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-*/
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import com.tvokids.locator.Email;
 import com.tvokids.locator.Common;

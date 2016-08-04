@@ -12,10 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -1121,6 +1118,5 @@ public class Iteration2 {
 	    }
 	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @AfterMethod  public static void endTime() throws IOException, InterruptedException { driver.close(); Thread.sleep(1000); new UtilitiesTestHelper().endTime(); }
 }
