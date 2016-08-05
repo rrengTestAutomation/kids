@@ -2460,22 +2460,28 @@ public class UtilitiesTestHelper{
         	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
         	 */
             public void testNgFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
-           		// DECLARATION
+           		// DECLARATION:
 				String sourceFileName = "testng-failed.xml";
     		
-        	    // PRE-CLEAN
+        	    // PRE-CLEAN:
         	    if (fileExist(System.getProperty("user.dir"), xmlOutputFileName, false)) { fileCleaner(System.getProperty("user.dir"), xmlOutputFileName);}
         	
-        	    // READER-WRITER      		
+        	    // READER-WRITER:     		
     		    String[] string = addReporterClassToTestNgXmlLinesArray(sourceFileName, reporterClass); // READS TESTNG XML
     		    for (String s : string) { fileWriter(System.getProperty("user.dir"), xmlOutputFileName, s); }
         	
-        	    // OPTIONAL FAILURES NUMBER OUTPUT
+        	    // OPTIONAL FAILURES NUMBER OUTPUT:
     		    int failed = 0;
     		    for (int i = 0; i < string.length; i++) {
 				    if ( string[i].contains("<include name=\"") ) { failed++; }
 			    }
-    		
+    		    
+        		// UPDATE FAILED TEST NUMBER AS PER FAILED:
+        		if (fileExist("failed.num", false)){
+        			fileCleaner("failed.num");
+        			fileWriter("failed.num", failed);
+        		}
+        		
     		    if (fileExist("last.num", false)) {
     		    	if (Integer.valueOf(fileScanner("last.num")) == 1 ) {
     			    if (failed > 0) { fileWriterPrinter("FAILED..."); } else { fileWriterPrinter("PASSED!"); }
@@ -2483,7 +2489,7 @@ public class UtilitiesTestHelper{
     			if (Integer.valueOf(fileScanner("last.num")) > 1 ) {
     			   if (failed > 0) {
     				   if (failed == Integer.valueOf(fileScanner("last.num")) ) { fileWriterPrinter("ALL FAILED..."); }
-    				   else { fileWriterPrinter("FAILED " + Integer.valueOf(fileScanner("last.num")) + " OF " + failed); }
+    				   else { fileWriterPrinter("FAILED " + failed  + " OF " + Integer.valueOf(fileScanner("last.num"))); }
     			   }
       			   if (failed == 0) { fileWriterPrinter("ALL PASSED!"); }
       			   }			
@@ -2514,7 +2520,7 @@ public class UtilitiesTestHelper{
         		ArrayList<String> noEmptyMethods = new ArrayList<String>();
         		ArrayList<String> noEmptyClass = new ArrayList<String>();
         		
-                // EMTY METHODS CLEANER     		
+                // EMTY METHODS CLEANER:
         		for (int i = 0; i < string.length; i++) {
 					if ( (i < (string.length - 1))
 					   && string[i].contains("<methods>")
@@ -2525,7 +2531,7 @@ public class UtilitiesTestHelper{
         		
         		String[] noEmptyMethodsArray = noEmptyMethods.toArray(new String[noEmptyMethods.size()]);
         		
-                // EMTY CLASS CLEANER     		
+                // EMTY CLASS CLEANER:
         		for (int i = 0; i < noEmptyMethodsArray.length; i++) {
 					if ( (i < (noEmptyMethodsArray.length - 1))
 					   && noEmptyMethodsArray[i].contains("<class name=")
@@ -2567,15 +2573,18 @@ public class UtilitiesTestHelper{
         	 * This METHOD created TestNG XML file based on Source File which contains (or not) XML CLASS PATH(s)
         	 */
         	public void testLogToXmlCreator(String suiteName, String testName, String sourceFileName, String xmlOutputFileName, String reporterClass) throws IOException {
-        		// OPTIONAL FAILURES NUMBER OUTPUT
-        		if (fileExist("test.num", false)) {
+        		// OPTIONAL FAILURES NUMBER OUTPUT:
+        		if (fileExist("last.num", false)) {
         			if (fileExist(sourceFileName, false)) {
-        				if (Integer.valueOf(fileScanner("test.num")) == 1 )
-        				{ fileWriterPrinter("FAILED..."); }
-        				/** else { fileWriterPrinter("FAILED: " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " OF " + fileScanner("test.num") + "\n"); } */
-        				} else { if (Integer.valueOf(fileScanner("test.num")) == 1 )
-        				       { fileWriterPrinter("PASSED!"); } 
-        				       /** else { fileWriterPrinter("ALL PASSED!\n"); } */
+        				if (Integer.valueOf(fileScanner("last.num")) == 1 ) { fileWriterPrinter("FAILED..."); }
+        				else { 
+        					if (convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length == Integer.valueOf(fileScanner("last.num")))
+        					     { fileWriterPrinter("ALL " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " FAILED!" + "\n"); }
+        					else { fileWriterPrinter("FAILED: " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " OF " + fileScanner("last.num") + "\n"); }
+        				}
+        			} else { 
+        				    if (Integer.valueOf(fileScanner("last.num")) == 1 ) { fileWriterPrinter("PASSED!"); } 
+        				    else { fileWriterPrinter("ALL PASSED!\n"); }
         				}  		
         	    } else {
             		    if(fileExist(sourceFileName, false)) {
@@ -2583,30 +2592,36 @@ public class UtilitiesTestHelper{
        		            } else { System.out.print("ALL PASSED!"); }        	    	
         	    }
 
-        		// PRE-CLEAN
+        		// PRE-CLEAN:
         		if (fileExist(System.getProperty("user.dir"), xmlOutputFileName, false)) { fileCleaner(System.getProperty("user.dir"), xmlOutputFileName);}		
         		
-        		// FAILED SUITE CREATES XML, OTHERWISE NOTHING
+        		// FAILED SUITE CREATES XML, OTHERWISE NOTHING:
         		if (fileExist(sourceFileName, false)) {
         			
-        		// UPDATE PREVIOUS TEST NUMBER AS PER FAILED
-        		if (fileExist("prev.num", false)){
-        			fileCleaner("prev.num");
-        			fileWriter("prev.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
-        		}
+//        		// UPDATE PREVIOUS TEST NUMBER AS PER FAILED:
+//        		if (fileExist("prev.num", false)){
+//        			fileCleaner("prev.num");
+//        			fileWriter("prev.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+//        		}
         			
-        		// UPDATE LAST TEST NUMBER AS PER FAILED
-        		if (fileExist("last.num", false)){
-        			fileCleaner("last.num");
-        			fileWriter("last.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
-        		}
+//        		// UPDATE LAST TEST NUMBER AS PER FAILED:
+//        		if (fileExist("last.num", false)){
+//        			fileCleaner("last.num");
+//        			fileWriter("last.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+//        		}
+        			
+            	// UPDATE FAILED TEST NUMBER AS PER FAILED:
+            	if (fileExist("failed.num", false)){
+            		fileCleaner("failed.num");
+            		fileWriter("failed.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+            	}
         		
-        		// HEADER
+        		// HEADER:
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "<!DOCTYPE suite SYSTEM \"http://testng.org/testng-1.0.dtd\">");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "<suite name=\"" + suiteName + "\">");
         		
-        		// LISTENERS
+        		// LISTENERS:
 				String extentReporterClassPath; 
         		extentReporterClassPath = new Object(){}.getClass().getPackage().getName();
         		extentReporterClassPath = extentReporterClassPath.substring(0, extentReporterClassPath.lastIndexOf("."));
@@ -2616,23 +2631,24 @@ public class UtilitiesTestHelper{
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "    <listener class-name=\"" + extentReporterClassPath + "\"/>");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "  </listeners>");
         		
-        		// TEST
+        		// TEST:
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "  <test name=\"" + testName + "\">");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "    <classes>");
         						
-        		// BODY
+        		// BODY:
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "      " + reporterClass);       		
         		String[] string = convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)); // READS FAILURES
         		/** WILL PRINT XML CLASSES-BODY */ // for (String s : string) { System.out.println(s); }
         		for (String s : string) { fileWriter(System.getProperty("user.dir"), xmlOutputFileName, s); }
         		
-        		// FOOTER
+        		// FOOTER:
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "    </classes>");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "  </test>");
-        		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "</suite>");        		
+        		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "</suite>");
+        		
         		}	
         	}
-        // ####################### TEST-NG XML EXTRACTOR-CREATER END #######################
+		// ####################### TEST-NG XML EXTRACTOR-CREATER END #######################
         	
         // ####################### LOG FILES HANDLER START #######################
     		/** 
