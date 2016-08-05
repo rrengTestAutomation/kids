@@ -569,7 +569,7 @@ public class UtilitiesTestHelper{
 	   * Re-formats a String as per syntacsis requirements of page URL (un-limited length)
 	   */
 	  public String reFormatStringForURL(String string) {
-		  string = string.toLowerCase().replace(" ", "-").replace("--", "-");
+		  string = string.toLowerCase().replaceAll(" ", "-").replaceAll("--", "-");
 		  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
 		  return string;
 		  }
