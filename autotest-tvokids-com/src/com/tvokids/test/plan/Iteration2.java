@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -1118,5 +1119,6 @@ public class Iteration2 {
 	    }
 	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
-    @AfterMethod  public static void endTime() throws IOException, InterruptedException { driver.close(); Thread.sleep(1000); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
 }
