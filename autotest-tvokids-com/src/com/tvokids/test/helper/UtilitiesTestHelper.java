@@ -2258,6 +2258,52 @@ public class UtilitiesTestHelper{
 				 { (new File(path  + File.separator + fileName)).delete(); }
 			}
 			
+			/** Cleans "output" Directory 
+			 * @throws IOException */
+			public static boolean outputCleaner(Boolean ifPrompt, Boolean ifDelete) throws IOException {
+				return folderCleaner(Common.outputFileDir, ifPrompt, ifDelete);
+				}
+			
+			/** Cleans any User-Defined Directory 
+			 * @throws IOException */
+			public static boolean folderCleaner(String folderPath, Boolean ifPrompt, Boolean ifDelete) throws IOException {			    
+				folderPath = folderPath.replace("\\", "/");
+				if(folderPath.endsWith("/")) { folderPath = folderPath.substring(0, folderPath.length() - 1); }
+				File dir = new File(folderPath);
+				String how = "", action = null;
+				Boolean success = false;
+				Boolean current = false;
+			    if (dir.exists() && dir.isDirectory()) {			    	
+			    	try{			    	
+				    	success = true;
+				        String[] children = dir.list();
+				        if(children.length > 0) {
+				        	action = "CLEANED";
+					        for (int i = 0; i < children.length; i++) {
+					        	File child = new File(dir, children[i]);
+							    if(child.isDirectory()){  if(ifPrompt) System.out.print("DIRECTORY "); }
+					            else 	               {  if(ifPrompt) System.out.print("     FILE "); }
+					        	FileUtils.forceDelete(child);
+					        	current = !child.exists();
+								success = success && current;
+								if(current) { how = "    DELETED: \""; } else { how = "NOT DELETED: \""; }
+								if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
+								}
+					        }
+						// THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
+					    if (ifDelete) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
+					    if(ifPrompt && (!action.equals(null))) {
+						if (success) { 
+							  System.out.print("\n" + "SUCCESSFULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+							} else {
+							  System.out.print("\n" + "NOT A SUCCESSFULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+							}
+					    }
+			    	} catch (Exception e) {}				    
+			    }
+				return success;
+			}
+			
 			/** Counter: Will renew counting starting with "1" if the Counter File is currently missing; Returns new iteration value; 
 			 * @throws IOException
 			 */
@@ -2658,6 +2704,7 @@ public class UtilitiesTestHelper{
     		 */
     		public void beforeCleaner() throws NumberFormatException, IOException{
     		    // PRE-CLEANING:
+    			outputCleaner(true, false);
                 fileCleaner("email.all"  );
                 fileCleaner("email.cont" );
                 fileCleaner("email.subj" );
