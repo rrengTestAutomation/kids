@@ -16,7 +16,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2"><methods>
-<include name="testCustomBrandTitleFieldContentLimit"/>
+<include name="testCharacterBannerIsInfiniteLooped"/>
 </methods></class>
      
         </classes>
