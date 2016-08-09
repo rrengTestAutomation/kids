@@ -46,13 +46,10 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipOutputStream;
-
 import javax.swing.JTextField;
-
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.openqa.selenium.By;
@@ -78,6 +75,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
 
 public class UtilitiesTestHelper{
 	WebDriver driverHelper;
@@ -2258,51 +2257,145 @@ public class UtilitiesTestHelper{
 				 { (new File(path  + File.separator + fileName)).delete(); }
 			}
 			
-			/** Cleans "output" Directory 
-			 * @throws IOException */
-			public static boolean outputCleaner(Boolean ifPrompt, Boolean ifDelete) throws IOException {
-				return folderCleaner(Common.outputFileDir, ifPrompt, ifDelete);
-				}
-			
-			/** Cleans any User-Defined Directory 
-			 * @throws IOException */
-			public static boolean folderCleaner(String folderPath, Boolean ifPrompt, Boolean ifDelete) throws IOException {			    
-				folderPath = folderPath.replace("\\", "/");
-				if(folderPath.endsWith("/")) { folderPath = folderPath.substring(0, folderPath.length() - 1); }
-				File dir = new File(folderPath);
-				String how = "", action = null;
-				Boolean success = false;
-				Boolean current = false;
-			    if (dir.exists() && dir.isDirectory()) {			    	
-			    	try{			    	
-				    	success = true;
-				        String[] children = dir.list();
-				        if(children.length > 0) {
-				        	action = "CLEANED";
-					        for (int i = 0; i < children.length; i++) {
-					        	File child = new File(dir, children[i]);
-							    if(child.isDirectory()){  if(ifPrompt) System.out.print("DIRECTORY "); }
-					            else 	               {  if(ifPrompt) System.out.print("     FILE "); }
-					        	FileUtils.forceDelete(child);
-					        	current = !child.exists();
-								success = success && current;
-								if(current) { how = "    DELETED: \""; } else { how = "NOT DELETED: \""; }
-								if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
-								}
-					        }
-						// THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
-					    if (ifDelete) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
-					    if(ifPrompt && (!action.equals(null))) {
-						if (success) { 
-							  System.out.print("\n" + "SUCCESSFULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
-							} else {
-							  System.out.print("\n" + "NOT A SUCCESSFULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
-							}
-					    }
-			    	} catch (Exception e) {}				    
-			    }
-				return success;
-			}
+            /** Cleans "test-output" Directory 
+             * @throws IOException */
+            public boolean testOutputCleaner(Boolean ifPrompt) throws IOException {
+                return folderCleaner(Common.testOutputFileDir, true, false, false, ifPrompt);
+                }
+            
+            /** Cleans "test-output" Directory 
+             * @throws IOException 
+             * @throws ParseException */
+            public boolean testOutputTimeReset(Boolean ifPrompt) throws IOException, ParseException {
+                return changeTimeAttribute("1999-12-31", "23:00:00", Common.testOutputFileDir, false, true, false, ifPrompt);
+                }
+            
+            /** Cleans "output" Directory 
+             * @throws IOException */
+            public boolean outputCleaner(Boolean ifPrompt) throws IOException {
+                return folderCleaner(Common.outputFileDir, true, true, false, ifPrompt);
+                }
+            
+            /** 
+             * Cleans any User-Defined Directory 
+             * @throws IOException
+             */
+            public boolean folderCleaner(String folderPath, Boolean ifDeleteSubdirs, Boolean ifDeleteFiles, Boolean ifDeleteRoot, Boolean ifPrompt) throws IOException {                
+                folderPath = folderPath.replace("\\", "/");
+                if(folderPath.endsWith("/")) { folderPath = folderPath.substring(0, folderPath.length() - 1); }
+                File dir = new File(folderPath);
+                String how = "", action = null;
+                Boolean success = false;
+                Boolean current = false;
+                if (dir.exists() && dir.isDirectory()) {                    
+                    try{                    
+                        success = true;
+                        String[] children = dir.list();
+                        if(children.length > 0) {
+                            action = "CLEANED";
+                            for (int i = 0; i < children.length; i++) {
+                                File child = new File(dir, children[i]);
+                                if(child.isDirectory()){  if(ifDeleteSubdirs) { FileUtils.forceDelete(child); } if(ifPrompt && ifDeleteSubdirs) {System.out.print("DIRECTORY ");} }
+                                else                   {  if(ifDeleteFiles)  { FileUtils.forceDelete(child); } if(ifPrompt && ifDeleteFiles)  {System.out.print("     FILE ");} }
+                                
+                                current = !child.exists();
+                                success = success && current;
+                                if(current) { how = "    DELETED: \""; } else { how = "NOT DELETED: \""; }
+                                if(ifPrompt && current) System.out.print(how + child.getAbsolutePath() + "\n");
+                                }
+                            }
+                        // THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
+                        if (ifDeleteRoot) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
+                        if(ifPrompt && (!action.equals(null))) {
+                        if (success) { 
+                              System.out.println("\n" + "FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                            } else {
+                              System.out.println("\n" + "NOT FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                            }
+                        }
+                    } catch (Exception e) {}                    
+                }
+                return success;
+            }
+            
+            /** 
+             * Changes Sub-Directories and/or Files Time-Attributes located in User-Defined Directory 
+             * @throws IOException
+             * @throws ParseException 
+             */
+            public boolean changeTimeAttribute(String date, String time, String folderPath, Boolean ifChangeSubdirs, Boolean ifChangeFiles, Boolean ifChangeRoot, Boolean ifPrompt) throws IOException, ParseException {                
+                long milliseconds = convertCalendarDateTimeHourMinSecToMillisecondsAsLong(date + " " + time);
+                folderPath = folderPath.replace("\\", "/");
+                if(folderPath.endsWith("/")) { folderPath = folderPath.substring(0, folderPath.length() - 1); }
+                File dir = new File(folderPath);
+                String dirTimeStamp = getLastModifiedTimeStamp(dir);
+                String how = "", action = null;
+                Boolean success = false;
+                Boolean current = false;
+                if (dir.exists() && dir.isDirectory()) {                    
+                    try{                    
+                        success = true;
+                        String[] children = dir.list();
+                        if(children.length > 0) {
+                            action = "TIME RESET";
+                            for (int i = 0; i < children.length; i++) {
+                                File child = new File(dir, children[i]);
+                                String childTimeStamp = getLastModifiedTimeStamp(child);
+                                if(child.isDirectory()){  if(ifChangeSubdirs) { child.setLastModified(milliseconds); } if(ifPrompt && ifChangeSubdirs) {System.out.print("DIRECTORY ");} }
+                                else                   {  if(ifChangeFiles)   { child.setLastModified(milliseconds); } if(ifPrompt && ifChangeFiles)  {System.out.print("     FILE ");} }
+                                
+                                current = child.exists() && !getLastModifiedTimeStamp(child).equals(childTimeStamp);
+                                success = success && current;
+                                if(current) { how = "    TIME CHANGED: \""; } else { how = "TIME NOT CHANGED: \""; }
+                                if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
+                                }
+                            }
+                        // THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
+                        if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
+                        if(ifPrompt && (!action.equals(null))) {
+                        if (success) { 
+                              System.out.println("\n" + "FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                            } else {
+                              System.out.println("\n" + "NOT FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                            }
+                        }
+                    } catch (Exception e) {}                    
+                }
+                return success;
+            }
+            
+            public String getCreationTimeStamp(File file) throws IOException {
+                return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getCreationTime(file).toMillis());
+                }
+            
+            public String getLastModifiedTimeStamp(File file) throws IOException {
+                return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getLastModifiedTime(file).toMillis());
+                }
+            
+            public String getLastAccessTimeStamp(File file) throws IOException {
+                return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(getLastAccessTime(file).toMillis());
+                }
+            
+            public FileTime getCreationTime(File file) throws IOException {
+                Path p = Paths.get(file.getAbsolutePath());
+                BasicFileAttributes view = Files.getFileAttributeView(p, BasicFileAttributeView.class).readAttributes();
+                FileTime fileTime = view.creationTime();
+                return fileTime;
+                }
+            
+            public FileTime getLastModifiedTime(File file) throws IOException {
+                Path p = Paths.get(file.getAbsolutePath());
+                BasicFileAttributes view = Files.getFileAttributeView(p, BasicFileAttributeView.class).readAttributes();
+                FileTime fileTime = view.lastModifiedTime();
+                return fileTime;
+                }
+            
+            public FileTime getLastAccessTime(File file) throws IOException {
+                Path p = Paths.get(file.getAbsolutePath());
+                BasicFileAttributes view = Files.getFileAttributeView(p, BasicFileAttributeView.class).readAttributes();
+                FileTime fileTime = view.lastAccessTime();
+                return fileTime;
+                }
 			
 			/** Counter: Will renew counting starting with "1" if the Counter File is currently missing; Returns new iteration value; 
 			 * @throws IOException
@@ -2701,10 +2794,13 @@ public class UtilitiesTestHelper{
     		 * Cleans all the Log records left from previous test executions
     		 * @throws NumberFormatException 
     		 * @throws IOException 
+    		 * @throws ParseException 
     		 */
-    		public void beforeCleaner() throws NumberFormatException, IOException{
+    		public void beforeCleaner() throws NumberFormatException, IOException, ParseException{
     		    // PRE-CLEANING:
-    			outputCleaner(true, false);
+    			testOutputCleaner(true);
+    			testOutputTimeReset(true);
+    			outputCleaner(true);
                 fileCleaner("email.all"  );
                 fileCleaner("email.cont" );
                 fileCleaner("email.subj" );

@@ -1,8 +1,10 @@
 package com.tvokids.report;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import org.testng.annotations.*;
+
 import com.tvokids.test.helper.UtilitiesTestHelper;
 
 @SuppressWarnings("static-access")
@@ -13,9 +15,11 @@ public class Log {
 	 * Creates a new Test Log record as a text file named "run.log" create file
 	 * example: File f = new File(<full path string>); f.createNewFile();
 	 * @throws IOException
+	 * @throws ParseException 
+	 * @throws NumberFormatException 
 	 */
 	@BeforeSuite
-	public void logOpen() throws IOException {
+	public void logOpen() throws IOException, NumberFormatException, ParseException {
 		// INITIALIZATION:
 		helper.beforeCleaner();	
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
