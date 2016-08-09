@@ -1477,6 +1477,13 @@ public class UtilitiesTestHelper{
           if ( title.toLowerCase().startsWith("the") && !title.toLowerCase().startsWith("the ") ) { first = 3; }
 		  return title.substring(first, (first + 1));
 	  }
+	  
+	  /**
+	   * Determines the given number is even or oddn
+	   */
+	  public String determineEvenOrOdd(int number){
+		  if((number%2)==0) { return "even"; } else { return "odd"; }
+		  }
  
 	// ################# DESCRIPTIVE BEGIN ##############################  
 		  /**Gets the first (main) line of any thrown Exception Message

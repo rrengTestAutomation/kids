@@ -128,7 +128,7 @@ public class Iteration2 {
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -1261,6 +1261,57 @@ public class Iteration2 {
                
 	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
+	
+	/**
+	 * Test TVOKIDS Logo displaying
+	 * <p>Date Created: 2016-08-09</p>
+	 * <p>Date Modified: 2016-08-09<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34169</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34169"}, priority = 18)
+    public void testTVOKidsLogoIsAnimated() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           String expected, actual;
+	           
+	           // AGE 5 AND UNDER TEST:
+	           Integer a[] = {2, 9, 3, 9, 6};
+		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+		       
+		       for (int i = 0; i < a.length; i++) {
+		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
+		    	   else { expected = "animated-logo"; }
+		    	   Thread.sleep(a[i]*1000);
+		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
+		    	   // ASSERT:
+		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		    	   }
+		         
+		       // AGE 6 AND OVER TEST:
+		       Integer b[] = {2, 9, 4, 10, 6};
+		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+		       
+		       for (int i = 0; i < b.length; i++) {
+		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
+		    	   else { expected = "animated-logo"; }
+		    	   Thread.sleep(b[i]*1000);
+		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
+		    	   // ASSERT:
+		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		    	   }
+		       
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
 	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
