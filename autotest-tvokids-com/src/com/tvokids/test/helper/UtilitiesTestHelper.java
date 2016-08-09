@@ -2346,7 +2346,7 @@ public class UtilitiesTestHelper{
                                 
                                 current = child.exists() && !getLastModifiedTimeStamp(child).equals(childTimeStamp);
                                 success = success && current;
-                                if(current) { how = "    TIME CHANGED: \""; } else { how = "TIME NOT CHANGED: \""; }
+                                if(current) { how = "TIME     CHANGED: \""; } else { how = "TIME NOT CHANGED: \""; }
                                 if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
                                 }
                             }
