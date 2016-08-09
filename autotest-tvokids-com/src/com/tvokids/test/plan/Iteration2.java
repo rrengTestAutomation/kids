@@ -1003,8 +1003,8 @@ public class Iteration2 {
 		       helper.fileWriterPrinter("CHARACTER SIZE RETURN RATIO = " + df.format(ReturntRatio) + " %");
 		       
 		       // ASSERT 5 AND UNDER CHARACTER MOVEMENT AND RETURN:
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 300 );
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 300 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 0 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 0 );
 
 	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
@@ -1037,8 +1037,8 @@ public class Iteration2 {
 		       helper.fileWriterPrinter("CHARACTER SIZE RETURN RATIO = " + df.format(ReturntRatio) + " %");
 		       
 		       // ASSERT 6 AND OVER CHARACTER MOVEMENT AND RETURN:
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 300 );
-		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 300 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatio) > 0 );
+		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 0 );
 		       
 	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
