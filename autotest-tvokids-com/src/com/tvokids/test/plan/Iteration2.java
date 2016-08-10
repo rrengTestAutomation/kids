@@ -1281,30 +1281,29 @@ public class Iteration2 {
 	           
 	           // DECLARATION:
 	           String expected, actual;
+	           Integer[] seconds = {2, 9, 4};
 	           
 	           // AGE 5 AND UNDER TEST:
-	           Integer a[] = {2, 9, 3, 9, 6};
 		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
 		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 		       
-		       for (int i = 0; i < a.length; i++) {
+		       for (int i = 0; i < seconds.length; i++) {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
 		    	   else { expected = "animated-logo"; }
-		    	   Thread.sleep(a[i]*1000);
+		    	   Thread.sleep(seconds[i]*1000);
 		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
 		    	   // ASSERT:
 		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 		    	   }
 		         
 		       // AGE 6 AND OVER TEST:
-		       Integer b[] = {2, 9, 4, 10, 6};
 		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
 		       
-		       for (int i = 0; i < b.length; i++) {
+		       for (int i = 0; i < seconds.length; i++) {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
 		    	   else { expected = "animated-logo"; }
-		    	   Thread.sleep(b[i]*1000);
+		    	   Thread.sleep(seconds[i]*1000);
 		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
 		    	   // ASSERT:
 		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
