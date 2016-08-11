@@ -15,7 +15,10 @@ public class Common {
 	  public static String userLoginPage   = homeURL + "/user"; 
 	  public static String adminContentURL = homeURL + "/admin/content";
 	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
-	  public static String sixAndOverURL = homeURL + "/6-and-over";
+	  public static String sixAndOverURL   = homeURL + "/6-and-over";
+
+	  public static String fiveAndUnderSearchURL = fiveAndUnderURL + "/search";
+	  public static String sixAndOverSearchURL   = sixAndOverURL   + "/search";
 	  
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
@@ -45,7 +48,8 @@ public class Common {
 	  public static String charBannerButtonRight = "//button[@class='character-banner-button-next']";
 	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
 	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
-			  
+	  public static String searchIcon            = "//a[@class='search-link']";
+	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";
 

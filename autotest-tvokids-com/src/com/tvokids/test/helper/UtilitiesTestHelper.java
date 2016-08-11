@@ -46,10 +46,13 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipOutputStream;
+
 import javax.swing.JTextField;
+
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
 import com.tvokids.locator.Common;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.openqa.selenium.By;
@@ -75,6 +78,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 
@@ -301,12 +305,12 @@ public class UtilitiesTestHelper{
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("finally")
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   By browse, upload;
-       try {
+//     try {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
@@ -344,7 +348,8 @@ public class UtilitiesTestHelper{
 
 			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
 			
-		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;
 	  }
 	
 	/**
@@ -352,12 +357,12 @@ public class UtilitiesTestHelper{
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("finally")
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   By browse, upload;
-	   try {
+//	   try {
 	    	int i = 0;
 	    	while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
@@ -397,7 +402,8 @@ public class UtilitiesTestHelper{
 
 			i = contentSubmit(driver, i, fingerprint);			
             }
-		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;	
 	  }
 	
 	/**
@@ -457,12 +463,12 @@ public class UtilitiesTestHelper{
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("finally")
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   By browse, upload;
-       try {
+//     try {
     	    int i = 0;
     	    while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
@@ -502,7 +508,8 @@ public class UtilitiesTestHelper{
 
 			i = contentSubmit(driver, i, fingerprint);			
             }
-		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;
 	  }
 	
 	/**
@@ -510,11 +517,11 @@ public class UtilitiesTestHelper{
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	@SuppressWarnings("finally")
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot, long fingerprint) throws AWTException, InterruptedException, IOException
 	  {
 	   By browse, upload;
-       try {
+//     try {
     	    int i = 0;
     	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
@@ -554,7 +561,8 @@ public class UtilitiesTestHelper{
 
 			i = contentSubmit(driver, fingerprint, i);			
             }
-		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }	
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;	
 	  }
 	
 	 public static void setClipboardData(String string) throws NumberFormatException, IOException {
@@ -1486,72 +1494,144 @@ public class UtilitiesTestHelper{
 		  }
  
 	// ################# DESCRIPTIVE BEGIN ##############################  
-		  /**Gets the first (main) line of any thrown Exception Message
+		  /**
+		   * Gets the first (main) line of any thrown Exception Message
 		   * Regardless it is single or multi-line Prompt
 		   * @param e
+		   * @throws IOException 
+		   * @throws NumberFormatException 
 		   */
-		   public static void getExceptionDescriptive(Exception e, StackTraceElement l, WebDriver driver) throws IOException {
-			 String message1 = null;					
-			 try{
-				 message1 = e.getCause().toString();
-			 } 
-			 catch(NullPointerException e1) {
-			 message1 = ".getCause() by NullPointerException:";
-			 }
-			 finally {					
-			 String message2 = e.getMessage();
-			 String [] multiline1 = message1.replaceAll("\\r", "").split("\\n");
-			 String [] multiline2 = message2.replaceAll("\\r", "").split("\\n");
-			 String firstLine = multiline1[0];
-			 String secondLine = multiline2[0];
-			 String errorCause = firstLine.substring(0,firstLine.indexOf(":"));
-			 String exceptionThrown = errorCause.substring(1 + errorCause.lastIndexOf("."), errorCause.length());
-			 String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
-			 String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
-			 String location = packageNameOnly + File.separator + classNameOnly + File.separator + l.getMethodName() + ", line # " + l.getLineNumber();
-		     String xml = "<class name=\"" + packageNameOnly + "." + classNameOnly + "\"><methods><include name=\"" + l.getMethodName() + "\"/></methods></class>";
-			 String description = exceptionThrown;
-		     String detected = getCurrentDateTimeFull();
-		     String runtime  = testRunTime("start.time", System.currentTimeMillis());
-		     String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
-			 fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
-			 getScreenShot(l, description, driver);
-		  // Creating New or Updating existing Failed Counter record:  
-			 counter("failed.num");
-		  // Append a New Log record:
-		     if (fileExist("run.log", false)) {
-			     fileWriter("run.log", "Error Cause: ---> " + errorCause);
-			     fileWriter("run.log", "Description: ---> " + secondLine);
-			     fileWriter("run.log", "   Location: ---> " + location);
-	   		  // fileWriter("run.log", "   Detected: ---> " + detected);
-	   		  // fileWriter("run.log", "    Runtime: ---> " + runtime);
-	   		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);	    	        
-		     }
-		  // Append an Error record:
-			   fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			   fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-			   fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-               fileWriter("failed.log", "   XML Path: "  + xml);
-			   fileWriter("failed.log", "Error Cause: ---> " + errorCause);
-			   fileWriter("failed.log", "Description: ---> " + secondLine);
-			   fileWriter("failed.log", "   Location: ---> " + location);
-			   fileWriter("failed.log", "   Detected: " + detected);
-		   	   fileWriter("failed.log", "    Runtime: " + runtime);
-		   	   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   	   fileWriter("failed.log", "");
-		  // Append Descriptive record:
-			 Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
-					                + "\n  Description: ---> " + secondLine
-					                + "\n     Location: ---> " + location
-									+ "\n     Detected: ---> " + detected
-									+ "\n      Runtime: ---> " + runtime
-									+ "\n     Subtotal: ---> " + subtotal
-					                + "\n"
-							        + xml
-							        + "\n"
-				                	+ "\nStack Traces:");
-			 }		
+		  public static void getExceptionDescriptive(Exception e, StackTraceElement l, WebDriver driver) throws IOException{
+		  String message1 = "", message2 = "", firstLine = "", secondLine = "";
+		  String errorCause = "", location = "", exceptionThrown = "";
+		  String packageNameOnly = "", classNameOnly = "", xml = "";
+		  String description = "", detected = "", runtime = "", subtotal = "";
+		  try{
+		      // CREATING NEW OR UPDATING EXISTING FAILED COUNTER RECORD:  
+			  counter("failed.num");
+			  		 
+			  if( (e.getCause().toString().length() > 0) && (e.getMessage().length() > 0) ) { 
+				  message1 = e.getCause().toString();
+				  message2 = e.getMessage();
+				  if(message1.contains("\\r") && message2.contains("\\r")) { 
+					  String [] multiline1 = message1.replaceAll("\\r", "").split("\\n");			
+					  String [] multiline2 = message2.replaceAll("\\r", "").split("\\n");
+					  if(multiline1.length > 0) { firstLine  = multiline1[0]; } else { firstLine  = "Unknown";  }
+					  if(multiline2.length > 0) { secondLine = multiline2[0]; } else { secondLine = "Unknown";  }
+					  errorCause = firstLine.substring(0,firstLine.indexOf(":"));
+					  exceptionThrown = errorCause.substring(1 + errorCause.lastIndexOf("."), errorCause.length());
+					  }
+				  }
+
+			  packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+			  classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+			  location = packageNameOnly + File.separator + classNameOnly + File.separator + l.getMethodName() + ", line # " + l.getLineNumber();
+		      xml = "<class name=\"" + packageNameOnly + "." + classNameOnly + "\"><methods><include name=\"" + l.getMethodName() + "\"/></methods></class>";
+			  description = exceptionThrown;
+		      detected = getCurrentDateTimeFull();
+		      runtime  = testRunTime("start.time", System.currentTimeMillis());
+		      subtotal = testRunTime("ini.time",   System.currentTimeMillis());
+		     
+			  fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
+			  getScreenShot(l, description, driver);
+			  
+		      // APPEND A NEW LOG RECORD:
+		      if (fileExist("run.log", false)) {
+			      fileWriter("run.log", "Error Cause: ---> " + errorCause);
+			      fileWriter("run.log", "Description: ---> " + secondLine);
+			      fileWriter("run.log", "   Location: ---> " + location);
+	   		  //  fileWriter("run.log", "   Detected: ---> " + detected);
+	   		  //  fileWriter("run.log", "    Runtime: ---> " + runtime);
+	   		  //  fileWriter("run.log", "   Subtotal: ---> " + subtotal);	    	        
+		      }
+		      
+		      // APPEND AN ERROR RECORD:
+			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   XML Path: "  + xml);
+			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
+			  fileWriter("failed.log", "Description: ---> " + secondLine);
+			  fileWriter("failed.log", "   Location: ---> " + location);
+			  fileWriter("failed.log", "   Detected: " + detected);
+		   	  fileWriter("failed.log", "    Runtime: " + runtime);
+		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
+		   	  fileWriter("failed.log", "");
+		   	  
+		      // APPEND DESCRIPTIVE RECORD:
+			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
+					                 + "\n  Description: ---> " + secondLine
+					                 + "\n     Location: ---> " + location
+									 + "\n     Detected: ---> " + detected
+									 + "\n      Runtime: ---> " + runtime
+									 + "\n     Subtotal: ---> " + subtotal
+					                 + "\n"
+							         + xml
+							         + "\n"
+				                	 + "\nStack Traces:");
+			  
+			  } catch(Exception e1) {
+				                     String s = e1.toString(), m = s;
+				                     if(s.contains(".") && s.contains("Exception")) {
+				                    	 m = ".getCause() by " + s.substring(s.lastIndexOf(".") + 1, s.lastIndexOf("Exception")) + " Exception";
+				                    	 }
+				                     exceptionDescriptive(m, l);	
+				                    }		  
+		  }
+		  
+		  /**
+		   * Gets the secondary Exception error
+		   * Regardless it is single or multi-line Prompt
+		   * @param e
+		   * @throws IOException 
+		   */
+		   public static void exceptionDescriptive(String errorCause, StackTraceElement l) throws IOException {
+			  String secondLine = "Browser Shut-Down", location = "";
+			  String packageNameOnly, classNameOnly, xml, detected, runtime, subtotal;
+
+			  packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+			  classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+			  location = packageNameOnly + File.separator + classNameOnly + File.separator + l.getMethodName() + ", line # " + l.getLineNumber();
+		      xml = "<class name=\"" + packageNameOnly + "." + classNameOnly + "\"><methods><include name=\"" + l.getMethodName() + "\"/></methods></class>";
+		      detected = getCurrentDateTimeFull();
+		      runtime  = testRunTime("start.time", System.currentTimeMillis());
+		      subtotal = testRunTime("ini.time",   System.currentTimeMillis());
+		      	      
+		      // APPEND A NEW LOG RECORDS:
+		      fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);	
+		      if (fileExist("run.log", false)) {
+			      fileWriter("run.log", "Error Cause: ---> " + errorCause);
+			      fileWriter("run.log", "Description: ---> " + secondLine);
+			      fileWriter("run.log", "   Location: ---> " + location);	    	        
+		      }
+		      
+		      // APPEND AN ERROR RECORD:
+			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   XML Path: "  + xml);
+			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
+			  fileWriter("failed.log", "Description: ---> " + secondLine);
+			  fileWriter("failed.log", "   Location: ---> " + location);
+			  fileWriter("failed.log", "   Detected: " + detected);
+		   	  fileWriter("failed.log", "    Runtime: " + runtime);
+		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
+		   	  fileWriter("failed.log", "");
+		   	  
+		      // APPEND DESCRIPTIVE RECORD:
+			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
+					                 + "\n  Description: ---> " + secondLine
+					                 + "\n     Location: ---> " + location
+									 + "\n     Detected: ---> " + detected
+									 + "\n      Runtime: ---> " + runtime
+									 + "\n     Subtotal: ---> " + subtotal
+					                 + "\n"
+							         + xml
+							         + "\n"
+				                	 + "\nStack Traces:");			 
 		   }
+		  
+		  
 	// ################# DESCRIPTIVE END ##############################
 
 	// ################# SMART ASSERTIONS BEGIN #######################
@@ -2628,14 +2708,14 @@ public class UtilitiesTestHelper{
         			fileWriter("failed.num", failed);
         		}
         		
-    		    if (fileExist("last.num", false)) {
-    		    	if (Integer.valueOf(fileScanner("last.num")) == 1 ) {
+    		    if (fileExist("test.num", false)) {
+    		    	if (Integer.valueOf(fileScanner("test.num")) == 1 ) {
     			    if (failed > 0) { fileWriterPrinter("FAILED..."); } else { fileWriterPrinter("PASSED!"); }
     			    }   			
-    			if (Integer.valueOf(fileScanner("last.num")) > 1 ) {
+    			if (Integer.valueOf(fileScanner("test.num")) > 1 ) {
     			   if (failed > 0) {
-    				   if (failed == Integer.valueOf(fileScanner("last.num")) ) { fileWriterPrinter("ALL FAILED..."); }
-    				   else { fileWriterPrinter("FAILED " + failed  + " OF " + Integer.valueOf(fileScanner("last.num"))); }
+    				   if (failed == Integer.valueOf(fileScanner("test.num")) ) { fileWriterPrinter("ALL FAILED..."); }
+    				   else { fileWriterPrinter("FAILED " + failed  + " OF " + Integer.valueOf(fileScanner("test.num"))); }
     			   }
       			   if (failed == 0) { fileWriterPrinter("ALL PASSED!"); }
       			   }			
@@ -2720,16 +2800,16 @@ public class UtilitiesTestHelper{
         	 */
         	public void testLogToXmlCreator(String suiteName, String testName, String sourceFileName, String xmlOutputFileName, String reporterClass) throws IOException {
         		// OPTIONAL FAILURES NUMBER OUTPUT:
-        		if (fileExist("last.num", false)) {
+        		if (fileExist("test.num", false)) {
         			if (fileExist(sourceFileName, false)) {
-        				if (Integer.valueOf(fileScanner("last.num")) == 1 ) { fileWriterPrinter("FAILED..."); }
+        				if (Integer.valueOf(fileScanner("test.num")) == 1 ) { fileWriterPrinter("FAILED..."); }
         				else { 
-        					if (convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length == Integer.valueOf(fileScanner("last.num")))
+        					if (convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length == Integer.valueOf(fileScanner("test.num")))
         					     { fileWriterPrinter("ALL " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " FAILED!" + "\n"); }
-        					else { fileWriterPrinter("FAILED: " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " OF " + fileScanner("last.num") + "\n"); }
+        					else { fileWriterPrinter("FAILED: " + convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length + " OF " + fileScanner("test.num") + "\n"); }
         				}
         			} else { 
-        				    if (Integer.valueOf(fileScanner("last.num")) == 1 ) { fileWriterPrinter("PASSED!"); } 
+        				    if (Integer.valueOf(fileScanner("test.num")) == 1 ) { fileWriterPrinter("PASSED!"); } 
         				    else { fileWriterPrinter("ALL PASSED!\n"); }
         				}  		
         	    } else {
@@ -2835,7 +2915,7 @@ public class UtilitiesTestHelper{
         		public void afterCleaner() throws NumberFormatException, IOException{
     			   fileCleaner("ini.time"   );
     			   fileCleaner("failed.num" );
-    			   fileCleaner("test.num"   );
+//    			   fileCleaner("test.num"   );
     			   fileCleaner("add.num"    );
 //    			   fileCleaner("prev.num"   );
     			   fileCleaner("server.info");

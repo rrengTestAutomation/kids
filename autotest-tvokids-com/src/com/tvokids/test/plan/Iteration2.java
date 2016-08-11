@@ -1284,8 +1284,8 @@ public class Iteration2 {
 	           Integer[] seconds = {2, 9, 4};
 	           
 	           // AGE 5 AND UNDER TEST:
-		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
 		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
 		       
 		       for (int i = 0; i < seconds.length; i++) {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
@@ -1297,8 +1297,8 @@ public class Iteration2 {
 		    	   }
 		         
 		       // AGE 6 AND OVER TEST:
-		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 		       
 		       for (int i = 0; i < seconds.length; i++) {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
@@ -1309,6 +1309,42 @@ public class Iteration2 {
 		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 		    	   }
 		       
+           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
+	
+	/**
+	 * Test Search Icon - Desktop
+	 * <p>Date Created: 2016-08-10</p>
+	 * <p>Date Modified: 2016-08-10<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34460</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34460"}, priority = 19)
+    public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // AGE 5 AND UNDER TEST:
+		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);		       
+		       // ASSERT:
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
+		       helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.fiveAndUnderSearchURL);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.fiveAndUnderSearchURL, true, false);
+   
+		       // AGE 6 AND OVER TEST:
+		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+		       // ASSERT:
+		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
+		       helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.sixAndOverSearchURL);
+		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.sixAndOverSearchURL, true, false);
+   
            } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
 	

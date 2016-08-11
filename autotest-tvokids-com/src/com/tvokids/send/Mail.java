@@ -216,7 +216,7 @@ public class Mail {
 		
 	    // STORE LAST TEST NUMBER:
 		helper.fileCopy("test.num", "last.num");
-		helper.fileCleaner("test.num");
+//		helper.fileCleaner("test.num");
 	}
 	
 		/** 
