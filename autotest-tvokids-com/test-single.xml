@@ -15,8 +15,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2"><methods><include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/>
-             <include name="testCustomBrandDescriptionIsMandatory"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2"><methods><include name="testTVOKidsLogoRedirectsToCorrectAgeLandingPage"/></methods></class>
      
         </classes>
      </test>
