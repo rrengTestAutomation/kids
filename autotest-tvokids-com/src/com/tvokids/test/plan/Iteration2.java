@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 
-import com.tvokids.locator.Drupal;
-import com.tvokids.locator.Common;
-import com.tvokids.test.helper.UtilitiesTestHelper;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -22,6 +21,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 */
+import com.tvokids.locator.Common;
+import com.tvokids.locator.Drupal;
+import com.tvokids.test.helper.UtilitiesTestHelper;
 
 //@SuppressWarnings("unused")
 public class Iteration2 {
@@ -364,7 +366,7 @@ public class Iteration2 {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH
+	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
@@ -969,7 +971,7 @@ public class Iteration2 {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH
+	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           
@@ -1085,7 +1087,7 @@ public class Iteration2 {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH
+	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd; // + "/ancestor::li";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           
@@ -1158,7 +1160,8 @@ public class Iteration2 {
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
-	           // LINK GENERIC XPATH
+	           
+	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           
@@ -1388,7 +1391,7 @@ public class Iteration2 {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH
+	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
@@ -1410,6 +1413,99 @@ public class Iteration2 {
 	           
 	           } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
+	
+	/**
+	 * Test character banner images Prioritization Business Rule
+	 * <p>Date Created: 2016-08-12</p>
+	 * <p>Date Modified: 2016-08-12<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34143</p>
+	 */
+	@SuppressWarnings("static-access")
+	@Test(groups = {"TC-34143"}, priority = 21)
+    public void testOnNowBubbleDoesIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath;
+	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth, windowWidth;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           // MEASURE THE CHARACTER BUBBLE EXISTING (DEFAULT) LOCATION:
+	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
+	           characterWidth = helper.getElementWidth(driver, xpath);
+	           windowWidth = driver.manage().window().getSize().getWidth();
+	           // CLICK LEFT UNTIL DISAPPEAR:
+	           while( driver.findElement(By.xpath(xpath)).getLocation().getX() < windowWidth )
+	           { driver.findElement(By.xpath(Common.charBannerButtonLeft)).click(); Thread.sleep(1000); }		      
+	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
+		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       // MEASUREMENT REPORT:
+	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
+	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);
+		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);	           
+		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
+	           Thread.sleep(3000);
+	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], backCoordinateX, movedCoordinateX);
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           // MEASURE THE CHARACTER BUBBLE EXISTING (DEFAULT) LOCATION:
+	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
+	           characterWidth = helper.getElementWidth(driver, xpath);
+	           windowWidth = driver.manage().window().getSize().getWidth();
+	           // CLICK RIGHT UNTIL DISAPPEAR:
+	           while( driver.findElement(By.xpath(xpath)).getLocation().getX() > (0 - characterWidth) )
+	           { driver.findElement(By.xpath(Common.charBannerButtonRight)).click(); Thread.sleep(1000); }		      
+	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
+		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       // MEASUREMENT REPORT:
+	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
+	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
+		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);
+		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);	           
+		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
+	           Thread.sleep(3000);
+	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], backCoordinateX, movedCoordinateX);
+	           
+	       } catch(Exception e) { UtilitiesTestHelper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	    }
+	
     @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
