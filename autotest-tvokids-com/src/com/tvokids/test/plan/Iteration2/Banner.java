@@ -449,6 +449,7 @@ public class Banner {
 	
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
+	
 	/**
 	 * Test TVOKids logo is redirecting to age specific landing page
 	 * <p>Date Created: 2016-08-11</p>

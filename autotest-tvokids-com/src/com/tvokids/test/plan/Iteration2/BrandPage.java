@@ -108,107 +108,109 @@ public class BrandPage {
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
+	
 	/**
-		 * Test Custom Brand Meta-Data Attributes - Title field content is limited
-		 * <p>Date Created: 2016-07-06</p>
-		 * <p>Date Modified: 2016-07-22<p>
-		 * <p>Original Version: V1</p>
-		 * <p>Modified Version: V3</p>
-		 * <p>Xpath: 3</p>
-		 * <p>Test Cases: 35131 35153</p>
-		 */
-		@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","BUG-529","OPEN"}, enabled = true, priority = 3)
-	    public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
-	       try{
-	    	   // INITIALISATION:
-	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
-	           driver = helper.getServerName(driver);
+	 * Test Custom Brand Meta-Data Attributes - Title field content is limited
+	 * <p>Date Created: 2016-07-06</p>
+	 * <p>Date Modified: 2016-07-22<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: V3</p>
+	 * <p>Xpath: 3</p>
+	 * <p>Test Cases: 35131 35153</p>
+	 */
+	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","BUG-529","OPEN"}, enabled = true, priority = 3)
+    public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
+       try{
+    	   // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+
+           // DECLARATION:
+           int actual, expected, number;
+           String actualText, expectedText, expectedURLend, title, xpath;
+           
+           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           helper.logIn(driver,"content_editor","changeme");
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+           
+           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+           driver.manage().window().maximize();
+           
+     	   // ASSERT EMPTY TITLE FIELD:
+           driver.findElement(By.id(Drupal.title)).clear();
+           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
+           expected = Drupal.titleMaxCharsNumber;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+           // ASSERT TITLE FIELD CAPACITY COUNTER:          
+           number = helper.randomInt(1, (Drupal.titleMaxCharsNumber - 1));
+           title = helper.randomEnglishText(number);
+           driver.findElement(By.id(Drupal.title)).clear();
+           driver.findElement(By.id(Drupal.title)).sendKeys(title);
+           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
+           expected = Drupal.titleMaxCharsNumber - number;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+           // ASSERT TITLE FIELD MAXIMUM CAPACITY:           
+           title = helper.randomEnglishText(Drupal.titleMaxCharsNumber);
+           driver.findElement(By.id(Drupal.title)).clear();
+           driver.findElement(By.id(Drupal.title)).sendKeys(title);
+           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
+           expected = 0;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+           // ASSERT TITLE FIELD OVERLOAD ENTRY:
+           driver.findElement(By.id(Drupal.title)).clear();
+           
+           // CREATE TITLE FOR CONTENT:
+//            text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
+//            text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
+           long fingerprint = System.currentTimeMillis();
+           title = String.valueOf(fingerprint) + " " +  helper.randomText(Drupal.titleMaxCharsNumber + 10);
+             
+           driver.findElement(By.id(Drupal.title)).sendKeys(title);
+           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
+           expected = 0;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+
+           // CREATE CONTENT:
+//            Robot robot = new Robot();
+//            helper.createCustomBrand(driver, text, true, true, robot, fingerprint);
+           helper.createCustomBrand(driver, title, true, true, fingerprint, new Exception().getStackTrace()[0]);
+          
+           // ASSERT CONTENT URL USES A LIMITED TITLE:
+           expectedText = title.substring(0, Drupal.titleMaxCharsNumber);
+           expectedURLend = "/" + helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+           helper.checkCurrentURLendsWith(driver, new Exception().getStackTrace()[0], expectedURLend);
+           
+           // ASSERT TITLE FIELD OVERLOAD CONTENT IS LIMITED:
+           actualText = driver.findElement(By.xpath(Common.title)).getText();
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);
+           
+           // ASSERT TITLE FIELD OVERLOAD ON CONTENT ADMIN IS LIMITED:
+           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);          
+		   WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
+		   Select clickThis = new Select(dropwDownListBox);
+		   Thread.sleep(2000);
+		   clickThis.selectByVisibleText("Custom Brand");
+		   Thread.sleep(2000);
+		   driver.findElement(By.id("edit-author")).clear();
+		   driver.findElement(By.id("edit-author")).sendKeys("content_editor");
+		   int size = helper.waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+           if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+           helper.waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+		   driver.findElement(By.id("edit-submit-admin-views-node")).click();
+		   helper.waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);          
+		   xpath = Drupal.adminContentRowFirst + Drupal.adminContentFieldTitles;
+		   actualText = driver.findElement(By.xpath(xpath)).getText();
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
+           
+           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+       }
 	
-	           // DECLARATION:
-	           int actual, expected, number;
-	           String actualText, expectedText, expectedURLend, title, xpath;
-	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
-	           
-	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
-	           
-	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-	           driver.manage().window().maximize();
-	           
-	     	   // ASSERT EMPTY TITLE FIELD:
-	           driver.findElement(By.id(Drupal.title)).clear();
-	           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
-	           expected = Drupal.titleMaxCharsNumber;
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-	           
-	           // ASSERT TITLE FIELD CAPACITY COUNTER:          
-	           number = helper.randomInt(1, (Drupal.titleMaxCharsNumber - 1));
-	           title = helper.randomEnglishText(number);
-	           driver.findElement(By.id(Drupal.title)).clear();
-	           driver.findElement(By.id(Drupal.title)).sendKeys(title);
-	           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
-	           expected = Drupal.titleMaxCharsNumber - number;
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-	           
-	           // ASSERT TITLE FIELD MAXIMUM CAPACITY:           
-	           title = helper.randomEnglishText(Drupal.titleMaxCharsNumber);
-	           driver.findElement(By.id(Drupal.title)).clear();
-	           driver.findElement(By.id(Drupal.title)).sendKeys(title);
-	           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
-	           expected = 0;
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-	           
-	           // ASSERT TITLE FIELD OVERLOAD ENTRY:
-	           driver.findElement(By.id(Drupal.title)).clear();
-	           
-	           // CREATE TITLE FOR CONTENT:
-	//            text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
-	//            text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
-	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomText(Drupal.titleMaxCharsNumber + 10);
-	             
-	           driver.findElement(By.id(Drupal.title)).sendKeys(title);
-	           actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
-	           expected = 0;
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-	
-	           // CREATE CONTENT:
-	//            Robot robot = new Robot();
-	//            helper.createCustomBrand(driver, text, true, true, robot, fingerprint);
-	           helper.createCustomBrand(driver, title, true, true, fingerprint, new Exception().getStackTrace()[0]);
-	          
-	           // ASSERT CONTENT URL USES A LIMITED TITLE:
-	           expectedText = title.substring(0, Drupal.titleMaxCharsNumber);
-	           expectedURLend = "/" + helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           helper.checkCurrentURLendsWith(driver, new Exception().getStackTrace()[0], expectedURLend);
-	           
-	           // ASSERT TITLE FIELD OVERLOAD CONTENT IS LIMITED:
-	           actualText = driver.findElement(By.xpath(Common.title)).getText();
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);
-	           
-	           // ASSERT TITLE FIELD OVERLOAD ON CONTENT ADMIN IS LIMITED:
-	           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);          
-			   WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
-			   Select clickThis = new Select(dropwDownListBox);
-			   Thread.sleep(2000);
-			   clickThis.selectByVisibleText("Custom Brand");
-			   Thread.sleep(2000);
-			   driver.findElement(By.id("edit-author")).clear();
-			   driver.findElement(By.id("edit-author")).sendKeys("content_editor");
-			   int size = helper.waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
-	           if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
-	           helper.waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
-			   driver.findElement(By.id("edit-submit-admin-views-node")).click();
-			   helper.waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);          
-			   xpath = Drupal.adminContentRowFirst + Drupal.adminContentFieldTitles;
-			   actualText = driver.findElement(By.xpath(xpath)).getText();
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
-	           
-	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	       }
 	/**
 	 * Test attempt to create a Custom Brand without a description is rejected
 	 * <p>Date Created: 2016-07-20</p>
@@ -321,74 +323,74 @@ public class BrandPage {
 	
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
-	// Navigate to the appropriate page (on both 5 and Under & 6 and Over) and locate your newly created Custom Brand.
-		/**
-		 * Test create a Custom Brand Page on both 5 and Under & 6 and Over is located on the appropriate front end age page and navigatation link is correct
-		 * <p>Date Created: 2016-07-22</p>
-		 * <p>Date Modified: 2016-07-22<p>
-		 * <p>Original Version: V1</p>
-		 * <p>Modified Version: </p>
-		 * <p>Xpath: 1</p>
-		 * <p>Test Cases: 35153</p>
-		 */
-		@Test(groups = {"TC-35153"}, priority = 6)
-	    public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
-		       try{
-		    	   // INITIALISATION:
-		           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
-		           driver = helper.getServerName(driver);
-		           
-		           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-		           helper.logIn(driver,"content_editor","changeme");
-		           
-		           // CLEAN-UP:
-	//	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
-	//	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
-	//	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
-		           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
-		           
-		           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-		           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-		           
-		           // DECLARATION:
-		           String title, titleURL, description, xpath, expectedURL;
-		           
-		           // CREATE TITLE FOR CONTENT:
-		           long fingerprint = System.currentTimeMillis();
-		           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-		           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-		           
-		           // CREATE DESCRIPTION FOR CONTENT:
-		           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-		           
-		           // CREATE CONTENT WITH BOTH AGES SELECTED:
-		           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
-		           
-		           // LINK GENERIC XPATH:
-		           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-		           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
-		           
-		           // NAVIGATE TO "AGE 5 AND UNDER":
-		           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
-	//	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
-		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-		           
-		           // ASSERT LINK IS CORRECT:
-		           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
-		           helper.moveToElement(driver, xpath);
-		           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
-		           
-		           // NAVIGATE TO "AGE 6 AND OVER":
-		           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
-	//	           xpath = Common.sixAndOverLinkBase + titleURL + Common.XpathEqualsEnd;
-		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-		           
-		           // ASSERT LINK IS CORRECT:
-		           expectedURL = Common.sixAndOverURL + "/" + titleURL;
-		           helper.moveToElement(driver, xpath);
-		           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
-		           
-		           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		       }
+
+	/**
+	 * Test create a Custom Brand Page on both 5 and Under & 6 and Over is located on the appropriate front end age page and navigatation link is correct
+	 * <p>Date Created: 2016-07-22</p>
+	 * <p>Date Modified: 2016-07-22<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35153</p>
+	 */
+	@Test(groups = {"TC-35153"}, priority = 6)
+    public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+//	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
+//	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
+//	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath, expectedURL;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           
+	           // NAVIGATE TO "AGE 5 AND UNDER":
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+//	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           // ASSERT LINK IS CORRECT:
+	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
+	           helper.moveToElement(driver, xpath);
+	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
+	           
+	           // NAVIGATE TO "AGE 6 AND OVER":
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+//	           xpath = Common.sixAndOverLinkBase + titleURL + Common.XpathEqualsEnd;
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           // ASSERT LINK IS CORRECT:
+	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
+	           helper.moveToElement(driver, xpath);
+	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
 
 }
