@@ -1291,7 +1291,7 @@ public class Iteration2 {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
 		    	   else { expected = "animated-logo"; }
 		    	   Thread.sleep(seconds[i]*1000);
-		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
+		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogoCanvas)).getAttribute("class");		    	   
 		    	   // ASSERT:
 		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 		    	   }
@@ -1304,7 +1304,7 @@ public class Iteration2 {
 		    	   if(helper.determineEvenOrOdd(i).equals("even")) { expected = "animated-logo animating"; }
 		    	   else { expected = "animated-logo"; }
 		    	   Thread.sleep(seconds[i]*1000);
-		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogo)).getAttribute("class");		    	   
+		    	   actual = driver.findElement(By.xpath(Common.kidsPageLogoCanvas)).getAttribute("class");		    	   
 		    	   // ASSERT:
 		    	   helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 		    	   }
