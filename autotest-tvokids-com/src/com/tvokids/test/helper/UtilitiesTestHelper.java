@@ -1629,9 +1629,7 @@ public class UtilitiesTestHelper{
 							         + xml
 							         + "\n"
 				                	 + "\nStack Traces:");			 
-		   }
-		  
-		  
+		   }		  
 	// ################# DESCRIPTIVE END ##############################
 
 	// ################# SMART ASSERTIONS BEGIN #######################
