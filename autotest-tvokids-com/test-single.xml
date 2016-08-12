@@ -17,7 +17,6 @@
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2"><methods>
 <include name="testTVOKidsLogoIsAnimated"/>
-<include name="testTVOKidsLogoRedirectsToCorrectAgeLandingPage"/>
 </methods></class>
      
         </classes>

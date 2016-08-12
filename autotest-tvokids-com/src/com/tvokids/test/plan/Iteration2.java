@@ -1281,7 +1281,7 @@ public class Iteration2 {
 	           
 	           // DECLARATION:
 	           String expected, actual;
-	           Integer[] seconds = {2, 9, 4};
+	           Integer[] seconds = {1, 10, 4};
 	           
 	           // AGE 5 AND UNDER TEST:
 		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
