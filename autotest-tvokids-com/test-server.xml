@@ -15,7 +15,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2"><methods><include name="testCustomBrandTitleFieldContentLimit"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testCustomBrandTitleFieldContentLimit"/></methods></class>
      
         </classes>
      </test>
