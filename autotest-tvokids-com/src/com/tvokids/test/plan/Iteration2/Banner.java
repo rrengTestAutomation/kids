@@ -521,7 +521,7 @@ public class Banner {
 	 * <p>Test Cases: 34143</p>
 	 */
 	@Test(groups = {"TC-34143"}, priority = 21)
-	public void testOnNowBubbleDoesIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
