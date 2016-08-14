@@ -15,9 +15,11 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2"><methods>
-<include name="testOnNowBubbleDoesIsNotMovingBackAfterRotation"/>
-</methods></class>
+<class name="com.tvokids.test.plan.Iteration2.Banner"><methods>
+             <include name="testOnNowBubbleIsNotMovingBackAfterRotation"/>
+             <include name="testTVOKidsLogoRedirectsToCorrectAgeLandingPage"/></methods></class>
+      <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
+             <include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/></methods></class>
      
         </classes>
      </test>
