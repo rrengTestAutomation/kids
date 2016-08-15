@@ -2520,9 +2520,10 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String fileName, Boolean silentMode) throws NumberFormatException, IOException {
-				File f = new File(Common.testOutputFileDir + fileName);
-				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
-				return (f.exists() && f.isFile());
+//				File f = new File(Common.testOutputFileDir + fileName);
+//				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
+//				return (f.exists() && f.isFile());			
+				return fileExist(Common.testOutputFileDir, fileName, silentMode);			
 			}
 			
 			/**
@@ -2530,15 +2531,23 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String path, String fileName, Boolean silentMode) throws NumberFormatException, IOException {
-				File f = new File(path + File.separator + fileName);
+				File f = new File((path + File.separator + fileName).replace(File.separator + File.separator, File.separator));
 				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
 				return (f.exists() && f.isFile());
 			}
 			
 			/** @throws IOException */ 
 			public static void fileCopy(String fileSource, String fileDest) throws IOException {
-				File s = new File(Common.testOutputFileDir + fileSource);
-				File d = new File(Common.testOutputFileDir + fileDest);
+//				File s = new File(Common.testOutputFileDir + fileSource);
+//				File d = new File(Common.testOutputFileDir + fileDest);
+//				if (s.exists() && s.isFile()) { FileUtils.copyFile(s, d); }
+				fileCopy(Common.testOutputFileDir, fileSource, Common.testOutputFileDir, fileDest);
+			}
+			
+			/** @throws IOException */ 
+			public static void fileCopy(String pathSource, String fileSource, String pathDest, String fileDest) throws IOException {
+				File s = new File((pathSource + File.separator + fileSource).replace(File.separator + File.separator, File.separator));
+				File d = new File((pathDest   + File.separator + fileDest  ).replace(File.separator + File.separator, File.separator));
 				if (s.exists() && s.isFile()) { FileUtils.copyFile(s, d); }
 			}
 			
@@ -2791,8 +2800,129 @@ public class UtilitiesTestHelper{
         	    return linesArray;
         	}
         // ######################## TESTNG-FAILED XML CONVERTER END ########################
+        	
+        // ####################### TEST-FAILED XML CONVERTER START #######################
+            /**
+         	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
+         	 */
+             public void testFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
+            		// DECLARATION:
+//             	String sourceFilePath = System.getProperty("user.dir");
+ 				String sourceFileName = "failed.xml";
+     		
+         	    // PRE-CLEAN:
+         	    if (fileExist(System.getProperty("user.dir"), xmlOutputFileName, false)) {
+         	    	fileCopy(System.getProperty("user.dir"), xmlOutputFileName, Common.testOutputFileDir, sourceFileName);
+         	    	fileCleaner(System.getProperty("user.dir"), xmlOutputFileName);
+         	
+         	    // READER-WRITER:     		
+     		    String[] string = addReporterClassToTestFailedXmlLinesArray(sourceFileName, reporterClass); // READS TESTNG XML
+     		    for (String s : string) { fileWriter(System.getProperty("user.dir"), xmlOutputFileName, s); }
+
+         	    // OPTIONAL FAILURES NUMBER OUTPUT:
+     		    int failed = 0;
+     		    for (int i = 0; i < string.length; i++) {
+ 				    if ( string[i].contains("<include name=\"") ) { failed++; }
+ 			    }
+     		    
+         		// UPDATE FAILED TEST NUMBER AS PER FAILED:
+         		if (fileExist("failed.num", false)){
+         			fileCleaner("failed.num");
+         			fileWriter("failed.num", failed);
+         		}
+         		
+     		    if (fileExist("test.num", false)) {
+     		    	if (Integer.valueOf(fileScanner("test.num")) == 1 ) {
+     			    if (failed > 0) { fileWriterPrinter("FAILED..."); } else { fileWriterPrinter("PASSED!"); }
+     			    }   			
+     			if (Integer.valueOf(fileScanner("test.num")) > 1 ) {
+     			   if (failed > 0) {
+     				   if (failed == Integer.valueOf(fileScanner("test.num")) ) { fileWriterPrinter("ALL FAILED..."); }
+     				   else { fileWriterPrinter("FAILED " + failed  + " OF " + Integer.valueOf(fileScanner("test.num"))); }
+     			   }
+       			   if (failed == 0) { fileWriterPrinter("ALL PASSED!"); }
+       			   }			
+     			}
+     		    
+         	    }
+             }
+        	
+        	/**
+        	 * This METHOD adds Reporter Class to TestNG File
+        	 */
+        	public String[] addReporterClassToTestFailedXmlLinesArray(String fileName, String reporterClass) throws IOException{
+        		String[] string = cleanTestFailedXmlLinesArray(fileName);
+        	    
+        	    ArrayList<String> lines = new ArrayList<String>();
+        	    for (int i = 0; i < string.length; i++) {
+        	    	lines.add(string[i]);
+					if ( string[i].contains("<classes>") ) { lines.add("      " + reporterClass); }
+				}
+        	    
+        	    String[] linesArray = lines.toArray(new String[lines.size()]);
+        	    return linesArray;
+        	}
+        	
+        	/**
+        	 * This METHOD reads TestNG Files, deletes empty XML CLASS PATH(s)
+        	 */
+        	public String[] cleanTestFailedXmlLinesArray(String fileName) throws IOException{
+        		String[] string = readTestFailedXmlFileOutputLinesArray(fileName);
+        		ArrayList<String> noEmptyMethods = new ArrayList<String>();
+        		ArrayList<String> noEmptyClass = new ArrayList<String>();
+        		
+                // EMTY METHODS CLEANER:
+        		for (int i = 0; i < string.length; i++) {
+					if ( (i < (string.length - 1))
+					   && string[i].contains("<methods>")
+					   && string[i + 1].contains("</methods>")
+					   ) 
+					{ i++; } else { noEmptyMethods.add(string[i]); }
+				}
+        		
+        		String[] noEmptyMethodsArray = noEmptyMethods.toArray(new String[noEmptyMethods.size()]);
+        		
+                // EMTY CLASS CLEANER:
+        		for (int i = 0; i < noEmptyMethodsArray.length; i++) {
+					if ( (i < (noEmptyMethodsArray.length - 1))
+					   && noEmptyMethodsArray[i].contains("<class name=")
+					   && noEmptyMethodsArray[i + 1].contains("</class>")
+					   ) 
+					{ i++; } else { noEmptyClass.add(noEmptyMethodsArray[i]); }
+				}
+
+        		String[] noEmptyClassArray = noEmptyClass.toArray(new String[noEmptyClass.size()]);
+				return noEmptyClassArray;
+        	}
+        	
+        	/**
+        	 * This METHOD reads any Text File,
+        	 * converts and outputs all the text lines as a String Array
+        	 */
+        	@SuppressWarnings("resource")
+        	public String[] readTestFailedXmlFileOutputLinesArray(String fileName) throws IOException{
+        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
+        	    String str=null;
+        	    ArrayList<String> lines = new ArrayList<String>();
+        	    while ((str = in.readLine()) != null) {
+        	        if (!str.contains("helper")       	        		
+        	        && (!str.contains("startTime"))
+        	        && (!str.contains("closeBrowsers"))
+        	        && (!str.contains("endTime"))
+        	        && (!str.contains("start"))
+        	        && (!str.contains("finish"))
+                    && (!str.contains("email.All"))
+                    && (!str.contains("send.Mail"))
+                    && (!str.contains("report.Log"))     	        
+        	        && (str.length() != 0)       	        
+        	        	) { lines.add(str); }
+        	        }
+        	    String[] linesArray = lines.toArray(new String[lines.size()]);
+        	    return linesArray;
+        	}
+        // ####################### TEST-FAILED XML CONVERTER END #######################
             
-        // ####################### TEST-NG XML EXTRACTOR-CREATER START #######################
+        // ####################### TEST-FAILED XML CREATER START #######################
             /**
         	 * This METHOD created TestNG XML file based on Source File which contains (or not) XML CLASS PATH(s)
         	 */
@@ -2872,7 +3002,7 @@ public class UtilitiesTestHelper{
         		
         		}	
         	}
-		// ####################### TEST-NG XML EXTRACTOR-CREATER END #######################
+		// ####################### TEST-FAILED XML CREATER END #######################
         	
         // ####################### LOG FILES HANDLER START #######################
     		/** 
@@ -2931,16 +3061,17 @@ public class UtilitiesTestHelper{
         	 * This METHOD reads any Text File,
         	 * converts and outputs all the text lines as an ASC sorted String Array
         	 */
-        	@SuppressWarnings("resource")
         	public String[] readTextFileOutputLinesArray(String fileName) throws IOException{
-        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
-        	    String str=null;
-        	    ArrayList<String> lines = new ArrayList<String>();
-        	    while ((str = in.readLine()) != null) {
-        	        if (!str.contains("helper") && (str.length() != 0)) { lines.add(str); }
-        	        }
-        	    String[] linesArray = lines.toArray(new String[lines.size()]);
-        	    return linesArray;
+//        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
+//        	    String str=null;
+//        	    ArrayList<String> lines = new ArrayList<String>();
+//        	    while ((str = in.readLine()) != null) {
+//        	        if (!str.contains("helper") && (str.length() != 0)) { lines.add(str); }
+//        	        }
+//        	    String[] linesArray = lines.toArray(new String[lines.size()]);
+//        	    return linesArray;
+        		
+        		return readTextFileOutputLinesArray(Common.testOutputFileDir, fileName);
         	}
         	
         	/**
@@ -2949,7 +3080,7 @@ public class UtilitiesTestHelper{
         	 */
         	@SuppressWarnings("resource")
         	public String[] readTextFileOutputLinesArray(String path, String fileName) throws IOException{
-        	    BufferedReader in = new BufferedReader(new FileReader(path + File.separator + fileName));
+        	    BufferedReader in = new BufferedReader(new FileReader((path + File.separator + fileName).replace(File.separator + File.separator, File.separator)));
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
@@ -2972,28 +3103,31 @@ public class UtilitiesTestHelper{
         	 * converts and outputs them as an ASC sorted String Array
         	 */
         	public String[] readLogOutputXmlLinesArray(String fileName) throws IOException{
-        		String[] string = readTextFileOutputLinesArray(fileName);
-                Pattern p = Pattern.compile("<class name=\"");
-                
-                // FAILURES COUNTER
-        		int i = 0;
-        		for (String s : string) {
-        			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains("helper") && (s.length() != 0) ){ i++; }
-        			}
+//        		String[] string = readTextFileOutputLinesArray(fileName);
+//                Pattern p = Pattern.compile("<class name=\"");
+//                
+//                // FAILURES COUNTER
+//        		int i = 0;
+//        		for (String s : string) {
+//        			Matcher m = p.matcher(s); Boolean found = m.find();
+//        			if ( found && !s.contains("helper") && (s.length() != 0) ){ i++; }
+//        			}
+//        		
+//        		// CLASS LINE EXTRACTION
+//        		String[] linesArray = new String[i];		
+//        		int j = 0;
+//        		for (String s : string) {
+//        			Matcher m = p.matcher(s); Boolean found = m.find();
+//        			if ( found && !s.contains("helper") && (s.length() != 0) ) {
+//        		    	linesArray[j] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
+//        		    	j++;
+//        		    	}
+//        		}
+//        		
+//        		return orderedStringArrayAsc(linesArray);
         		
-        		// CLASS LINE EXTRACTION
-        		String[] linesArray = new String[i];		
-        		int j = 0;
-        		for (String s : string) {
-        			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains("helper") && (s.length() != 0) ) {
-        		    	linesArray[j] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
-        		    	j++;
-        		    	}
-        		}
+        		return readLogOutputXmlLinesArray(Common.testOutputFileDir, fileName);
         		
-        		return orderedStringArrayAsc(linesArray);
         	}  
         	
         	/**

@@ -73,9 +73,9 @@ public class Mail {
 		StringSelection stringSelection = new StringSelection(current);
 		Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clpbrd.setContents(stringSelection, null);
-		long currTime    = helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(current);
-		long startTime   = helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(dateBox());
-	 // String start  = helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(startTime);		
+		long currTime = helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(current);
+		long startTime = helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(dateBox());
+		String start = helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(startTime);		
 		long updateDelay = (startTime - currTime);
 		int sec = (int) updateDelay/1000;
 		
@@ -108,21 +108,39 @@ public class Mail {
 		} else { System.out.println("Will not send any E-Mail notification...\n"); }
 		
 		// TEST DELAY MANAGEMENT:
-		int testDelay = minBox();
+		int testDelay = minBox();		
+//		if (testDelay != 0 ) {
+//		System.out.println("  Test will be started in: " + helper.convertTimeSecondsToHoursMinSeconds(sec + testDelay*60));
+//		System.out.println("  Test will be started at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay + testDelay*60*1000));
+//		System.out.println("\nwait please...\n");
+//		}
 		if ( (testDelay >= 0 ) && (currTime + updateDelay + testDelay*60*1000 > System.currentTimeMillis()) ){    // USED TO BE: if (testDelay != 0 ) {
 		System.out.println("  Test additional delay is: " + helper.convertTimeSecondsToHoursMinSeconds(testDelay*60));
 		System.out.println("  Test will be  started at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay + testDelay*60*1000));
 		System.out.println("\nwait please...\n");
 		} else { System.out.println("starting now...\n"); }
 		
-	 // String date = start.substring(0,start.indexOf(" "));
-	 // String time = start.substring(start.indexOf(" ") + 1, start.length());
-	 
-	 // System.out.println("\n" + date + "\n" + time + "\n");
+		String date = start.substring(0,start.indexOf(" "));
+		String time = start.substring(start.indexOf(" ") + 1, start.length());
+		
+		Boolean ifRefresh = false;
+		String refresh = "";
+        if(ifRefresh) { refresh = "refresh-dev "; }
+
+		String command = 
+				"clear;CURRENT=$(date +%s);echo;echo $(date +%Y-%m-%d)\" \"$(date +%H\":\"%M\":\"%S);echo;TESTSTARTDATE=\"" +
+                date +
+                "\";TESTSTARTTIME=\"" +
+                time +
+                "\";TESTSTART=$(date --date=\"$TESTSTARTDATE $TESTSTARTTIME\" +%s);DIFF=$(( $TESTSTART - $CURRENT ));HOURS=$(( $DIFF/3600 ));MINUTES=$(( $(( $DIFF%3600 ))/60 ));SECONDS=$(( $DIFF%60 ));SLEEPTIME=$(( $HOURS*3600 + $MINUTES*60 + $SECONDS ));echo;echo \"Sleep time seconds: \"$SLEEPTIME\" seconds\";echo;echo \"Update Start is expected at:\";date \"+%Y-%m-%d\" -d @$(( $(date +%s) + $SLEEPTIME));date \"+%T\" -d @$(( $(date +%s) + $SLEEPTIME));echo;echo;sleep $SLEEPTIME;echo;echo;echo;cd /data/WebSites/" +
+                server +
+                "/website;git pull;git checkout " + branch + ";git pull origin " + branch + ";sh sites/all/scripts/d7-rebuild.sh " + refresh + branch + ";echo;echo;FINISH=$(date +%s);DIFF=$(( $FINISH - $TESTSTART ));HOURS=$(( $DIFF/3600 ));MINUTES=$(( $(( $DIFF%3600 ))/60 ));SECONDS=$(( $DIFF%60 ));echo;echo;echo $(date +%Y-%m-%d)\" \"$(date +%H\":\"%M\":\"%S);echo \"Update duration: \"$HOURS\" hours \"$MINUTES\" minutes \"$SECONDS\" seconds\";echo;echo;"
+                ;
+	 // System.out.println("\n" + date + "\n" + time + "\n");	
 	 // System.out.println(command);		
-	 // stringSelection = new StringSelection(command);
-	 // clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-	 // clpbrd.setContents(stringSelection, null);
+		stringSelection = new StringSelection(command);
+		clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clpbrd.setContents(stringSelection, null);
 		
 		long sleep = (helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay + testDelay*60*1000)) -
 				      helper.convertCalendarDateTimeHourMinSecToMillisecondsAsLong(helper.getCurrentDateTimeHourMinSec()));
