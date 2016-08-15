@@ -542,7 +542,7 @@ public class Banner {
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath;
-	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth, windowWidth;
+	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth, windowWidth, left, right;
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -566,8 +566,10 @@ public class Banner {
 	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
 	           characterWidth = helper.getElementWidth(driver, xpath);
 	           windowWidth = driver.manage().window().getSize().getWidth();
+	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
+	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
 	           // CLICK LEFT UNTIL DISAPPEAR:
-	           while( driver.findElement(By.xpath(xpath)).getLocation().getX() < windowWidth )
+	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
 	           { driver.findElement(By.xpath(Common.charBannerButtonLeft)).click(); Thread.sleep(1000); }		      
 	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
@@ -575,7 +577,9 @@ public class Banner {
 	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
 	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
 		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);
-		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);	           
+		       helper.fileWriterPrinter("LEFT  ARROW      X-COORDINATE = " + left);
+		       helper.fileWriterPrinter("RIGHT ARROW      X-COORDINATE = " + right);
+		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);
 		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
 	           Thread.sleep(3000);
 	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
@@ -588,8 +592,10 @@ public class Banner {
 	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
 	           characterWidth = helper.getElementWidth(driver, xpath);
 	           windowWidth = driver.manage().window().getSize().getWidth();
+	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
+	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
 	           // CLICK RIGHT UNTIL DISAPPEAR:
-	           while( driver.findElement(By.xpath(xpath)).getLocation().getX() > (0 - characterWidth) )
+	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
 	           { driver.findElement(By.xpath(Common.charBannerButtonRight)).click(); Thread.sleep(1000); }		      
 	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
@@ -597,7 +603,9 @@ public class Banner {
 	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
 	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
 		       helper.fileWriterPrinter("CHARACTER   MOVED  COORDINATE = " + movedCoordinateX);
-		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);	           
+		       helper.fileWriterPrinter("LEFT  ARROW      X-COORDINATE = " + left);
+		       helper.fileWriterPrinter("RIGHT ARROW      X-COORDINATE = " + right);
+		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);
 		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
 	           Thread.sleep(3000);
 	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
