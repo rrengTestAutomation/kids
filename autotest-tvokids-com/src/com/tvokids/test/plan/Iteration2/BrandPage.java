@@ -387,6 +387,7 @@ public class BrandPage {
 	           
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
+	           driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
 	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
