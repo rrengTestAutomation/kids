@@ -1211,10 +1211,11 @@ public class UtilitiesTestHelper{
 				           if(!b) { fileWriterPrinter("Successful \"" + image + "\" " + name + " entry!"); }
 				           
 				           driver.findElement(upload).click();
+				           waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 				           alertHandler(driver);
 			               closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
 				         } catch (Exception e) {}
-		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+		        	// waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		        	 
 		        	// UPLOAD ERROR HANDLER:
 		        	 if (i > 1) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
@@ -2447,9 +2448,9 @@ public class UtilitiesTestHelper{
                         if (ifDeleteRoot) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             } else {
-                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             }
                         }
                     } catch (Exception e) {}                    
@@ -2493,9 +2494,9 @@ public class UtilitiesTestHelper{
                         if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             } else {
-                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             }
                         }
                     } catch (Exception e) {}                    
