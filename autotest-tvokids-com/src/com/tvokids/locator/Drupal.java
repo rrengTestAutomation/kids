@@ -62,6 +62,9 @@ public class Drupal{
 	  public static String longDescription        = "edit-field-description-und-0-value";
 	  public static String shortDescription       = "edit-field-summary-und-0-value";
 	  
+	  /************************active tab******************************/
+	  public static String verticalTabActive = "/parent::*/span[@id='active-vertical-tab']";
+	  
 	  /************vertical tab - character banner*********************/
 	  public static String characterBannerVerticalTab = "//ul[@class='vertical-tabs-list']/li[1]/a/strong";
 	  public static String characterBannerFieldSet = "//fieldset[1]/div/div";

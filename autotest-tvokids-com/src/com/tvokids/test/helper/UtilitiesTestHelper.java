@@ -309,7 +309,8 @@ public class UtilitiesTestHelper{
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
-	   By browse, upload;
+//	   By browse, upload;
+	   String tab, browse, upload;
 //     try {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
@@ -325,27 +326,27 @@ public class UtilitiesTestHelper{
 			
 			driver.findElement(By.id(Drupal.keywords)).clear();
 			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-			
-			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
-			browse = By.xpath(Drupal.characterBannerBrowse);
-			upload = By.xpath(Drupal.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
-			
-		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-			browse = By.xpath(Drupal.heroBoxBrowse);
-			upload = By.xpath(Drupal.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileSmallBrowse);
-			upload = By.xpath(Drupal.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileLargeBrowse);
-			upload = By.xpath(Drupal.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image", t);
 
+			tab    = Drupal.characterBannerVerticalTab;
+			browse = Drupal.characterBannerBrowse;
+			upload = Drupal.characterBannerUpload;
+			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
+
+		    tab    = Drupal.heroBoxVerticalTab;
+			browse = Drupal.heroBoxBrowse;
+			upload = Drupal.heroBoxUpload;
+			upload(driver, "hero.jpg", tab, browse, upload, "image", t);
+
+			tab    = Drupal.tileVerticalTab;
+			browse = Drupal.tileSmallBrowse;
+			upload = Drupal.tileSmallUpload;
+			upload(driver, "small.jpg", tab, browse, upload, "image", t);
+
+			tab    = Drupal.tileVerticalTab;
+			browse = Drupal.tileLargeBrowse;
+			upload = Drupal.tileLargeUpload;
+			upload(driver, "large.jpg", tab, browse, upload, "image", t);
+			
 			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
 			
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
@@ -1121,6 +1122,34 @@ public class UtilitiesTestHelper{
 	  }
 	  
 	  /**
+	   * Image tab-clicked upload
+	   * @throws IOException 
+	   * @throws NumberFormatException 
+	   * @throws InterruptedException 
+	   */
+	  public void upload(WebDriver driver, String image, String tab, String browse, String upload, String name, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+		  String parentWindowHandle = driver.getWindowHandle();
+		  String tabActive = tab  + Drupal.verticalTabActive;
+		  By Tab = By.xpath(tabActive);
+		  By Browse = By.xpath(browse);
+		  By Upload = By.xpath(upload);
+		  int i = 0;
+		  int size = driver.findElements(Tab).size();
+		  while ((size == 0) && (i < 5)) {
+		         try { 
+		              if (i > 0) { fileWriterPrinter("Not a successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click...will try again..."); }
+	                  driver.findElement(By.xpath(tab)).click();
+	                  alertHandler(driver);
+	                  closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
+		         } catch (Exception e) { getScreenShot(t, e, driver); }
+		         i++;
+		         size = driver.findElements(Tab).size();
+		         }
+		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
+		  uploader(driver, image, Browse, Upload, "image", t);
+      }
+	  
+	  /**
 	   * Image direct upload engine
 	   * @param driver
 	   * @param image
@@ -1167,12 +1196,24 @@ public class UtilitiesTestHelper{
 			         try {
 			        	   size = driver.findElements(element).size();
 				           if ((i > 0) && (size == 0) && (errors == 0)) { fileWriterPrinter("AJAX error during " + name + " upload..."); }
-				           driver.findElement(browse).sendKeys(imagePath);
-				           Thread.sleep(1000);
+				           
+				           // IMAGE PATH ENTRY ERROR HANDLER:
+				           boolean b = true;
+				           while (b) {
+				        	   try {
+				        		    driver.findElement(browse).sendKeys(imagePath);
+								    b = ifAlertHandler(driver);
+								    if(b) { closeAllOtherWindows(driver, parentWindowHandle); }
+								    if(b) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " entry...will try again..."); }
+								    Thread.sleep(1000);
+				        	   } catch (Exception e) { getScreenShot(t, e, driver); }
+				           }
+				           if(!b) { fileWriterPrinter("Successful \"" + image + "\" " + name + " entry!"); }
+				           
 				           driver.findElement(upload).click();
 				           alertHandler(driver);
 			               closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
-				         } catch (Exception e) {}
+				         } catch (Exception e) { getScreenShot(t, e, driver); }
 		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		        	 
 		        	// UPLOAD ERROR HANDLER:
@@ -5065,6 +5106,17 @@ public class UtilitiesTestHelper{
       }
 	}
 	
+	public boolean ifAlertHandler(WebDriver driver) throws NumberFormatException, IOException{
+		boolean b = isAlertPresent(driver);
+		if(isAlertPresent(driver)){
+	        driver.switchTo().alert();
+	        fileWriterPrinter(driver.switchTo().alert().getText());
+	        driver.switchTo().alert().accept();   
+	        driver.switchTo().defaultContent();
+	      }
+		return b;
+		}
+	
 	public String alertContentScanner(WebDriver driver) throws NumberFormatException, IOException{
 	    String content = null;
 		if (isAlertPresent(driver)) {
@@ -5779,12 +5831,12 @@ public class UtilitiesTestHelper{
 	        	 ) { driver.findElement(By.xpath(buttonClick)).click(); Thread.sleep(1000); i++; }
 
             // MEASURE NEW LOCATION:
-	        if(ifPrompt) { fileWriterPrinter("\n" + "DIS-APPEAR!"); }
+	        if(ifPrompt) { fileWriterPrinter("\n" + "DISAPPEAR!"); }
 		    int elementMovedX = driver.findElement(By.xpath(elementXpath)).getLocation().getX();
 		    int diff = elementMovedX - elementCurrentX;
 		    if(i == 0) { if(ifPrompt) { fileWriterPrinter("RE-LOCATION:   NOT REQUIRED"); } }
 		    else       { if(ifPrompt) { 
-                                        fileWriterPrinter("ELEMENT DIS-APPEARED  AFTER " + i + " CLICKS ON " + arrow + "ARROW");
+                                        fileWriterPrinter("ELEMENT  DISAPPEARED  AFTER " + i + " CLICKS ON " + arrow + "ARROW");
 		    	                        fileWriterPrinter("ELEMENT HORIZONTAL MOVEMENT: " + diff + " UNITS");
 		    	                      }
 		               }
