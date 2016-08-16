@@ -2447,9 +2447,9 @@ public class UtilitiesTestHelper{
                         if (ifDeleteRoot) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             } else {
-                              System.out.println("\n" + "NOT FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             }
                         }
                     } catch (Exception e) {}                    
@@ -2493,9 +2493,9 @@ public class UtilitiesTestHelper{
                         if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             } else {
-                              System.out.println("\n" + "NOT FULLY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             }
                         }
                     } catch (Exception e) {}                    
