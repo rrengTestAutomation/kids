@@ -1141,7 +1141,7 @@ public class UtilitiesTestHelper{
 	                  driver.findElement(By.xpath(tab)).click();
 	                  alertHandler(driver);
 	                  closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
-		         } catch (Exception e) { getScreenShot(t, e, driver); }
+		         } catch (Exception e) {}
 		         i++;
 		         size = driver.findElements(Tab).size();
 		         }
@@ -1206,14 +1206,14 @@ public class UtilitiesTestHelper{
 								    if(b) { closeAllOtherWindows(driver, parentWindowHandle); }
 								    if(b) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " entry...will try again..."); }
 								    Thread.sleep(1000);
-				        	   } catch (Exception e) { getScreenShot(t, e, driver); }
+				        	   } catch (Exception e) {}
 				           }
 				           if(!b) { fileWriterPrinter("Successful \"" + image + "\" " + name + " entry!"); }
 				           
 				           driver.findElement(upload).click();
 				           alertHandler(driver);
 			               closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
-				         } catch (Exception e) { getScreenShot(t, e, driver); }
+				         } catch (Exception e) {}
 		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		        	 
 		        	// UPLOAD ERROR HANDLER:
