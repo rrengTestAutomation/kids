@@ -249,7 +249,7 @@ public class Banner {
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath;
-	           int i = 0, countDisappear = i, countAppear = i, left, right;
+	           int i = 0, countDisappear = i, countAppear = i;
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -267,105 +267,40 @@ public class Banner {
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
-	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
-	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
-	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
-	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
-	           
+	              helper.fileWriterPrinter("\n\n" + "AGE 5 AND UNDER TEST:");
+	              helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+           
 	           // CLICK LEFT UNTIL DISAPPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countDisappear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER DISAPPEARED AFTER " + countDisappear + " CLICKS ON LEFT ARROW");
-		       // CLICK LEFT UNTIL APPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() <= left) || (driver.findElement(By.xpath(xpath)).getLocation().getX() >= right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countAppear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER APPEARED AGAIN AFTER " + countAppear + " CLICKS ON LEFT ARROW" + "\n");         
-		       // ASSERT 5 AND UNDER CHARACTER LEFT LOOPING:
-	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear > countDisappear) && (countDisappear > 0) );
+	           countDisappear = helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, true);		       
+	           // CLICK LEFT UNTIL APPEAR:
+	           countAppear = countDisappear + helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, true);		       
+	           // ASSERT 5 AND UNDER CHARACTER LEFT LOOPING:
+	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear >= countDisappear) && (countDisappear >= 0) );
 	           
 	           // CLICK RIGHT UNTIL DISAPPEAR:
-	           i = 0;
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countDisappear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER DISAPPEARED AFTER " + countDisappear + " CLICKS ON RIGHT ARROW");
-		       // CLICK RIGHT UNTIL APPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() <= left) || (driver.findElement(By.xpath(xpath)).getLocation().getX() >= right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countAppear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER APPEARED AGAIN AFTER " + countAppear + " CLICKS ON RIGHT ARROW" + "\n");         
-		       // ASSERT 5 AND UNDER CHARACTER RIGHT LOOPING:
-	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear > countDisappear) && (countDisappear > 0) );
+	           countDisappear = helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, true, true);		       
+	           // CLICK RIGHT UNTIL APPEAR:
+	           countAppear = countDisappear + helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, true, true);   
+	           // ASSERT 5 AND UNDER CHARACTER RIGHT LOOPING:
+	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear >= countDisappear) && (countDisappear >= 0) );
 	           
 	           // AGE 6 AND OVER TEST:
-	           i = 0;
-	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
-	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
-	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
-	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
+	              helper.fileWriterPrinter("\n\n" + "AGE 6 AND OVER TEST:");
+	              helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 	           
 	           // CLICK LEFT UNTIL DISAPPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countDisappear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER DISAPPEARED AFTER " + countDisappear + " CLICKS ON LEFT ARROW");
-		       // CLICK LEFT UNTIL APPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() <= left) || (driver.findElement(By.xpath(xpath)).getLocation().getX() >= right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countAppear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER APPEARED AGAIN AFTER " + countAppear + " CLICKS ON LEFT ARROW" + "\n");         
+		       countDisappear = helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, true);		      
+		       // CLICK LEFT UNTIL APPEAR:        
+		       countAppear = countDisappear + helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, true);		       
 		       // ASSERT 6 AND OVER CHARACTER LEFT LOOPING:
-	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear > countDisappear) && (countDisappear > 0) );
+	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear >= countDisappear) && (countDisappear >= 0) );
 	           
 	           // CLICK RIGHT UNTIL DISAPPEAR:
-	           i = 0;
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countDisappear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER DISAPPEARED AFTER " + countDisappear + " CLICKS ON RIGHT ARROW");
+	           countDisappear = helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, true, true);	           
 		       // CLICK RIGHT UNTIL APPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() <= left) || (driver.findElement(By.xpath(xpath)).getLocation().getX() >= right) )
-	           {
-			       driver.findElement(By.xpath(Common.charBannerButtonRight)).click();
-			       Thread.sleep(1000);
-			       i++;
-			       countAppear = i;
-			       }
-	           helper.fileWriterPrinter("CHARACTER APPEARED AGAIN AFTER " + countAppear + " CLICKS ON RIGHT ARROW" + "\n");         
+	           countAppear = countDisappear + helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, true, true);	           
 		       // ASSERT 6 AND OVER CHARACTER RIGHT LOOPING:
-	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear > countDisappear) && (countDisappear > 0) );
+	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear >= countDisappear) && (countDisappear >= 0) );
 	           
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	    }
@@ -542,7 +477,7 @@ public class Banner {
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath;
-	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth, windowWidth, left, right;
+	           int defaultCoordinateX, movedCoordinateX, backCoordinateX, characterWidth, windowWidth , left, right;
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -560,19 +495,23 @@ public class Banner {
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
-	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.fileWriterPrinter("\n\n" + "AGE 5 AND UNDER TEST:");
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           
 	           // MEASURE THE CHARACTER BUBBLE EXISTING (DEFAULT) LOCATION:
 	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
 	           characterWidth = helper.getElementWidth(driver, xpath);
 	           windowWidth = driver.manage().window().getSize().getWidth();
-	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
-	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
-	           // CLICK LEFT UNTIL DISAPPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           { driver.findElement(By.xpath(Common.charBannerButtonLeft)).click(); Thread.sleep(1000); }		      
+               left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
+               right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
+	           
+               // CLICK LEFT UNTIL DISAPPEAR:
+               helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, true);
+	           
 	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
+               Thread.sleep(1000);
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       
 		       // MEASUREMENT REPORT:
 	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
 	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
@@ -580,25 +519,30 @@ public class Banner {
 		       helper.fileWriterPrinter("LEFT  ARROW      X-COORDINATE = " + left);
 		       helper.fileWriterPrinter("RIGHT ARROW      X-COORDINATE = " + right);
 		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);
+		       
 		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
 	           Thread.sleep(3000);
 	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], backCoordinateX, movedCoordinateX);
 	           
 	           // AGE 6 AND OVER TEST:
-	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.fileWriterPrinter("\n\n" + "AGE 6 AND OVER TEST:");
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           
 	           // MEASURE THE CHARACTER BUBBLE EXISTING (DEFAULT) LOCATION:
 	           defaultCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();	           
 	           characterWidth = helper.getElementWidth(driver, xpath);
 	           windowWidth = driver.manage().window().getSize().getWidth();
 	           left = driver.findElement(By.xpath(Common.charBannerButtonLeft)).getLocation().getX();
 	           right = driver.findElement(By.xpath(Common.charBannerButtonRight)).getLocation().getX();
+	           
 	           // CLICK RIGHT UNTIL DISAPPEAR:
-	           while( (driver.findElement(By.xpath(xpath)).getLocation().getX() > left) && (driver.findElement(By.xpath(xpath)).getLocation().getX() < right) )
-	           { driver.findElement(By.xpath(Common.charBannerButtonRight)).click(); Thread.sleep(1000); }		      
+	           helper.clickToDisAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, true, true);
+	           
 	           // MEASURE THE CHARACTER BUBBLE NEW LOCATION:
+	           Thread.sleep(1000);
 		       movedCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();
+		       
 		       // MEASUREMENT REPORT:
 	           helper.fileWriterPrinter("\n" + "CHARACTER              WIDTH = " + characterWidth);
 	           helper.fileWriterPrinter("CHARACTER DEFAULT  COORDINATE = " + defaultCoordinateX);
@@ -606,6 +550,7 @@ public class Banner {
 		       helper.fileWriterPrinter("LEFT  ARROW      X-COORDINATE = " + left);
 		       helper.fileWriterPrinter("RIGHT ARROW      X-COORDINATE = " + right);
 		       helper.fileWriterPrinter("CURRENT BROWSER  WINDOW WIDTH = " + windowWidth);
+		       
 		       // ASSERT CHARACTER BUBBLE DID NOT MOVE BACK:
 	           Thread.sleep(3000);
 	           backCoordinateX = driver.findElement(By.xpath(xpath)).getLocation().getX();

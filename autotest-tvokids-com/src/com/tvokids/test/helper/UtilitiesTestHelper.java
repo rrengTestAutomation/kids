@@ -1150,7 +1150,9 @@ public class UtilitiesTestHelper{
 	   * @throws NumberFormatException 
 	   */
       public void uploader(WebDriver driver, String image, By browse, By upload, String name, StackTraceElement t) throws InterruptedException, NumberFormatException, IOException {
-		  String imageDir = Common.localImageDir;
+    	  String parentWindowHandle = driver.getWindowHandle();
+    	  
+    	  String imageDir = Common.localImageDir;
 		  String imagePath = imageDir + File.separator + image;
 		  
 		  int i = 0;
@@ -1160,21 +1162,32 @@ public class UtilitiesTestHelper{
 		  int errors = 0;
 		  while ((size == 0) && (errors == 0)) {			  		        	 
 		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..." + "[Attempt #" + (i+1) + "]"); }
-		        	 driver.findElement(browse).sendKeys(imagePath);
-		        	 Thread.sleep(1000);
-		        	 driver.findElement(upload).click();
+
+		        	 // UPLOAD CLICK WITH AJAX ERROR HANDLER:
+			         try {
+			        	   size = driver.findElements(element).size();
+				           if ((i > 0) && (size == 0) && (errors == 0)) { fileWriterPrinter("AJAX error during " + name + " upload..."); }
+				           driver.findElement(browse).sendKeys(imagePath);
+				           Thread.sleep(1000);
+				           driver.findElement(upload).click();
+				           alertHandler(driver);
+			               closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
+				         } catch (Exception e) {}
 		        	 waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+		        	 
+		        	// UPLOAD ERROR HANDLER:
 		        	 if (i > 1) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
 		        	 if (errors > 0) { 
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
 		        		              moveToElement(driver, Drupal.confirmButton);
 		        		              }
-		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); }	         
+		        	 if (errors > 0) { assertWebElementNotExist(driver, t, By.xpath(Drupal.errorUpload)); }
+		        	 
 		         i++;
 		         Thread.sleep(1000);
 		         waitUntilElementPresence(driver, 2, element, "\"" + image + "\"", t, false);
-		         size = driver.findElements(element).size();		         
-		         }
+		         size = driver.findElements(element).size();
+		         }		  
 		  if (size == 1) { fileWriterPrinter("Successful \"" + image + "\" " + name + " upload!"); }
 		  Thread.sleep(1000);
 	  }
@@ -5728,6 +5741,87 @@ public class UtilitiesTestHelper{
 	    	double[] array = {MovementRatioX, MovementRatioY};
 	    	return array;
 	    	}
-	    // ########### DRAG AND DROP START ############
-	        
+	    // ########### DRAG AND DROP END ############
+	    
+	    // ########### ELEMENT APPEARER START ############
+	    /** This Method forces to move selected element between left and right arrow scroller-buttons
+	     * @throws InterruptedException 
+	     * @throws IOException 
+	     * @throws NumberFormatException 
+	     */
+	    public int clickToAppear(WebDriver driver, String buttonLeft, String buttonRight, String elementXpath, Boolean ifRight, Boolean ifPrompt) throws InterruptedException, NumberFormatException, IOException {
+	    	// LEFT-RIGHT coordinates
+	        int buttonLeftX = driver.findElement(By.xpath(buttonLeft)).getLocation().getX();
+	        int buttonRightX = driver.findElement(By.xpath(buttonRight)).getLocation().getX();
+
+            // MEASURE THE WIDTH:
+            int leftWidth = getElementWidth(driver, buttonLeft);
+            int elementWidth = getElementWidth(driver, elementXpath);
+            
+	        // MEASURE THE ECURRENT LOCATION:
+	        int elementCurrentCoordinateX = driver.findElement(By.xpath(elementXpath)).getLocation().getX();
+           
+            // APEARER:
+	        int i = 0;
+	        String buttonClick = buttonLeft;
+	        String arrow = "LEFT  ";
+	        if(ifRight) { buttonClick = buttonRight; arrow = "RIGHT "; }
+	        while( (driver.findElement(By.xpath(elementXpath)).getLocation().getX() < (buttonLeftX + leftWidth + 1))
+	        	   || 
+	        	   (driver.findElement(By.xpath(elementXpath)).getLocation().getX() > (buttonRightX - elementWidth - 1))
+	        	 ) { driver.findElement(By.xpath(buttonClick)).click(); Thread.sleep(1000); i++; }
+
+            // MEASURE NEW LOCATION:
+	        if(ifPrompt) { fileWriterPrinter("\n" + "APPEARS!"); }
+		    int elementMovedCoordinateX = driver.findElement(By.xpath(elementXpath)).getLocation().getX();
+		    int diff = elementMovedCoordinateX - elementCurrentCoordinateX;
+		    if(i == 0) { if(ifPrompt) { fileWriterPrinter("RE-LOCATION:   NOT REQUIRED"); } }
+		    else       { if(ifPrompt) { 
+		    	                        fileWriterPrinter("ELEMENT     APPEARED  AFTER " + i + " CLICKS ON " + arrow + "ARROW");
+		    	                        fileWriterPrinter("ELEMENT HORIZONTAL MOVEMENT: " + diff + " UNITS");
+		    	                      }
+		               }
+		    return i;
+		    }
+
+	    /** This Method forces to move selected element out of between left and right arrow scroller-buttons
+	     * @throws InterruptedException 
+	     * @throws IOException 
+	     * @throws NumberFormatException 
+	     */
+	    public int clickToDisAppear(WebDriver driver, String buttonLeft, String buttonRight, String elementXpath, Boolean ifRight, Boolean ifPrompt) throws InterruptedException, NumberFormatException, IOException {
+	    	// LEFT-RIGHT coordinates
+	        int buttonLeftX = driver.findElement(By.xpath(buttonLeft)).getLocation().getX();
+	        int buttonRightX = driver.findElement(By.xpath(buttonRight)).getLocation().getX();
+
+            // MEASURE THE WIDTH:
+            int leftWidth = getElementWidth(driver, buttonLeft);
+            int elementWidth = getElementWidth(driver, elementXpath);
+            
+	        // MEASURE THE ECURRENT LOCATION:
+	        int elementCurrentX = driver.findElement(By.xpath(elementXpath)).getLocation().getX();
+           
+	     // APEARER:
+	        int i = 0;
+	        String buttonClick = buttonLeft;
+	        String arrow = "LEFT  ";
+	        if(ifRight) { buttonClick = buttonRight; arrow = "RIGHT "; }
+	        while( (driver.findElement(By.xpath(elementXpath)).getLocation().getX() > (buttonLeftX + leftWidth - elementWidth - 1))
+	        	   && 
+	        	   (driver.findElement(By.xpath(elementXpath)).getLocation().getX() < (buttonRightX + 1))
+	        	 ) { driver.findElement(By.xpath(buttonClick)).click(); Thread.sleep(1000); i++; }
+
+            // MEASURE NEW LOCATION:
+	        if(ifPrompt) { fileWriterPrinter("\n" + "DIS-APPEAR!"); }
+		    int elementMovedX = driver.findElement(By.xpath(elementXpath)).getLocation().getX();
+		    int diff = elementMovedX - elementCurrentX;
+		    if(i == 0) { if(ifPrompt) { fileWriterPrinter("RE-LOCATION:   NOT REQUIRED"); } }
+		    else       { if(ifPrompt) { 
+                                        fileWriterPrinter("ELEMENT DIS-APPEARED  AFTER " + i + " CLICKS ON " + arrow + "ARROW");
+		    	                        fileWriterPrinter("ELEMENT HORIZONTAL MOVEMENT: " + diff + " UNITS");
+		    	                      }
+		               }
+		    return i;
+		    }
+	    // ########### ELEMENT APPEARER START ############
 }
