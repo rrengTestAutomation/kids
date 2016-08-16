@@ -2819,7 +2819,7 @@ public class UtilitiesTestHelper{
          	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
          	 */
              public void testFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
-            		// DECLARATION:
+            	// DECLARATION:
 //             	String sourceFilePath = System.getProperty("user.dir");
  				String sourceFileName = "test-failed.xml";
      		
@@ -3075,17 +3075,8 @@ public class UtilitiesTestHelper{
         	 * converts and outputs all the text lines as an ASC sorted String Array
         	 */
         	public String[] readTextFileOutputLinesArray(String fileName) throws IOException{
-//        	    BufferedReader in = new BufferedReader(new FileReader(Common.testOutputFileDir + fileName));
-//        	    String str=null;
-//        	    ArrayList<String> lines = new ArrayList<String>();
-//        	    while ((str = in.readLine()) != null) {
-//        	        if (!str.contains("helper") && (str.length() != 0)) { lines.add(str); }
-//        	        }
-//        	    String[] linesArray = lines.toArray(new String[lines.size()]);
-//        	    return linesArray;
-        		
         		return readTextFileOutputLinesArray(Common.testOutputFileDir, fileName);
-        	}
+        		}
         	
         	/**
         	 * This METHOD reads any Text File,
@@ -3116,32 +3107,8 @@ public class UtilitiesTestHelper{
         	 * converts and outputs them as an ASC sorted String Array
         	 */
         	public String[] readLogOutputXmlLinesArray(String fileName) throws IOException{
-//        		String[] string = readTextFileOutputLinesArray(fileName);
-//                Pattern p = Pattern.compile("<class name=\"");
-//                
-//                // FAILURES COUNTER
-//        		int i = 0;
-//        		for (String s : string) {
-//        			Matcher m = p.matcher(s); Boolean found = m.find();
-//        			if ( found && !s.contains("helper") && (s.length() != 0) ){ i++; }
-//        			}
-//        		
-//        		// CLASS LINE EXTRACTION
-//        		String[] linesArray = new String[i];		
-//        		int j = 0;
-//        		for (String s : string) {
-//        			Matcher m = p.matcher(s); Boolean found = m.find();
-//        			if ( found && !s.contains("helper") && (s.length() != 0) ) {
-//        		    	linesArray[j] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
-//        		    	j++;
-//        		    	}
-//        		}
-//        		
-//        		return orderedStringArrayAsc(linesArray);
-        		
         		return readLogOutputXmlLinesArray(Common.testOutputFileDir, fileName);
-        		
-        	}  
+        		}  
         	
         	/**
         	 * This METHOD reads Log Files, extracts XML CLASS PATH(s),
