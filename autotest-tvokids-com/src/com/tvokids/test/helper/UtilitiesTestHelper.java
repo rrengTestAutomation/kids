@@ -2490,13 +2490,13 @@ public class UtilitiesTestHelper{
                                 if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
                                 }
                             }
-                        // THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
+                        // DIRECTORY TIME RESET IF REQUIRED
                         if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             } else {
-                              System.out.println("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
                             }
                         }
                     } catch (Exception e) {}                    
