@@ -2808,7 +2808,7 @@ public class UtilitiesTestHelper{
              public void testFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
             		// DECLARATION:
 //             	String sourceFilePath = System.getProperty("user.dir");
- 				String sourceFileName = "failed.xml";
+ 				String sourceFileName = "test-failed.xml";
      		
          	    // PRE-CLEAN:
          	    if (fileExist(System.getProperty("user.dir"), xmlOutputFileName, false)) {
