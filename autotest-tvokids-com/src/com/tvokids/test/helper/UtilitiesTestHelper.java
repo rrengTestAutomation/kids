@@ -201,7 +201,7 @@ public class UtilitiesTestHelper{
 				while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
 				fileWriterPrinter("\nPAGE-" + i + ": DELETING...");
 				waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-				driver.findElement(By.xpath(Drupal.selectAllCheckBox)).click();  //check "Select All"
+				ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
 				
 				// all rows selection			
 				List<WebElement> elements = driver.findElements(By.xpath(Drupal.selectAllRowsButton));
@@ -309,7 +309,6 @@ public class UtilitiesTestHelper{
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
-//	   By browse, upload;
 	   String tab, browse, upload;
 //     try {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
@@ -1128,25 +1127,24 @@ public class UtilitiesTestHelper{
 	   * @throws InterruptedException 
 	   */
 	  public void upload(WebDriver driver, String image, String tab, String browse, String upload, String name, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
-		  String parentWindowHandle = driver.getWindowHandle();
+//		  String parentWindowHandle = driver.getWindowHandle();
 		  String tabActive = tab  + Drupal.verticalTabActive;
 		  By Tab = By.xpath(tabActive);
 		  By Browse = By.xpath(browse);
 		  By Upload = By.xpath(upload);
+		  
+		  // TAB CLICK WITH XPATH CHANGE CONTROLLER AND AJAX ERROR HANDLER:
 		  int i = 0;
 		  int size = driver.findElements(Tab).size();
 		  while ((size == 0) && (i < 5)) {
-			     // TAB AJAX ERROR HANDLER:
-		         try { 
-		              if (i > 0) { fileWriterPrinter("Not a successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click...will try again..."); }
-	                  driver.findElement(By.xpath(tab)).click();
-	                  alertHandler(driver);
-	                  closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
-		         } catch (Exception e) {}
-		         i++;
+			     // TAB CLICK WITH AJAX ERROR HANDLER:
+			     ajaxProtectedClick(driver, tab, "", false, "", true, false);		     
+		         i++;		         
 		         size = driver.findElements(Tab).size();
 		         }
 		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
+		  
+		  // FINAL UPLOADER:
 		  uploader(driver, image, Browse, Upload, "image", t);
       }
 	  
@@ -1168,7 +1166,7 @@ public class UtilitiesTestHelper{
         	  waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
           }catch(Throwable e) { e.printStackTrace(); }
       }
-	  
+      
 	  /**
 	   * Image direct upload engine with image appplication notification
 	   * @param driver
@@ -1180,11 +1178,10 @@ public class UtilitiesTestHelper{
 	   * @throws NumberFormatException 
 	   */
       public void uploader(WebDriver driver, String image, By browse, By upload, String name, StackTraceElement t) throws InterruptedException, NumberFormatException, IOException {
-    	  String parentWindowHandle = driver.getWindowHandle();
-    	  
     	  String imageDir = Common.localImageDir;
 		  String imagePath = imageDir + File.separator + image;
 		  
+		  // UPLOADER WITH UPLOAD ACTION ERROR HANDLER:
 		  int i = 0;
 		  String xpath = "//a[contains(@type,'image/jpeg;')][text()='" + image + "']";
 		  By element = By.xpath(xpath);
@@ -1193,39 +1190,14 @@ public class UtilitiesTestHelper{
 		  while ((size == 0) && (errors == 0)) {			  		        	 
 		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..." + "[Attempt #" + (i+1) + "]"); }
 
-		        	 // UPLOADER AJAX ERROR HANDLER:
 			         try {
-			        	   size = driver.findElements(element).size();
-				           if ((i > 0) && (size == 0) && (errors == 0)) { fileWriterPrinter("AJAX error during " + name + " upload..."); }
-				           
-				           // IMAGE PATH ENTRY ERROR HANDLER:
-				           boolean b = true;
-				           while (b) {
-				        	   try {
-				        		    driver.findElement(browse).sendKeys(imagePath);
-								    b = ifAlertHandler(driver);
-								    if(b) { closeAllOtherWindows(driver, parentWindowHandle); }
-								    if(b) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " entry...will try again..."); }
-								    Thread.sleep(1000);
-				        	   } catch (Exception e) {}
-				           }
-				           if(!b) { fileWriterPrinter("Successful \"" + image + "\" " + name + " entry!"); }
-				           
-				           // UPLOAD CLICK AJAX ERROR HANDLER:
-				           boolean c = true;
-				           while (c) {
-							     try {
-							    	 driver.findElement(upload).click();
-							    	 Thread.sleep(1000);
-								     c = ifAlertHandler(driver);
-								     if(c) { closeAllOtherWindows(driver, parentWindowHandle); }
-								     if(c) { fileWriterPrinter("Not a successful upload click...will try again..."); }
-								     
-							     } catch (Exception e) {}
-						   }
-				           if(!c) { fileWriterPrinter("Successful upload click!"); waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]); }
-				           
-				         } catch (Exception e) {}
+			        	  size = driver.findElements(element).size();
+				          if ((i > 0) && (size == 0) && (errors == 0)) { fileWriterPrinter("AJAX error during " + name + " upload..."); }				            
+				          // IMAGE PATH ENTRY WITH AJAX ERROR HANDLER:
+				          ajaxProtectedSendKeys(driver, browse, image, imagePath, false, "", true, false); 
+				          // UPLOAD CLICK WITH AJAX ERROR HANDLER:
+				          ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, false);  
+			         } catch (Exception e) {}
 		        	 
 		        	 // UPLOAD ACTION ERROR HANDLER:
 		        	 if (i > 1) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
@@ -5105,6 +5077,74 @@ public class UtilitiesTestHelper{
 	return s;
 	}
 	
+    // ################ AJAX RECOVERY SCENARIOS START ###################
+    /**
+	 * Performes SendKeys on By-identified Web-Element protected with AJAX Recovery Scenario
+     * @throws IOException 
+     * @throws NumberFormatException 
+	 */
+    public void ajaxProtectedSendKeys(WebDriver driver, By element, String name, String sendKeys, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    	String parentWindowHandle = driver.getWindowHandle();
+    	String attempt = "";
+        boolean ifAjax = true;
+        if(name.length() == 0) { name = driver.findElement(element).getText().replace("(", "").replace(")", ""); }
+        int i = 0;
+        boolean reason = true;
+        while (reason) {
+			     try {
+			    	 driver.findElement(element).sendKeys(sendKeys);
+			    	 Thread.sleep(1000);
+			    	 if(ifAttempt && (i > 0)) { attempt = " [Attempt #" + (i+1) + "]"; }
+			    	 ifAjax = ifAlertHandler(driver, ifScreenshot, new Exception().getStackTrace()[0], "''" + name + "'' entry" + attempt);
+				     if(ifAjax) { closeAllOtherWindows(driver, parentWindowHandle); }
+				     if(ifAjax) { fileWriterPrinter("Not a successful \"" + name + "\" entry...will try again..." + attempt); }
+			     } catch (Exception e) {}
+			     i++;
+			     reason = ((i > 0) && (i < 5)) && ifAjax;
+        }        
+        if(!ifAjax) { fileWriterPrinter("Successful \"" + name + "\" entry!" + attempt); }
+        if(!ifAjax && (ifThrobber && (throbberXPATH.length() != 0))) { waitUntilElementInvisibility(driver, 10, throbberXPATH, "Throbber", new Exception().getStackTrace()[0]); } 
+    }
+    
+    /**
+	 * Performes Click on By-identified Web-Element protected with AJAX Recovery Scenario
+     * @throws IOException 
+     * @throws NumberFormatException 
+	 */
+    public void ajaxProtectedClick(WebDriver driver, By element, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    	String parentWindowHandle = driver.getWindowHandle();
+    	String attempt = "";
+        boolean ifAjax = true;
+        if(name.length() == 0) { name = driver.findElement(element).getText().replace("(", "").replace(")", ""); }
+        int i = 0;
+        boolean reason = true;
+        while (reason) {
+			     try {
+			    	 driver.findElement(element).click();
+			    	 Thread.sleep(1000);
+			    	 if(ifAttempt && (i > 0)) { attempt = " [Attempt #" + (i+1) + "]"; }
+			    	 ifAjax = ifAlertHandler(driver, ifScreenshot, new Exception().getStackTrace()[0], "''" + name + "'' click" + attempt);
+				     if(ifAjax) { closeAllOtherWindows(driver, parentWindowHandle); }
+				     if(ifAjax) { fileWriterPrinter("Not a successful \"" + name + "\" click...will try again..." + attempt); }
+			     } catch (Exception e) {}
+			     i++;
+			     reason = ((i > 0) && (i < 5)) && ifAjax;
+        }        
+        if(!ifAjax) { fileWriterPrinter("Successful \"" + name + "\" click!" + attempt); }
+        if(!ifAjax && (ifThrobber && (throbberXPATH.length() != 0))) { waitUntilElementInvisibility(driver, 10, throbberXPATH, "Throbber", new Exception().getStackTrace()[0]); }    
+    }
+    
+    /**
+	 * Performes Click on XPATH-identified Web-Element protected with AJAX Recovery Scenario
+     * @throws IOException 
+     * @throws NumberFormatException 
+	 */
+    public void ajaxProtectedClick(WebDriver driver, String locator, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    	ajaxProtectedClick(driver, By.xpath(locator), name, ifThrobber, throbberXPATH, ifAttempt, ifScreenshot);
+    }
+	// ################ AJAX RECOVERY SCENARIOS END ###################
+	
+	
 	public boolean isAlertPresent(WebDriver driver){
         try{ driver.switchTo().alert(); return true; }
 		catch(Exception e){ return false; }
@@ -5120,14 +5160,26 @@ public class UtilitiesTestHelper{
 	}
 	
 	public boolean ifAlertHandler(WebDriver driver) throws NumberFormatException, IOException{
-		boolean b = isAlertPresent(driver);
+		boolean ifAlert = isAlertPresent(driver);
 		if(isAlertPresent(driver)){
 	        driver.switchTo().alert();
 	        fileWriterPrinter(driver.switchTo().alert().getText());
 	        driver.switchTo().alert().accept();   
 	        driver.switchTo().defaultContent();
 	      }
-		return b;
+		return ifAlert;
+		}
+	
+	public boolean ifAlertHandler(WebDriver driver, Boolean ifScreenshot, StackTraceElement t, String comment) throws NumberFormatException, IOException{
+		boolean ifAlert = isAlertPresent(driver);
+		if(isAlertPresent(driver)){
+	        driver.switchTo().alert();
+	        fileWriterPrinter(driver.switchTo().alert().getText());
+	        driver.switchTo().alert().accept();   
+	        driver.switchTo().defaultContent();
+	        if(ifScreenshot) { getScreenShot(new Exception().getStackTrace()[0], "AJAX issue after " + comment, driver); }
+	      }
+		return ifAlert;
 		}
 	
 	public String alertContentScanner(WebDriver driver) throws NumberFormatException, IOException{
@@ -5526,8 +5578,25 @@ public class UtilitiesTestHelper{
 		return distance;
 	}
 	
+	// ################ ZIP METHODS START #########################
 	/**
      * This class gets file size
+     * @param args
+     * @throws IOException 
+     * @throws NumberFormatException 
+     */
+    public double fileSizeBit(String filePath) throws NumberFormatException, IOException {
+    	File file = new File(filePath.replace("\\", "/"));
+        if(file.exists()) {
+            fileWriterPrinter("FILE SIZE: " + file.length() + " Bit");
+         // fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
+         // fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
+            return (double) file.length();
+        } else { fileWriterPrinter("File doesn't exist"); return 0; }
+    }
+    
+	/**
+     * This class gets file size MB
      * @param args
      * @throws IOException 
      * @throws NumberFormatException 
@@ -5540,7 +5609,6 @@ public class UtilitiesTestHelper{
             fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
             return (double) file.length()/(1024*1024);
         } else { fileWriterPrinter("File doesn't exist"); return 0; }
-         
     }
     
 	/**
@@ -5549,7 +5617,7 @@ public class UtilitiesTestHelper{
 	 public void zipDirectory(String sourceDirectoryPath, String zipOutputPath, Boolean ifAbsolutePath, Boolean ifProtect, int maxZipMbSizeToProtect) throws Exception {		  
 		   if(ifAbsolutePath) { zipOutputPath = zipDirectoryFullPath(sourceDirectoryPath, zipOutputPath); }
 		   else { zipOutputPath = zipDirectoryInternalPath(sourceDirectoryPath, zipOutputPath); }		   
-		   if(fileSizeMB(zipOutputPath) < maxZipMbSizeToProtect) {
+		   if( (fileSizeMB(zipOutputPath) < maxZipMbSizeToProtect) &&  (fileSizeBit(zipOutputPath) > 22) ) {
 			   if(ifProtect){ fileRename(zipOutputPath,zipOutputPath.replace(".zip",".renameToZip")); }
 			   }
 		  }
@@ -5672,6 +5740,7 @@ public class UtilitiesTestHelper{
 	    	File file = new File(sourcePath); 
 	    	file.renameTo(new File(targetPath));
 	    	}
+		// ################# ZIP METHODS END ##########################
 	       
 		/**
 	     * This Method generates JavaScript Alert shown during user difined time in seconds

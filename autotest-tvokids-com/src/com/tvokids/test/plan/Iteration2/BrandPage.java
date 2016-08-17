@@ -377,7 +377,6 @@ public class BrandPage {
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
 	           // AGE 6 AND OVER TEST:
@@ -388,7 +387,6 @@ public class BrandPage {
 	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
 	           driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
