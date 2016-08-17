@@ -11,6 +11,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
+
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -435,6 +439,9 @@ public class Banner {
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+		       helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+		       helper.moveToElement(driver, xpath);
 	           helper.clickLinkUrlWaitUntil(driver, 10, xpath); // URL = Common.fiveAndUnderURL + "/" + titleURL;
 	           // ASSERT:
 	           helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.fiveAndUnderURL);
@@ -443,6 +450,9 @@ public class Banner {
 	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
 		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+		       helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+		       helper.moveToElement(driver, xpath);
 	           helper.clickLinkUrlWaitUntil(driver, 10, xpath); // URL = Common.fiveAndUnderURL + "/" + titleURL;
 	           // ASSERT:
 	           helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.sixAndOverURL);

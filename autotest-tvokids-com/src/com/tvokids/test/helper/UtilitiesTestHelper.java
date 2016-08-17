@@ -1136,6 +1136,7 @@ public class UtilitiesTestHelper{
 		  int i = 0;
 		  int size = driver.findElements(Tab).size();
 		  while ((size == 0) && (i < 5)) {
+			     // TAB AJAX ERROR HANDLER:
 		         try { 
 		              if (i > 0) { fileWriterPrinter("Not a successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click...will try again..."); }
 	                  driver.findElement(By.xpath(tab)).click();
@@ -1192,7 +1193,7 @@ public class UtilitiesTestHelper{
 		  while ((size == 0) && (errors == 0)) {			  		        	 
 		        	 if (i > 0) { fileWriterPrinter("Not a successful \"" + image + "\" " + name + " upload...will try again..." + "[Attempt #" + (i+1) + "]"); }
 
-		        	 // UPLOAD CLICK WITH AJAX ERROR HANDLER:
+		        	 // UPLOADER AJAX ERROR HANDLER:
 			         try {
 			        	   size = driver.findElements(element).size();
 				           if ((i > 0) && (size == 0) && (errors == 0)) { fileWriterPrinter("AJAX error during " + name + " upload..."); }
@@ -1210,14 +1211,23 @@ public class UtilitiesTestHelper{
 				           }
 				           if(!b) { fileWriterPrinter("Successful \"" + image + "\" " + name + " entry!"); }
 				           
-				           driver.findElement(upload).click();
-				           waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-				           alertHandler(driver);
-			               closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
+				           // UPLOAD CLICK AJAX ERROR HANDLER:
+				           boolean c = true;
+				           while (c) {
+							     try {
+							    	 driver.findElement(upload).click();
+							    	 Thread.sleep(1000);
+								     c = ifAlertHandler(driver);
+								     if(c) { closeAllOtherWindows(driver, parentWindowHandle); }
+								     if(c) { fileWriterPrinter("Not a successful upload click...will try again..."); }
+								     
+							     } catch (Exception e) {}
+						   }
+				           if(!c) { fileWriterPrinter("Successful upload click!"); waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]); }
+				           
 				         } catch (Exception e) {}
-		        	// waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 		        	 
-		        	// UPLOAD ERROR HANDLER:
+		        	 // UPLOAD ACTION ERROR HANDLER:
 		        	 if (i > 1) { errors = driver.findElements(By.xpath(Drupal.errorUpload)).size(); }
 		        	 if (errors > 0) { 
 		        		              fileWriterPrinter("\n" + "ERROR! The file could not be uploaded...");
@@ -2842,7 +2852,8 @@ public class UtilitiesTestHelper{
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
-        	        if (!str.contains("helper")       	        		
+        	        if (!str.contains("helper")
+        	        && (!str.contains("logOpen"))
         	        && (!str.contains("startTime"))
         	        && (!str.contains("closeBrowsers"))
         	        && (!str.contains("endTime"))
@@ -2960,16 +2971,17 @@ public class UtilitiesTestHelper{
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
-        	        if (!str.contains("helper")       	        		
+        	        if  ((!str.contains("email.All"))
+                    && (!str.contains("send.Mail"))
+                    && (!str.contains("report.Log"))     	        
+            	    && (!str.contains("helper"))
+            	    && (!str.contains("logOpen"))
         	        && (!str.contains("startTime"))
         	        && (!str.contains("closeBrowsers"))
         	        && (!str.contains("endTime"))
         	        && (!str.contains("start"))
         	        && (!str.contains("finish"))
-                    && (!str.contains("email.All"))
-                    && (!str.contains("send.Mail"))
-                    && (!str.contains("report.Log"))     	        
-        	        && (str.length() != 0)       	        
+                    && (str.length() != 0)       	        
         	        	) { lines.add(str); }
         	        }
         	    String[] linesArray = lines.toArray(new String[lines.size()]);
@@ -5801,6 +5813,7 @@ public class UtilitiesTestHelper{
 		    	                        fileWriterPrinter("ELEMENT HORIZONTAL MOVEMENT: " + diff + " UNITS");
 		    	                      }
 		               }
+		    Thread.sleep(1000);
 		    return i;
 		    }
 
@@ -5841,7 +5854,8 @@ public class UtilitiesTestHelper{
 		    	                        fileWriterPrinter("ELEMENT HORIZONTAL MOVEMENT: " + diff + " UNITS");
 		    	                      }
 		               }
+		    Thread.sleep(1000);
 		    return i;
 		    }
-	    // ########### ELEMENT APPEARER START ############
+	    // ########### ELEMENT APPEARER END ############
 }

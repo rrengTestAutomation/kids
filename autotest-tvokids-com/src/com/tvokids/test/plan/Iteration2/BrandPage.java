@@ -370,24 +370,24 @@ public class BrandPage {
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
-	           // NAVIGATE TO "AGE 5 AND UNDER":
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
-//	           xpath = Common.fiveAndUnderLinkBase + titleURL + Common.XpathEqualsEnd;
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
 	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
-	           // NAVIGATE TO "AGE 6 AND OVER":
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
-//	           xpath = Common.sixAndOverLinkBase + titleURL + Common.XpathEqualsEnd;
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
 	           driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
 	           helper.moveToElement(driver, xpath);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           
