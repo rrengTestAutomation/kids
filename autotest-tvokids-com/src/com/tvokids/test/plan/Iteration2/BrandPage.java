@@ -346,8 +346,7 @@ public class BrandPage {
 	           // CLEAN-UP:
 //	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
 //	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
-//	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
-	           helper.deleteAllContent(driver, "Custom Brand", "14", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
