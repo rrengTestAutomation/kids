@@ -646,6 +646,6 @@ public class Banner {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], X - x, Y - y);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	       }
+	       }	
 	
 }

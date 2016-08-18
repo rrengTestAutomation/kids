@@ -52,6 +52,9 @@ public class Common {
 	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
 	  public static String searchIcon            = "//a[@class='search-link']";
 	  
+	  /**********character page elements*********/
+	  public static String characterTitle = "//div[@class='tile-bubble']/following-sibling::*/h1";
+	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";
 

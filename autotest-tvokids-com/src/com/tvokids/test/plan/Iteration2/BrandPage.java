@@ -390,5 +390,69 @@ public class BrandPage {
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
+	
+	
+	/**
+	 * Test Brand Page Browser Title 
+	 * <p>Date Created: 2016-08-18</p>
+	 * <p>Date Modified: 2016-08-18<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 34558</p>
+	 */
+	@Test(groups = {"TC-34558"}, priority = 23)
+    public void testBrandPageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver);
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "Character Brand", "", "dev", new RuntimeException().getStackTrace()[0]);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath, actual, expected;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCharacterBrand(driver, title, description, 281374, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+               helper.clickLinkUrlWaitUntil(driver, 10, xpath, new RuntimeException().getStackTrace()[0]);
+               // ASSERT:
+               actual = driver.findElement(By.xpath(Common.characterTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+               helper.clickLinkUrlWaitUntil(driver, 10, xpath, new RuntimeException().getStackTrace()[0]);
+               // ASSERT:
+               actual = driver.findElement(By.xpath(Common.characterTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
 
 }

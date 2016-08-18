@@ -15,9 +15,9 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.Banner"><methods>            
-             <include name="testCharacterBannerInteractivityBubblesAnimationIsCorrect"/>             
-             </methods></class>
+<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>            
+<include name="testBrandPageBrowserTitle"/>             
+</methods></class>
      
         </classes>
      </test>

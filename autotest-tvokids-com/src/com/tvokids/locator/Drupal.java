@@ -90,6 +90,7 @@ public class Drupal{
 	  public static String brandPageDescriptionContentLimitMsgCSS = "div#edit-field-brand-page-description-und-0-value-counter.counter";
 	  public static String brandPageDescriptionCounterCSS         = "div#edit-field-brand-page-description-und-0-value-counter.counter strong";
 	  public static    int descriptionMaxCharsNumber              = 135;
+	  public static String programTelescopeAssetId                = "edit-field-telescope-asset-id-und-0-value";
 	  
 	  /************meta*********************/
 	  public static String metaTagsTab            = "//a/strong[text()='Meta tags']";
