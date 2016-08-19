@@ -2606,9 +2606,6 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String fileName, Boolean silentMode) throws NumberFormatException, IOException {
-//				File f = new File(Common.testOutputFileDir + fileName);
-//				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
-//				return (f.exists() && f.isFile());			
 				return fileExist(Common.testOutputFileDir, fileName, silentMode);			
 			}
 			
@@ -2624,9 +2621,6 @@ public class UtilitiesTestHelper{
 			
 			/** @throws IOException */ 
 			public static void fileCopy(String fileSource, String fileDest) throws IOException {
-//				File s = new File(Common.testOutputFileDir + fileSource);
-//				File d = new File(Common.testOutputFileDir + fileDest);
-//				if (s.exists() && s.isFile()) { FileUtils.copyFile(s, d); }
 				fileCopy(Common.testOutputFileDir, fileSource, Common.testOutputFileDir, fileDest);
 			}
 			
@@ -2894,7 +2888,6 @@ public class UtilitiesTestHelper{
          	 */
              public void testFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
             	// DECLARATION:
-//             	String sourceFilePath = System.getProperty("user.dir");
  				String sourceFileName = "test-failed.xml";
      		
          	    // PRE-CLEAN:
