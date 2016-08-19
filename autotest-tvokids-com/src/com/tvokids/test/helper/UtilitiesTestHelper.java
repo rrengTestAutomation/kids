@@ -1726,13 +1726,15 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
-			   if (list.size() == 0) { fileWriterPrinter("      XPATH: ---> " + xpath); }
+			   if (list.size() == 0) { fileWriterPrinter("\n      XPATH: ---> " + xpath
+); }
 			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
 			   }
 		   
 		   public void assertWebElementsExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
-			   if (list.size() == 0) { fileWriterPrinter("         ID: ---> " + id); }
+			   if (list.size() == 0) { fileWriterPrinter("\n         ID: ---> " + id
+); }
 			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
 			   }
 		   
@@ -1743,13 +1745,15 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
-			   if (list.size() != 1) { fileWriterPrinter("      XPATH: ---> " + xpath); }
+			   if (list.size() != 1) { fileWriterPrinter("\n      XPATH: ---> " + xpath
+); }
 			   Assert.assertTrue(list.size() == 1, getAssertTrue(t, driver, "Element not found!", list.size() == 1));
 			   }
 		   
 		   public void assertWebElementExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
-			   if (list.size() != 1) { fileWriterPrinter("         ID: ---> " + id); }
+			   if (list.size() != 1) { fileWriterPrinter("\n         ID: ---> " + id
+); }
 			   Assert.assertTrue(list.size() == 1, getAssertTrue(t, driver, "Element not found!", list.size() == 1));
 			   }
 		   
@@ -1760,13 +1764,15 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementNotExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
-			   if (list.size() > 0) { fileWriterPrinter("      XPATH: ---> " + xpath); }
+			   if (list.size() > 0) { fileWriterPrinter("\n      XPATH: ---> " + xpath
+); }
 			   Assert.assertFalse(list.size() > 0, getAssertFalse(t, driver, "Un-Expected Element found!", list.size() > 0));
 			   }
 		   
 		   public void assertWebElementNotExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
-			   if (list.size() > 0) { fileWriterPrinter("         ID: ---> " + id); }
+			   if (list.size() > 0) { fileWriterPrinter("\n         ID: ---> " + id
+); }
 			   Assert.assertFalse(list.size() > 0, getAssertFalse(t, driver, "Un-Expected Element found!", list.size() > 0));
 			   }
 		   
@@ -2485,9 +2491,15 @@ public class UtilitiesTestHelper{
                         if (ifDeleteRoot) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.print("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
+
+
+
                             } else {
-                              System.out.println("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.print("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
+
+
+
                             }
                         }
                     } catch (Exception e) {}                    
@@ -2531,9 +2543,15 @@ public class UtilitiesTestHelper{
                         if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.println("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.print("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
+
+
+
                             } else {
-                              System.out.println("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n");
+                              System.out.print("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
+
+
+
                             }
                         }
                     } catch (Exception e) {}                    
