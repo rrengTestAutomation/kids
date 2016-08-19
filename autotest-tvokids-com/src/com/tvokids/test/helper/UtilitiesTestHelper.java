@@ -2586,19 +2586,7 @@ public class UtilitiesTestHelper{
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String fileName) throws NumberFormatException, IOException {
-				File f = new File(Common.testOutputFileDir + fileName);
-				if (! (f.exists() && f.isFile()) ) { fileWriterPrinter(f + " is missing..."); }
-				return (f.exists() && f.isFile());
-			}
-			
-			/**
-			 * @throws IOException
-			 * @throws NumberFormatException
-			 */ 
-			public static Boolean fileExist(String path, String fileName) throws NumberFormatException, IOException {
-				File f = new File(path + File.separator + fileName);
-				if (! (f.exists() && f.isFile()) ) { fileWriterPrinter(f + " is missing..."); }
-				return (f.exists() && f.isFile());
+				return fileExist(Common.testOutputFileDir, fileName, true);			
 			}
 			
 			/**
@@ -2607,6 +2595,14 @@ public class UtilitiesTestHelper{
 			 */ 
 			public static Boolean fileExist(String fileName, Boolean silentMode) throws NumberFormatException, IOException {
 				return fileExist(Common.testOutputFileDir, fileName, silentMode);			
+			}
+			
+			/**
+			 * @throws IOException
+			 * @throws NumberFormatException
+			 */ 
+			public static Boolean fileExist(String path, String fileName) throws NumberFormatException, IOException {
+				return fileExist(path, fileName, true);			
 			}
 			
 			/**
