@@ -1726,11 +1726,13 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
+			   if (list.size() == 0) { fileWriterPrinter("      XPATH: ---> " + xpath); }
 			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
 			   }
 		   
 		   public void assertWebElementsExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
+			   if (list.size() == 0) { fileWriterPrinter("         ID: ---> " + id); }
 			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
 			   }
 		   
@@ -1741,11 +1743,13 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
+			   if (list.size() != 1) { fileWriterPrinter("      XPATH: ---> " + xpath); }
 			   Assert.assertTrue(list.size() == 1, getAssertTrue(t, driver, "Element not found!", list.size() == 1));
 			   }
 		   
 		   public void assertWebElementExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
+			   if (list.size() != 1) { fileWriterPrinter("         ID: ---> " + id); }
 			   Assert.assertTrue(list.size() == 1, getAssertTrue(t, driver, "Element not found!", list.size() == 1));
 			   }
 		   
@@ -1756,11 +1760,13 @@ public class UtilitiesTestHelper{
 		   
 		   public void assertWebElementNotExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
 			   List <WebElement> list = driver.findElements(By.xpath(xpath));
+			   if (list.size() > 0) { fileWriterPrinter("      XPATH: ---> " + xpath); }
 			   Assert.assertFalse(list.size() > 0, getAssertFalse(t, driver, "Un-Expected Element found!", list.size() > 0));
 			   }
 		   
 		   public void assertWebElementNotExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
 			   List <WebElement> list = driver.findElements(By.id(id));
+			   if (list.size() > 0) { fileWriterPrinter("         ID: ---> " + id); }
 			   Assert.assertFalse(list.size() > 0, getAssertFalse(t, driver, "Un-Expected Element found!", list.size() > 0));
 			   }
 		   
