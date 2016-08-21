@@ -2484,22 +2484,16 @@ public class UtilitiesTestHelper{
                                 current = !child.exists();
                                 success = success && current;
                                 if(current) { how = "    DELETED: \""; } else { how = "NOT DELETED: \""; }
-                                if(ifPrompt && current) System.out.print(how + child.getAbsolutePath() + "\n");
+                                if(ifPrompt && current) System.out.print(how + child.getAbsolutePath() + "\"\n");
                                 }
                             }
                         // THE DIRECTORY IS EMPTY - DELETE IT IF REQUIRED
                         if (ifDeleteRoot) { FileUtils.forceDelete(dir); success = success && !dir.exists(); action = "DELETED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.print("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
-
-
-
+                              System.out.print("\n" + "COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             } else {
-                              System.out.print("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
-
-
-
+                              System.out.print("\n" + "NOT COMPLETELY " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             }
                         }
                     } catch (Exception e) {}                    
@@ -2536,22 +2530,16 @@ public class UtilitiesTestHelper{
                                 current = child.exists() && !getLastModifiedTimeStamp(child).equals(childTimeStamp);
                                 success = success && current;
                                 if(current) { how = "TIME     CHANGED: \""; } else { how = "TIME NOT CHANGED: \""; }
-                                if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\n");
+                                if(ifPrompt) System.out.print(how + child.getAbsolutePath() + "\"\n");
                                 }
                             }
-                        // DIRECTORY TIME RESET IF REQUIRED
+                        // DIRECTORY TIME RESET IF REQUIRED:
                         if (ifChangeRoot) { dir.setLastModified(milliseconds); success = success && dir.exists() && !getLastModifiedTimeStamp(dir).equals(dirTimeStamp); action = "TIME CHANGED"; }
                         if(ifPrompt && (!action.equals(null))) {
                         if (success) { 
-                              System.out.print("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
-
-
-
+                              System.out.print("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             } else {
-                              System.out.print("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"" + "\n");
-
-
-
+                              System.out.print("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             }
                         }
                     } catch (Exception e) {}                    
