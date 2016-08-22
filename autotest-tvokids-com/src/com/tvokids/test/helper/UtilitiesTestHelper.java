@@ -2888,7 +2888,7 @@ public class UtilitiesTestHelper{
             /**
          	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
          	 */
-             public void testFailedToTestFailedConverter(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
+             public void testFailedToTestFailedModifier(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
             	// DECLARATION:
  				String sourceFileName = "test-failed.xml";
      		
