@@ -2812,7 +2812,7 @@ public class UtilitiesTestHelper{
             }
 
         	/**
-        	 * This METHOD adds Reporter Class to TestNG File
+        	 * This METHOD adds Reporter Class to TestNG-Failed XML File
         	 */
         	public String[] addReporterClassToTestNgXmlLinesArray(String fileName, String reporterClass) throws IOException{
         		String[] string = cleanTestNgXmlLinesArray(fileName);
@@ -2828,7 +2828,7 @@ public class UtilitiesTestHelper{
         	}
             
         	/**
-        	 * This METHOD reads TestNG Files, deletes empty XML CLASS PATH(s)
+        	 * This METHOD reads TestNG-Failed XML File and deletes empty XML CLASS PATH(s) if any
         	 */
         	public String[] cleanTestNgXmlLinesArray(String fileName) throws IOException{
         		String[] string = readTestNgXmlFileOutputLinesArray(fileName);
@@ -2869,24 +2869,27 @@ public class UtilitiesTestHelper{
         	    String str=null;
         	    ArrayList<String> lines = new ArrayList<String>();
         	    while ((str = in.readLine()) != null) {
-        	        if (!str.contains("helper")
-        	        && (!str.contains("logOpen"))
-        	        && (!str.contains("startTime"))
-        	        && (!str.contains("closeBrowsers"))
-        	        && (!str.contains("endTime"))
-        	        && (!str.contains("start"))
-        	        && (!str.contains("finish"))        	        
+        	        if  ((!str.contains("email.All"))
+                    && (!str.contains("send.Mail"))
+                    && (!str.contains("report.Log"))     	        
+            	    && (!str.contains(".helper"))
+        	        && (!str.contains("\"logOpen\""))
+        	        && (!str.contains("\"startTime\""))
+        	        && (!str.contains("\"closeBrowsers\""))
+        	        && (!str.contains("\"endTime\""))
+        	        && (!str.contains("\"start\""))
+        	        && (!str.contains("\"finish\""))       	        
         	        && (str.length() != 0)       	        
         	        	) { lines.add(str); }
         	        }
         	    String[] linesArray = lines.toArray(new String[lines.size()]);
         	    return linesArray;
         	}
-        // ######################## TESTNG-FAILED XML CONVERTER END ########################
+        // ####################### TESTNG-FAILED XML CONVERTER END #######################
         	
-        // ####################### TEST-FAILED XML CONVERTER START #######################
+        // ####################### TEST-FAILED XML MODIFIER START #######################	
             /**
-         	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
+         	 * This METHOD modifies Test-Failed XML file into Test-Failed XML of user-selected reporting option
          	 */
              public void testFailedToTestFailedModifier(String suiteName, String testName, String xmlOutputFileName, String reporterClass ) throws IOException {
             	// DECLARATION:
@@ -2930,7 +2933,7 @@ public class UtilitiesTestHelper{
              }
         	
         	/**
-        	 * This METHOD adds Reporter Class to TestNG File
+        	 * This METHOD adds Reporter Class to Test-Failed XML File
         	 */
         	public String[] addReporterClassToTestFailedXmlLinesArray(String fileName, String reporterClass) throws IOException{
         		String[] string = cleanTestFailedXmlLinesArray(fileName);
@@ -2946,7 +2949,7 @@ public class UtilitiesTestHelper{
         	}
         	
         	/**
-        	 * This METHOD reads TestNG Files, deletes empty XML CLASS PATH(s)
+        	 * This METHOD reads Test-Failed XML File and deletes empty XML CLASS PATH(s) if any
         	 */
         	public String[] cleanTestFailedXmlLinesArray(String fileName) throws IOException{
         		String[] string = readTestFailedXmlFileOutputLinesArray(fileName);
@@ -2954,24 +2957,12 @@ public class UtilitiesTestHelper{
         		ArrayList<String> noEmptyClass = new ArrayList<String>();
         		
                 // EMTY METHODS CLEANER:
-        		for (int i = 0; i < string.length; i++) {
-					if ( (i < (string.length - 1))
-					   && string[i].contains("<methods>")
-					   && string[i + 1].contains("</methods>")
-					   ) 
-					{ i++; } else { noEmptyMethods.add(string[i]); }
-				}
+        		for (int i = 0; i < string.length; i++) { noEmptyMethods.add(string[i]); }
         		
         		String[] noEmptyMethodsArray = noEmptyMethods.toArray(new String[noEmptyMethods.size()]);
         		
                 // EMTY CLASS CLEANER:
-        		for (int i = 0; i < noEmptyMethodsArray.length; i++) {
-					if ( (i < (noEmptyMethodsArray.length - 1))
-					   && noEmptyMethodsArray[i].contains("<class name=")
-					   && noEmptyMethodsArray[i + 1].contains("</class>")
-					   ) 
-					{ i++; } else { noEmptyClass.add(noEmptyMethodsArray[i]); }
-				}
+				for (int i = 0; i < noEmptyMethodsArray.length; i++) { noEmptyClass.add(noEmptyMethodsArray[i]); }
 
         		String[] noEmptyClassArray = noEmptyClass.toArray(new String[noEmptyClass.size()]);
 				return noEmptyClassArray;
@@ -2990,24 +2981,24 @@ public class UtilitiesTestHelper{
         	        if  ((!str.contains("email.All"))
                     && (!str.contains("send.Mail"))
                     && (!str.contains("report.Log"))     	        
-            	    && (!str.contains("helper"))
-            	    && (!str.contains("logOpen"))
-        	        && (!str.contains("startTime"))
-        	        && (!str.contains("closeBrowsers"))
-        	        && (!str.contains("endTime"))
-        	        && (!str.contains("start"))
-        	        && (!str.contains("finish"))
+            	    && (!str.contains(".helper"))
+            	    && (!str.contains("\"logOpen\""))
+        	        && (!str.contains("\"startTime\""))
+        	        && (!str.contains("\"closeBrowsers\""))
+        	        && (!str.contains("\"endTime\""))
+        	        && (!str.contains("\"start\""))
+        	        && (!str.contains("\"finish\""))
                     && (str.length() != 0)       	        
         	        	) { lines.add(str); }
         	        }
         	    String[] linesArray = lines.toArray(new String[lines.size()]);
         	    return linesArray;
         	}
-        // ####################### TEST-FAILED XML CONVERTER END #######################
+        // ####################### TEST-FAILED XML MODIFIER END #######################
             
         // ####################### TEST-FAILED XML CREATER START #######################
             /**
-        	 * This METHOD created TestNG XML file based on Source File which contains (or not) XML CLASS PATH(s)
+        	 * This METHOD created Test-Failed XML file based on Source File which contains (or not) XML CLASS PATH(s)
         	 */
         	public void testLogToXmlCreator(String suiteName, String testName, String sourceFileName, String xmlOutputFileName, String reporterClass) throws IOException {
         		// OPTIONAL FAILURES NUMBER OUTPUT:
