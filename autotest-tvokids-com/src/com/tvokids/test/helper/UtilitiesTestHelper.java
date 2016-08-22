@@ -3077,6 +3077,102 @@ public class UtilitiesTestHelper{
         		}	
         	}
 		// ####################### TEST-FAILED XML CREATER END #######################
+        		
+        // ####################### TEST-NG XML READER-EXTRACTOR-CREATER START #######################
+        	/**
+        	 * This METHOD reads any Text File,
+        	 * converts and outputs all the text lines as an ASC sorted String Array
+        	 */
+        	public String[] readTextFileOutputLinesArray(String fileName) throws IOException{
+        		return readTextFileOutputLinesArray(Common.testOutputFileDir, fileName);
+        		}
+        	
+        	/**
+        	 * This METHOD reads any Text File,
+        	 * converts and outputs all the text lines as an ASC sorted String Array
+        	 */
+        	@SuppressWarnings("resource")
+        	public String[] readTextFileOutputLinesArray(String path, String fileName) throws IOException{
+        	    BufferedReader in = new BufferedReader(new FileReader((path + File.separator + fileName).replace(File.separator + File.separator, File.separator)));
+        	    String str=null;
+        	    ArrayList<String> lines = new ArrayList<String>();
+        	    while ((str = in.readLine()) != null) {
+        	        if (!str.contains("helper") && (str.length() != 0)) { lines.add(str); }
+        	        }
+        	    String[] linesArray = lines.toArray(new String[lines.size()]);
+        	    return linesArray;
+        	}
+        	
+        	/**
+        	 * This METHOD gets a String Array and sorts it as per ASC order
+        	 */
+            public String[] orderedStringArrayAsc(String[] string) {
+                Arrays.sort(string);
+                return string;
+            }
+
+        	/**
+        	 * This METHOD reads Log Files, extracts XML CLASS PATH(s),
+        	 * converts and outputs them as an ASC sorted String Array
+        	 */
+        	public String[] readLogOutputXmlLinesArray(String fileName) throws IOException{
+        		return readLogOutputXmlLinesArray(Common.testOutputFileDir, fileName);
+        		}  
+        	
+        	/**
+        	 * This METHOD reads Log Files, extracts XML CLASS PATH(s),
+        	 * converts and outputs them as an ASC sorted String Array
+        	 */
+        	public String[] readLogOutputXmlLinesArray(String path, String fileName) throws IOException{
+        		String[] string = readTextFileOutputLinesArray(path, fileName);
+                Pattern p = Pattern.compile("<class name=\"");
+                int i, j; 
+                String current, previous;
+                
+                // FAILURES COUNTER
+        		i = 0; j = 0; previous = null; current = null;
+        		for (String s : string) {
+        			Matcher m = p.matcher(s); Boolean found = m.find();
+        			if ( found ) { current = s.toString().substring(s.indexOf("<include name=\"") + 15, s.indexOf("\"/>")); }
+        			if ( found && !s.contains(".helper") && (s.length() != 0) && !current.equals(previous) ) { i++; } 
+        			if ( found ) { j++; }
+        			if ( found && (j > 0)) { previous = s.toString().substring(s.indexOf("<include name=\"") + 15, s.indexOf("\"/>")); }		
+        		}
+        		
+        		// CLASS LINE EXTRACTION
+        		String[] linesArray = new String[i];		
+        		i = 0; j = 0; previous = null; current = null;
+        		for (String s : string) {
+        			Matcher m = p.matcher(s); Boolean found = m.find();
+        			if ( found ) { current = s.toString().substring(s.indexOf("<include name=\"") + 15, s.indexOf("\"/>")); }
+        			if ( found && !s.contains(".helper") && (s.length() != 0) && !current.equals(previous) ) {
+        		    	linesArray[i] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
+        		    	i++;
+        		    	}
+        			if ( found ) { j++; }
+        			if ( found && (j > 0)) { previous = s.toString().substring(s.indexOf("<include name=\"") + 15, s.indexOf("\"/>")); }
+        		}
+        		
+        		return orderedStringArrayAsc(linesArray);
+        	}
+        	
+        	/**
+        	 * This METHOD converts Sorted XML CLASS PATH(s) as per TestNG XML Format
+        	 */
+        	public String[] convertXmlArrayToTestNG(String[] string) {
+        		for (int i = 0; i < string.length-1; i++) {
+        			if ( string[i].substring(0, string[i].indexOf("<methods>")).equals(
+        			     string[i+1].substring(0, string[i+1].indexOf("<methods>"))) )
+        			{ string[i] = string[i].replace("</methods></class>", "");}
+        		}		
+        		for (int j = string.length-1; j > 0; j--) {
+        			if ( string[j].substring(0, string[j].indexOf("<methods>")).equals(
+        			     string[j-1].substring(0, string[j-1].indexOf("<methods>"))) )
+        			{ string[j] = string[j].replace(string[j].substring(0, string[j].indexOf("<include")), "             ");}
+        		}		
+        	return string;
+        	}
+        // ####################### TEST-NG XML READER-EXTRACTOR-CREATER END #######################
         	
         // ####################### LOG FILES HANDLER START #######################
     		/** 
@@ -3130,91 +3226,6 @@ public class UtilitiesTestHelper{
     			   fileCleaner("screen-shots.renameToZip");
         		}
         // ####################### LOG FILES HANDLER END #######################
-        	
-        	/**
-        	 * This METHOD reads any Text File,
-        	 * converts and outputs all the text lines as an ASC sorted String Array
-        	 */
-        	public String[] readTextFileOutputLinesArray(String fileName) throws IOException{
-        		return readTextFileOutputLinesArray(Common.testOutputFileDir, fileName);
-        		}
-        	
-        	/**
-        	 * This METHOD reads any Text File,
-        	 * converts and outputs all the text lines as an ASC sorted String Array
-        	 */
-        	@SuppressWarnings("resource")
-        	public String[] readTextFileOutputLinesArray(String path, String fileName) throws IOException{
-        	    BufferedReader in = new BufferedReader(new FileReader((path + File.separator + fileName).replace(File.separator + File.separator, File.separator)));
-        	    String str=null;
-        	    ArrayList<String> lines = new ArrayList<String>();
-        	    while ((str = in.readLine()) != null) {
-        	        if (!str.contains("helper") && (str.length() != 0)) { lines.add(str); }
-        	        }
-        	    String[] linesArray = lines.toArray(new String[lines.size()]);
-        	    return linesArray;
-        	}
-        	
-        	/**
-        	 * This METHOD gets a String Array and sorts it as per ASC order
-        	 */
-            public String[] orderedStringArrayAsc(String[] string) {
-                Arrays.sort(string);
-                return string;
-            }
-
-        	/**
-        	 * This METHOD reads Log Files, extracts XML CLASS PATH(s),
-        	 * converts and outputs them as an ASC sorted String Array
-        	 */
-        	public String[] readLogOutputXmlLinesArray(String fileName) throws IOException{
-        		return readLogOutputXmlLinesArray(Common.testOutputFileDir, fileName);
-        		}  
-        	
-        	/**
-        	 * This METHOD reads Log Files, extracts XML CLASS PATH(s),
-        	 * converts and outputs them as an ASC sorted String Array
-        	 */
-        	public String[] readLogOutputXmlLinesArray(String path, String fileName) throws IOException{
-        		String[] string = readTextFileOutputLinesArray(path, fileName);
-                Pattern p = Pattern.compile("<class name=\"");
-                
-                // FAILURES COUNTER
-        		int i = 0;
-        		for (String s : string) {
-        			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains(".helper") && (s.length() != 0) ){ i++; }
-        			}
-        		
-        		// CLASS LINE EXTRACTION
-        		String[] linesArray = new String[i];		
-        		int j = 0;
-        		for (String s : string) {
-        			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains(".helper") && (s.length() != 0) ) {
-        		    	linesArray[j] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
-        		    	j++;
-        		    	}
-        		}       		
-        		return orderedStringArrayAsc(linesArray);
-        	}
-        	
-        	/**
-        	 * This METHOD converts Sorted XML CLASS PATH(s) as per TestNG XML Format
-        	 */
-        	public String[] convertXmlArrayToTestNG(String[] string) {
-        		for (int i = 0; i < string.length-1; i++) {
-        			if ( string[i].substring(0, string[i].indexOf("<methods>")).equals(
-        			     string[i+1].substring(0, string[i+1].indexOf("<methods>"))) )
-        			{ string[i] = string[i].replace("</methods></class>", "");}
-        		}		
-        		for (int j = string.length-1; j > 0; j--) {
-        			if ( string[j].substring(0, string[j].indexOf("<methods>")).equals(
-        			     string[j-1].substring(0, string[j-1].indexOf("<methods>"))) )
-        			{ string[j] = string[j].replace(string[j].substring(0, string[j].indexOf("<include")), "             ");}
-        		}		
-        	return string;
-        	}
 
             /** Returns Suffix based on Number */
 			public String getNumberSuffix(int num) {
