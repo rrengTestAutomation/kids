@@ -2533,7 +2533,7 @@ public class UtilitiesTestHelper{
                         if (success) { 
                               System.out.print("\n" + "COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             } else {
-                              System.out.print("\n" + "NOT COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
+                              System.out.print("\n" + "NOT A COMPLETE " + action + " DIRECTORY: \"" + folderPath.substring(folderPath.lastIndexOf("/") + 1, folderPath.length()) + "\"\n\n");
                             }
                         }
                     } catch (Exception e) {}                    
