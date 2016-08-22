@@ -3183,7 +3183,7 @@ public class UtilitiesTestHelper{
         		int i = 0;
         		for (String s : string) {
         			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains("helper") && (s.length() != 0) ){ i++; }
+        			if ( found && !s.contains(".helper") && (s.length() != 0) ){ i++; }
         			}
         		
         		// CLASS LINE EXTRACTION
@@ -3191,7 +3191,7 @@ public class UtilitiesTestHelper{
         		int j = 0;
         		for (String s : string) {
         			Matcher m = p.matcher(s); Boolean found = m.find();
-        			if ( found && !s.contains("helper") && (s.length() != 0) ) {
+        			if ( found && !s.contains(".helper") && (s.length() != 0) ) {
         		    	linesArray[j] = s.replace(s.substring(0, s.indexOf("<class name=\"")),"      ");
         		    	j++;
         		    	}
