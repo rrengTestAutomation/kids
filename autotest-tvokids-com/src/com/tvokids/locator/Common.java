@@ -53,7 +53,15 @@ public class Common {
 	  public static String searchIcon            = "//a[@class='search-link']";
 	  
 	  /**********character page elements*********/
-	  public static String characterTitle = "//div[@class='tile-bubble']/following-sibling::*/h1";
+	  public static String brandTitle           = "//div[@class='tile-bubble']/following-sibling::*/h1";
+	  public static String brandTitleFontName   = "Booster Next FY Bold";
+	  public static String brandTitleFontSize   = "18px";
+	  public static String brandTitleFontColour = "#E01382";
+	  
+	  public static String brandDescription           = "//div[contains(@class,'brand-page-description')]/div/div";
+	  public static String brandDescriptionFontName   = "Suisse Int'l"; // "Suisse Int'l Regular";
+	  public static String brandDescriptionFontSize   = "16px";
+	  public static String brandDescriptionFontColour = "#000000";
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

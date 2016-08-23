@@ -16,7 +16,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>            
-<include name="testBrandPageBrowserTitle"/>             
+<include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/>             
 </methods></class>
      
         </classes>

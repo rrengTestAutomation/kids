@@ -1786,6 +1786,37 @@ public class UtilitiesTestHelper{
 			   Assert.assertEquals(actual, expected, getAssertEquals(t, driver, "Not the same!", actual, expected));
 			   }
 		   
+		   public void assertFont(WebDriver driver, StackTraceElement t, By by,
+				                  String expectedFontName,  String fontNameCssValue,
+				                  String expectedFontSize,  String fontSizeCssValue,
+				                  String expectedFontColour, String fontColourCssValue
+				                  ) throws IOException {
+			   
+			   String actualFontName = null, actualFontColour = null, actualFontSize = null;
+			   if( (expectedFontName.length() > 0) && (fontNameCssValue.length() > 0) ) {
+				   actualFontName = driver.findElement(by).getCssValue(fontNameCssValue).toLowerCase().replace("'", "").replace("_", "").replace("-","").replace(" ", "");
+				   if(actualFontName.contains(",")) { actualFontName = actualFontName.substring(0, actualFontName.indexOf(",")); }
+				   expectedFontName = expectedFontName.toLowerCase().replace("_", "").replace("'", "").replace("-","").replace(" ", "");
+				   assertEquals(driver, t, actualFontName, expectedFontName);
+				   }
+			   if( (expectedFontSize.length() > 0) && (fontSizeCssValue.length() > 0) ) { 
+				   actualFontSize = driver.findElement(by).getCssValue(fontSizeCssValue);
+				   assertEquals(driver, t, actualFontSize, expectedFontSize);
+				   }
+			   if( (expectedFontColour.length() > 0) && (fontColourCssValue.length() > 0) ) {
+				   actualFontColour = getColorHEX(driver, by, fontColourCssValue, true, "DETECTED COLOUR: "); // driver.findElement(by).getCssValue(fontColourCssValue);
+				   assertEquals(driver, t, actualFontColour, expectedFontColour);
+				   }		   
+			   }
+		   
+		   public void assertFont(WebDriver driver, StackTraceElement t, String xpath,
+	                  String expectedFontName,  String fontNameCssValue,
+	                  String expectedFontSize,  String fontSizeCssValue,
+	                  String expectedFontColour, String fontColourCssValue
+	                  ) throws IOException {
+			   assertFont(driver, t, By.xpath(xpath), expectedFontName, fontNameCssValue, expectedFontSize, fontSizeCssValue, expectedFontColour, fontColourCssValue);
+			   }
+		   
 		   public static String getAssertTrue(StackTraceElement l, WebDriver driver, String description, Boolean b) throws IOException {
 		       String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 		       String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());

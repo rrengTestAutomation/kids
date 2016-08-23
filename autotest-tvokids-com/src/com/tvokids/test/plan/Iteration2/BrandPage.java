@@ -118,7 +118,7 @@ public class BrandPage {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131 35153</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","BUG-529","OPEN"}, enabled = true, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","BUG-529","CLOSED"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -377,6 +377,14 @@ public class BrandPage {
 	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
+	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandTitle,
+	        		   Common.brandTitleFontName, "font-family",
+	        		   Common.brandTitleFontSize, "font-size",
+	        		   Common.brandTitleFontColour, "color");
+	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandDescription, 
+	        		   Common.brandDescriptionFontName, "font-family", 
+	        		   "", "font-size", 
+	        		   Common.brandDescriptionFontColour, "color");
 	           
 	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
@@ -387,10 +395,17 @@ public class BrandPage {
 	           driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
+	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandTitle,
+	        		   Common.brandTitleFontName, "font-family",
+	        		   Common.brandTitleFontSize, "font-size",
+	        		   Common.brandTitleFontColour, "color");
+	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandDescription,
+	        		   Common.brandDescriptionFontName, "font-family",
+	        		   "", "font-size",
+	        		   Common.brandDescriptionFontColour, "color");
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
-	
 	
 	/**
 	 * Test Brand Page Browser Title 
@@ -438,7 +453,7 @@ public class BrandPage {
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
                helper.clickLinkUrlWaitUntil(driver, 10, xpath, new RuntimeException().getStackTrace()[0]);
                // ASSERT:
-               actual = driver.findElement(By.xpath(Common.characterTitle)).getText();
+               actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
 	           expected = title;
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
@@ -448,7 +463,7 @@ public class BrandPage {
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
                helper.clickLinkUrlWaitUntil(driver, 10, xpath, new RuntimeException().getStackTrace()[0]);
                // ASSERT:
-               actual = driver.findElement(By.xpath(Common.characterTitle)).getText();
+               actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
 	           expected = title;
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	           
