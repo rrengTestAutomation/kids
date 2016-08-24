@@ -133,7 +133,7 @@ public class BrandPage {
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -344,9 +344,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
-//	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -427,7 +425,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Character Brand", "", "dev", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath, actual, expected;

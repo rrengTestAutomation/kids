@@ -1578,6 +1578,12 @@ public class UtilitiesTestHelper{
 	  public String determineEvenOrOdd(int number){
 		  if((number%2)==0) { return "even"; } else { return "odd"; }
 		  }
+	  
+	  /** Determines the given number is even */
+	  public Boolean isEven(int number){ return ((number%2)==0); }
+	  
+	  /** Determines the given number is odd */
+	  public Boolean isOdd(int number){ return ((number%2)!=0); }
  
 	// ################# DESCRIPTIVE BEGIN ##############################  
 		  /**

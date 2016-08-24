@@ -52,7 +52,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -169,7 +169,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -242,7 +242,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -405,52 +405,71 @@ public class Banner {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
-	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
-	           
-	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           helper.logIn(driver);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.logOut(driver);	           
 	           
 	           // DECLARATION:
-	           String title, titleURL, description, xpath;
+	           int total = 8;
+	           String[] title = new String[total];
+	           String[] titleURL = new String[total];
+	           String[] description = new String[total];
+	           String[] xpath = new String[total];
+	           long[] fingerprint = new long[total];
 	           
-	           // CREATE TITLE FOR CONTENT:
-	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           
-	           // CREATE DESCRIPTION FOR CONTENT:
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           
-	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
-	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           for (int i = 0; i < total; i++) {
+	        	   // CREATE TITLES FOR CONTENTS:
+	        	   fingerprint[i] = System.currentTimeMillis();
+	        	   title[i] = String.valueOf(fingerprint[i]) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
+	        	   // CREATE DESCRIPTION FOR CONTENT:
+	        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	        	   // LINK GENERIC XPATH:
+		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
+		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
+	        	   if (helper.isEven(i)) {
+	        		   // CREATE A CHARACTER BRAND CONTENT WITH BOTH AGES SELECTED:
+	        		   helper.logIn(driver);  // LOGIN TO DRUPAL AS AN ADMIN
+	    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, true, true, true, new Exception().getStackTrace()[0]);
+	    	           helper.logOut(driver);
+	    	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
+	        	   } else {
+	        		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
+	        		   helper.logIn(driver,"content_editor","changeme"); // LOGIN TO DRUPAL AS A CONTENT EDITOR
+	        		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, new Exception().getStackTrace()[0]);
+	        		   helper.logOut(driver);
+	        		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n");
+	        	   }
+	           }
 	           
 	           // AGE 5 AND UNDER TEST:
-	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
-		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
-		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-		       helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-	           helper.clickLinkUrlWaitUntil(driver, 10, xpath); // URL = Common.fiveAndUnderURL + "/" + titleURL;
-	           // ASSERT:
-	           helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.fiveAndUnderURL);
-	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.fiveAndUnderURL, true, false);
+	           helper.fileWriterPrinter("\n\n" + "AGE 5 AND UNDER TEST:");
+	           for (int i = 0; i < total; i++) {
+	        	   helper.fileWriterPrinter("\nAGE 5 AND UNDER TEST: " + (i + 1) + " OF " + total);
+	        	   helper.fileWriterPrinter(  "LINK   GENERIC XPATH: " + xpath[i] + "\n");
+	        	   helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	        	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+	        	   helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);
+	        	   helper.clickLinkUrlWaitUntil(driver, 10, xpath[i]); // URL = Common.fiveAndUnderURL + "/" + titleURL[i];
+	        	   // ASSERT:
+	        	   helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.fiveAndUnderURL);
+	        	   helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.fiveAndUnderURL, true, false);
+	        	   }
 	           
 	           // AGE 6 AND OVER TEST:
-	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
-		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
-		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-		       helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-	           helper.clickLinkUrlWaitUntil(driver, 10, xpath); // URL = Common.fiveAndUnderURL + "/" + titleURL;
-	           // ASSERT:
-	           helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.sixAndOverURL);
-	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.sixAndOverURL, true, false);
+	           helper.fileWriterPrinter("\n\n" + "AGE 6 AND OVER TEST:");
+	           for (int i = 0; i < total; i++) {
+	        	   helper.fileWriterPrinter("\nAGE 6 AND OVER TEST: " + (i + 1) + " OF " + total);
+	        	   helper.fileWriterPrinter(  "LINK  GENERIC XPATH: " + xpath[i] + "\n");
+	        	   helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	        	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+	        	   helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);
+	        	   helper.clickLinkUrlWaitUntil(driver, 10, xpath[i]); // URL = Common.sixAndOverURL + "/" + titleURL[i];
+	        	   // ASSERT:
+	        	   helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.sixAndOverURL);
+	        	   helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.kidsPageLogo, Common.sixAndOverURL, true, false);
+	        	   }
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
@@ -474,7 +493,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -583,9 +602,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "", "", "", new RuntimeException().getStackTrace()[0]);
-//	           helper.deleteAllContent(driver, "Custom Brand", "", "", new RuntimeException().getStackTrace()[0]);
-	           helper.deleteAllContent(driver, "Custom Brand", "", "content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
