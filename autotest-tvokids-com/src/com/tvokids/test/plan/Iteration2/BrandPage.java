@@ -488,19 +488,19 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 
-	           String browse, imageDir, imagePath, error;
+	           // DECLARATION:
+	           String browse = Drupal.heroBoxBrowse, imageDir = Common.localImageDir, imagePath, error;
 			   
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
-	           
-	           browse    = Drupal.heroBoxBrowse;
-			   imageDir  = Common.localImageDir;
 			   
+			   // ASSERT GIF FILE NOT ALLOWED:
 			   imagePath = imageDir + File.separator + "hero.gif";
 			   error     = Drupal.errorBrowseFormat;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
 	           
+	           // ASSERT JPG FILE IS ALLOWED:
 	           imagePath = imageDir + File.separator + "hero.jpg";
 			   error     = Drupal.errorBrowseFormat;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
