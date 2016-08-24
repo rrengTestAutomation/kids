@@ -467,5 +467,15 @@ public class BrandPage {
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
+	
+	/**
+	 * Test Brand Page Upload Image for Hero Box
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35154</p>
+	 */
 
 }

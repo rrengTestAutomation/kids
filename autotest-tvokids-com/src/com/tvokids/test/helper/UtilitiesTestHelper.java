@@ -5664,7 +5664,6 @@ public class UtilitiesTestHelper{
 	// ################ ZIP METHODS START #########################
 	/**
      * This class gets file size
-     * @param args
      * @throws IOException 
      * @throws NumberFormatException 
      */
@@ -5680,7 +5679,6 @@ public class UtilitiesTestHelper{
     
 	/**
      * This class gets file size MB
-     * @param args
      * @throws IOException 
      * @throws NumberFormatException 
      */
@@ -5815,7 +5813,6 @@ public class UtilitiesTestHelper{
 			
 		/**
 	     * This Method renames file
-	     * @param args
 	     * @throws IOException 
 	     * @throws NumberFormatException 
 	     */
@@ -5827,7 +5824,6 @@ public class UtilitiesTestHelper{
 	       
 		/**
 	     * This Method generates JavaScript Alert shown during user difined time in seconds
-	     * @param args
 	     * @throws InterruptedException 
 	     */
 	    public void javaScriptAlert(WebDriver driver, String alert, int seconds) throws InterruptedException {
