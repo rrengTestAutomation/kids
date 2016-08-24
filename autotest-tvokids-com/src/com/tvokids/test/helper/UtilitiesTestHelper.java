@@ -355,6 +355,73 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t,
+			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage
+			                     ) throws AWTException, InterruptedException, IOException
+	  {
+	   long fingerprint = System.currentTimeMillis();
+	   String tab, browse, upload;
+//     try {
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+			if(title.length() > 0) {
+				driver.findElement(By.id(Drupal.title)).clear();
+				driver.findElement(By.id(Drupal.title)).sendKeys(title);
+				}
+			
+			if(description.length() > 0) {
+				driver.findElement(By.xpath(Drupal.description)).clear();
+				driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
+				}
+			
+			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			
+			if(title.length() > 0) {
+				driver.findElement(By.id(Drupal.keywords)).clear();
+				driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
+				}
+			
+			if(bannerImage.length() > 0) {
+				tab    = Drupal.characterBannerVerticalTab;
+				browse = Drupal.characterBannerBrowse;
+				upload = Drupal.characterBannerUpload;
+				upload(driver, bannerImage, tab, browse, upload);
+				}
+
+			if(heroImage.length() > 0) {
+			    tab    = Drupal.heroBoxVerticalTab;
+				browse = Drupal.heroBoxBrowse;
+				upload = Drupal.heroBoxUpload;
+				upload(driver, heroImage, tab, browse, upload);
+				}
+
+			if(titleSmallImage.length() > 0) {
+				tab    = Drupal.tileVerticalTab;
+				browse = Drupal.tileSmallBrowse;
+				upload = Drupal.tileSmallUpload;
+				upload(driver, titleSmallImage, tab, browse, upload);
+				}
+
+			if(titleLargeImage.length() > 0) {
+				tab    = Drupal.tileVerticalTab;
+				browse = Drupal.tileLargeBrowse;
+				upload = Drupal.tileLargeUpload;
+				upload(driver, titleLargeImage, tab, browse, upload);
+				}
+
+			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
+			
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;
+	  }
+	
+	/**
+	 * Create a Custom Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
@@ -1175,6 +1242,34 @@ public class UtilitiesTestHelper{
 	   * @throws NumberFormatException 
 	   * @throws InterruptedException 
 	   */
+	  public void upload(WebDriver driver, String image, String tab, String browse, String upload) throws NumberFormatException, IOException, InterruptedException {
+//		  String parentWindowHandle = driver.getWindowHandle();
+		  String tabActive = tab  + Drupal.verticalTabActive;
+		  By Tab = By.xpath(tabActive);
+		  By Browse = By.xpath(browse);
+		  By Upload = By.xpath(upload);
+		  
+		  // TAB CLICK WITH XPATH CHANGE CONTROLLER AND AJAX ERROR HANDLER:
+		  int i = 0;
+		  int size = driver.findElements(Tab).size();
+		  while ((size == 0) && (i < 5)) {
+			     // TAB CLICK WITH AJAX ERROR HANDLER:
+			     ajaxProtectedClick(driver, tab, "", false, "", true, false);		     
+		         i++;		         
+		         size = driver.findElements(Tab).size();
+		         }
+		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
+		  
+		  // FINAL UPLOADER:
+		  uploader(driver, image, Browse, Upload);
+      }
+	  
+	  /**
+	   * Image tab-clicked upload
+	   * @throws IOException 
+	   * @throws NumberFormatException 
+	   * @throws InterruptedException 
+	   */
 	  public void upload(WebDriver driver, String image, String tab, String browse, String upload, String name, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
 //		  String parentWindowHandle = driver.getWindowHandle();
 		  String tabActive = tab  + Drupal.verticalTabActive;
@@ -1194,9 +1289,9 @@ public class UtilitiesTestHelper{
 		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
 		  
 		  // FINAL UPLOADER:
-		  uploader(driver, image, Browse, Upload, "image", t);
+		  uploader(driver, image, Browse, Upload, name, t);
       }
-	  
+      
 	  /**
 	   * Image direct upload engine
 	   * @param driver

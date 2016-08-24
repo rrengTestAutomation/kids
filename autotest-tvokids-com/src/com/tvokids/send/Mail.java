@@ -645,7 +645,7 @@ public class Mail {
 			 return all; 
 		 }
 		 
-		/** Reads the previous (last) Test total test number, records it as a previous, and erases the last total 
+		/** Reads the previous (last) Test total test number and records it as a previous and erases the last total 
 		  * @throws IOException 
 		  * @throws NumberFormatException 
 		  */

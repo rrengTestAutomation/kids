@@ -1,5 +1,6 @@
 package com.tvokids.test.plan.Iteration2;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -421,7 +422,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
@@ -469,7 +470,7 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test Brand Page Upload Image for Hero Box
+	 * Test Brand Page Upload Image for Hero Box only jpg and jpeg and png files are allowed
 	 * <p>Date Created: 2016-08-24</p>
 	 * <p>Date Modified: 2016-08-24<p>
 	 * <p>Original Version: V1</p>
@@ -477,5 +478,35 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154</p>
 	 */
+	@Test(groups = {"TC-35154"}, priority = 24)
+    public void testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
 
+	           String browse, imageDir, imagePath, error;
+			   
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
+	           
+	           browse    = Drupal.heroBoxBrowse;
+			   imageDir  = Common.localImageDir;
+			   
+			   imagePath = imageDir + File.separator + "hero.gif";
+			   error     = Drupal.errorBrowseFormat;
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           
+	           imagePath = imageDir + File.separator + "hero.jpg";
+			   error     = Drupal.errorBrowseFormat;
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
 }
