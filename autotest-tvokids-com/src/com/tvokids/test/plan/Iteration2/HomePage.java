@@ -18,13 +18,14 @@ import org.openqa.selenium.interactions.Actions;
 */
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.UtilitiesTestHelper;
+import java.lang.reflect.Method;
 
 @SuppressWarnings("static-access")
 public class HomePage {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
-    @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
+    @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
     

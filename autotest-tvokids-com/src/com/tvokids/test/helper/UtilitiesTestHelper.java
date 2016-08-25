@@ -55,6 +55,7 @@ import com.tvokids.locator.Common;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
+import java.lang.reflect.Method;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -78,6 +79,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.nio.file.*;
 import java.nio.file.attribute.*;
@@ -2491,6 +2493,65 @@ public class UtilitiesTestHelper{
 			       fileWriter("run.log", "      Start: "  + date);	    	        
 		    	}		    
 			}
+			
+			/**
+			 * startTime with Anotation Output
+			 * @throws IOException
+			 */
+			public void startTime(Method method) throws IOException {
+			   String date = getCurrentDateTimeFull();
+
+			// Cleaning:
+			   fileCleaner("match.log");
+			   fileCleaner("max.log");
+			   fileCleaner("order.log");
+			   fileCleaner("xml.log");
+			   fileCleaner("error.log");
+			   fileCleaner("reason.log");
+			   fileCleaner("start.time");
+			   
+			   fileWriter("start.time", convertLongToString(System.currentTimeMillis()));
+			// Creating New or Updating existing Test Counter record:  
+			   int n = counter("test.num");
+		    // Print-out information:
+		       fileWriterPrinter("\n       Test: #" + n);
+			   fileWriterPrinter(  "      Start: "  + date);
+			// Anotation output (coverage groups):
+			   String coverage = printAnotationGroups(method);
+			   if( coverage.length() == 0 ) { coverage = "N/A"; }
+			   fileWriterPrinter(  "   COVERAGE: " + coverage);
+			// Append a Start Log record:
+			   if (fileExist("run.log", false)) {
+			       fileWriter("run.log", "");
+			       fileWriter("run.log", "       Test: #" + n);
+			       fileWriter("run.log", "      Start: "  + date);
+			       fileWriter("run.log", "   COVERAGE: " + coverage);
+		    	}	            
+			}
+			
+//		    @BeforeMethod
+		    public void printMethodName(Method method) throws IOException { fileWriterPrinter(method.getName()); }
+
+//		    @BeforeMethod
+		    public String printAnotationGroups(Method method) throws IOException{
+		            Test test = method.getAnnotation(Test.class);
+		            String s = "", c = ", ";
+		            try {
+						for (int i = 0; i < test.groups().length; i++) {
+							if ( test.groups()[i].startsWith("US-"  )
+							   || test.groups()[i].startsWith("TC-" )
+							   || test.groups()[i].startsWith("TP-")
+							   || test.groups()[i].startsWith("BUG-")
+							   )
+							   { 
+								s = s + test.groups()[i];
+								if(i < (test.groups().length - 1)) { s = s + c; }
+								}
+						//  if( i == (test.groups().length - 1) ) { fileWriterPrinter(s); }
+							}
+					} catch (Exception e) {}
+		            return s;
+		            }
 			
 			/** Prints Test End and Sub-Total Time */
 			public void endTime() throws IOException {

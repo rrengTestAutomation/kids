@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import java.lang.reflect.Method;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,7 +31,7 @@ public class BrandPage {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
-    @BeforeMethod public static void startTime() throws IOException { new UtilitiesTestHelper().startTime(); } 
+    @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
     
