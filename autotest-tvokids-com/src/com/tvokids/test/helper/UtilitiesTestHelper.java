@@ -2519,13 +2519,13 @@ public class UtilitiesTestHelper{
 			// Anotation output (coverage groups):
 			   String coverage = printAnotationGroups(method);
 			   if( coverage.length() == 0 ) { coverage = "N/A"; }
-			   fileWriterPrinter(  "   COVERAGE: " + coverage);
+			   fileWriterPrinter(  "   Coverage: " + coverage);
 			// Append a Start Log record:
 			   if (fileExist("run.log", false)) {
 			       fileWriter("run.log", "");
 			       fileWriter("run.log", "       Test: #" + n);
 			       fileWriter("run.log", "      Start: "  + date);
-			       fileWriter("run.log", "   COVERAGE: " + coverage);
+			       fileWriter("run.log", "   Coverage: " + coverage);
 		    	}	            
 			}
 			
