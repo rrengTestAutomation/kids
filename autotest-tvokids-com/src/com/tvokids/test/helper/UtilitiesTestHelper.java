@@ -55,7 +55,9 @@ import com.tvokids.locator.Common;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
+
 import java.lang.reflect.Method;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -2517,15 +2519,13 @@ public class UtilitiesTestHelper{
 		       fileWriterPrinter("\n       Test: #" + n);
 			   fileWriterPrinter(  "      Start: "  + date);
 			// Anotation output (coverage groups):
-			   String coverage = printAnotationGroups(method);
-			   if( coverage.length() == 0 ) { coverage = "N/A"; }
-			   fileWriterPrinter(  "   Coverage: " + coverage);
-			// Append a Start Log record:
+			   fileWriterPrinter(  "   Coverage: " + printAnnotationGroups(method));
+			// Append a Start Log record with Annotation:
 			   if (fileExist("run.log", false)) {
 			       fileWriter("run.log", "");
 			       fileWriter("run.log", "       Test: #" + n);
 			       fileWriter("run.log", "      Start: "  + date);
-			       fileWriter("run.log", "   Coverage: " + coverage);
+			       fileWriter("run.log", "   Coverage: " + printAnnotationGroups(method));
 		    	}	            
 			}
 			
@@ -2533,23 +2533,21 @@ public class UtilitiesTestHelper{
 		    public void printMethodName(Method method) throws IOException { fileWriterPrinter(method.getName()); }
 
 //		    @BeforeMethod
-		    public String printAnotationGroups(Method method) throws IOException{
+		    public String printAnnotationGroups(Method method) throws IOException{
 		            Test test = method.getAnnotation(Test.class);
 		            String s = "", c = ", ";
 		            try {
 						for (int i = 0; i < test.groups().length; i++) {
-							if ( test.groups()[i].startsWith("US-"  )
+							if (  test.groups()[i].startsWith("US-" )
 							   || test.groups()[i].startsWith("TC-" )
-							   || test.groups()[i].startsWith("TP-")
+							   || test.groups()[i].startsWith("TP-" )
 							   || test.groups()[i].startsWith("BUG-")
 							   )
-							   { 
-								s = s + test.groups()[i];
-								if(i < (test.groups().length - 1)) { s = s + c; }
-								}
+							   { if((i == 0) || (s.length() == 0)) { s = s + test.groups()[i]; } else { s = s + c + test.groups()[i]; } }
 						//  if( i == (test.groups().length - 1) ) { fileWriterPrinter(s); }
 							}
 					} catch (Exception e) {}
+		            if(s.length() == 0 ) { s = "N/A"; }
 		            return s;
 		            }
 			
