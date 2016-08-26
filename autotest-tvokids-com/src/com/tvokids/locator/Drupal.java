@@ -41,7 +41,7 @@ public class Drupal{
       public static String logout                    = "//a[text()='Log out']";
 	  public static String drupalHomeIcon            = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton          = "//*[@id='tabs']/descendant::a[text()='Edit']";
-	  public static String statusPerformedDelete  = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
+	  public static String statusPerformedDelete     = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
 	  public static String executeButton             = "//*[@id='edit-submit--2']";
       public static String selectAllCheckBox         = "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
       public static String selectAllRowsButton       = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
@@ -51,7 +51,9 @@ public class Drupal{
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
 	  public static int titleMaxCharsNumber       = 26;
 	  	  
-	  public static String description = "//*[contains(@id,'-description-und-0-value')]";	  
+	  public static String description   = "//*[contains(@id,'-description-und-0-value')]";
+	  public static String alternate     = "//*[@id='edit-field-small-tile-image-und-0-alt']";
+	  public static String alternateText = "This is an Alternate Text";
 	  
 	  public static String ageGroup5   = "edit-field-age-group-und-1";
 	  public static String ageGroup6   = "edit-field-age-group-und-2";

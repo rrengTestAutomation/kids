@@ -624,4 +624,66 @@ public class BrandPage {
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	
+	/**
+	 * Test Brand Page Upload Image for Hero Box Hero image has no alternate text
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35154</p>
+	 */
+	@Test(groups = {"TC-35154"}, priority = 27)
+    public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, xpath, alternate;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           // ASSERT ALERNATE IS NOT SHOWN:
+	           alternate = Common.XpathContainsStart + Drupal.alternateText + Common.XpathContainsEnd;
+               helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           // ASSERT ALERNATE IS NOT SHOWN:
+	           alternate = Common.XpathContainsStart + Drupal.alternateText + Common.XpathContainsEnd;
+               helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
 }

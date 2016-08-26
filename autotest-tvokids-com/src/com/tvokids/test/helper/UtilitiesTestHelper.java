@@ -426,6 +426,63 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	  {
+	   long fingerprint = System.currentTimeMillis();
+	   String tab, browse, upload;
+//     try {
+            getUrlWaitUntil(driver, 15, Drupal.customBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+			
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
+			
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
+
+			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
+
+			tab    = Drupal.characterBannerVerticalTab;
+			browse = Drupal.characterBannerBrowse;
+			upload = Drupal.characterBannerUpload;
+			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
+
+		    tab    = Drupal.heroBoxVerticalTab;
+			browse = Drupal.heroBoxBrowse;
+			upload = Drupal.heroBoxUpload;
+			upload(driver, "hero.jpg", tab, browse, upload, "image", t);
+
+			tab    = Drupal.tileVerticalTab;
+			browse = Drupal.tileSmallBrowse;
+			upload = Drupal.tileSmallUpload;
+			upload(driver, "small.jpg", tab, browse, upload, "image", t);
+
+			if(ifAlternateText) { 
+				driver.findElement(By.xpath(Drupal.alternate)).clear();
+				driver.findElement(By.xpath(Drupal.alternate)).sendKeys(Drupal.alternateText);
+				}
+			
+			tab    = Drupal.tileVerticalTab;
+			browse = Drupal.tileLargeBrowse;
+			upload = Drupal.tileLargeUpload;
+			upload(driver, "large.jpg", tab, browse, upload, "image", t);
+			
+			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
+			
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;
+	  }
+	
+	/**
+	 * Create a Custom Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
