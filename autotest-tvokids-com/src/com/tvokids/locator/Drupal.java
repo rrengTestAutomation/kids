@@ -29,12 +29,15 @@ public class Drupal{
       public static String errorMessage              = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
       public static String errorAjax                 = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
       public static String errorTitle                = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
-      public static String errorDescription          = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";
-      public static String errorBrowseFormat         = "//div[@class='messages error file-upload-js-error']"
-		   		                                     + "[contains(.,'The selected file')"
-		   		                                     + " and contains(.,'cannot be uploaded. Only files with the following extensions are allowed:')"
-		   		                                     + " and contains(.,'png, jpg, jpeg')]";
-      public static String errorUpload               = "//div[@class='messages error'][contains(.,'could not be uploaded')]";
+      public static String errorDescription          = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    
+      public static String errorBrowse               = "//div[contains(@class,'messages error')][contains(.,'The') and contains(.,'file')]";
+      public static String errorActual               = "/descendant::em[1]";
+      public static String errorExpected             = "/descendant::em[2]";
+      public static String errorSize                 = "/descendant::em[3]";
+      public static String heroFormatExpected        = "png, jpg, jpeg";
+      public static String heroDimensionsExpected    = "708x398";
+      public static String heroSizeMaximum           = "75 KB";
+      public static String errorUpload               = "//div[contains(@class,'messages error')][contains(.,'could not be uploaded') or contains(.,'cannot be uploaded')]";  // used to be: "//div[@class='messages error'][contains(.,'could not be uploaded')]";
       public static String logout                    = "//a[text()='Log out']";
 	  public static String drupalHomeIcon            = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton          = "//*[@id='tabs']/descendant::a[text()='Edit']";
@@ -54,8 +57,9 @@ public class Drupal{
 	  public static String ageGroup6   = "edit-field-age-group-und-2";
 	  public static String keywords    = "edit-field-keywords-und";
 
-	  public static String browse = "/descendant::*[contains(@id, '-und-0-upload')][@class='form-file']";
-	  public static String upload = "/descendant::*[contains(@id, '-und-0-upload')][contains(@class,'form-submit')]";	  
+	  public static String browse  = "/descendant::*[contains(@id, '-und-0-upload')][@class='form-file']";
+	  public static String upload  = "/descendant::*[contains(@id, '-und-0-upload')][contains(@class,'form-submit')]";
+	  public static String remove  = "/descendant::*[contains(@id, '-und-0-remove-button')][contains(@class,'form-submit')]";
 	  public static String subSet1 = "[1]";
 	  public static String subSet2 = "[2]";
 	  
@@ -80,7 +84,8 @@ public class Drupal{
 	  public static String heroBoxFieldSet    = "//fieldset[2]/div/div";
 	  public static String heroBoxBrowse      = heroBoxFieldSet + browse;
 	  public static String heroBoxUpload      = heroBoxFieldSet + upload;
-	  		    
+	  public static String heroBoxRemove      = heroBoxFieldSet + remove;
+	  
 	  /************vertical tab - tile*********************/
 	  public static String tileVerticalTab  = "//ul[@class='vertical-tabs-list']/li[3]/a/strong";
 	  public static String tileFieldSet     = "//fieldset[3]/div/div";

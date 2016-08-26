@@ -87,7 +87,9 @@ public class Common {
 	  public static String XpathEqualsStart       = "//*[.='";
 	  public static String XpathEqualsStartQuot   = "//*[.=\"";	  
 	  public static String XpathEqualsTextStart       = "//*[text()='";
-	  public static String XpathEqualsTextStartQuot   = "//*[text()=\"";	  
+	  public static String XpathEqualsTextStartQuot   = "//*[text()=\"";
+	  public static String XpathAddContainsStart      = "[contains(.,'";
+	  public static String XpathAddContainsStartQuot  = "[contains(.,\"";	  	  
 	  public static String XpathContainsStart         = "/descendant::*[contains(.,'";
 	  public static String XpathContainsStartQuot     = "/descendant::*[contains(.,\"";	  
 	  public static String XpathContainsTextStart     = "/descendant::*[contains(text(),'";

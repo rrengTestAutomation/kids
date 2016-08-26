@@ -15,7 +15,9 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
+<include name="testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed"/>
+</methods></class>
      
         </classes>
      </test>

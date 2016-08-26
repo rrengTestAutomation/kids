@@ -2,9 +2,8 @@ package com.tvokids.test.plan.Iteration2;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,8 +13,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.tvokids.locator.Drupal;
-import com.tvokids.test.helper.UtilitiesTestHelper;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -25,6 +22,8 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 */
 import com.tvokids.locator.Common;
+import com.tvokids.locator.Drupal;
+import com.tvokids.test.helper.UtilitiesTestHelper;
 
 @SuppressWarnings("static-access")
 public class BrandPage {
@@ -494,18 +493,133 @@ public class BrandPage {
 			   
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			   
-			   // ASSERT GIF FILE NOT ALLOWED:
-			   imagePath = imageDir + File.separator + "hero.gif";
-			   error     = Drupal.errorBrowseFormat;
-		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
 	           
+			   // ASSERT GIF FILE NOT ALLOWED:
+			   imagePath = imageDir + File.separator + "hero.gif";			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);		       
+		       error = Drupal.errorBrowse;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.gif" + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.heroFormatExpected + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
+
 	           // ASSERT JPG FILE IS ALLOWED:
 	           imagePath = imageDir + File.separator + "hero.jpg";
-			   error     = Drupal.errorBrowseFormat;
+			   error     = Drupal.errorBrowse;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);           
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test Brand Page Upload Image for Hero Box less then minimum dimensions not allowed
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35154</p>
+	 */
+	@Test(groups = {"TC-35154"}, priority = 25)
+    public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+               
+	           // DECLARATION:
+	           String browse = Drupal.heroBoxBrowse, 
+	        		  upload = Drupal.heroBoxUpload,
+	        		  remove = Drupal.heroBoxRemove,
+	        		  imageDir = Common.localImageDir, imagePath, error;
+			   
+	           // NAVIGATE:
+	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
+	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+	           
+	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
+			   imagePath = imageDir + File.separator + "hero 707x397.jpg";			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           driver.findElement(By.xpath(upload)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);	           
+	           error = Drupal.errorBrowse;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
+	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero 707x397.jpg" + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.heroDimensionsExpected + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
+
+	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+	           imagePath = imageDir + File.separator + "hero 708x398.jpg";
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           driver.findElement(By.xpath(upload)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			   error = Drupal.errorBrowse;		       
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);
+
+	           // ASSERT MORE THEN MINIMUM DIMENSIONS IMAGE IS ALLOWED:
+	           driver.findElement(By.xpath(remove)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+	           imagePath = imageDir + File.separator + "hero 708x398.jpg";
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           driver.findElement(By.xpath(upload)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			   error = Drupal.errorBrowse;		       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test Brand Page Upload Image for Hero Box larger than 75kb not allowed
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35154</p>
+	 */
+	@Test(groups = {"TC-35154"}, priority = 26)
+    public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+               
+	           // DECLARATION:
+	           String browse = Drupal.heroBoxBrowse, 
+	        		  upload = Drupal.heroBoxUpload,
+	        		  imageDir = Common.localImageDir, imagePath, error;
+			   
+	           // NAVIGATE:
+	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
+	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+	           
+	           // ASSERT MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED:
+			   imagePath = imageDir + File.separator + "hero.png";			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           driver.findElement(By.xpath(upload)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);	           
+	           error = Drupal.errorBrowse;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
+	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.png" + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           error = Drupal.errorBrowse + Drupal.errorSize + Common.XpathAddContainsStart +  Drupal.heroSizeMaximum + Common.XpathContainsEnd;
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
