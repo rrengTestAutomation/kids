@@ -36,7 +36,7 @@ public class Banner {
 	/**
 	 * Test Desktop - Character banner rotation using Banner Arrows
 	 * <p>Date Created: 2016-07-30</p>
-	 * <p>Date Modified: 2016-07-30<p>
+	 * <p>Date Modified: 2016-07-30</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -152,7 +152,7 @@ public class Banner {
 	/**
 	 * Test Desktop - Character banner rotation using Click and Drug
 	 * <p>Date Created: 2016-07-30</p>
-	 * <p>Date Modified: 2016-07-30<p>
+	 * <p>Date Modified: 2016-07-30</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -226,7 +226,7 @@ public class Banner {
 	/**
 	 * Test the banner is Infinite looped
 	 * <p>Date Created: 2016-08-08</p>
-	 * <p>Date Modified: 2016-08-08<p>
+	 * <p>Date Modified: 2016-08-08</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -309,7 +309,7 @@ public class Banner {
 	/**
 	 * Test TVOKIDS Logo displaying
 	 * <p>Date Created: 2016-08-09</p>
-	 * <p>Date Modified: 2016-08-09<p>
+	 * <p>Date Modified: 2016-08-09</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -358,7 +358,7 @@ public class Banner {
 	/**
 	 * Test Search Icon - Desktop
 	 * <p>Date Created: 2016-08-10</p>
-	 * <p>Date Modified: 2016-08-10<p>
+	 * <p>Date Modified: 2016-08-10</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -393,7 +393,7 @@ public class Banner {
 	/**
 	 * Test TVOKids logo is redirecting to age specific landing page
 	 * <p>Date Created: 2016-08-11</p>
-	 * <p>Date Modified: 2016-08-11<p>
+	 * <p>Date Modified: 2016-08-11</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -477,7 +477,7 @@ public class Banner {
 	/**
 	 * Test character banner images Prioritization Business Rule
 	 * <p>Date Created: 2016-08-12</p>
-	 * <p>Date Modified: 2016-08-12<p>
+	 * <p>Date Modified: 2016-08-12</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -586,7 +586,7 @@ public class Banner {
 	/**
 	 * Test Character Banner Interactivity Bubbles-animation behaves exactly as required
 	 * <p>Date Created: 2016-08-18</p>
-	 * <p>Date Modified: 2016-08-18<p>
+	 * <p>Date Modified: 2016-08-18</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>

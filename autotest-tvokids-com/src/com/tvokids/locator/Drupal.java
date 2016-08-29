@@ -89,13 +89,16 @@ public class Drupal{
 	  public static String heroBoxRemove      = heroBoxFieldSet + remove;
 	  
 	  /************vertical tab - tile*********************/
-	  public static String tileVerticalTab  = "//ul[@class='vertical-tabs-list']/li[3]/a/strong";
-	  public static String tileFieldSet     = "//fieldset[3]/div/div";
-	  public static String tileSmallBrowse  = tileFieldSet + subSet1 + browse;
-	  public static String tileSmallUpload  = tileFieldSet + subSet1 + upload;
-	  public static String tileLargeBrowse = tileFieldSet + subSet2 +  browse;
-	  public static String tileLargeUpload  = tileFieldSet + subSet2 +  upload;
-
+	  public static String tileVerticalTab = "//ul[@class='vertical-tabs-list']/li[3]/a/strong";
+	  public static String tileFieldSet    = "//fieldset[3]/div/div";
+	  public static String tileSmallBrowse = tileFieldSet + subSet1 + browse;
+	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
+	  public static String tileSmallRemove = tileFieldSet + subSet1 + remove;
+	  public static String tileLargeBrowse = tileFieldSet + subSet2 + browse;
+	  public static String tileLargeUpload = tileFieldSet + subSet2 + upload;
+	  public static String tileLargeRemove = tileFieldSet + subSet2 + remove;
+	  
+	  
 	  /************content******************/
 	  public static String brandPageDescriptionID                 =     "edit-field-brand-page-description-und-0-value";	  
 	  public static String brandPageDescriptionContentLimitMsgCSS = "div#edit-field-brand-page-description-und-0-value-counter.counter";

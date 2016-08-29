@@ -32,7 +32,7 @@ public class HomePage {
 	/**
 	 * Test Home Page elements exist
 	 * <p>Date Created: 2016-07-25</p>
-	 * <p>Date Modified: 2016-07-25<p>
+	 * <p>Date Modified: 2016-07-25</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -61,7 +61,7 @@ public class HomePage {
 	/**
 	 * Test Home page by click on the specific age image takes under to corresponding age Landing page
 	 * <p>Date Created: 2016-07-25</p>
-	 * <p>Date Modified: 2016-07-25<p>
+	 * <p>Date Modified: 2016-07-25</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -89,7 +89,7 @@ public class HomePage {
 	/**
 	 * Test responsive Desktop and Tablet and Mobile Home page Age Titles position is compatible to the platform being used
 	 * <p>Date Created: 2016-07-26</p>
-	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Date Modified: 2016-07-26</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -181,7 +181,7 @@ public class HomePage {
 	/**
 	 * Test responsive Desktop and Tablet and Mobile Home page Age Images position is compatible to the platform being used
 	 * <p>Date Created: 2016-07-26</p>
-	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Date Modified: 2016-07-26</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -283,7 +283,7 @@ public class HomePage {
 	/**
 	 * Test responsive Desktop and Tablet and Mobile Home page Age Blocks sections are 50% of the browser width
 	 * <p>Date Created: 2016-07-26</p>
-	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Date Modified: 2016-07-26</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -392,7 +392,7 @@ public class HomePage {
 	/**
 	 * Test responsive Desktop and Tablet and Mobile Home page TVOKids logo is not a hyperlink
 	 * <p>Date Created: 2016-07-26</p>
-	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Date Modified: 2016-07-26</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -440,7 +440,7 @@ public class HomePage {
 	/**
 	 * Test responsive Desktop and Tablet and Mobile Home page both ages group blocks are hyperlinked to the corresponding landing page
 	 * <p>Date Created: 2016-07-26</p>
-	 * <p>Date Modified: 2016-07-26<p>
+	 * <p>Date Modified: 2016-07-26</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -498,7 +498,7 @@ public class HomePage {
 	/**
 	 * Test interactivity Home Page age block's background colour changes if mouse hover
 	 * <p>Date Created: 2016-07-29</p>
-	 * <p>Date Modified: 2016-07-29<p>
+	 * <p>Date Modified: 2016-07-29</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>

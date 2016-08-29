@@ -414,7 +414,7 @@ public class UtilitiesTestHelper{
 				upload(driver, titleLargeImage, tab, browse, upload);
 				}
 
-			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
+			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); Thread.sleep(1000); }
 			
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
             return fingerprint;
@@ -5281,7 +5281,11 @@ public class UtilitiesTestHelper{
 	/* ##### TAB SWITCH HANDLER WITH CLICK END ##### */
 				
 	public void moveToElement(WebDriver driver, String scrollTo) throws InterruptedException{
-        WebElement element = driver.findElement(By.xpath(scrollTo));
+		moveToElement(driver, By.xpath(scrollTo));
+	}
+	
+	public void moveToElement(WebDriver driver, By by) throws InterruptedException{
+        WebElement element = driver.findElement(by);
         Coordinates coordinate = ((Locatable)element).getCoordinates(); 
         coordinate.onPage(); 
         coordinate.inViewPort();

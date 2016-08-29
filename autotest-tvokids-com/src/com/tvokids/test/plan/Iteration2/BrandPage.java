@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,7 +70,7 @@ public class BrandPage {
 	/**
 	 * Test attempt to create a Custom Brand without a title is rejected
 	 * <p>Date Created: 2016-07-20</p>
-	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Date Modified: 2016-07-20</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -113,7 +114,7 @@ public class BrandPage {
 	/**
 	 * Test Custom Brand Meta-Data Attributes - Title field content is limited
 	 * <p>Date Created: 2016-07-06</p>
-	 * <p>Date Modified: 2016-07-22<p>
+	 * <p>Date Modified: 2016-07-22</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: V3</p>
 	 * <p>Xpath: 3</p>
@@ -215,7 +216,7 @@ public class BrandPage {
 	/**
 	 * Test attempt to create a Custom Brand without a description is rejected
 	 * <p>Date Created: 2016-07-20</p>
-	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Date Modified: 2016-07-20</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -259,7 +260,7 @@ public class BrandPage {
 	/**
 	 * Test attempt to create a Custom Brand Page Description that is longer than 135 characters is rejected
 	 * <p>Date Created: 2016-07-20</p>
-	 * <p>Date Modified: 2016-07-20<p>
+	 * <p>Date Modified: 2016-07-20</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -328,7 +329,7 @@ public class BrandPage {
 	/**
 	 * Test create a Custom Brand Page on both 5 and Under & 6 and Over is located on the appropriate front end age page and navigatation link is correct
 	 * <p>Date Created: 2016-07-22</p>
-	 * <p>Date Modified: 2016-07-22<p>
+	 * <p>Date Modified: 2016-07-22</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -409,7 +410,7 @@ public class BrandPage {
 	/**
 	 * Test Brand Page Browser Title 
 	 * <p>Date Created: 2016-08-18</p>
-	 * <p>Date Modified: 2016-08-18<p>
+	 * <p>Date Modified: 2016-08-18</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -472,7 +473,7 @@ public class BrandPage {
 	/**
 	 * Test Brand Page Upload Image for Hero Box only jpg and jpeg and png files are allowed
 	 * <p>Date Created: 2016-08-24</p>
-	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Date Modified: 2016-08-24</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -517,7 +518,7 @@ public class BrandPage {
 	/**
 	 * Test Brand Page Upload Image for Hero Box less then minimum dimensions not allowed
 	 * <p>Date Created: 2016-08-24</p>
-	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Date Modified: 2016-08-24</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -584,7 +585,7 @@ public class BrandPage {
 	/**
 	 * Test Brand Page Upload Image for Hero Box larger than 75kb not allowed
 	 * <p>Date Created: 2016-08-24</p>
-	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Date Modified: 2016-08-24</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -627,7 +628,7 @@ public class BrandPage {
 	/**
 	 * Test Brand Page Upload Image for Hero Box Hero image has no alternate text
 	 * <p>Date Created: 2016-08-24</p>
-	 * <p>Date Modified: 2016-08-24<p>
+	 * <p>Date Modified: 2016-08-24</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
@@ -682,6 +683,46 @@ public class BrandPage {
 	           // ASSERT ALERNATE IS NOT SHOWN:
 	           alternate = Common.XpathContainsStart + Drupal.alternateText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test create Brand Tile and check the Small Tile image is mandatory
+	 * <p>Date Created: 2016-08-29</p>
+	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220</p>
+	 */
+	@Test(groups = {"TC-35220"}, priority = 28)
+    public void testCreateCustomBrandCheckSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
