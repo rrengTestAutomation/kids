@@ -1367,7 +1367,7 @@ public class UtilitiesTestHelper{
 		  try{
         	  driver.findElement(browse).sendKeys(imagePath);
         	  Thread.sleep(1000);
-        	  driver.findElement(upload).click();
+        	  ajaxProtectedClick(driver, upload, image, true, Common.ajaxThrobber, true, 5, false); // used to be:  driver.findElement(upload).click();
         	  waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
           }catch(Throwable e) { e.printStackTrace(); }
       }
@@ -1945,6 +1945,7 @@ public class UtilitiesTestHelper{
 			   }
 		   
 		   public void assertEquals(WebDriver driver, StackTraceElement t, String actual, String expected) throws IOException {
+			   if(expected.contains("\n")) { expected = "\n" + expected + "\n"; actual = "\n" + actual + "\n"; }
 			   Assert.assertEquals(actual, expected, getAssertEquals(t, driver, "Not the same!", actual, expected));
 			   }
 		   
@@ -5893,8 +5894,8 @@ public class UtilitiesTestHelper{
 		fileWriterPrinter("\n" + "VERTICAL DISTANCE = " + distance);
 		return distance;
 	}
-	
-	// ################ ZIP METHODS START #########################
+
+	// ################ FILE SIZE START ####################
 	/**
      * This class gets file size
      * @throws IOException 
@@ -5907,6 +5908,21 @@ public class UtilitiesTestHelper{
          // fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
          // fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
             return (double) file.length();
+        } else { fileWriterPrinter("File doesn't exist"); return 0; }
+    }
+    
+	/**
+     * This class gets file size
+     * @throws IOException 
+     * @throws NumberFormatException 
+     */
+    public double fileSizeKB(String filePath) throws NumberFormatException, IOException {
+    	File file = new File(filePath.replace("\\", "/"));
+        if(file.exists()) {
+         // fileWriterPrinter("FILE SIZE: " + file.length() + " Bit");
+            fileWriterPrinter("FILE SIZE: " + file.length()/1024 + " Kb");
+         // fileWriterPrinter("FILE SIZE: " + ((double) file.length()/(1024*1024)) + " Mb");
+            return (double) file.length()/1024;
         } else { fileWriterPrinter("File doesn't exist"); return 0; }
     }
     
@@ -5925,6 +5941,57 @@ public class UtilitiesTestHelper{
         } else { fileWriterPrinter("File doesn't exist"); return 0; }
     }
     
+	/**
+     * This class gets file size Bit, KB, MB
+     * @throws IOException 
+     * @throws NumberFormatException 
+     */
+    public double fileSize(String filePath, String units, Boolean ifPrompt) throws NumberFormatException, IOException {
+    	File file = new File(filePath.replace("\\", "/"));
+        String Units = "";
+    	if(file.exists()) {
+        	if(units.toUpperCase().substring(0,1).equals("B")) { Units = " Bit"; }
+        	if(units.toUpperCase().substring(0,1).equals("K")) { Units = " KB";  }
+        	if(units.toUpperCase().substring(0,1).equals("M")) { Units = " MB";  }
+        	
+        	if(ifPrompt) { 
+        	    if(units.toUpperCase().substring(0,1).equals("B")) { fileWriterPrinter("FILE SIZE: " + (double) file.length() + Units); } else
+            	if(units.toUpperCase().substring(0,1).equals("K")) { fileWriterPrinter("FILE SIZE: " + (double) file.length()/1024 + Units); } else
+                if(units.toUpperCase().substring(0,1).equals("M")) { fileWriterPrinter("FILE SIZE: " + (double) file.length()/(1024*1024) + Units); }
+        	}
+        	
+        	if(units.toUpperCase().substring(0,1).equals("B")) { return (double) file.length(); } else
+        	if(units.toUpperCase().substring(0,1).equals("K")) { return (double) file.length()/1024; } else
+            if(units.toUpperCase().substring(0,1).equals("M")) { return (double) file.length()/(1024*1024); } else return 0;
+            
+        } else { fileWriterPrinter("File doesn't exist"); return 0; }
+    }
+    
+	/**
+     * This class gets file size as String
+     * @throws IOException
+     */
+	public String getFileSpaceSize(String filePath, String units, int decimals) throws IOException {
+		DecimalFormat f = new DecimalFormat(decimalsNumberToFormat(decimals));
+		return f.format(fileSize(filePath, units, false));
+		}
+	
+	/**
+     * This class generates format String
+     */
+	public String decimalsNumberToFormat(int decimals) {
+		String format = "#";
+		if(decimals > 0) { 
+			format = format + ".";
+			for (int i = 0; i < decimals; i++) {
+				format = format + "#";
+			}
+			}	
+		return format;
+		}
+	// ################ FILE SIZE END ####################
+    
+	// ################ ZIP METHODS START #########################
 	/**
 	 * Create a Zip File from given Directory using ZipOutputStream CLASS with Path Structure and Protection choise
 	 */

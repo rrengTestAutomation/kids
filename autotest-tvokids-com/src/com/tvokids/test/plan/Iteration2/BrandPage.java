@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -503,7 +502,7 @@ public class BrandPage {
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
 	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.gif" + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.heroFormatExpected + Common.XpathContainsEnd;
+	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroFormatExpected + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
 
 	           // ASSERT JPG FILE IS ALLOWED:
@@ -553,7 +552,7 @@ public class BrandPage {
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
 	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero 707x397.jpg" + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.heroDimensionsExpected + Common.XpathContainsEnd;
+	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroPxExpected + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
 
 	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
@@ -619,7 +618,7 @@ public class BrandPage {
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
 	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.png" + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorSize + Common.XpathAddContainsStart +  Drupal.heroSizeMaximum + Common.XpathContainsEnd;
+	           error = Drupal.errorBrowse + Drupal.errorSize + Common.XpathAddContainsStart +  Drupal.errorMessageHeroSizeMax + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -706,11 +705,8 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
-	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
-	           
 	           // DECLARATION:
-	           String title, titleURL, description;
+	           String title, titleURL, description, actual, expected;
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -722,9 +718,146 @@ public class BrandPage {
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
 	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
-	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
 	           
+	           // ASSERT ERROR MESSAGE APPEARS:
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
+	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
+	           expected = Drupal.errorMessageSmallTile;
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+
+	/**
+	 * Test create Brand Tile and check the Small Tile image upload larger than 50kb not allowed
+	 * <p>Date Created: 2016-08-29</p>
+	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220</p>
+	 */
+	@Test(groups = {"TC-35220"}, priority = 29)
+    public void testCreateCustomBrandCheckSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected, image = "small more then 75Kb.jpg";
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
+	           
+	           // ASSERT ERROR MESSAGE APPEARS:	   
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = helper.getFileSpaceSize(Common.localImageDir + File.separator + image, "Kbit", 2);
+	           expected = Drupal.errorMessageSmallTileSize(image, expected);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	
+	/**
+	 * Test create Brand Tile and check the Small Tile image upload only jpg and jpeg and png files are allowed
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220</p>
+	 */
+	@Test(groups = {"TC-35220"}, priority = 30)
+    public void ttestCreateCustomBrandCheckSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+//	           // CLEAN-UP:
+//	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
+	           
+	           // ASSERT ERROR MESSAGE APPEARS:
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
+	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
+	           expected = Drupal.errorMessageSmallTile;
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test create Brand Tile and check the Small Tile image upload not exact dimensions not allowed
+	 * <p>Date Created: 2016-08-29</p>
+	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220</p>
+	 */
+	@Test(groups = {"TC-35220"}, priority = 31)
+    public void testCreateCustomBrandCheckSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+//	           // CLEAN-UP:
+//	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected;
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
+	           
+	           // ASSERT ERROR MESSAGE APPEARS:
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
+	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
+	           expected = Drupal.errorMessageSmallTile;
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
 }
