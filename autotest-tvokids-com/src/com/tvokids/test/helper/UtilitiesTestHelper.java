@@ -1401,7 +1401,7 @@ public class UtilitiesTestHelper{
 				          // IMAGE PATH ENTRY WITH AJAX ERROR HANDLER:
 				          ajaxProtectedSendKeys(driver, browse, image, imagePath, false, "", true, false); 
 				          // UPLOAD CLICK WITH AJAX ERROR HANDLER:
-				          ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, false);  
+				          ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 15, false);  
 			         } catch (Exception e) {}
 		        	 
 		        	 // UPLOAD ACTION ERROR HANDLER:
@@ -5405,11 +5405,11 @@ public class UtilitiesTestHelper{
     }
     
     /**
-	 * Performes Click on By-identified Web-Element protected with AJAX Recovery Scenario
+	 * Performes Click on By-identified Web-Element protected with AJAX Recovery Scenario with custom maximum number of attempts
      * @throws IOException 
      * @throws NumberFormatException 
 	 */
-    public void ajaxProtectedClick(WebDriver driver, By element, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    public void ajaxProtectedClick(WebDriver driver, By element, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, int maxAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
     	String parentWindowHandle = driver.getWindowHandle();
     	String attempt = "";
         boolean ifAjax = true;
@@ -5426,10 +5426,28 @@ public class UtilitiesTestHelper{
 				     if(ifAjax) { fileWriterPrinter("Not a successful \"" + name + "\" click...will try again..." + attempt); }
 			     } catch (Exception e) {}
 			     i++;
-			     reason = ((i > 0) && (i < 5)) && ifAjax;
+			     reason = ((i > 0) && (i < maxAttempt)) && ifAjax;
         }        
         if(!ifAjax) { fileWriterPrinter("Successful \"" + name + "\" click!" + attempt); }
         if(!ifAjax && (ifThrobber && (throbberXPATH.length() != 0))) { waitUntilElementInvisibility(driver, 10, throbberXPATH, "Throbber", new Exception().getStackTrace()[0]); }    
+    }
+    
+    /**
+	 * Performes Click on XPATH-identified Web-Element protected with AJAX Recovery Scenario
+     * @throws IOException 
+     * @throws NumberFormatException 
+	 */
+    public void ajaxProtectedClick(WebDriver driver, String locator, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, int maxAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    	ajaxProtectedClick(driver, By.xpath(locator), name, ifThrobber, throbberXPATH, ifAttempt, maxAttempt, ifScreenshot);
+    }
+    
+    /**
+	 * Performes Click on By-identified Web-Element protected with AJAX Recovery Scenario with maximum 5 attempts
+     * @throws IOException 
+     * @throws NumberFormatException 
+	 */
+    public void ajaxProtectedClick(WebDriver driver, By element, String name, Boolean ifThrobber, String throbberXPATH, Boolean ifAttempt, Boolean ifScreenshot ) throws NumberFormatException, IOException{
+    	ajaxProtectedClick(driver, element, name, ifThrobber, throbberXPATH, ifAttempt, 5, ifScreenshot);
     }
     
     /**
