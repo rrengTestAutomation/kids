@@ -62,9 +62,11 @@ public class Drupal{
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
 	  public static int titleMaxCharsNumber       = 26;
 	  	  
-	  public static String description   = "//*[contains(@id,'-description-und-0-value')]";
-	  public static String alternate     = "//*[@id='edit-field-small-tile-image-und-0-alt']";
-	  public static String alternateText = "This is an Alternate Text";
+	  public static String description    = "//*[contains(@id,'-description-und-0-value')]";
+	  public static String alternateSmall = "//*[@id='edit-field-small-tile-image-und-0-alt']";
+	  public static String alternateLarge = "//*[@id='edit-field-large-tile-image-und-0-alt']";
+	  public static String alternateSmallText  = "This is an Alternate Text of Small Tile";
+	  public static String alternateLargeText  = "This is an Alternate Text of Large Tile";
 	  
 	  public static String ageGroup5   = "edit-field-age-group-und-1";
 	  public static String ageGroup6   = "edit-field-age-group-und-2";
@@ -77,6 +79,9 @@ public class Drupal{
 	  public static String subSet2 = "[2]";
 	  
 	  public static String progress               = "updateprogress";
+	  public static String tilePlacementSelection = "edit-tvokids-content-tile-fieldset-0-landing-page";
+	  public static String tilePlacementPublished = "edit-tvokids-content-tile-fieldset-0-published";
+	  public static String tilePlacementAdd       = "edit-tvokids-content-tile-fieldset-add"; 
 	  public static String submit                 = "edit-submit";
 	  public static String statusPerformedMessage = "//*[@id='console']/descendant::*[contains(.,'on ') and contains(.,' item')]";	  
 	  public static String statusPerformedCancel  = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Cancel')]";

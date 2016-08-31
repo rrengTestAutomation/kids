@@ -629,9 +629,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35154</p>
+	 * <p>Test Cases: 35154 35220 3188 3996</p>
 	 */
-	@Test(groups = {"TC-35154"}, priority = 27)
+	@Test(groups = {"TC-35154","TC-35220","US-3188","US-3996"}, priority = 27)
     public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -659,7 +659,10 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, true, new Exception().getStackTrace()[0]);
+// helper.createCustomBrand(driver, title, description, true, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, titleURL, description, true, true, true, true, new Exception().getStackTrace()[0],
+	        		                    "bubble.jpg", "hero.jpg", "small.jpg", "large.jpg", "Age Landing Page"
+	        		                    );
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -670,7 +673,9 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           // ASSERT ALERNATE IS NOT SHOWN:
-	           alternate = Common.XpathContainsStart + Drupal.alternateText + Common.XpathContainsEnd;
+	           alternate = Common.XpathContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
+               helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
+               alternate = Common.XpathContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
 	           
 	           // AGE 6 AND OVER TEST:
@@ -678,7 +683,9 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           // ASSERT ALERNATE IS NOT SHOWN:
-	           alternate = Common.XpathContainsStart + Drupal.alternateText + Common.XpathContainsEnd;
+	           alternate = Common.XpathContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
+               helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
+               alternate = Common.XpathContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -993,8 +1000,7 @@ public class BrandPage {
 	           String browse = Drupal.tileLargeBrowse, upload = Drupal.tileLargeUpload, remove = Drupal.tileLargeRemove;
 			   String imageDir = Common.localImageDir, imagePath;
 			   String image = "large 707x835.jpg", imageMin = "large 708x836.jpg", imageOverMin = "large 709x837.jpg";
-	           
-	           
+	            
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
