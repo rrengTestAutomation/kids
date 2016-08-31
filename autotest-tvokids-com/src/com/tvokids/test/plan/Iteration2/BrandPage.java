@@ -525,58 +525,56 @@ public class BrandPage {
 	 */
 	@Test(groups = {"TC-35154"}, priority = 25)
     public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
-	       try{
+	       try{	    	   
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver,"content_editor","changeme");
-               
+	           
 	           // DECLARATION:
-	           String browse = Drupal.heroBoxBrowse, 
-	        		  upload = Drupal.heroBoxUpload,
-	        		  remove = Drupal.heroBoxRemove,
-	        		  imageDir = Common.localImageDir, imagePath, error;
-			   
-	           // NAVIGATE:
-	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
-	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+	           String title, titleURL, description, actual, expected;
+	           String browse = Drupal.heroBoxBrowse, upload = Drupal.heroBoxUpload, remove = Drupal.heroBoxRemove;
+			   String imageDir = Common.localImageDir, imagePath;
+			   String image = "hero 707x397.jpg", imageMin = "hero 708x398.jpg", imageOverMin = "hero 709x399.jpg";
+	           
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
 	           
 	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
-			   imagePath = imageDir + File.separator + "hero 707x397.jpg";			   
-		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
-	           driver.findElement(By.xpath(upload)).click();
-	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);	           
-	           error = Drupal.errorBrowse;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
-	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero 707x397.jpg" + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroBoxPixelsExpected + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
-
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = Drupal.errorMessageHeroBoxWrongImagePixels(image);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       		       
 	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
 	           driver.navigate().refresh();
 	           helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-	           imagePath = imageDir + File.separator + "hero 708x398.jpg";
+	           imagePath = imageDir + File.separator + imageMin;
 	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           Thread.sleep(1000);
-	           driver.findElement(By.xpath(upload)).click();
-	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-			   error = Drupal.errorBrowse;		       
-	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);	       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           // ASSERT MORE THEN MINIMUM DIMENSIONS IMAGE IS ALLOWED:
 	           driver.findElement(By.xpath(remove)).click();
 	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-	           imagePath = imageDir + File.separator + "hero 708x398.jpg";
+	           imagePath = imageDir + File.separator + imageOverMin;
 	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           Thread.sleep(1000);
-	           driver.findElement(By.xpath(upload)).click();
-	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-			   error = Drupal.errorBrowse;		       
-	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);		       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
@@ -696,7 +694,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220</p>
 	 */
 	@Test(groups = {"TC-35220"}, priority = 28)
-    public void testCreateCustomBrandCheckSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
+    public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -738,7 +736,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220</p>
 	 */
 	@Test(groups = {"TC-35220"}, priority = 29)
-    public void testCreateCustomBrandCheckSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+    public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -780,8 +778,8 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220</p>
 	 */
-	@Test(groups = {"TC-35220"}, enabled = true, priority = 30)
-    public void testCreateCustomBrandCheckSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	@Test(groups = {"TC-35220"}, priority = 30)
+    public void testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -808,6 +806,7 @@ public class BrandPage {
 
 	           // ASSERT JPG FILE IS ALLOWED:
 		       driver.navigate().refresh();
+		       helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 	           imagePath = imageDir + File.separator + "small.jpg";
 			   error     = Drupal.errorBrowse;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
@@ -825,8 +824,8 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220</p>
 	 */
-	@Test(groups = {"TC-35220"}, enabled = false, priority = 31)
-    public void testCreateCustomBrandCheckSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	@Test(groups = {"TC-35220","BUG-699","OPEN"}, enabled = false, priority = 31)
+    public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -837,6 +836,10 @@ public class BrandPage {
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
+	           String browse = Drupal.tileSmallBrowse, upload = Drupal.tileSmallUpload, remove = Drupal.tileSmallRemove;
+			   String imageDir = Common.localImageDir, imagePath;
+			   String image = "small 707x397.jpg", imageMin = "small 708x398.jpg", imageOverMin = "small 709x399.jpg";
+	           
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -847,13 +850,32 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
 	           
-	           // ASSERT ERROR MESSAGE APPEARS:
-	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
-	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
-	           expected = Drupal.errorMessageSmallTileImageRequired;
+	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = Drupal.errorMessageSmallTileWrongImagePixels(image);
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       		       
+	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+	           imagePath = imageDir + File.separator + imageMin;
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);	       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+
+	           // ASSERT MORE THEN MINIMUM DIMENSIONS IMAGE IS NOT ALLOWED:
+	           driver.findElement(By.xpath(remove)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+	           imagePath = imageDir + File.separator + imageOverMin;
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);		       
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
