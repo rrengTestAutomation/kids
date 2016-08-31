@@ -729,7 +729,7 @@ public class BrandPage {
 	       }
 
 	/**
-	 * Test create Brand Tile and check the Small Tile image upload larger than 50kb not allowed
+	 * Test create Brand Tile and check the Small Tile image upload larger than 75 KB not allowed
 	 * <p>Date Created: 2016-08-29</p>
 	 * <p>Date Modified: 2016-08-29</p>
 	 * <p>Original Version: V1</p>
@@ -780,8 +780,8 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220</p>
 	 */
-	@Test(groups = {"TC-35220"}, priority = 30)
-    public void ttestCreateCustomBrandCheckSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	@Test(groups = {"TC-35220"}, enabled = false, priority = 30)
+    public void testCreateCustomBrandCheckSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -789,9 +789,6 @@ public class BrandPage {
 	           
 	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver,"content_editor","changeme");
-	           
-//	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -825,7 +822,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220</p>
 	 */
-	@Test(groups = {"TC-35220"}, priority = 31)
+	@Test(groups = {"TC-35220"}, enabled = false, priority = 31)
     public void testCreateCustomBrandCheckSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -834,9 +831,6 @@ public class BrandPage {
 	           
 	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver,"content_editor","changeme");
-	           
-//	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -860,4 +854,5 @@ public class BrandPage {
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
+	
 }
