@@ -489,23 +489,23 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 
 	           // DECLARATION:
-	           String browse = Drupal.heroBoxBrowse, imageDir = Common.localImageDir, imagePath, error;
+	           String actual, expected;
+	           String browse = Drupal.heroBoxBrowse, error = Drupal.errorBrowse; 
+			   String imageDir = Common.localImageDir, imagePath, image = "hero.gif";
 			   
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
 	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
 	           
 			   // ASSERT GIF FILE NOT ALLOWED:
-			   imagePath = imageDir + File.separator + "hero.gif";			   
-		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);		       
-		       error = Drupal.errorBrowse;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.gif" + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroFormatExpected + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
+			   imagePath = imageDir + File.separator + image;			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+		       actual = driver.findElement(By.xpath(error)).getText();
+		       expected = Drupal.errorMessageHeroBoxWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           // ASSERT JPG FILE IS ALLOWED:
+		       driver.navigate().refresh();
 	           imagePath = imageDir + File.separator + "hero.jpg";
 			   error     = Drupal.errorBrowse;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
@@ -552,7 +552,7 @@ public class BrandPage {
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
 	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero 707x397.jpg" + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroPxExpected + Common.XpathContainsEnd;
+	           error = Drupal.errorBrowse + Drupal.errorExpected + Common.XpathAddContainsStart +  Drupal.errorMessageHeroBoxPixelsExpected + Common.XpathContainsEnd;
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);		       
 
 	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
@@ -597,29 +597,29 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver,"content_editor","changeme");
-               
-	           // DECLARATION:
-	           String browse = Drupal.heroBoxBrowse, 
-	        		  upload = Drupal.heroBoxUpload,
-	        		  imageDir = Common.localImageDir, imagePath, error;
-			   
-	           // NAVIGATE:
-	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
-	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
 	           
-	           // ASSERT MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED:
-			   imagePath = imageDir + File.separator + "hero.png";			   
-		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
-	           driver.findElement(By.xpath(upload)).click();
-	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);	           
-	           error = Drupal.errorBrowse;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);	           
-	           error = Drupal.errorBrowse + Drupal.errorActual + Common.XpathAddContainsStart + "hero.png" + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
-	           error = Drupal.errorBrowse + Drupal.errorSize + Common.XpathAddContainsStart +  Drupal.errorMessageHeroSizeMax + Common.XpathContainsEnd;
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], error);
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected, image = "hero more then 75Kb.png";
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
+	           
+	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):	   
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = helper.getFileSpaceSize(Common.localImageDir + File.separator + image, "Kbit", 2);
+	           expected = Drupal.errorMessageHeroBoxWrongUploadSize(image, expected);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
@@ -722,7 +722,7 @@ public class BrandPage {
 	           // ASSERT ERROR MESSAGE APPEARS:
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
 	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
-	           expected = Drupal.errorMessageSmallTile;
+	           expected = Drupal.errorMessageSmallTileImageRequired;
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -761,11 +761,11 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
 	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
 	           
-	           // ASSERT ERROR MESSAGE APPEARS:	   
+	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):   
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
 	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
 	           expected = helper.getFileSpaceSize(Common.localImageDir + File.separator + image, "Kbit", 2);
-	           expected = Drupal.errorMessageSmallTileSize(image, expected);
+	           expected = Drupal.errorMessageSmallTileWrongUploadSize(image, expected);
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -780,7 +780,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220</p>
 	 */
-	@Test(groups = {"TC-35220"}, enabled = false, priority = 30)
+	@Test(groups = {"TC-35220"}, enabled = true, priority = 30)
     public void testCreateCustomBrandCheckSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -791,24 +791,27 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
-	           String title, titleURL, description, actual, expected;
+	           String actual, expected;
+	           String browse = Drupal.tileSmallBrowse, error = Drupal.errorBrowse; 
+			   String imageDir = Common.localImageDir, imagePath, image = "small 708x398.gif";
+			   
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
+	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
 	           
-	           // CREATE TITLE FOR CONTENT:
-	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           
-	           // CREATE DESCRIPTION FOR CONTENT:
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           
-	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
-	           
-	           // ASSERT ERROR MESSAGE APPEARS:
-	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
-	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
-	           expected = Drupal.errorMessageSmallTile;
-	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+			   // ASSERT GIF FILE NOT ALLOWED:
+			   imagePath = imageDir + File.separator + image;			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+		       actual = driver.findElement(By.xpath(error)).getText();
+		       expected = Drupal.errorMessageSmallTileWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);		       
+
+	           // ASSERT JPG FILE IS ALLOWED:
+		       driver.navigate().refresh();
+	           imagePath = imageDir + File.separator + "small.jpg";
+			   error     = Drupal.errorBrowse;
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);  
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
@@ -849,7 +852,7 @@ public class BrandPage {
 	           // ASSERT ERROR MESSAGE APPEARS:
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
 	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
-	           expected = Drupal.errorMessageSmallTile;
+	           expected = Drupal.errorMessageSmallTileImageRequired;
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }

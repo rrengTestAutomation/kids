@@ -21,38 +21,36 @@ public class Drupal{
 	  public static String messageEveryCacheCleared = "//div[@class='messages status'][contains(.,'Every cache cleared.')]";
 	  
 	  /**********common buttons*******************/
-      public static String featureTypeInDropDown               = "//*[@value='feature']";
-      public static String deleteOperationInDropDown           = "//*[@id='edit-operation']/option[text()='Delete']";
-      public static String confirmButton                       = "//*[@id='edit-submit']";
-      public static String errorConsole                        = "//div[@id='console']";
-      public static String error                               = "//*[@id='console']/div[@class='messages error']";
-      public static String errorMessage                        = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
-      public static String errorMessageHeroFormatExpected      = "png, jpg, jpeg";
-      public static String errorMessageHeroPxExpected          = "708x398";
-      public static String errorMessageHeroSizeMax             = "75 KB";
-      public static String errorMessageSmallTile               = "Error message\nSmall Tile Image field is required.";
-      public static String errorMessageSmallTileFormatExpected = "png, jpg, jpeg";
-      public static String errorMessageSmallTilePxExpected     = "708x398";
-      public static String errorMessageSmallTileSizeMax        = "75 KB";     
-      public static String errorMessageSmallTileSize(String image, String size) { 
-    	  return"Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB.";
-    	  }
+      public static String featureTypeInDropDown                = "//*[@value='feature']";
+      public static String deleteOperationInDropDown            = "//*[@id='edit-operation']/option[text()='Delete']";
+      public static String confirmButton                        = "//*[@id='edit-submit']";
+      public static String errorConsole                         = "//div[@id='console']";
+      public static String error                                = "//*[@id='console']/div[@class='messages error']";
+      public static String errorMessage                         = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
       
-      public static String errorAjax                           = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
-      public static String errorTitle                          = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
-      public static String errorDescription                    = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    
-      public static String errorBrowse                         = "//div[contains(@class,'messages error')][contains(.,'The') and contains(.,'file')]";
-      public static String errorActual                         = "/descendant::em[1]";
-      public static String errorExpected                       = "/descendant::em[2]";
-      public static String errorSize                           = "/descendant::em[3]";
-      public static String errorUpload                         = "//div[contains(@class,'messages error')][contains(.,'could not be uploaded') or contains(.,'cannot be uploaded')]";  // used to be: "//div[@class='messages error'][contains(.,'could not be uploaded')]";
-      public static String logout                              = "//a[text()='Log out']";
-	  public static String drupalHomeIcon                      = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
-	  public static String drupalEditButton                    = "//*[@id='tabs']/descendant::a[text()='Edit']";
-	  public static String statusPerformedDelete               = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
-	  public static String executeButton                       = "//*[@id='edit-submit--2']";
-      public static String selectAllCheckBox                   = "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
-      public static String selectAllRowsButton                 = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
+      public static String errorMessageHeroBoxPixelsExpected    = "708x398";
+      public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
+      public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
+      public static String errorMessageSmallTilePixelsExpected  = "708x398";      
+      public static String errorMessageSmallTileImageRequired   = "Error message\nSmall Tile Image field is required.";
+      public static String errorMessageSmallTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
+      public static String errorMessageSmallTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
+            
+      public static String errorAjax                            = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
+      public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
+      public static String errorDescription                     = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    
+      public static String errorBrowse                          = "//div[contains(@class,'messages error')][contains(.,'The') and contains(.,'file')]";
+      public static String errorActual                          = "/descendant::em[1]";
+      public static String errorExpected                        = "/descendant::em[2]";
+      public static String errorSize                            = "/descendant::em[3]";
+      public static String errorUpload                          = "//div[contains(@class,'messages error')][contains(.,'could not be uploaded') or contains(.,'cannot be uploaded')]";  // used to be: "//div[@class='messages error'][contains(.,'could not be uploaded')]";
+      public static String logout                               = "//a[text()='Log out']";
+	  public static String drupalHomeIcon                       = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
+	  public static String drupalEditButton                     = "//*[@id='tabs']/descendant::a[text()='Edit']";
+	  public static String statusPerformedDelete                = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
+	  public static String executeButton                        = "//*[@id='edit-submit--2']";
+      public static String selectAllCheckBox                    = "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
+      public static String selectAllRowsButton                  = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
 
       /************common once*********************/
 	  public static String title   = "edit-title";
