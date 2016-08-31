@@ -27,20 +27,20 @@ public class Drupal{
       public static String errorConsole                         = "//div[@id='console']";
       public static String error                                = "//*[@id='console']/div[@class='messages error']";
       public static String errorMessage                         = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
-
-//      
-      public static String errorMessageHeroBoxPixelsExpected    = "708x398";
-//      
+    
       public static String errorMessageHeroBoxWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
       public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
-
-//    public static String errorMessageSmallTilePixelsExpected  = "708x398";      
+      
       public static String errorMessageSmallTileImageRequired   = "Error message\nSmall Tile Image field is required."; 
       public static String errorMessageSmallTileWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
       public static String errorMessageSmallTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageSmallTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
-            
+ 
+      public static String errorMessageLargeTileWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x836 pixels."; }
+      public static String errorMessageLargeTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 100 KB."; }
+      public static String errorMessageLargeTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
+      
       public static String errorAjax                            = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
       public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
       public static String errorDescription                     = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    

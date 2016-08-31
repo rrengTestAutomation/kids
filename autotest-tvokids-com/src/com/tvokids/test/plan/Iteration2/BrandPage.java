@@ -117,9 +117,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: V3</p>
 	 * <p>Xpath: 3</p>
-	 * <p>Test Cases: 35131 35153</p>
+	 * <p>Test Cases: 35131 35153 524 528 529</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-528","BUG-529","CLOSED"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -332,7 +332,7 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35153</p>
+	 * <p>Test Cases: 35153 650</p>
 	 */
 	@Test(groups = {"TC-35153","BUG-650","OPEN"}, enabled = false, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -691,9 +691,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220</p>
+	 * <p>Test Cases: 35220 3188 3996 707</p>
 	 */
-	@Test(groups = {"TC-35220"}, priority = 28)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-707","OPEN"}, priority = 28)
     public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -733,9 +733,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220</p>
+	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(groups = {"TC-35220"}, priority = 29)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 29)
     public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -776,9 +776,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220</p>
+	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(groups = {"TC-35220"}, priority = 30)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 30)
     public void testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -822,9 +822,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220</p>
+	 * <p>Test Cases: 35220 3188 3996 699</p>
 	 */
-	@Test(groups = {"TC-35220","BUG-699","OPEN"}, enabled = false, priority = 31)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = false, priority = 31)
     public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -875,6 +875,161 @@ public class BrandPage {
 	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           Thread.sleep(1000);
 	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);		       
+	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test create Brand Tile and check the Large Tile image upload larger than 75 KB not allowed
+	 * <p>Date Created: 2016-08-29</p>
+	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220 3188 3996</p>
+	 */
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 32)
+    public void testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected, image = "large more then 100Kb.jpg";
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
+	           
+	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):   
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = helper.getFileSpaceSize(Common.localImageDir + File.separator + image, "Kbit", 2);
+	           expected = Drupal.errorMessageLargeTileWrongUploadSize(image, expected);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test create Brand Tile and check the Large Tile image upload only jpg and jpeg and png files are allowed
+	 * <p>Date Created: 2016-08-24</p>
+	 * <p>Date Modified: 2016-08-24</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220 3188 3996</p>
+	 */
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 33)
+    public void testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // DECLARATION:
+	           String actual, expected;
+	           String browse = Drupal.tileLargeBrowse, error = Drupal.errorBrowse; 
+			   String imageDir = Common.localImageDir, imagePath, image = "large 708x836.gif";
+			   
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
+	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+	           
+			   // ASSERT GIF FILE NOT ALLOWED:
+			   imagePath = imageDir + File.separator + image;			   
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+		       actual = driver.findElement(By.xpath(error)).getText();
+		       expected = Drupal.errorMessageLargeTileWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);		       
+
+	           // ASSERT JPG FILE IS ALLOWED:
+		       driver.navigate().refresh();
+		       helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+	           imagePath = imageDir + File.separator + "large.jpg";
+			   error     = Drupal.errorBrowse;
+		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);  
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test create Brand Tile and check the Large Tile image upload not exact dimensions not allowed
+	 * <p>Date Created: 2016-08-29</p>
+	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35220 3188 3996 708</p>
+	 */
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","OPEN"}, enabled = false, priority = 34)
+    public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // DECLARATION:
+	           String title, titleURL, description, actual, expected;
+	           String browse = Drupal.tileLargeBrowse, upload = Drupal.tileLargeUpload, remove = Drupal.tileLargeRemove;
+			   String imageDir = Common.localImageDir, imagePath;
+			   String image = "large 707x835.jpg", imageMin = "large 708x836.jpg", imageOverMin = "large 709x837.jpg";
+	           
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
+	           
+	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = Drupal.errorMessageLargeTileWrongImagePixels(image);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       		       
+	           // ASSERT MINIMUM DIMENSIONS IMAGE IS ALLOWED:
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+	           imagePath = imageDir + File.separator + imageMin;
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);	       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+
+	           // ASSERT MORE THEN MINIMUM DIMENSIONS IMAGE IS NOT ALLOWED:
+	           driver.findElement(By.xpath(remove)).click();
+	           helper.waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+	           imagePath = imageDir + File.separator + imageOverMin;
+	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
+	           Thread.sleep(1000);
+	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);
+               helper.moveToElement(driver, "//span[@class='fieldset-legend'][text()='Add Tile Placements']");	       
 	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
