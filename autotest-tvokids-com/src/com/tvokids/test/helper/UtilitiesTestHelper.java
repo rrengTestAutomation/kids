@@ -1428,7 +1428,7 @@ public class UtilitiesTestHelper{
 				          // IMAGE PATH ENTRY WITH AJAX ERROR HANDLER:
 				          ajaxProtectedSendKeys(driver, browse, image, imagePath, false, "", true, false); 
 				          // UPLOAD CLICK WITH AJAX ERROR HANDLER:
-				          ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 15, false);  
+				          ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, -1, false);  
 			         } catch (Exception e) {}
 		        	 
 		        	 // UPLOAD ACTION ERROR HANDLER:
@@ -5434,6 +5434,7 @@ public class UtilitiesTestHelper{
     
     /**
 	 * Performes Click on By-identified Web-Element protected with AJAX Recovery Scenario with custom maximum number of attempts
+	 * If custom maximum number of attempts is negative - will work like maximum number of attempts is un-limited
      * @throws IOException 
      * @throws NumberFormatException 
 	 */
@@ -5454,7 +5455,7 @@ public class UtilitiesTestHelper{
 				     if(ifAjax) { fileWriterPrinter("Not a successful \"" + name + "\" click...will try again..." + attempt); }
 			     } catch (Exception e) {}
 			     i++;
-			     reason = ((i > 0) && (i < maxAttempt)) && ifAjax;
+			     reason = ( (i > 0) && ((i < maxAttempt) || (maxAttempt < 0)) ) && ifAjax;
         }        
         if(!ifAjax) { fileWriterPrinter("Successful \"" + name + "\" click!" + attempt); }
         if(!ifAjax && (ifThrobber && (throbberXPATH.length() != 0))) { waitUntilElementInvisibility(driver, 10, throbberXPATH, "Throbber", new Exception().getStackTrace()[0]); }    

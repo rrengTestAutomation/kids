@@ -16,8 +16,9 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
-<include name="testBrandPageHeroBoxImageUploadAlternativeTextNotExist"/>
-
+<include name="testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed"/>
+<include name="testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed"/>
+<include name="testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed"/>
 </methods></class>
      
         </classes>
