@@ -43,7 +43,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131</p> 
 	 */
-	@Test(groups = {"TC-35131"}, priority = 1)
+	@Test(groups = {"TC-35131","US-3229"}, priority = 1)
     public void testCustomBrandFieldsExist() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -75,7 +75,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131 35153</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153"}, priority = 2)
+	@Test(groups = {"TC-35131","TC-35153","US-3229"}, priority = 2)
 	public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
@@ -119,7 +119,7 @@ public class BrandPage {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131 35153 524 528 529</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -221,7 +221,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 35131</p>
 	 */
-	@Test(groups = {"TC-35153","TC-35131"}, priority = 4)
+	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 4)
 	public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
@@ -265,7 +265,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 35131</p>
 	 */
-	@Test(groups = {"TC-35153","TC-35131"}, priority = 5)
+	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 5)
 	public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -334,7 +334,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 650</p>
 	 */
-	@Test(groups = {"TC-35153","BUG-650","OPEN"}, enabled = false, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","OPEN"}, enabled = false, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -415,7 +415,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34558</p>
 	 */
-	@Test(groups = {"TC-34558"}, priority = 23)
+	@Test(groups = {"TC-34558","US-3461"}, priority = 23)
     public void testBrandPageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -478,7 +478,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154</p>
 	 */
-	@Test(groups = {"TC-35154"}, priority = 24)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 24)
     public void testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -523,7 +523,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154</p>
 	 */
-	@Test(groups = {"TC-35154"}, priority = 25)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 25)
     public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	    	   // INITIALISATION:
@@ -588,7 +588,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154</p>
 	 */
-	@Test(groups = {"TC-35154"}, priority = 26)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 26)
     public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -631,7 +631,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154 35220 3188 3996</p>
 	 */
-	@Test(groups = {"TC-35154","TC-35220","US-3188","US-3996"}, priority = 27)
+	@Test(groups = {"TC-35154","US-3311","TC-35220","US-3188","US-3996"}, priority = 27)
     public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:

@@ -42,7 +42,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34144</p>
 	 */
-	@Test(groups = {"TC-34144"}, priority = 15)
+	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 15)
 	public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -158,7 +158,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34144</p>
 	 */
-	@Test(groups = {"TC-34144"}, priority = 16)
+	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 16)
 	public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -232,7 +232,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34147</p>
 	 */
-	@Test(groups = {"TC-34147"}, priority = 17)
+	@Test(groups = {"TC-34147","US-2024","US-3656"}, priority = 17)
 	public void testCharacterBannerIsInfiniteLooped() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -315,7 +315,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34169</p>
 	 */
-	@Test(groups = {"TC-34169"}, priority = 18)
+	@Test(groups = {"TC-34169","US-2769"}, priority = 18)
 	public void testTVOKidsLogoIsAnimated() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -364,7 +364,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34460</p>
 	 */
-	@Test(groups = {"TC-34460"}, priority = 19)
+	@Test(groups = {"TC-34460","US-2829"}, priority = 19)
 	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -399,7 +399,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34140</p>
 	 */
-	@Test(groups = {"TC-34140"}, priority = 20)
+	@Test(groups = {"TC-34140","US-1990"}, priority = 20)
 	public void testTVOKidsLogoRedirectsToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -483,7 +483,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34143</p>
 	 */
-	@Test(groups = {"TC-34143"}, priority = 21)
+	@Test(groups = {"TC-34143","US-2023"}, priority = 21)
 	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -592,7 +592,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34462</p>
 	 */
-	@Test(groups = {"TC-34462"}, priority = 22)
+	@Test(groups = {"TC-34462","US-2831"}, priority = 22)
     public void testCharacterBannerInteractivityBubblesAnimationIsCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:

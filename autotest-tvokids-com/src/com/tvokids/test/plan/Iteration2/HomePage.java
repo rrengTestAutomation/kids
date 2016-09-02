@@ -38,7 +38,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34908</p>
 	 */
-	@Test(groups = {"TC-34908"}, priority = 7)
+	@Test(groups = {"TC-34908","US-3214"}, priority = 7)
 	public void testHomePageElementsExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -67,7 +67,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34908</p>
 	 */
-	@Test(groups = {"TC-34908"}, priority = 8)
+	@Test(groups = {"TC-34908","US-3214"}, priority = 8)
 	public void testHomePageClickAgeImageNavigatesToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -95,7 +95,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
-	@Test(groups = {"TC-34960"}, priority = 9)
+	@Test(groups = {"TC-34960","US-3267"}, priority = 9)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -187,7 +187,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
-	@Test(groups = {"TC-34960"}, priority = 10)
+	@Test(groups = {"TC-34960","US-3267"}, priority = 10)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeImagesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -289,7 +289,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
-	@Test(groups = {"TC-34960"}, priority = 11)
+	@Test(groups = {"TC-34960","US-3267"}, priority = 11)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocksOccupyHalfBrowser() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -398,7 +398,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
-	@Test(groups = {"TC-34960"}, priority = 12)
+	@Test(groups = {"TC-34960","US-3267"}, priority = 12)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeLogoIsNotHyperlink() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -446,7 +446,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960</p>
 	 */
-	@Test(groups = {"TC-34960"}, priority = 13)
+	@Test(groups = {"TC-34960","US-3267"}, priority = 13)
 	public void testResponsiveDesktopAndMobileDevicesHomePageClickAgeBlocksOpensCorrectLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -504,7 +504,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34969</p>
 	 */
-	@Test(groups = {"TC-34969"}, priority = 14)
+	@Test(groups = {"TC-34969","US-3316"}, priority = 14)
 	public void testInteractivityHomePageAgeBlockMouseHoverColourChanges() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
