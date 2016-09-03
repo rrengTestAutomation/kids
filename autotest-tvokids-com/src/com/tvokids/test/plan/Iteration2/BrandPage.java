@@ -334,7 +334,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 650</p>
 	 */
-	@Test(groups = {"TC-35153","US-3229","BUG-650","OPEN"}, enabled = false, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = false, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -700,7 +700,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 707</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-707","OPEN"}, priority = 28)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-707","CLOSED"}, priority = 28)
     public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -831,7 +831,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 699</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = false, priority = 31)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = true, priority = 31)
     public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -882,7 +882,7 @@ public class BrandPage {
 	           driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           Thread.sleep(1000);
 	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);		       
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
@@ -985,7 +985,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 708</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","OPEN"}, enabled = false, priority = 34)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","NEW"}, enabled = true, priority = 34)
     public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1036,7 +1036,7 @@ public class BrandPage {
 	           Thread.sleep(1000);
 	           helper.ajaxProtectedClick(driver, upload, "Upload", true, Common.ajaxThrobber, true, 5, false);
                helper.moveToElement(driver, "//span[@class='fieldset-legend'][text()='Add Tile Placements']");	       
-	           helper.assertWebElementExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
