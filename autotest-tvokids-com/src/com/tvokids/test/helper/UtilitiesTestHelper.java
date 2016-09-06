@@ -1370,7 +1370,7 @@ public class UtilitiesTestHelper{
 		  int size = driver.findElements(Tab).size();
 		  while ((size == 0) && (i < 5)) {
 			     // TAB CLICK WITH AJAX ERROR HANDLER:
-			     ajaxProtectedClick(driver, tab, "", false, "", true, false);		     
+			     ajaxProtectedClick(driver, tab, "", false, "", true, -1, false); //(driver, tab, "", false, "", true, false);		     
 		         i++;		         
 		         size = driver.findElements(Tab).size();
 		         }

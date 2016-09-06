@@ -36,7 +36,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34908</p>
+	 * <p>Test Cases: 34908 3214</p>
 	 */
 	@Test(groups = {"TC-34908","US-3214"}, priority = 7)
 	public void testHomePageElementsExist() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -65,7 +65,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34908</p>
+	 * <p>Test Cases: 34908 3214</p>
 	 */
 	@Test(groups = {"TC-34908","US-3214"}, priority = 8)
 	public void testHomePageClickAgeImageNavigatesToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -93,7 +93,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34960</p>
+	 * <p>Test Cases: 34960 3267</p>
 	 */
 	@Test(groups = {"TC-34960","US-3267"}, priority = 9)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -185,7 +185,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34960</p>
+	 * <p>Test Cases: 34960 3267</p>
 	 */
 	@Test(groups = {"TC-34960","US-3267"}, priority = 10)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeImagesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -287,7 +287,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34960</p>
+	 * <p>Test Cases: 34960 3267</p>
 	 */
 	@Test(groups = {"TC-34960","US-3267"}, priority = 11)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocksOccupyHalfBrowser() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -396,7 +396,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34960</p>
+	 * <p>Test Cases: 34960 3267</p>
 	 */
 	@Test(groups = {"TC-34960","US-3267"}, priority = 12)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeLogoIsNotHyperlink() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -444,7 +444,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34960</p>
+	 * <p>Test Cases: 34960 3267</p>
 	 */
 	@Test(groups = {"TC-34960","US-3267"}, priority = 13)
 	public void testResponsiveDesktopAndMobileDevicesHomePageClickAgeBlocksOpensCorrectLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -502,7 +502,7 @@ public class HomePage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34969</p>
+	 * <p>Test Cases: 34969 3316</p>
 	 */
 	@Test(groups = {"TC-34969","US-3316"}, priority = 14)
 	public void testInteractivityHomePageAgeBlockMouseHoverColourChanges() throws IOException, IllegalArgumentException, MalformedURLException {
