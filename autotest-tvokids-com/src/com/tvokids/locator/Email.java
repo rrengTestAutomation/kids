@@ -86,7 +86,8 @@ public class Email {
 		                                     Common.testOutputFileDir + "extent-test-report.html",
 		                                     Common.testOutputFileDir + "run.log",
 		                                     Common.testOutputFileDir + "failed.log",
-		                                     Common.testOutputFileDir + "screen-shots.renameToZip"	                			         
+		                                     Common.testOutputFileDir + "screen-shots.renameToZip",
+		                                     Common.testOutputFileDir + "scoverage.csv"
 		                                    };
 	  
 	  // ATTACHMENT PATHS VALIDATION
