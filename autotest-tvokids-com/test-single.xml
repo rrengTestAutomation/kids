@@ -16,7 +16,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
-<include name="testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect"/>
+<include name="testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed"/>
 </methods></class>
      
         </classes>

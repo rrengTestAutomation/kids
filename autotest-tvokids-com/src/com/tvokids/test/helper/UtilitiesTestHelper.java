@@ -2390,6 +2390,15 @@ public class UtilitiesTestHelper{
 			// Renew XML record:
 			   fileCleaner("xml.path");
 			   fileWriter( "xml.path", xml);
+			// Append Test Coverage:
+			   if( fileExist("test.type", false) && fileExist("coverage.info", false) ) { 
+			       if( fileScanner("test.type").equals("Regression Test") ) { 
+			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
+			    	   fileWriter("coverage.csv", 
+			    			       fileScanner("test.num") + "," + packageNameOnly + "," + classNameOnly + "," + l.getMethodName() + "," + fileScanner("coverage.info").replaceAll(", ", ",")
+			    			       );
+			    	   }
+			    	}			   
 			// Renew Stack Trace Element record:
 			   fileCleaner("stack.trace");
 			   fileWriter( "stack.trace", l);
@@ -2611,7 +2620,7 @@ public class UtilitiesTestHelper{
 			// Anotation output (coverage groups):
 			   fileWriterPrinter(  "   Coverage: " + printAnnotationGroups(method));
 			   fileCleaner("coverage.info");
-			   fileWriter("coverage.info", printAnnotationGroups(method));
+			   fileWriter("coverage.info", printAnnotationGroups(method));  
 			// Append a Start Log record with Annotation:
 			   if (fileExist("run.log", false)) {
 			       fileWriter("run.log", "");
@@ -3484,6 +3493,7 @@ public class UtilitiesTestHelper{
                 fileCleaner("source.html");
                 fileCleaner("test.num"   );
                 fileCleaner("failed.num" );
+			    fileCleaner("coverage.csv");
                 fileCleaner("emailable-report.html");
                 fileCleaner("extent-test-report.html");
     		}
