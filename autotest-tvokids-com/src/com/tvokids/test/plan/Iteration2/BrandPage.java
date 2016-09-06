@@ -334,7 +334,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 3229 650</p>
 	 */
-	@Test(groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = false, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = true, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1040,5 +1040,15 @@ public class BrandPage {
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
+	
+	/**
+	 * Test URL Redirect - 5 and Under
+	 * <p>Date Created: 2016-09-06</p>
+	 * <p>Date Modified: 2016-09-06</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35158 3610</p>
+	 */
 	
 }

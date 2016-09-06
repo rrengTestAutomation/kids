@@ -1824,6 +1824,7 @@ public class UtilitiesTestHelper{
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
               fileWriter("failed.log", "   XML Path: "  + xml);
 			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
 			  fileWriter("failed.log", "Description: ---> " + secondLine);
@@ -1884,6 +1885,7 @@ public class UtilitiesTestHelper{
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
               fileWriter("failed.log", "   XML Path: "  + xml);
 			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
 			  fileWriter("failed.log", "Description: ---> " + secondLine);
@@ -2034,6 +2036,7 @@ public class UtilitiesTestHelper{
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2087,6 +2090,7 @@ public class UtilitiesTestHelper{
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2140,6 +2144,7 @@ public class UtilitiesTestHelper{
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2605,6 +2610,8 @@ public class UtilitiesTestHelper{
 			   fileWriterPrinter(  "      Start: "  + date);
 			// Anotation output (coverage groups):
 			   fileWriterPrinter(  "   Coverage: " + printAnnotationGroups(method));
+			   fileCleaner("coverage.info");
+			   fileWriter("coverage.info", printAnnotationGroups(method));
 			// Append a Start Log record with Annotation:
 			   if (fileExist("run.log", false)) {
 			       fileWriter("run.log", "");
