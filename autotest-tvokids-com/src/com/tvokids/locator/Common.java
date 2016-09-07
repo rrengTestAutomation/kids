@@ -26,7 +26,7 @@ public class Common {
 	  public static String localFileDir      = localResourceDir + File.separator + "files";                                                                                      
 	  public static String outputFileDir     = System.getProperty("user.dir") + File.separator + "output" + File.separator;
 	  public static String testOutputFileDir = System.getProperty("user.dir") + File.separator + "test-output" + File.separator;
-	  public static String testIconFileDir   = System.getProperty("user.dir") + File.separator + "icons" + File.separator;
+	  public static String testIconFileDir   = localResourceDir + File.separator + "icons" + File.separator;
 	  
 	  public static String notFound          = "//*[contains(text(),'Not Found')]";
 	  public static String notFoundError     = "//*[text()='Not Found']";
