@@ -2392,7 +2392,7 @@ public class UtilitiesTestHelper{
 			   fileWriter( "xml.path", xml);
 			// Append Test Coverage:
 			   if( fileExist("test.type", false) && fileExist("coverage.info", false) ) { 
-			       if( fileScanner("test.type").equals("Regression Test") ) { 
+			       if( fileScanner("test.type").contains("Regression Test") ) { 
 			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
 			    	   fileWriter("coverage.csv", 
 			    			       fileScanner("test.num") + "," + packageNameOnly + "," + classNameOnly + "," + l.getMethodName() + "," + fileScanner("coverage.info").replaceAll(", ", ",")
