@@ -116,12 +116,24 @@ public class Drupal{
 	  
 	  
 	  /************content******************/
-	  public static String brandPageDescriptionID                 =     "edit-field-brand-page-description-und-0-value";	  
+	  public static String brandPageDescriptionID                 = "edit-field-brand-page-description-und-0-value";	  
 	  public static String brandPageDescriptionContentLimitMsgCSS = "div#edit-field-brand-page-description-und-0-value-counter.counter";
 	  public static String brandPageDescriptionCounterCSS         = "div#edit-field-brand-page-description-und-0-value-counter.counter strong";
 	  public static    int descriptionMaxCharsNumber              = 135;
 	  public static String programTelescopeAssetId                = "edit-field-telescope-asset-id-und-0-value";
 	  
+	  /************url redirect*********************/
+	  public static String urlRedirects     = Common.homeURL + "/admin/config/search/redirect";
+	  public static String filterRedirects  = "edit-filter";
+	  public static String filterSubmit     = "edit-submit";
+	  public static String selectAllRedirectsCheckBox = "//input[@class='form-checkbox']";
+	  public static String redirectUpdateSubmit       = "edit-submit--2";
+	  public static String redirectUpdateWarning      = "Are you sure you want to delete these redirects?";
+	  
+	  public static String urlRedirectsAdd  = urlRedirects + "/add";
+	  public static String urlRedirectsFrom = "edit-source";
+	  public static String urlRedirectsTo   = "edit-redirect";
+	  	  
 	  /************meta*********************/
 	  public static String metaTagsTab            = "//a/strong[text()='Meta tags']";
 	  public static String metaTagDescription     = "edit-metatags-und-description-value";

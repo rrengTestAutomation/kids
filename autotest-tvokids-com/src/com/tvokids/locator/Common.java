@@ -107,6 +107,14 @@ public class Common {
 	  public static String XpathGrandParent           = "/parent::*/parent::*";
 	  public static String imageParticle = "/img";
 	  
+	  public static String IdToXpath(String id) { return "//*[@id='" + id + "']"; }
+	  
+	  public static String TextEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
+	  public static String TextPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
+	  
+	  public static String ContentEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
+	  public static String ContentPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
+	  
 	  public static String[] imageArray  = { "1_Vimeo.jpg","2_Layouts.jpg","2_Louis.jpg","2_Metacafe.jpg","2_Phil.png","2_qlcteam.jpg","3_qlcteam.jpg" };
 	  public static int[] imageSizeArray = { 580879, 438462, 380586, 482688, 205666, 663898, 663898  };
 	

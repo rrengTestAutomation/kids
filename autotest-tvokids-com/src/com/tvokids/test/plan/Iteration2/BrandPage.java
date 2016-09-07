@@ -1042,7 +1042,7 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test URL Redirect - 5 and Under
+	 * Test the ability to create a custom URL Redirect for a particular Content type - 5 and Under
 	 * <p>Date Created: 2016-09-06</p>
 	 * <p>Date Modified: 2016-09-06</p>
 	 * <p>Original Version: V1</p>
@@ -1050,5 +1050,19 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35158 3610</p>
 	 */
+	@Test(groups = {"US-35158","US-3610"})
+    public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // DECLARATION:
+
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
 	
 }
