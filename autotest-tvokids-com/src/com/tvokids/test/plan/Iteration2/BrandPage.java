@@ -1050,7 +1050,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35158 3610</p>
 	 */
-	@Test(groups = {"US-35158","US-3610"})
+	@Test(groups = {"US-35158","US-3610"}, priority = 35)
     public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
