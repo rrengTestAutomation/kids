@@ -1085,4 +1085,48 @@ public class BrandPage {
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	
+	/**
+	 * Test the ability to create a custom URL Redirect for a particular Content type - 6 and Over (3610)
+	 * <p>Date Created: 2016-09-08</p>
+	 * <p>Date Modified: 2016-09-08</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35160</p>
+	 */
+	@Test(groups = {"US-35160"}, priority = 36)
+    public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // DECLARATION:
+	           String redirectURL = "http://www.veoh.com";
+	        		   
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // ADD REEDIRECT:
+	           helper.createUrlRedirect(driver, Common.sixAndOverURL, redirectURL);
+	           
+	           // LOG-OUT:
+	           helper.logOut(driver);
+	           
+	           // ASSERT REDIRECT:
+	           helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, redirectURL, false, false);
+	           
+	           // DELETE REDIRECT:
+	           helper.logIn(driver,"content_editor","changeme");
+	           helper.deleteUrlRedirect(driver, redirectURL);
+	           helper.logOut(driver);
+	           
+	           // ASSERT REDIRECT DELETED:
+	           helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOverURL, false, false);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
 }
