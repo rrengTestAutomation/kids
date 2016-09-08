@@ -12,8 +12,9 @@ public class Common {
 	
 	  /**********common url*******************/
 	  public static String homeURL         = System.getProperty("URL");
-	  public static String userLoginPage   = homeURL + "/user"; 
-	  public static String adminContentURL = homeURL + "/admin/content";
+	  public static String userLoginPage   = homeURL + "/user";
+	  public static String adminURL        = homeURL + "/admin";
+	  public static String adminContentURL = adminURL + "/content";
 	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
 	  public static String sixAndOverURL   = homeURL + "/6-and-over";
 
@@ -78,8 +79,8 @@ public class Common {
 	  public static String image            = "/descendant::img[@typeof='foaf:Image']";
 	  public static String filterSelected   = "/descendant::option[@selected]";
 	  
-	  public static String fiveAndUnderLinkBase = "//a[@href='/5-and-under/";
-	  public static String sixAndOverLinkBase = "//a[@href='/6-and-over/";
+	  public static String fiveAndUnderLinkBase = "//a[@href='/5-and-under";
+	  public static String sixAndOverLinkBase   = "//a[@href='/6-and-over";
 	  
 	  
 	  public static String metaTag            = "//meta[@name]";
@@ -88,14 +89,25 @@ public class Common {
 	  public static String XpathEqualsStartQuot   = "//*[.=\"";	  
 	  public static String XpathEqualsTextStart       = "//*[text()='";
 	  public static String XpathEqualsTextStartQuot   = "//*[text()=\"";
+	  
+	  public static String XpathAddEqualsTextStart       = "[text()='";
+	  public static String XpathAddEqualsTextStartQuot   = "[text()=\"";	  
+	  public static String XpathAddContainsTextStart      = "[contains(text(),'";
+	  public static String XpathAddContainsTextStartQuot  = "[contains(text(),\"";
+	  
+	  public static String XpathAddEqualsStart        = "[.='";
+	  public static String XpathAddEqualsStartQuot    = "[.=\"";	  
 	  public static String XpathAddContainsStart      = "[contains(.,'";
-	  public static String XpathAddContainsStartQuot  = "[contains(.,\"";	  	  
+	  public static String XpathAddContainsStartQuot  = "[contains(.,\"";
+	  
 	  public static String XpathContainsStart         = "/descendant::*[contains(.,'";
 	  public static String XpathContainsStartQuot     = "/descendant::*[contains(.,\"";	  
 	  public static String XpathContainsTextStart     = "/descendant::*[contains(text(),'";
 	  public static String XpathContainsTextStartQuot = "/descendant::*[contains(text(),\"";
+	  
 	  public static String XpathContainsAnyStart      = "/descendant::*[@*[contains(.,'";
 	  public static String XpathContainsAnyStartQuot  = "/descendant::*[@*[contains(.,\"";
+	  
 	  public static String XpathEnd                   = "]";
 	  public static String XpathEqualsEnd             = "']";
 	  public static String XpathEqualsEndQuot         = "\"]";
@@ -112,8 +124,14 @@ public class Common {
 	  public static String TextEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
 	  public static String TextPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
 	  
+	  public static String TextEntireAddToXpath(String text) { return XpathAddEqualsTextStart   + text + XpathEqualsEnd; }
+	  public static String TextPartOfAddToXpath(String text) { return XpathAddContainsStart + text + XpathContainsEnd; }
+	  
 	  public static String ContentEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
 	  public static String ContentPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
+	  
+	  public static String ContentEntireAddToXpath(String text) { return XpathAddEqualsTextStart   + text + XpathEqualsEnd; }
+	  public static String ContentPartOfAddToXpath(String text) { return XpathAddContainsTextStart + text + XpathContainsEnd; }
 	  
 	  public static String[] imageArray  = { "1_Vimeo.jpg","2_Layouts.jpg","2_Louis.jpg","2_Metacafe.jpg","2_Phil.png","2_qlcteam.jpg","3_qlcteam.jpg" };
 	  public static int[] imageSizeArray = { 580879, 438462, 380586, 482688, 205666, 663898, 663898  };

@@ -123,12 +123,15 @@ public class Drupal{
 	  public static String programTelescopeAssetId                = "edit-field-telescope-asset-id-und-0-value";
 	  
 	  /************url redirect*********************/
-	  public static String urlRedirects     = Common.homeURL + "/admin/config/search/redirect";
-	  public static String filterRedirects  = "edit-filter";
-	  public static String filterSubmit     = "edit-submit";
-	  public static String selectAllRedirectsCheckBox = "//input[@class='form-checkbox']";
+	  public static String urlRedirects    = Common.homeURL + "/admin/config/search/redirect";
+	  public static String filterRedirects = "edit-filter";
+	  public static String filterSubmit    = "edit-submit";
+	  public static String filterReset     = "edit-reset";
+	  
+	  public static String selectAllRedirectsCheckBox = "//table[contains(@class,'redirect-list-tableselect')]/descendant::th[@class='select-all']/input[@class='form-checkbox']";	  
 	  public static String redirectUpdateSubmit       = "edit-submit--2";
-	  public static String redirectUpdateWarning      = "Are you sure you want to delete these redirects?";
+	  public static String redirectUpdateWarningText  = "Are you sure you want to delete this redirect?";
+	  public static String redirectUpdateWarning      = "//h1[@class='page-title']" + Common.TextEntireAddToXpath(redirectUpdateWarningText);
 	  
 	  public static String urlRedirectsAdd  = urlRedirects + "/add";
 	  public static String urlRedirectsFrom = "edit-source";

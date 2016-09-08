@@ -530,7 +530,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -595,7 +595,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -707,7 +707,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -749,7 +749,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -792,7 +792,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -838,7 +838,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -903,7 +903,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -946,7 +946,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -992,7 +992,7 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // DECLARATION:
@@ -1057,11 +1057,31 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           // DECLARATION:
+	           String redirectURL = "http://www.veoh.com";
+	        		   
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
-	           // DECLARATION:
-
+	           // ADD REEDIRECT:
+	           helper.createUrlRedirect(driver, Common.fiveAndUnderURL, redirectURL);
+	           
+	           // LOG-OUT:
+	           helper.logOut(driver);
+	           
+	           // ASSERT REDIRECT:
+	           helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, redirectURL, false, false);
+	           
+	           // DELETE REDIRECT:
+	           helper.logIn(driver,"content_editor","changeme");
+	           helper.deleteUrlRedirect(driver, redirectURL);
+	           helper.logOut(driver);
+	           
+	           // ASSERT REDIRECT DELETED:
+	           helper.getUrlWaitUntil(driver, 10, Common.homeURL);
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, Common.fiveAndUnderURL, false, false);
+	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
 	

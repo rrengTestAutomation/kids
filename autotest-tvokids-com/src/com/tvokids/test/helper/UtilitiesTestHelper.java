@@ -760,35 +760,39 @@ public class UtilitiesTestHelper{
 	
 	/**
 	 * Create URL Redirect
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public void createUrlRedirect(WebDriver driver, String sourceURL, String destinationURL) throws IOException {
-		getUrlWaitUntil(driver, 15, Drupal.urlRedirectsAdd);
+	public void createUrlRedirect(WebDriver driver, String sourceURL, String destinationURL) throws IOException, InterruptedException {
+     	getUrlWaitUntil(driver, 15, Drupal.urlRedirectsAdd);
 		waitUntilElementPresence(driver, 15, By.id(Drupal.urlRedirectsFrom), "From", new Exception().getStackTrace()[0]);
 		driver.findElement(By.id(Drupal.urlRedirectsFrom)).clear();
 	    driver.findElement(By.id(Drupal.urlRedirectsFrom)).sendKeys(sourceURL);
 		driver.findElement(By.id(Drupal.urlRedirectsTo)).clear();
 	    driver.findElement(By.id(Drupal.urlRedirectsTo)).sendKeys(destinationURL);
 	    driver.findElement(By.id(Drupal.submit)).click();
-	}
+	    }
 	
 	/**
 	 * Delete URL Redirect
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void deleteUrlRedirect(WebDriver driver, String filter) throws IOException {
-		getUrlWaitUntil(driver, 15, Drupal.urlRedirects);
-		waitUntilElementPresence(driver, 15, By.id(Drupal.filterRedirects), "Filter", new Exception().getStackTrace()[0]);
-		driver.findElement(By.id(Drupal.filterRedirects)).clear();
-	    driver.findElement(By.id(Drupal.filterRedirects)).sendKeys(filter);
-	    driver.findElement(By.id(Drupal.filterSubmit)).click();
-	    driver.findElement(By.id(Drupal.selectAllRedirectsCheckBox)).click();
+	public void deleteUrlRedirect(WebDriver driver, String filter) throws IOException, InterruptedException {
+		getUrlWaitUntil(driver, 10, Drupal.urlRedirects);	
+		waitUntilElementPresence(driver, 5, By.id(Drupal.filterRedirects), "Filter", new Exception().getStackTrace()[0]);
+		if(filter.length() > 0) {
+			driver.findElement(By.id(Drupal.filterRedirects)).clear();
+		    driver.findElement(By.id(Drupal.filterRedirects)).sendKeys(filter);
+		    driver.findElement(By.id(Drupal.filterSubmit)).click();
+		    waitUntilElementPresence(driver, 15, By.id(Drupal.filterReset), "Reset", new Exception().getStackTrace()[0]);
+		    }
+	    driver.findElement(By.xpath(Drupal.selectAllRedirectsCheckBox)).click();
 	    waitUntilElementPresence(driver, 15, By.id(Drupal.redirectUpdateSubmit), "Update", new Exception().getStackTrace()[0]);
 	    driver.findElement(By.id(Drupal.redirectUpdateSubmit)).click();
-	    waitUntilElementPresence(driver, 15, By.xpath(Common.TextEntireToXpath(Drupal.redirectUpdateWarning)), "Warning", new Exception().getStackTrace()[0]);
+	    waitUntilElementPresence(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
 	    driver.findElement(By.id(Drupal.submit)).click();
-	    waitUntilElementInvisibility(driver, 15, By.xpath(Common.TextEntireToXpath(Drupal.redirectUpdateWarning)), "Warning", new Exception().getStackTrace()[0]);
-	}
+	    waitUntilElementInvisibility(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
+	    }
 	
 	public static void setClipboardData(String string) throws NumberFormatException, IOException {
 			StringSelection stringSelection = new StringSelection(string);
