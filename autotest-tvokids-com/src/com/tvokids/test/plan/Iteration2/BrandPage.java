@@ -1094,7 +1094,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35160</p>
 	 */
-	@Test(groups = {"US-35160"}, priority = 36)
+	@Test(groups = {"US-35160","US-3610"}, priority = 36)
     public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1125,6 +1125,94 @@ public class BrandPage {
 	           // ASSERT REDIRECT DELETED:
 	           helper.getUrlWaitUntil(driver, 10, Common.homeURL);
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOverURL, false, false);
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test the ability to create a custom URL Redirect for a particular Content type - Custom Brand Page (3610)
+	 * <p>Date Created: 2016-09-08</p>
+	 * <p>Date Modified: 2016-09-08</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35161</p>
+	 */
+	@Test(groups = {"US-35161","US-3610"}, priority = 37)
+    public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	           String title, titleURL, description, xpath, BrandPageUrlAgeFive, BrandPageUrlAgeSix, redirectURL = "http://www.veoh.com";
+	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteUrlRedirect(driver, redirectURL);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           BrandPageUrlAgeFive = Common.fiveAndUnderURL + "/" + titleURL;
+	           BrandPageUrlAgeSix  = Common.sixAndOverURL + "/" + titleURL;
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
+	           
+	           // ADD REEDIRECTS:
+	           helper.createUrlRedirect(driver, BrandPageUrlAgeFive, redirectURL);
+	           helper.createUrlRedirect(driver, BrandPageUrlAgeSix,  redirectURL);
+	           
+	           // AGE 5 AND UNDER REDIRECT TEST:	           
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // ASSERT REDIRECT IS CORRECT:
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, redirectURL, false, false);
+	           
+	           // AGE 6 AND OVER REDIRECT TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // ASSERT REDIRECT IS CORRECT:
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, redirectURL, false, false);
+	           
+	           // DELETE REDIRECT:
+	           helper.deleteUrlRedirect(driver, redirectURL);
+	           
+	           // AGE 5 AND UNDER REDIRECT DELETED TEST:	           
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT DELETED TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // ASSERT REDIRECT DELETED:
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, BrandPageUrlAgeFive, false, false);
+	           
+	           // AGE 6 AND OVER REDIRECT DELETED TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT DELETED TEST:");
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // ASSERT REDIRECT DELETED:
+	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, BrandPageUrlAgeSix, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }
