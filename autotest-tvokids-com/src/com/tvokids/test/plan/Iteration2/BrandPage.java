@@ -105,6 +105,7 @@ public class BrandPage {
 	       
 	       // ASSERT ERROR MESSAGE APPEARS:
 	       driver.findElement(By.id(Drupal.submit)).click();
+	       helper.waitUntilElementPresence(driver, 5, Drupal.errorTitle, "Error Message (Title)", new Exception().getStackTrace()[0]);
 	       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.errorTitle);
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
