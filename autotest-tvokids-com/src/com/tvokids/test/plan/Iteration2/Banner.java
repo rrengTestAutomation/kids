@@ -438,7 +438,7 @@ public class Banner {
 	        	   } else {
 	        		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	        		   helper.logIn(driver,"content_editor","changeme"); // LOGIN TO DRUPAL AS A CONTENT EDITOR
-	        		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, false, true, new Exception().getStackTrace()[0]);
+	        		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new Exception().getStackTrace()[0]);
 	        		   helper.logOut(driver);
 	        		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n");
 	        	   }
