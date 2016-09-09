@@ -1086,13 +1086,13 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test the ability to create a custom URL Redirect for a particular Content type - 6 and Over (3610)
+	 * Test the ability to create a custom URL Redirect for a particular Content type - 6 and Over
 	 * <p>Date Created: 2016-09-08</p>
 	 * <p>Date Modified: 2016-09-08</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35160</p>
+	 * <p>Test Cases: 35160 3610</p>
 	 */
 	@Test(groups = {"US-35160","US-3610"}, priority = 36)
     public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -1130,13 +1130,13 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test the ability to create a custom URL Redirect for a particular Content type - Custom Brand Page (3610)
+	 * Test the ability to create a custom URL Redirect for a particular Content type - Custom Brand Page
 	 * <p>Date Created: 2016-09-08</p>
 	 * <p>Date Modified: 2016-09-08</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35161</p>
+	 * <p>Test Cases: 35161 3610</p>
 	 */
 	@Test(groups = {"US-35161","US-3610"}, priority = 37)
     public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
@@ -1215,6 +1215,23 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, BrandPageUrlAgeSix, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       }
+	
+	/**
+	 * Test sort Tiles on the reorder interface
+	 * <p>Date Created: 2016-09-09</p>
+	 * <p>Date Modified: 2016-09-09</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35404 3522 3202</p>
+	 */
+	@Test(groups = {"US-35404","US-3522","US-3202"}, priority = 38)
+    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	           
+	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+
 	       }
 	
 }
