@@ -415,7 +415,8 @@ public class UtilitiesTestHelper{
 	   String tab, browse, upload;
 //     try {
 	   int i = 0;
-	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))) || (i == 0)) && (i < 25) ) {
+	   Boolean ifTitle = true;
+	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
             getUrlWaitUntil(driver, 15, Drupal.characterBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
@@ -449,8 +450,9 @@ public class UtilitiesTestHelper{
 			upload(driver, "small.jpg", tab, browse, upload, "image", t);
 			if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateSmall)).clear(); driver.findElement(By.xpath(Drupal.alternateSmall)).sendKeys(Drupal.alternateSmallText); }
 			
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title)); } else { i = 25; }
-			if(!ifRetry) { i = 25; }
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title)); }
+			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))); } }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
 						
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
@@ -471,7 +473,8 @@ public class UtilitiesTestHelper{
 	   String tab, browse, upload;
 //     try {
 	   int i = 0;
-	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))) || (i == 0)) && (i < 25) ) {
+	   Boolean ifTitle = true;
+	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			if(title.length() > 0) {
@@ -524,10 +527,9 @@ public class UtilitiesTestHelper{
 			
 			if(tile.length() > 0) { addTilePlacement(driver, tile);}
 
-//			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); Thread.sleep(1000); }
-			
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); } else { i = 25; }
-			if(!ifRetry) { i = 25; }
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); }
+			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
 			
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
@@ -556,14 +558,15 @@ public class UtilitiesTestHelper{
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
-//       try {
+//     try {
 	   int i = 0;
-	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))) || (i == 0)) && (i < 25) ) {
+	   Boolean ifTitle = true;
+	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
 			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
+			if(title.length() > 0) { driver.findElement(By.id(Drupal.title)).sendKeys(title); }
 			
 			driver.findElement(By.xpath(Drupal.description)).clear();
 			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
@@ -600,9 +603,10 @@ public class UtilitiesTestHelper{
 				driver.findElement(By.xpath(Drupal.alternateLarge)).clear();
 				driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText);
 				}
-			
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); } else { i = 25; }
-			if(!ifRetry) { i = 25; }
+		
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); }
+			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
 						
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }

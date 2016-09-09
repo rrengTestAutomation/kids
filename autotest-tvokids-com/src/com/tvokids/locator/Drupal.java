@@ -42,7 +42,7 @@ public class Drupal{
       public static String errorMessageLargeTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
       
       public static String errorAjax                            = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
-      public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
+      public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'Brand Page Title field is required.')]"; // used to be: "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
       public static String errorDescription                     = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    
       public static String errorBrowse                          = "//div[contains(@class,'messages error')][contains(.,'The') and contains(.,'file')]";
       public static String errorActual                          = "/descendant::em[1]";

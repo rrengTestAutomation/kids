@@ -69,9 +69,9 @@ public class BrandPage {
 	/**
 	 * Test attempt to create a Custom Brand without a title is rejected
 	 * <p>Date Created: 2016-07-20</p>
-	 * <p>Date Modified: 2016-07-20</p>
+	 * <p>Date Modified: 2016-09-09</p>
 	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
+	 * <p>Modified Version: V2</p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131 35153 3229</p>
 	 */
@@ -97,7 +97,7 @@ public class BrandPage {
 	       description = helper.randomEnglishText(helper.randomInt(125, (Drupal.descriptionMaxCharsNumber - 1)));
 	       
 	       // CREATE CONTENT WITH NO DESCRIPTION:
-	       helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
+	       helper.createCustomBrand(driver, title, description, true, true, false, false, false, new Exception().getStackTrace()[0]);
 	      
 	       // ASSERT CONTENT URL DID NOT CHANGE:
 	       expectedURL = Drupal.customBrand;
@@ -243,7 +243,7 @@ public class BrandPage {
 	       title = String.valueOf(fingerprint) + " " +  helper.randomText(Drupal.titleMaxCharsNumber + 10);
 	
 	       // CREATE CONTENT WITH NO DESCRIPTION:
-	       helper.createCustomBrand(driver, title, "", true, true, false, true, true, new Exception().getStackTrace()[0]);
+	       helper.createCustomBrand(driver, title, "", true, true, false, true, false, new Exception().getStackTrace()[0]);
 	      
 	       // ASSERT CONTENT URL DID NOT CHANGE:
 	       expectedURL = Drupal.customBrand;
