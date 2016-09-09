@@ -73,7 +73,7 @@ public class Banner {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -188,7 +188,7 @@ public class Banner {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd; // + "/ancestor::li";
@@ -261,7 +261,7 @@ public class Banner {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -432,13 +432,13 @@ public class Banner {
 	        	   if (helper.isEven(i)) {
 	        		   // CREATE A CHARACTER BRAND CONTENT WITH BOTH AGES SELECTED:
 	        		   helper.logIn(driver);  // LOGIN TO DRUPAL AS AN ADMIN
-	    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, true, true, true, new Exception().getStackTrace()[0]);
+	    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, true, true, true, true, new Exception().getStackTrace()[0]);
 	    	           helper.logOut(driver);
 	    	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
 	        	   } else {
 	        		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	        		   helper.logIn(driver,"content_editor","changeme"); // LOGIN TO DRUPAL AS A CONTENT EDITOR
-	        		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, new Exception().getStackTrace()[0]);
+	        		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, false, true, new Exception().getStackTrace()[0]);
 	        		   helper.logOut(driver);
 	        		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n");
 	        	   }
@@ -512,7 +512,7 @@ public class Banner {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -621,7 +621,7 @@ public class Banner {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd + Common.imageParticle;

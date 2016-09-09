@@ -237,14 +237,14 @@ public class UtilitiesTestHelper{
 				}
 			    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
 		  }
-		
+				
 	/**
-	 * Submits Content and reports result (if final URL doesn't end with fingerprint - failure condition)
+	 * Submits Content and reports result (if final URL doesn't start with String - failure condition)
 	 * @throws IOException
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	public int contentSubmit(WebDriver driver, int iteration, long fingerprint) throws IOException, NumberFormatException, InterruptedException {
+	public int contentSubmit(String URLstartsWith, WebDriver driver, int iteration) throws IOException, NumberFormatException, InterruptedException {
 	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
 	   String previousURL = driver.getCurrentUrl();
 	   driver.findElement(By.id(Drupal.submit)).click();
@@ -254,7 +254,7 @@ public class UtilitiesTestHelper{
 	   String success = "Successful \"" + type + "\" process!"; 
 	   String   issue = "Not a successful \"" + type + "\" process...will try again..." + "(attempt #" + iteration + ")";
 	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
-	   if (! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) { 
+	   if (! driver.getCurrentUrl().startsWith(URLstartsWith)) { 
 	   	fileWriterPrinter(issue);
 	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
 	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
@@ -269,8 +269,41 @@ public class UtilitiesTestHelper{
 	   	}
 	   	} else { fileWriterPrinter(success); }
 	   return iteration;
-		  }
-		
+	   }
+	
+	/**
+	 * Submits Content and reports result (if final URL doesn't contain String - failure condition)
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public int contentSubmit(WebDriver driver, String URLcontains, int iteration) throws IOException, NumberFormatException, InterruptedException {
+	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
+	   String previousURL = driver.getCurrentUrl();
+	   driver.findElement(By.id(Drupal.submit)).click();
+	   waitUntilUrl(driver, 15, previousURL);
+	   iteration++;
+	   String suffix = "-" + getNumberSuffix(iteration);
+	   String success = "Successful \"" + type + "\" process!"; 
+	   String   issue = "Not a successful \"" + type + "\" process...will try again..." + "(attempt #" + iteration + ")";
+	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
+	   if (! driver.getCurrentUrl().contains(URLcontains)) { 
+	   	fileWriterPrinter(issue);
+	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
+	   		String[] error = text.split("\\n");
+	   		String message, prompt;
+	   		if( error.length > 1) { 
+	   			message = error[1];
+	   			prompt = error[0] + ": " + error[1];
+	   			} else { message = error[0]; prompt = message; }
+	   				fileWriterPrinter(prompt);
+	   		if( iteration == 1 ) { getScreenShot(new RuntimeException().getStackTrace()[0], message, driver); }
+	   	}
+	   	} else { fileWriterPrinter(success); }
+	   return iteration;
+	   }
+	
 	/**
 	 * Submits Content and reports result (if final URL doesn't contain fingerprint - failure condition)
 	 * @throws IOException
@@ -305,18 +338,139 @@ public class UtilitiesTestHelper{
 	   }
 	
 	/**
+	 * Submits Content and reports result (if final URL doesn't end with fingerprint - failure condition)
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public int contentSubmit(WebDriver driver, int iteration, long fingerprint) throws IOException, NumberFormatException, InterruptedException {
+	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
+	   String previousURL = driver.getCurrentUrl();
+	   driver.findElement(By.id(Drupal.submit)).click();
+	   waitUntilUrl(driver, 15, previousURL);
+	   iteration++;
+	   String suffix = "-" + getNumberSuffix(iteration);
+	   String success = "Successful \"" + type + "\" process!"; 
+	   String   issue = "Not a successful \"" + type + "\" process...will try again..." + "(attempt #" + iteration + ")";
+	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
+	   if (! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) { 
+	   	fileWriterPrinter(issue);
+	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
+	   		String[] error = text.split("\\n");
+	   		String message, prompt;
+	   		if( error.length > 1) { 
+	   			message = error[1];
+	   			prompt = error[0] + ": " + error[1];
+	   			} else { message = error[0]; prompt = message; }
+	   				fileWriterPrinter(prompt);
+	   		if( iteration == 1 ) { getScreenShot(new RuntimeException().getStackTrace()[0], message, driver); }
+	   	}
+	   	} else { fileWriterPrinter(success); }
+	   return iteration;
+	   }
+	
+	/**
+	 * Submits Content and reports result (if final URL doesn't end with String - failure condition)
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public int contentSubmit(WebDriver driver, int iteration, String URLendsWith) throws IOException, NumberFormatException, InterruptedException {
+	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
+	   String previousURL = driver.getCurrentUrl();
+	   driver.findElement(By.id(Drupal.submit)).click();
+	   waitUntilUrl(driver, 15, previousURL);
+	   iteration++;
+	   String suffix = "-" + getNumberSuffix(iteration);
+	   String success = "Successful \"" + type + "\" process!"; 
+	   String   issue = "Not a successful \"" + type + "\" process...will try again..." + "(attempt #" + iteration + ")";
+	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
+	   if (! driver.getCurrentUrl().endsWith(URLendsWith)) { 
+	   	fileWriterPrinter(issue);
+	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
+	   		String[] error = text.split("\\n");
+	   		String message, prompt;
+	   		if( error.length > 1) { 
+	   			message = error[1];
+	   			prompt = error[0] + ": " + error[1];
+	   			} else { message = error[0]; prompt = message; }
+	   				fileWriterPrinter(prompt);
+	   		if( iteration == 1 ) { getScreenShot(new RuntimeException().getStackTrace()[0], message, driver); }
+	   	}
+	   	} else { fileWriterPrinter(success); }
+	   return iteration;
+	   }
+	
+	/**
+	 * Create a Character Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
+	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	  {
+	   long fingerprint = System.currentTimeMillis();
+	   String tab, browse, upload;
+//     try {
+	   int i = 0;
+	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))) || (i == 0)) && (i < 25) ) {
+            getUrlWaitUntil(driver, 15, Drupal.characterBrand);
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+			
+			driver.findElement(By.id(Drupal.title)).clear();
+			driver.findElement(By.id(Drupal.title)).sendKeys(title);
+			
+			driver.findElement(By.xpath(Drupal.description)).clear();
+			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
+
+			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			
+			driver.findElement(By.id(Drupal.keywords)).clear();
+			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
+
+			if (assetID > 0) { driver.findElement(By.id(Drupal.programTelescopeAssetId)).sendKeys(String.valueOf(assetID)); }
+			
+			tab    = Drupal.characterBannerVerticalTab;
+			browse = Drupal.characterBannerBrowse;
+			upload = Drupal.characterBannerUpload;
+			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
+
+		    tab    = Drupal.heroBoxVerticalTab;
+			browse = Drupal.heroBoxBrowse;
+			upload = Drupal.heroBoxUpload;
+			upload(driver, "hero.jpg", tab, browse, upload, "image", t);
+
+			tab    = Drupal.tileVerticalTab;
+			browse = Drupal.tileSmallBrowse;
+			upload = Drupal.tileSmallUpload;
+			upload(driver, "small.jpg", tab, browse, upload, "image", t);
+			
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title)); } else { i = 25; }
+			if(!ifRetry) { i = 25; }
+			}
+						
+//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+            return fingerprint;
+	  }
+	
+	/**
 	 * Create a Custom Brand
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, StackTraceElement t,
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
 			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile
 			                     ) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
 //     try {
+	   int i = 0;
+	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))) || (i == 0)) && (i < 25) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			if(title.length() > 0) {
@@ -369,7 +523,11 @@ public class UtilitiesTestHelper{
 			
 			if(tile.length() > 0) { addTilePlacement(driver, tile);}
 
-			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); Thread.sleep(1000); }
+//			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); Thread.sleep(1000); }
+			
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); } else { i = 25; }
+			if(!ifRetry) { i = 25; }
+			}
 			
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
             return fingerprint;
@@ -380,58 +538,11 @@ public class UtilitiesTestHelper{
 	 * @throws AWTException 
 	 * @throws IOException
 	 */
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t,
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
 			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage
 			                     ) throws AWTException, InterruptedException, IOException
-	  { return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, false, ifSubmit, t, bannerImage, heroImage, titleSmallImage, titleLargeImage,""); }
-	
-	/**
-	 * Create a Character Brand
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-//	@SuppressWarnings("finally")
-	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
-	  {
-	   long fingerprint = System.currentTimeMillis();
-	   String tab, browse, upload;
-//     try {
-            getUrlWaitUntil(driver, 15, Drupal.characterBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-
-			if (assetID > 0) { driver.findElement(By.id(Drupal.programTelescopeAssetId)).sendKeys(String.valueOf(assetID)); }
-			
-			tab    = Drupal.characterBannerVerticalTab;
-			browse = Drupal.characterBannerBrowse;
-			upload = Drupal.characterBannerUpload;
-			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
-
-		    tab    = Drupal.heroBoxVerticalTab;
-			browse = Drupal.heroBoxBrowse;
-			upload = Drupal.heroBoxUpload;
-			upload(driver, "hero.jpg", tab, browse, upload, "image", t);
-
-			tab    = Drupal.tileVerticalTab;
-			browse = Drupal.tileSmallBrowse;
-			upload = Drupal.tileSmallUpload;
-			upload(driver, "small.jpg", tab, browse, upload, "image", t);
-			
-			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
-			
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-	        return fingerprint;
+	  { 
+		return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, false, ifSubmit, ifRetry, t, bannerImage, heroImage, titleSmallImage, titleLargeImage,"");	  
 	  }
 	
 	/**
@@ -440,11 +551,13 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
-//     try {
+//       try {
+	   int i = 0;
+	   while ( ((! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))) || (i == 0)) && (i < 25) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
@@ -487,276 +600,78 @@ public class UtilitiesTestHelper{
 				driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText);
 				}
 			
-			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
-			
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); } else { i = 25; }
+			if(!ifRetry) { i = 25; }
+			}
+						
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
             return fingerprint;
 	  }
 	
-	/**
-	 * Create a Custom Brand
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-//	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, StackTraceElement t) throws AWTException, InterruptedException, IOException
-	  {
-	   long fingerprint = System.currentTimeMillis();
-	   String tab, browse, upload;
-//     try {
-            getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-
-			tab    = Drupal.characterBannerVerticalTab;
-			browse = Drupal.characterBannerBrowse;
-			upload = Drupal.characterBannerUpload;
-			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
-
-		    tab    = Drupal.heroBoxVerticalTab;
-			browse = Drupal.heroBoxBrowse;
-			upload = Drupal.heroBoxUpload;
-			upload(driver, "hero.jpg", tab, browse, upload, "image", t);
-
-			tab    = Drupal.tileVerticalTab;
-			browse = Drupal.tileSmallBrowse;
-			upload = Drupal.tileSmallUpload;
-			upload(driver, "small.jpg", tab, browse, upload, "image", t);
-
-			tab    = Drupal.tileVerticalTab;
-			browse = Drupal.tileLargeBrowse;
-			upload = Drupal.tileLargeUpload;
-			upload(driver, "large.jpg", tab, browse, upload, "image", t);
-			
-			if(ifSubmit) { driver.findElement(By.id(Drupal.submit)).click(); }
-			
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;
-	  }
-	
-	/**
-	 * Create a Custom Brand
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-//	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws AWTException, InterruptedException, IOException
-	  {
-	   long fingerprint = System.currentTimeMillis();
-	   By browse, upload;
-//	   try {
-	    	int i = 0;
-	    	while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-			
-			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
-			browse = By.xpath(Drupal.characterBannerBrowse);
-			upload = By.xpath(Drupal.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
-			
-		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-			browse = By.xpath(Drupal.heroBoxBrowse);
-			upload = By.xpath(Drupal.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileSmallBrowse);
-			upload = By.xpath(Drupal.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileLargeBrowse);
-			upload = By.xpath(Drupal.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image", t);
-
-			i = contentSubmit(driver, i, fingerprint);			
-            }
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;	
-	  }
-	
-	/**
-	 * Create a Custom Brand
-	 * @throws InterruptedException 
-	 * @throws NumberFormatException 
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, long fingerprint, StackTraceElement t)
-    throws NumberFormatException, InterruptedException, IOException	{
-	   By browse, upload;
-	    	int i = 0;
-	    	while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-			
-			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
-			browse = By.xpath(Drupal.characterBannerBrowse);
-			upload = By.xpath(Drupal.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, "thumbnail", t);
-			
-		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-			browse = By.xpath(Drupal.heroBoxBrowse);
-			upload = By.xpath(Drupal.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileSmallBrowse);
-			upload = By.xpath(Drupal.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, "image", t);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileLargeBrowse);
-			upload = By.xpath(Drupal.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, "image", t);
-
-			i = contentSubmit(driver, fingerprint, i);			
-            }
-	    	return fingerprint;
-	  }
-	
-	/**
-	 * Create a Custom Brand using Robot
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-//	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot) throws AWTException, InterruptedException, IOException
-	  {
-	   long fingerprint = System.currentTimeMillis();
-	   By browse, upload;
-//     try {
-    	    int i = 0;
-    	    while (((! driver.getCurrentUrl().endsWith(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-			
-			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
-			browse = By.xpath(Drupal.characterBannerBrowse);
-			upload = By.xpath(Drupal.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, robot);
-			
-		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-			browse = By.xpath(Drupal.heroBoxBrowse);
-			upload = By.xpath(Drupal.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, robot);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileSmallBrowse);
-			upload = By.xpath(Drupal.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, robot);
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileLargeBrowse);
-			upload = By.xpath(Drupal.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, robot);
-
-			i = contentSubmit(driver, i, fingerprint);			
-            }
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;
-	  }
-	
-	/**
-	 * Create a Custom Brand using Robot
-	 * @throws AWTException 
-	 * @throws IOException
-	 */
-//	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot, long fingerprint) throws AWTException, InterruptedException, IOException
-	  {
-	   By browse, upload;
-//     try {
-    	    int i = 0;
-    	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
-            getUrlWaitUntil(driver, 15, Drupal.customBrand);
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			
-			driver.findElement(By.id(Drupal.title)).clear();
-			driver.findElement(By.id(Drupal.title)).sendKeys(title);
-			
-			driver.findElement(By.xpath(Drupal.description)).clear();
-			driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
-
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
-			
-			driver.findElement(By.id(Drupal.keywords)).clear();
-			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
-			
-			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
-			browse = By.xpath(Drupal.characterBannerBrowse);
-			upload = By.xpath(Drupal.characterBannerUpload);					
-			uploader(driver, "bubble.jpg", browse, upload, robot, "thumbnail");
-			
-		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
-			browse = By.xpath(Drupal.heroBoxBrowse);
-			upload = By.xpath(Drupal.heroBoxUpload);
-			uploader(driver, "hero.jpg", browse, upload, robot, "image");
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileSmallBrowse);
-			upload = By.xpath(Drupal.tileSmallUpload);
-			uploader(driver, "small.jpg", browse, upload, robot, "image");
-		    
-		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
-			browse = By.xpath(Drupal.tileLargeBrowse);
-			upload = By.xpath(Drupal.tileLargeUpload);
-			uploader(driver, "large.jpg", browse, upload, robot, "image");
-
-			i = contentSubmit(driver, fingerprint, i);			
-            }
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;	
-	  }
+//	/**
+//	 * Create a Custom Brand using Robot
+//	 * @throws AWTException 
+//	 * @throws IOException
+//	 */
+////	@SuppressWarnings("finally")
+//	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot, long fingerprint) throws AWTException, InterruptedException, IOException
+//	  {
+//	   By browse, upload;
+////     try {
+//    	    int i = 0;
+//    	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
+//    	    getUrlWaitUntil(driver, 15, Drupal.customBrand);
+//			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+//			
+//			driver.findElement(By.id(Drupal.title)).clear();
+//			driver.findElement(By.id(Drupal.title)).sendKeys(title);
+//			
+//			driver.findElement(By.xpath(Drupal.description)).clear();
+//          driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
+//
+//			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
+//			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+//			
+//			driver.findElement(By.id(Drupal.keywords)).clear();
+//			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
+//			
+//			driver.findElement(By.xpath(Drupal.characterBannerVerticalTab)).click();
+//			browse = By.xpath(Drupal.characterBannerBrowse);
+//			upload = By.xpath(Drupal.characterBannerUpload);					
+//			uploader(driver, "bubble.jpg", browse, upload, robot, "thumbnail");
+//			
+//		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
+//			browse = By.xpath(Drupal.heroBoxBrowse);
+//			upload = By.xpath(Drupal.heroBoxUpload);
+//			uploader(driver, "hero.jpg", browse, upload, robot, "image");
+//		    
+//		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+//			browse = By.xpath(Drupal.tileSmallBrowse);
+//			upload = By.xpath(Drupal.tileSmallUpload);
+//			uploader(driver, "small.jpg", browse, upload, robot, "image");
+//		    
+//		    driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
+//			browse = By.xpath(Drupal.tileLargeBrowse);
+//			upload = By.xpath(Drupal.tileLargeUpload);
+//			uploader(driver, "large.jpg", browse, upload, robot, "image");
+//
+//			i = contentSubmit(driver, fingerprint, i);			
+//          }
+////     } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
+//       return fingerprint;	
+//	  }
+//	
+//	/**
+//	 * Create a Custom Brand using Robot
+//	 * @throws AWTException 
+//	 * @throws IOException
+//	 */
+////	@SuppressWarnings("finally")
+//	public long createCustomBrand(WebDriver driver, String title, Boolean ifAgeUnder, Boolean ifAgeOver, Robot robot) throws AWTException, InterruptedException, IOException
+//	  {
+//	   long fingerprint = System.currentTimeMillis();
+//	   return createCustomBrand(driver, title, ifAgeUnder, ifAgeOver, robot, fingerprint);
+//	  }
 	
 	/**
 	 * Create URL Redirect
