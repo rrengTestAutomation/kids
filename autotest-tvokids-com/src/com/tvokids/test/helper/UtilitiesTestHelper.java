@@ -409,7 +409,7 @@ public class UtilitiesTestHelper{
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
@@ -447,6 +447,7 @@ public class UtilitiesTestHelper{
 			browse = Drupal.tileSmallBrowse;
 			upload = Drupal.tileSmallUpload;
 			upload(driver, "small.jpg", tab, browse, upload, "image", t);
+			if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateSmall)).clear(); driver.findElement(By.xpath(Drupal.alternateSmall)).sendKeys(Drupal.alternateSmallText); }
 			
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title)); } else { i = 25; }
 			if(!ifRetry) { i = 25; }
