@@ -32,7 +32,7 @@ public class Drupal{
       public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
       
-      public static String errorMessageSmallTileImageRequired   = "Error message\nSmall Tile Image field is required."; 
+      public static String errorMessageSmallTileImageRequired   = "Small Tile Image field is required."; 
       public static String errorMessageSmallTileWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
       public static String errorMessageSmallTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageSmallTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
@@ -42,8 +42,10 @@ public class Drupal{
       public static String errorMessageLargeTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
       
       public static String errorAjax                            = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
-      public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'Brand Page Title field is required.')]"; // used to be: "//*[@id='console']/div[@class='messages error'][contains(.,'Title field is required')]";
-      public static String errorDescription                     = "//*[@id='console']/div[@class='messages error'][contains(.,'Description field is required')]";    
+      public static String errorMessageTitleRequired            = "Brand Page Title field is required.";
+      public static String errorTitle                           = "//*[@id='console']/div[@class='messages error'][contains(.,'" + errorMessageTitleRequired + "')]";
+      public static String errorMessageDescriptionRequired      = "Brand Page Description field is required.";
+      public static String errorDescription                     = "//*[@id='console']/div[@class='messages error'][contains(.,'" + errorMessageDescriptionRequired + "')]";    
       public static String errorBrowse                          = "//div[contains(@class,'messages error')][contains(.,'The') and contains(.,'file')]";
       public static String errorActual                          = "/descendant::em[1]";
       public static String errorExpected                        = "/descendant::em[2]";

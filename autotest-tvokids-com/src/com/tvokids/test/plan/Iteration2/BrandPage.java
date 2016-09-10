@@ -83,7 +83,7 @@ public class BrandPage {
 	       driver = helper.getServerName(driver);
 	
 	       // DECLARATION:
-	       String expectedURL, title, description;
+	       String expectedURL, title, description, actual, expected;
 	       
 	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	       helper.logIn(driver,"content_editor","changeme");
@@ -97,16 +97,17 @@ public class BrandPage {
 	       description = helper.randomEnglishText(helper.randomInt(125, (Drupal.descriptionMaxCharsNumber - 1)));
 	       
 	       // CREATE CONTENT WITH NO DESCRIPTION:
-	       helper.createCustomBrand(driver, title, description, true, true, false, false, false, new Exception().getStackTrace()[0]);
+	       helper.createCustomBrand(driver, title, description, true, true, false, true, false, new Exception().getStackTrace()[0]);
 	      
 	       // ASSERT CONTENT URL DID NOT CHANGE:
 	       expectedURL = Drupal.customBrand;
 	       helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
 	       
-	       // ASSERT ERROR MESSAGE APPEARS:
-	       driver.findElement(By.id(Drupal.submit)).click();
+	       // ASSERT ERROR MESSAGE:
 	       helper.waitUntilElementPresence(driver, 5, Drupal.errorTitle, "Error Message (Title)", new Exception().getStackTrace()[0]);
-	       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.errorTitle);
+           actual = helper.getTextLine(driver.findElement(By.xpath( Drupal.error)).getText(), 2);
+           expected = Drupal.errorMessageTitleRequired;
+           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
@@ -230,7 +231,7 @@ public class BrandPage {
 	       driver = helper.getServerName(driver);
 	
 	       // DECLARATION:
-	       String expectedURL, title;
+	       String expectedURL, title, actual, expected;
 	       
 	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	       helper.logIn(driver,"content_editor","changeme");
@@ -250,9 +251,11 @@ public class BrandPage {
 	       expectedURL = Drupal.customBrand;
 	       helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
 	       
-	       // ASSERT ERROR MESSAGE APPEARS:
-	       driver.findElement(By.id(Drupal.submit)).click();
-	       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.errorDescription);
+	       // ASSERT ERROR MESSAGE:
+	       helper.waitUntilElementPresence(driver, 5, Drupal.errorDescription, "Error Message (Description)", new Exception().getStackTrace()[0]);
+           actual = helper.getTextLine(driver.findElement(By.xpath( Drupal.error)).getText(), 2);
+           expected = Drupal.errorMessageDescriptionRequired;
+           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
@@ -722,11 +725,11 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, true, true, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "");
+	           helper.createCustomBrand(driver, titleURL, description, true, true, false, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "", "");
 	           
-	           // ASSERT ERROR MESSAGE APPEARS:
-	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorMessage);
-	           actual = driver.findElement(By.xpath( Drupal.error)).getText();
+	           // ASSERT ERROR MESSAGE:
+		       helper.waitUntilElementPresence(driver, 5, Drupal.errorMessage, "Error Message (Small Tile Image)", new Exception().getStackTrace()[0]);
+	           actual = helper.getTextLine(driver.findElement(By.xpath( Drupal.error)).getText(), 2);
 	           expected = Drupal.errorMessageSmallTileImageRequired;
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 

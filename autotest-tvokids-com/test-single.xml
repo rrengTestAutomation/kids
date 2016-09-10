@@ -16,7 +16,9 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
-<include name="testCustomBrandTitleFieldContentLimit"/>
+<include name="testBrandPageSmallTileImageIsMandatory"/>
+<include name="testCustomBrandDescriptionIsMandatory"/>
+<include name="testCustomBrandTitleIsMandatory"/>
 </methods></class>
      
         </classes>

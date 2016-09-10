@@ -376,7 +376,7 @@ public class UtilitiesTestHelper{
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	public int contentSubmit(WebDriver driver, int iteration, String URLendsWith) throws IOException, NumberFormatException, InterruptedException {
+	public int contentSubmit(WebDriver driver, int iteration, String URLendsWith, Boolean ifRetry) throws IOException, NumberFormatException, InterruptedException {
 	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
 	   String previousURL = driver.getCurrentUrl();
 	   driver.findElement(By.id(Drupal.submit)).click();
@@ -384,24 +384,34 @@ public class UtilitiesTestHelper{
 	   iteration++;
 	   String suffix = "-" + getNumberSuffix(iteration);
 	   String success = "Successful \"" + type + "\" process!"; 
-	   String   issue = "Not a successful \"" + type + "\" process...will try again..." + "(attempt #" + iteration + ")";
-	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
-	   if (! driver.getCurrentUrl().endsWith(URLendsWith)) { 
-	   	fileWriterPrinter(issue);
-	   	if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
-	   		String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();
-	   		String[] error = text.split("\\n");
-	   		String message, prompt;
-	   		if( error.length > 1) { 
-	   			message = error[1];
-	   			prompt = error[0] + ": " + error[1];
-	   			} else { message = error[0]; prompt = message; }
-	   				fileWriterPrinter(prompt);
-	   		if( iteration == 1 ) { getScreenShot(new RuntimeException().getStackTrace()[0], message, driver); }
-	   	}
-	   	} else { fileWriterPrinter(success); }
-	   return iteration;
-	   }
+	   String   issue = "Not a successful \"" + type + "\" process...";
+	   String attempt =  "will try again..." + "(attempt #" + iteration + ")";
+	   if(! ifRetry ) { attempt = ""; }
+	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }   
+	   Boolean error = false;	   
+	   if ( URLendsWith.length() == 0 ) { error =   driver.getCurrentUrl().equals(previousURL); }
+	   else                             { error = ! driver.getCurrentUrl().endsWith(URLendsWith); }
+	   if ( error ) {
+		   fileWriterPrinter(issue + attempt);
+		   if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
+			   String text = driver.findElement(By.xpath(Drupal.errorConsole)).getText();			   
+			   String message=getTextLine(text, 1), prompt=getTextLine(text, 2), space = "";
+			   if(prompt.length() > 0) { space = ": "; }
+			   fileWriterPrinter(message + space + prompt);	   		
+	   		if( (iteration == 1) && ifRetry ) { getScreenShot(new RuntimeException().getStackTrace()[0], message, driver); }
+	   		}	   
+	   } else { fileWriterPrinter(success); }
+	   return iteration;	   
+	}
+	
+	/**
+	 * Extracts selected text line number (1, 2, 3, etc.) from multi-line text
+	 */
+	public String getTextLine(String text, int line) {
+		String[] string = text.split("\\n");
+   		if( string.length >= line ) { return string[line - 1]; } 
+   		else { return ""; }
+   		}
 	
 	/**
 	 * Create a Character Brand
@@ -450,7 +460,7 @@ public class UtilitiesTestHelper{
 			upload(driver, "small.jpg", tab, browse, upload, "image", t);
 			if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateSmall)).clear(); driver.findElement(By.xpath(Drupal.alternateSmall)).sendKeys(Drupal.alternateSmallText); }
 			
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title)); }
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))); } }
 			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
@@ -527,7 +537,7 @@ public class UtilitiesTestHelper{
 			
 			if(tile.length() > 0) { addTilePlacement(driver, tile);}
 
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); }
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
 			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
@@ -545,7 +555,7 @@ public class UtilitiesTestHelper{
 			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage
 			                     ) throws AWTException, InterruptedException, IOException
 	  { 
-		return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, false, ifSubmit, ifRetry, t, bannerImage, heroImage, titleSmallImage, titleLargeImage,"");	  
+		return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, false, ifSubmit, ifRetry, t, bannerImage, heroImage, titleSmallImage, titleLargeImage, "");	  
 	  }
 	
 	/**
@@ -604,7 +614,7 @@ public class UtilitiesTestHelper{
 				driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText);
 				}
 		
-			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber)); }
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
 			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
 			}
@@ -733,8 +743,10 @@ public class UtilitiesTestHelper{
 	 * Re-formats a String as per syntacsis requirements of page URL (un-limited length)
 	 */
 	public String reFormatStringForURL(String string) {
-		  string = string.toLowerCase().replaceAll(" ", "-").replaceAll("--", "-");
-		  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
+		  if(string.length() > 0) {
+			  string = string.toLowerCase().replaceAll(" ", "-").replaceAll("--", "-");
+			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
+			  }
 		  return string;
 		  }
 	  
@@ -742,7 +754,8 @@ public class UtilitiesTestHelper{
 	 * Re-formats a String as per syntacsis requirements of page URL (limited length)
 	 */
 	public String reFormatStringForURL(String string, int length) {
-		  string = string.substring(0, length);
+		  if(string.length() < length) { length = string.length(); }
+		  if(string.length() > 0) { string = string.substring(0, length); }
 		  return reFormatStringForURL(string);
 		  }
 	 
