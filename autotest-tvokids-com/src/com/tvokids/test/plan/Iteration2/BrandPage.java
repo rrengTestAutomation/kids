@@ -1053,7 +1053,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35158 3610</p>
 	 */
-	@Test(groups = {"US-35158","US-3610"}, priority = 35)
+	@Test(groups = {"TC-35158","US-3610"}, priority = 35)
     public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1097,7 +1097,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35160 3610</p>
 	 */
-	@Test(groups = {"US-35160","US-3610"}, priority = 36)
+	@Test(groups = {"TC-35160","US-3610"}, priority = 36)
     public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1141,7 +1141,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35161 3610</p>
 	 */
-	@Test(groups = {"US-35161","US-3610"}, priority = 37)
+	@Test(groups = {"TC-35161","US-3610"}, priority = 37)
     public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -1229,7 +1229,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35404 3522 3202</p>
 	 */
-	@Test(groups = {"US-35404","US-3522","US-3202"}, priority = 38)
+	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
     public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	           
