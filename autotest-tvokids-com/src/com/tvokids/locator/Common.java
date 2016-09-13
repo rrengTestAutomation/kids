@@ -34,6 +34,7 @@ public class Common {
 	  
 	  /**********home page elements*******************/
 	  public static String homePageLogo              = "//div[@class='splash-logo']/img[@alt='TVOKids']";
+	  public static String homePageBrowserTitle  = "Free Educational Games for Kids | TVOKids.com";
 	  public static String kidsPageLogo              = "//a[@id='logo-link']";
 	  public static String kidsPageLogoCanvas        = kidsPageLogo + "/canvas[@id='canvas']";
 	  public static String kidsPageLogoImage         = kidsPageLogo + "/img";

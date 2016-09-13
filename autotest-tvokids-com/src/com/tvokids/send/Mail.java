@@ -279,8 +279,9 @@ public class Mail {
 			helper.fileWriter("email.cont", "FYI:"); 
 			helper.fileWriter("email.cont", "TVOKids.com - AUTOMATED " + helper.fileScanner("test.type").toUpperCase() + " RESULT");
 			helper.fileWriter("email.cont", "");
-			helper.fileWriter("email.cont", "     APP SERVER: " + helper.fileScanner("server.info"));
-			helper.fileWriter("email.cont", "     GiT BRANCH: " + helper.fileScanner("branch.info"));
+			helper.fileWriter("email.cont", "     APP  SERVER: " + helper.fileScanner("server.info"));
+			helper.fileWriter("email.cont", "     WEB BROWSER: " + System.getProperty("Browser"));
+			helper.fileWriter("email.cont", "     GiT  BRANCH: " + helper.fileScanner("branch.info"));	
 			helper.fileWriter("email.cont", "");
 
 			// E-MAIL CONTENT TOTAL TESTS NUMBER:
