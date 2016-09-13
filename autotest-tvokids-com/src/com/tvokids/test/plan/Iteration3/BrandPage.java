@@ -3,11 +3,15 @@ package com.tvokids.test.plan.Iteration3;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -124,4 +128,38 @@ public class BrandPage {
     	  
            } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
        }
+	
+	/**
+	 * Test New size of Tile Image
+	 * <p>Date Created: 2016-09-13</p>
+	 * <p>Date Modified: 2016-09-13</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36113 3996</p>
+	 */
+	@Test(groups = {"TC-36113","US-3996"}, priority = 41)
+	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+//	    	   String expected, actual;
+	    	   
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	        // LOGIN TO DRUPAL AS CONTENT-EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // NAVIGATE TO HOME PAGE:
+		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+		       
+		       // ASSERT BROWSER TITLE:
+		       helper.ajaxProtectedClick(driver, Drupal.tileVerticalTab, "tile Vertical Tab", false, "", true, false);
+		       helper.fileWriterPrinter(driver.findElement(By.xpath(Drupal.tileSmallSizeDescription)).getText());
+		       helper.fileWriterPrinter(driver.findElement(By.xpath(Drupal.tileLargeSizeDescription)).getText());
+		       
+	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	   }
+	
 }
