@@ -112,12 +112,18 @@ public class Drupal{
 	  public static String tileSmallBrowse = tileFieldSet + subSet1 + browse;
 	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
 	  public static String tileSmallRemove = tileFieldSet + subSet1 + remove;
-	  public static String tileSmallSizeDescription = "//div[@class='form-item form-type-managed-file form-item-field-small-tile-image-und-0']/descendant::div[@class='description']";
-
+	  public static String tileSmallDescription = "//div[@class='form-item form-type-managed-file form-item-field-small-tile-image-und-0']/descendant::div[@class='description']";
+	  public static String tileSmallDescriptionOfSize      = "Files must be less than 75 KB.";
+	  public static String tileSmallDescriptionOfFormat    = "Allowed file types: png jpg jpeg.";
+	  public static String tileSmallDescriptionOfDimension = "Images must be exactly 708x398 pixels.";
+	 
 	  public static String tileLargeBrowse = tileFieldSet + subSet2 + browse;
 	  public static String tileLargeUpload = tileFieldSet + subSet2 + upload;
 	  public static String tileLargeRemove = tileFieldSet + subSet2 + remove;
-	  public static String tileLargeSizeDescription = "//div[@class='form-item form-type-managed-file form-item-field-large-tile-image-und-0']/descendant::div[@class='description']";
+	  public static String tileLargeDescription = "//div[@class='form-item form-type-managed-file form-item-field-large-tile-image-und-0']/descendant::div[@class='description']";
+	  public static String tileLargeDescriptionOfSize      = "Files must be less than 100 KB.";
+	  public static String tileLargeDescriptionOfFormat    = "\nAllowed file types: png jpg jpeg.";
+	  public static String tileLargeDescriptionOfDimension = "\nImages must be exactly 708x836 pixels.";
 	  
 	  /************content******************/
 	  public static String brandPageDescriptionID                 = "edit-field-brand-page-description-und-0-value";	  

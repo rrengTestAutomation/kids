@@ -142,22 +142,32 @@ public class BrandPage {
 	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
-//	    	   String expected, actual;
+	    	   String expected, actual;
 	    	   
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	        // LOGIN TO DRUPAL AS CONTENT-EDITOR:
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
 	           helper.logIn(driver,"content_editor","changeme");
 	           
-	           // NAVIGATE TO HOME PAGE:
+	           // NAVIGATE TO CONTENT ADD CUSTOM BRAND:
 		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
 		       
-		       // ASSERT BROWSER TITLE:
+		       // CLICK ON TILE:
 		       helper.ajaxProtectedClick(driver, Drupal.tileVerticalTab, "tile Vertical Tab", false, "", true, false);
-		       helper.fileWriterPrinter(driver.findElement(By.xpath(Drupal.tileSmallSizeDescription)).getText());
-		       helper.fileWriterPrinter(driver.findElement(By.xpath(Drupal.tileLargeSizeDescription)).getText());
+		       
+		       // ASSERT SMALL TITLE IMAGE SIZE DESCRIPTION:
+		       actual = driver.findElement(By.xpath(Drupal.tileSmallDescription)).getText();
+		       actual = helper.getTextLine(actual, 1);
+		       expected = Drupal.tileSmallDescriptionOfSize;
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+		    
+		       // ASSERT LARGE TITLE IMAGE SIZE DESCRIPTION:
+		       actual = driver.findElement(By.xpath(Drupal.tileLargeDescription)).getText();
+		       actual = helper.getTextLine(actual, 1);
+		       expected = Drupal.tileLargeDescriptionOfSize;
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }

@@ -478,7 +478,7 @@ public class UtilitiesTestHelper {
 	 */
 	public String getTextLine(String text, int line) {
 		String[] string = text.split("\\n");
-   		if( string.length >= line ) { return string[line - 1]; } 
+   		if( (string.length >= line) && (line > 0) ) { return string[line - 1]; } 
    		else { return ""; }
    		}
 	
