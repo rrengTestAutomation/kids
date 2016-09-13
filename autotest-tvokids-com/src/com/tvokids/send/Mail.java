@@ -7,7 +7,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -27,9 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
-import org.testng.annotations.*;
-
+import org.testng.annotations.BeforeSuite;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Email;
 import com.tvokids.test.helper.UtilitiesTestHelper;
@@ -85,11 +82,18 @@ public class Mail {
 		System.out.println("Update will be started in: " + helper.convertTimeSecondsToHoursMinSeconds(sec));
 		System.out.println("Update will be started at: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(currTime + updateDelay));
 		System.out.println("Update will be started on: " + server);
-		
+
 		// GIT BRANCH MANAGEMENT
 		String branch = gitBranch();
 		System.out.println("Update will be started on: \"" + branch + "\" GiT Branch");
-		
+        
+		// UPDATE REFRESH MANAGEMENT
+		String refresh = "";
+		String type = "partial";
+		Boolean ifRefresh = refreshOption();
+        if(ifRefresh) { refresh = "refresh-dev "; type = "full"; }
+        System.out.println("Update will be started as: " + type);
+        
 		// E-MAIL PERMEATION MANAGEMENT
 		boolean send = emailOptionDouble();
 		if(helper.fileExist("email.opt", false)) { helper.fileCleaner("email.opt"); }
@@ -105,7 +109,7 @@ public class Mail {
 				   System.out.println("E-Mail will be sent to All assigned Recepients!\n");
 			   } else { System.out.println("E-Mail will be sent to Automation Tester Only...\n"); }
 			   
-		} else { System.out.println("Will not send any E-Mail notification...\n"); }
+		} else { System.out.println("\nWill not send any E-Mail notification...\n"); }
 		
 		// TEST DELAY MANAGEMENT:
 		int testDelay = minBox();		
@@ -122,10 +126,6 @@ public class Mail {
 		
 		String date = start.substring(0,start.indexOf(" "));
 		String time = start.substring(start.indexOf(" ") + 1, start.length());
-		
-		Boolean ifRefresh = false;
-		String refresh = "";
-        if(ifRefresh) { refresh = "refresh-dev "; }
 
 		String command = 
 				"clear;CURRENT=$(date +%s);echo;echo $(date +%Y-%m-%d)\" \"$(date +%H\":\"%M\":\"%S);echo;TESTSTARTDATE=\"" +
@@ -710,6 +710,16 @@ public class Mail {
 			 JOptionPane.showConfirmDialog(null, params, "Show Tests Number change Option", JOptionPane.CLOSED_OPTION, 0, icon);
 			 boolean show = checkbox.isSelected();
 			 return show;
+		 }
+
+		 /** Full or Partial Refresh Option dialogue with selection radio-buttons */
+		 public boolean refreshOption(){			 
+			 Icon icon = new ImageIcon(Common.testIconFileDir + "application.update.png");			 
+			 JCheckBox checkbox = new JCheckBox("Yes!");
+			 String message = "Do you want to update the Application using Full Refresh?";
+			 Object[] params = { message, checkbox };
+			 JOptionPane.showConfirmDialog(null, params, "Refresh Option", JOptionPane.CLOSED_OPTION, 0, icon);
+			 return checkbox.isSelected();
 		 }
 		 
 		 /** Sends e-mail with single-file attachment */

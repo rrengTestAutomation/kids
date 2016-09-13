@@ -18,11 +18,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
@@ -49,15 +56,8 @@ import java.util.zip.ZipOutputStream;
 
 import javax.swing.JTextField;
 
-import com.tvokids.locator.Dictionary;
-import com.tvokids.locator.Drupal;
-import com.tvokids.locator.Common;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
-
-import java.lang.reflect.Method;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -69,7 +69,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -83,10 +83,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.nio.file.*;
-import java.nio.file.attribute.*;
+import com.tvokids.locator.Common;
+import com.tvokids.locator.Dictionary;
+import com.tvokids.locator.Drupal;
 
-public class UtilitiesTestHelper{
+public class UtilitiesTestHelper {
 	WebDriver driverHelper;
 	
 	public WebDriver getServerName(WebDriver driver) throws IllegalArgumentException, MalformedURLException{
@@ -6396,4 +6397,5 @@ public class UtilitiesTestHelper{
 		    return i;
 		    }
 	    // ########### ELEMENT APPEARER END ############
+    
 }
