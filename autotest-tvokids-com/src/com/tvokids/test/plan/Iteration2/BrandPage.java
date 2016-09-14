@@ -633,9 +633,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35154 3311 35220 3188 3996</p>
+	 * <p>Test Cases: 35154 3311 35220 3188</p>
 	 */
-	@Test(groups = {"TC-35154","US-3311","TC-35220","US-3188","US-3996"}, priority = 27)
+	@Test(groups = {"TC-35154","US-3311","TC-35220","US-3188"}, priority = 27)
     public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -701,9 +701,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220 3188 3996 707</p>
+	 * <p>Test Cases: 35220 3188 707</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-707","CLOSED"}, priority = 28)
+	@Test(groups = {"TC-35220","US-3188","BUG-707","CLOSED"}, priority = 28)
     public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:

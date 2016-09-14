@@ -15,8 +15,15 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testNewSizeOfTileImageDescription"/></methods></class>
+      <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
+             <include name="testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed"/>
+             <include name="testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed"/>
+             <include name="testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed"/>
+             <include name="testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed"/>
+             <include name="testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed"/>
+             <include name="testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed"/></methods></class>
+      <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+             <include name="testNewSizeOfTileImageDescription"/></methods></class>
      
         </classes>
      </test>
