@@ -27,7 +27,11 @@ public class Drupal{
       public static String errorConsole                         = "//div[@id='console']";
       public static String error                                = "//*[@id='console']/div[@class='messages error']";
       public static String errorMessage                         = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
-    
+      
+      public static String errorMessageCharacterBannerWrongUploadSize(String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 25 KB."; }
+      public static String errorMessageCharacterBannerWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: jpg."; }
+      public static String errorMessageCharacterBannerWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 200x200 pixels."; }
+      
       public static String errorMessageHeroBoxWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
       public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
@@ -98,6 +102,11 @@ public class Drupal{
 	  public static String characterBannerFieldSet = "//fieldset[1]/div/div";
 	  public static String characterBannerBrowse = characterBannerFieldSet + browse;
 	  public static String characterBannerUpload = characterBannerFieldSet + upload;
+	  public static String characterBannerRemove = characterBannerFieldSet + remove;
+	  public static String characterBannerDescription = characterBannerFieldSet + "/descendant::div[@class='description']";
+	  public static String characterBannerDescriptionOfSize      = "Files must be less than 25 KB.";
+	  public static String characterBannerDescriptionOfFormat    = "Allowed file types: jpg.";
+	  public static String characterBannerDescriptionOfDimension = "Images must be exactly 200x200 pixels.";
 	  			
 	  /************vertical tab - hero box*********************/
 	  public static String heroBoxVerticalTab = "//ul[@class='vertical-tabs-list']/li[2]/a/strong";
@@ -112,7 +121,7 @@ public class Drupal{
 	  public static String tileSmallBrowse = tileFieldSet + subSet1 + browse;
 	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
 	  public static String tileSmallRemove = tileFieldSet + subSet1 + remove;
-	  public static String tileSmallDescription = "//div[@class='form-item form-type-managed-file form-item-field-small-tile-image-und-0']/descendant::div[@class='description']";
+	  public static String tileSmallDescription            = tileFieldSet + subSet1 + "/descendant::div[@class='description']";
 	  public static String tileSmallDescriptionOfSize      = "Files must be less than 75 KB.";
 	  public static String tileSmallDescriptionOfFormat    = "Allowed file types: png jpg jpeg.";
 	  public static String tileSmallDescriptionOfDimension = "Images must be exactly 708x398 pixels.";
@@ -120,7 +129,7 @@ public class Drupal{
 	  public static String tileLargeBrowse = tileFieldSet + subSet2 + browse;
 	  public static String tileLargeUpload = tileFieldSet + subSet2 + upload;
 	  public static String tileLargeRemove = tileFieldSet + subSet2 + remove;
-	  public static String tileLargeDescription = "//div[@class='form-item form-type-managed-file form-item-field-large-tile-image-und-0']/descendant::div[@class='description']";
+	  public static String tileLargeDescription            = tileFieldSet + subSet2 + "/descendant::div[@class='description']";
 	  public static String tileLargeDescriptionOfSize      = "Files must be less than 100 KB.";
 	  public static String tileLargeDescriptionOfFormat    = "\nAllowed file types: png jpg jpeg.";
 	  public static String tileLargeDescriptionOfDimension = "\nImages must be exactly 708x836 pixels.";

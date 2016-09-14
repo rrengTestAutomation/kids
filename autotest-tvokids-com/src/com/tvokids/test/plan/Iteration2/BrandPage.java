@@ -501,7 +501,7 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
 	           driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
 	           
-			   // ASSERT GIF FILE NOT ALLOWED:
+			   // ASSERT GIF FILE IS NOT ALLOWED:
 			   imagePath = imageDir + File.separator + image;			   
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 		       actual = driver.findElement(By.xpath(error)).getText();
@@ -807,7 +807,7 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
 	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
 	           
-			   // ASSERT GIF FILE NOT ALLOWED:
+			   // ASSERT GIF FILE IS NOT ALLOWED:
 			   imagePath = imageDir + File.separator + image;			   
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 		       actual = driver.findElement(By.xpath(error)).getText();
@@ -818,7 +818,6 @@ public class BrandPage {
 		       driver.navigate().refresh();
 		       helper.waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 	           imagePath = imageDir + File.separator + "small.jpg";
-			   error     = Drupal.errorBrowse;
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);  
 
@@ -961,7 +960,7 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 15, Drupal.customBrand);
 	           driver.findElement(By.xpath(Drupal.tileVerticalTab)).click();
 	           
-			   // ASSERT GIF FILE NOT ALLOWED:
+			   // ASSERT GIF FILE IS NOT ALLOWED:
 			   imagePath = imageDir + File.separator + image;			   
 		       driver.findElement(By.xpath(browse)).sendKeys(imagePath);
 		       actual = driver.findElement(By.xpath(error)).getText();

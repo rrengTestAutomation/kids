@@ -1440,9 +1440,8 @@ public class UtilitiesTestHelper {
 		  try{
         	  driver.findElement(browse).sendKeys(imagePath);
         	  Thread.sleep(1000);
-        	  ajaxProtectedClick(driver, upload, image, true, Common.ajaxThrobber, true, 5, false); // used to be:  driver.findElement(upload).click();
-        	  waitUntilElementInvisibility(driver, 10, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-          }catch(Throwable e) { e.printStackTrace(); }
+        	  ajaxProtectedClick(driver, upload, image + "\" \"Upload", true, Common.ajaxThrobber, true, 5, false);
+          } catch(Throwable e) { e.printStackTrace(); }
       }
       
 	  /**

@@ -1,5 +1,6 @@
 package com.tvokids.test.plan.Iteration3;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -10,6 +11,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
+
 
 
 /*
@@ -155,7 +159,7 @@ public class BrandPage {
 		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
 		       
 		       // CLICK ON TILE:
-		       helper.ajaxProtectedClick(driver, Drupal.tileVerticalTab, "tile Vertical Tab", false, "", true, false);
+		       helper.ajaxProtectedClick(driver, Drupal.tileVerticalTab, "Tile Vertical Tab", false, "", true, false);
 		       
 		       // ASSERT SMALL TITLE IMAGE SIZE DESCRIPTION:
 		       actual = driver.findElement(By.xpath(Drupal.tileSmallDescription)).getText();
@@ -172,4 +176,107 @@ public class BrandPage {
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
 	
+	/**
+	 * Test New size of Character bubble Image ()
+	 * <p>Date Created: 2016-09-14</p>
+	 * <p>Date Modified: 2016-09-14</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36114 3997 699</p>
+	 */
+	@Test(groups = {"TC-36114","US-3997","BUG-699","OPEN"}, enabled = true, priority = 42)
+	public void testNewSizeOfCharacterBubbleImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	    	   String expected, actual, image;
+	    	   
+	    	   // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // NAVIGATE TO CONTENT ADD CUSTOM BRAND:
+		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+		       
+		       // CLICK ON CHARACTER BANNER:
+		       helper.ajaxProtectedClick(driver, Drupal.characterBannerVerticalTab, "Character Banner Vertical Tab", false, "", true, false);
+		       
+		       // ASSERT CHARACTER BANNER IMAGE SIZE DESCRIPTION:
+		       actual = driver.findElement(By.xpath(Drupal.characterBannerDescription)).getText();
+		       actual = helper.getTextLine(actual, 1);
+		       expected = Drupal.characterBannerDescriptionOfSize;
+		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+		       
+		       // ASSERT CHARACTER BANNER IMAGE IS ACCEPTED IF RESTRICTED BY SIZE, FORMAT AND DIMENSIONS:
+		       image = "bubble.jpg";
+	           helper.createCustomBrand(driver, "", "", false, false, false, false, new Exception().getStackTrace()[0], image, "", "", "");
+	           helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], Drupal.characterBannerUpload);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Drupal.characterBannerRemove);
+	           
+		       // ASSERT CHARACTER BANNER IMAGE NOT AS RESTRICTED SIZE IS REJECTED:
+	           image = "bubble more then 25Kb.jpg";
+	           helper.ajaxProtectedClick(driver, Drupal.characterBannerRemove, "Remove", true, Common.ajaxThrobber, true, 5, false);
+	           helper.createCustomBrand(driver, "", "", false, false, false, false, new Exception().getStackTrace()[0], image, "", "", "");
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = helper.getFileSpaceSize(Common.localImageDir + File.separator + image, "Kbit", 2);
+	           expected = Drupal.errorMessageCharacterBannerWrongUploadSize(image, expected);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+	           
+	           // ASSERT PNG FILE IS NOT ALLOWED:
+	           image = "bubble.png";
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 5, Drupal.characterBannerBrowse, "Bubble Thumbnail Browse", new RuntimeException().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.characterBannerBrowse)).sendKeys(Common.localImageDir + File.separator + image);
+		       actual = driver.findElement(By.xpath(Drupal.errorBrowse)).getText();
+		       expected = Drupal.errorMessageCharacterBannerWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       
+	           // ASSERT GIF FILE IS NOT ALLOWED:
+	           image = "bubble.gif";
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 5, Drupal.characterBannerBrowse, "Bubble Thumbnail Browse", new RuntimeException().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.characterBannerBrowse)).sendKeys(Common.localImageDir + File.separator + image);
+		       actual = driver.findElement(By.xpath(Drupal.errorBrowse)).getText();
+		       expected = Drupal.errorMessageCharacterBannerWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       
+	           // ASSERT JPEG FILE IS NOT ALLOWED:
+	           image = "bubble.jpeg";
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 5, Drupal.characterBannerBrowse, "Bubble Thumbnail Browse", new RuntimeException().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.characterBannerBrowse)).sendKeys(Common.localImageDir + File.separator + image);
+		       actual = driver.findElement(By.xpath(Drupal.errorBrowse)).getText();
+		       expected = Drupal.errorMessageCharacterBannerWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		       
+	           // ASSERT BMP FILE IS NOT ALLOWED:
+	           image = "bubble.bmp";
+	           driver.navigate().refresh();
+	           helper.waitUntilElementPresence(driver, 5, Drupal.characterBannerBrowse, "Bubble Thumbnail Browse", new RuntimeException().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.characterBannerBrowse)).sendKeys(Common.localImageDir + File.separator + image);
+		       actual = driver.findElement(By.xpath(Drupal.errorBrowse)).getText();
+		       expected = Drupal.errorMessageCharacterBannerWrongImageFormat(image);
+		       helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+		    
+		       // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
+		       image = "bubble 199x199.jpg";
+	           driver.navigate().refresh();
+	           helper.createCustomBrand(driver, "", "", false, false, false, false, new Exception().getStackTrace()[0], image, "", "", "");
+	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
+	           actual = driver.findElement(By.xpath( Drupal.errorUpload)).getText();
+	           expected = Drupal.errorMessageCharacterBannerWrongImagePixels(image);
+	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
+
+	           // ASSERT MORE THEN MINIMUM DIMENSIONS IMAGE IS NOT ALLOWED:
+	           image = "bubble 201x201.jpg";
+	           driver.navigate().refresh();
+	           helper.createCustomBrand(driver, "", "", false, false, false, false, new Exception().getStackTrace()[0], image, "", "", "");		       
+	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
+		       
+	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	   }	
 }
