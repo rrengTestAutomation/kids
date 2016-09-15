@@ -5,7 +5,7 @@
 
   <test verbose="1" name="test-group">
         <groups><run>       
-        <include name="US-3996"/>
+        <include name="TC-34969"/>
         </run></groups>
         <packages><package name="com.tvokids.test.*"></package></packages>      
   </test>

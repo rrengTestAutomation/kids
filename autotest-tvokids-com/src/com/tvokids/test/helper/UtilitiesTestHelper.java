@@ -5684,8 +5684,8 @@ public class UtilitiesTestHelper {
 		String color = driver.findElement(element).getCssValue(css), space = "";
 		       color = color.substring(0, color.indexOf(")") + 1);
 		if(comment.length() > 0) { space = ": "; }
-		if(ifPrint){ fileWriterPrinter("\n" + comment + space + Color.fromString(color).asHex()); }
-		return Color.fromString(color).asHex();		
+		if(ifPrint){ fileWriterPrinter("\n" + comment + space + Color.fromString(color).asHex().toUpperCase()); }
+		return Color.fromString(color).asHex().toUpperCase();		
 	}
 	
 	/** 
@@ -5694,11 +5694,7 @@ public class UtilitiesTestHelper {
 	 * @throws NumberFormatException 
 	 */
 	public String getColorHEX(WebDriver driver, String xpath, String css, Boolean ifPrint, String comment) throws NumberFormatException, IOException {
-		String color = driver.findElement(By.xpath(xpath)).getCssValue(css), space = "";
-		       color = color.substring(0, color.indexOf(")") + 1);
-		if(comment.length() > 0) { space = ": "; }
-		if(ifPrint){ fileWriterPrinter("\n" + comment + space + Color.fromString(color).asHex()); }
-		return Color.fromString(color).asHex();		
+		return getColorHEX(driver, By.xpath(xpath), css, ifPrint, comment);		
 	}
 	
 	/** 

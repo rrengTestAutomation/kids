@@ -34,16 +34,19 @@ public class Common {
 	  
 	  /**********home page elements*******************/
 	  public static String homePageLogo              = "//div[@class='splash-logo']/img[@alt='TVOKids']";
-	  public static String homePageBrowserTitle  = "Free Educational Games for Kids | TVOKids.com";
+	  public static String homePageBrowserTitle      = "Free Educational Games for Kids | TVOKids.com";
 	  public static String kidsPageLogo              = "//a[@id='logo-link']";
 	  public static String kidsPageLogoCanvas        = kidsPageLogo + "/canvas[@id='canvas']";
 	  public static String kidsPageLogoImage         = kidsPageLogo + "/img";
 	  public static String kidsPageLogoStatic        = kidsPageLogoCanvas + "[@class='animated-logo']";
 	  public static String kidsPageLogoAnimated      = kidsPageLogoCanvas + "[@class='animated-logo animating']";
       public static String homePageFiveAndUnderBlock = "//a[@class='splash-under-5']";
+      public static String homePageFiveAndUnderBlockBackgroundColorDefault = "#F18A20";
 	  public static String homePageFiveAndUnderTitle = homePageFiveAndUnderBlock + "/div[@class='splash-text']";
 	  public static String homePageFiveAndUnderImage = homePageFiveAndUnderBlock + "/picture/img";
+	  
 	  public static String homePageSixAndOverBlock   = "//a[@class='splash-over-6']";
+	  public static String homePageSixAndOverBlockBackgroundColorDefault = "#009FD4";
 	  public static String homePageSixAndOverTitle   = homePageSixAndOverBlock + "/div[@class='splash-text']";
 	  public static String homePageSixAndOverImage   = homePageSixAndOverBlock + "/picture/img";
 	  
