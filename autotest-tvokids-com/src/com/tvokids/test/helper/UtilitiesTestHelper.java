@@ -2981,14 +2981,23 @@ public class UtilitiesTestHelper {
 			/** Counter: Will renew counting starting with "1" if the Counter File is currently missing; Returns new iteration value; 
 			 * @throws IOException
 			 */
+            public static int counter(String counterFileName, int counterStep) throws NumberFormatException, IOException {
+			   // if Counter File does not exist - create new it with counter "1";
+               //                      otherwise - update existing by increasing the counter by value of "counterStep";
+		       int n = 1;
+		       File f = new File(Common.testOutputFileDir + counterFileName);
+		       if (f.exists() && f.isFile()) { n = Integer.valueOf(fileScanner(counterFileName)) + counterStep; }
+		       FileUtils.writeStringToFile(f, String.valueOf(n));
+		       return n;
+            }
+            
+			/** Counter: Will renew counting starting with "1" if the Counter File is currently missing; Returns new iteration value; 
+			 * @throws IOException
+			 */
             public static int counter(String counterFileName) throws NumberFormatException, IOException {
 			   // if Counter File does not exist - create new it with counter "1";
                //                      otherwise - update existing by increasing the counter by "1";
-		       int n = 1;
-		       File f = new File(Common.testOutputFileDir + counterFileName);
-		       if (f.exists() && f.isFile()) { n = Integer.valueOf(fileScanner(counterFileName)) + 1; }
-		       FileUtils.writeStringToFile(f, String.valueOf(n));
-		       return n;
+		       return counter(counterFileName, 1);
             }
             
 			/**
