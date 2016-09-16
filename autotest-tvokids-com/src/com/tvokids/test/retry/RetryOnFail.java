@@ -1,6 +1,10 @@
 package com.tvokids.test.retry;
 
+import java.io.IOException;
 import java.util.Map;
+
+import com.tvokids.test.helper.*;
+
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
@@ -40,19 +44,48 @@ public class RetryOnFail implements IRetryAnalyzer {
      * Below method returns 'true' if the test method has to be retried else 'false'
      * and it takes the 'Result' as parameter of the test method that just ran
      */
-    public boolean retry(ITestResult result) {
-      String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
-      if (retryCount < maxRetryCount) {
-    	  
-      System.out.println("\n\"" + result.getName() + "\" test re-trying, with a status of " +
-                 getResultStatusName(result.getStatus()) + 
-                 ", for " + (retryCount + 1) + "-" + time[retryCount] + " time:"
-                 );
-      retryCount++;
-      return true;
-      }
-      return false;
-    } 
+//    public boolean retry(ITestResult result) {
+//      String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
+//      if (retryCount < maxRetryCount) {
+//    	  
+////    	  System.out.println("\n\"" + result.getName() + "\" test re-trying, with a status of " +
+////                  getResultStatusName(result.getStatus()) + 
+////                  ", for " + (retryCount + 1) + "-" + time[retryCount] + " time:"
+////                  ); // where: result.getName() = result.getMethod().getMethodName()
+//    	  
+//    	  System.out.println("\n\"" + result.getTestClass().getName() +"."+ result.getMethod().getMethodName() + "\" test re-trying, with a status of " +
+//                  getResultStatusName(result.getStatus()) + 
+//                  ", for " + (retryCount + 1) + "-" + time[retryCount] + " time:"
+//                  );
+//      
+//    	  retryCount++;
+//      
+//    	  return true;
+//    	  }     
+//      return false;
+//    } 
+    
+    @SuppressWarnings("static-access")
+	public boolean retry(ITestResult result) {
+    	UtilitiesTestHelper helper = new UtilitiesTestHelper();
+    	String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
+        if (retryCount < maxRetryCount) {
+            String err = result.getThrowable().getMessage().toString().replace("\n\n", "\n");
+            try {
+				helper.fileWriter("run.log", "  Retrying test with status of "  + getResultStatusName(result.getStatus()));
+				
+// helper.getExceptionDescriptive(result.getThrowable(), result.getThrowable().getStackTrace()[2]);
+				
+				System.out.println("   Executed: ---> " +  (retryCount + 1)  + "-" + time[retryCount] + " time");
+				System.out.println("     Result: ---> "  + getResultStatusName(result.getStatus()));
+				System.out.println("    Details: "  + err);
+				System.out.println("\n\n" + "Retrying the test \"" + result.getTestClass().getName() +"."+ result.getMethod().getMethodName() + "\" with status of " + getResultStatusName(result.getStatus()) + " for the " + (retryCount + 2)  + "-" + time[retryCount + 1] + " time:");
+			} catch (NumberFormatException | IOException e) { /* TODO Auto-generated catch block */ e.printStackTrace(); }
+            retryCount++;
+            return true;
+        }
+        return false;
+    }
     
     public String getResultStatusName(int status) {
     	String resultName = null;

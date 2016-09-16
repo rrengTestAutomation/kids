@@ -53,7 +53,9 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipOutputStream;
+
 import javax.swing.JTextField;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.tools.zip.ZipEntry;
 import org.openqa.selenium.By;
@@ -80,6 +82,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
@@ -1895,6 +1898,73 @@ public class UtilitiesTestHelper {
 				                    	 }
 				                     exceptionDescriptive(m, l);	
 				                    }		  
+		  }
+
+		/**
+		 * The function create fail logs
+		 * @param Throwable e
+		 * @param StackTraceElement l
+		 * @param WebDriver driver
+		 * @throws IOException
+		 */
+		@SuppressWarnings("unused")
+		public static void getExceptionDescriptive(Throwable e, StackTraceElement l) throws IOException {
+		  	
+		  	 String message1 = null;					
+		  	 try{
+		  		 message1 = e.getCause().toString();
+		  	 } 
+		  	 catch (NullPointerException e1) {
+		  	 message1 = ".getCause() by NullPointerException:";
+		  	 }
+		  	 finally {					
+			  	 String message2 = e.getMessage();
+			  	 String [] multiline1 = message1.replaceAll("\\r", "").split("\\n");
+			  	 String [] multiline2 = message2.replaceAll("\\r", "").split("\\n");
+			  	 String firstLine = multiline1[0];
+			  	 String secondLine = multiline2[0];
+			  	 String errorCause = firstLine.substring(0,firstLine.indexOf(":"));
+			  	 String exceptionThrown = errorCause.substring(1 + errorCause.lastIndexOf("."), errorCause.length());
+			  	 String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+			  	 String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+			  	 String location = packageNameOnly + File.separator + classNameOnly + File.separator + l.getMethodName() + ", line # " + l.getLineNumber();
+			  	 String xml = "<class name=\"" + packageNameOnly + "." + classNameOnly + "\"><methods><include name=\"" + l.getMethodName() + "\"/></methods></class>";
+			  	 String description = exceptionThrown;
+			  	 String detected = getCurrentDateTimeFull();
+			  	 String runtime  = testRunTime("start.time", System.currentTimeMillis());
+			  	 String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
+			  	 fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
+		  	 
+			  	 //getScreenShot(l, description, driver);
+		   
+			  	 // Creating New or Updating existing Failed Counter record:  
+		  	 
+			  	 counter("failed.num");
+		   
+			  	 // Append a New Log record:
+		      
+			  	 if (fileExist("run.log", false)) {
+			  	     fileWriter("run.log", "Error Cause: ---> " + errorCause);
+			  	     fileWriter("run.log", "Description: ---> " + secondLine);
+			  	     fileWriter("run.log", "   Location: ---> " + location);
+		  		  // fileWriter("run.log", "   Detected: ---> " + detected);
+		  		  // fileWriter("run.log", "    Runtime: ---> " + runtime);
+		  		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
+			  	     }
+			  	   
+			  	 // Append an Error record:
+			  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+			  	 fileWriter("failed.log", "   XML Path: "  + xml);			  	   
+			  	 fileWriter("failed.log", "Error Cause: ---> " + errorCause);			  	   
+			  	 fileWriter("failed.log", "Description: ---> " + secondLine);			  	   
+			  	 fileWriter("failed.log", "   Location: ---> " + location);			  	   
+			  	 fileWriter("failed.log", "   Detected: " + detected);			  	   
+			  	 fileWriter("failed.log", "    Runtime: " + runtime);
+			  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
+			  	 fileWriter("failed.log", "");
+			  	 }		  	 
 		  }
 		  
 		  /**

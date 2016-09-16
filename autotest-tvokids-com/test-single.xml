@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="test-single">
+<suite name="test-single" parallel="false">
 
     <listeners>
         <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
@@ -16,7 +16,8 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.HomePage"><methods>
-<include name="testBackgroundColorForAgeGroups"/></methods></class>
+       <!-- <include name="testHomePageBrowserTitle"/> -->
+       <include name="testBackgroundColorForAgeGroups"/></methods></class>
      
         </classes>
      </test>

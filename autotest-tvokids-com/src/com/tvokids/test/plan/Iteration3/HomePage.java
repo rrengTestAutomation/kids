@@ -38,7 +38,8 @@ public class HomePage {
      * <p>Xpath: 1</p>
      * <p>Test Cases: 36104 3852</p>
      */
-	@Test(groups = {"TC-36104","US-3852"}, priority = 40)
+    @Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
+    groups = {"TC-36104","US-3852"}, priority = 40)
 	public void testHomePageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -68,7 +69,8 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36144 3414 742</p>
 	 */
-	@Test(groups = {"US-36144","US-3414","BUG-742","NEW"}, enabled = false, priority = 43)
+	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
+    groups = {"US-36144","US-3414","BUG-742","NEW"}, enabled = true, priority = 43)
 	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
