@@ -21,7 +21,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.tvokids.send.Mail;
 import com.tvokids.email.All;
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
  
 public class ExtentReporterNG implements IReporter {
     private ExtentReports extent;

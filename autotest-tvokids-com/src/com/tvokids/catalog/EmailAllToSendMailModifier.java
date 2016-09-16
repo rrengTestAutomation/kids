@@ -1,7 +1,7 @@
 package com.tvokids.catalog;
 
 import java.io.IOException;
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
 
 public class EmailAllToSendMailModifier {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();

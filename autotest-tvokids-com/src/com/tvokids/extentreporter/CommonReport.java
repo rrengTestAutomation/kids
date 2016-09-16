@@ -2,10 +2,8 @@ package com.tvokids.extentreporter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.IResultMap;
 import org.testng.ITestResult;
-
 import com.relevantcodes.extentreports.LogStatus;
 
 

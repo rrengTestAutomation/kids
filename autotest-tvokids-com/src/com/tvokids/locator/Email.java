@@ -2,8 +2,7 @@ package com.tvokids.locator;
 
 import java.io.File;
 import java.io.IOException;
-
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
 
 @SuppressWarnings("static-access")
 public class Email {

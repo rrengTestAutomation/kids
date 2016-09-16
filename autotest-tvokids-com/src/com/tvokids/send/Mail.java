@@ -29,7 +29,7 @@ import javax.swing.UIManager;
 import org.testng.annotations.BeforeSuite;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Email;
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
 
 @SuppressWarnings("static-access")
 public class Mail {

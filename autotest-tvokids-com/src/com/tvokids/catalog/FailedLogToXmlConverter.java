@@ -1,7 +1,7 @@
 package com.tvokids.catalog;
 
 import java.io.IOException;
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
 
 /**
  * Converts "failed.log" into "test-failed.xml"

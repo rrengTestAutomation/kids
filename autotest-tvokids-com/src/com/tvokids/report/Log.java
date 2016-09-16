@@ -2,10 +2,8 @@ package com.tvokids.report;
 
 import java.io.IOException;
 import java.text.ParseException;
-
 import org.testng.annotations.*;
-
-import com.tvokids.test.helper.UtilitiesTestHelper;
+import com.tvokids.test.helper.*;
 
 @SuppressWarnings("static-access")
 public class Log {
