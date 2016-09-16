@@ -70,7 +70,7 @@ public class HomePage {
 	 * <p>Test Cases: 36144 3414 742</p>
 	 */
 	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"US-36144","US-3414","BUG-742","NEW"}, enabled = true, priority = 43)
+    groups = {"US-36144","US-3414","BUG-742","NEW"}, enabled = false, priority = 43)
 	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
