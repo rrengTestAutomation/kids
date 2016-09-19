@@ -59,7 +59,7 @@ public class HomePage {
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
-    
+
 	/**
 	 * Test Background color for age groups
 	 * <p>Date Created: 2016-09-15</p>

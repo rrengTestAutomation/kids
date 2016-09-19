@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <setupvariables>
+        <item name="retryOnFail"     value="true"/>
+        <item name="retryCountStart" value="0"/>
+        <item name="maxRetryCount"   value="2"/>
+    </setupvariables>
+</config>
