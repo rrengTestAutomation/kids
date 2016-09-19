@@ -1864,8 +1864,11 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
+		      if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  if(fileExist("failed.try",false)) {  
+			  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
               fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
               fileWriter("failed.log", "   XML Path: "  + xml);
@@ -1876,7 +1879,8 @@ public class UtilitiesTestHelper {
 		   	  fileWriter("failed.log", "    Runtime: " + runtime);
 		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   	  fileWriter("failed.log", "");
-		   	  
+		      }}
+		      
 		      // APPEND DESCRIPTIVE RECORD:
 			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
 					                 + "\n  Description: ---> " + secondLine
@@ -1951,8 +1955,11 @@ public class UtilitiesTestHelper {
 			  	     }
 			  	   
 			  	 // Append an Error record:
+			  	 if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  	 if(fileExist("failed.try",false)) {  
+				 fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			  	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
 			  	 fileWriter("failed.log", "   XML Path: "  + xml);			  	   
 			  	 fileWriter("failed.log", "Error Cause: ---> " + errorCause);			  	   
@@ -1962,6 +1969,7 @@ public class UtilitiesTestHelper {
 			  	 fileWriter("failed.log", "    Runtime: " + runtime);
 			  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
 			  	 fileWriter("failed.log", "");
+			  	 }}
 			  	 }		  	 
 		  }
 		  
@@ -1992,8 +2000,11 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
+		      if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			  if(fileExist("failed.try",false)) {  
+			  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
               fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
               fileWriter("failed.log", "   XML Path: "  + xml);
@@ -2004,7 +2015,8 @@ public class UtilitiesTestHelper {
 		   	  fileWriter("failed.log", "    Runtime: " + runtime);
 		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   	  fileWriter("failed.log", "");
-		   	  
+		      }}
+		      
 		      // APPEND DESCRIPTIVE RECORD:
 			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
 					                 + "\n  Description: ---> " + secondLine
@@ -2143,10 +2155,13 @@ public class UtilitiesTestHelper {
 		   		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
+			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				   if(fileExist("failed.try",false)) {  
+				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2156,6 +2171,7 @@ public class UtilitiesTestHelper {
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   		   fileWriter("failed.log", "");
+			       }}
 		      } else {
 			  fileWriterPrinter("\nExpected: " + true + "\n  Actual: " + b + "\n  Result: OK\n");
 			  }
@@ -2197,10 +2213,13 @@ public class UtilitiesTestHelper {
 	   		      // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
+			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				   if(fileExist("failed.try",false)) {  
+				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2209,7 +2228,8 @@ public class UtilitiesTestHelper {
 				   fileWriter("failed.log", "   Detected: " + detected);
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   		   fileWriter("failed.log", "");	    	        
+		   		   fileWriter("failed.log", "");
+			       }}
 		      } else {
 		      fileWriterPrinter("\nExpected: " + expected + "\n  Actual: " + actual + "\n  Result: OK\n");
 		      }
@@ -2251,10 +2271,13 @@ public class UtilitiesTestHelper {
    		          // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 		         }
 			  // Append an Error record:
+			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				   if(fileExist("failed.try",false)) {  
+				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
                    fileWriter("failed.log", "   XML Path: "  + xml);
 				   fileWriter("failed.log", "Error Cause: ---> " + description);
 				   fileWriter("failed.log", "   Location: ---> " + location);
@@ -2263,7 +2286,8 @@ public class UtilitiesTestHelper {
 				   fileWriter("failed.log", "   Detected: " + detected);
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   		   fileWriter("failed.log", "");	    	        
+		   		   fileWriter("failed.log", "");
+			       }}
 		      } else {
 			  fileWriterPrinter("\nExpected: " + false + "\n  Actual: " + b + "\n  Result: OK\n");
 			  }
@@ -2683,11 +2707,11 @@ public class UtilitiesTestHelper {
 			   String date = getCurrentDateTimeFull();
 
 			// Cleaning:
-			   fileCleaner("match.log");
-			   fileCleaner("max.log");
-			   fileCleaner("order.log");
-			   fileCleaner("xml.log");
-			   fileCleaner("error.log");
+			   fileCleaner("match.log" );
+			   fileCleaner("max.log"   );
+			   fileCleaner("order.log" );
+			   fileCleaner("xml.log"   );
+			   fileCleaner("error.log" );
 			   fileCleaner("reason.log");
 			   fileCleaner("start.time");
 			   
@@ -2711,13 +2735,13 @@ public class UtilitiesTestHelper {
 			 */
 			public void startTime(Method method) throws IOException {
 			   String date = getCurrentDateTimeFull();
-
+			   
 			// Cleaning:
-			   fileCleaner("match.log");
-			   fileCleaner("max.log");
-			   fileCleaner("order.log");
-			   fileCleaner("xml.log");
-			   fileCleaner("error.log");
+			   fileCleaner("match.log" );
+			   fileCleaner("max.log"   );
+			   fileCleaner("order.log" );
+			   fileCleaner("xml.log"   );
+			   fileCleaner("error.log" );
 			   fileCleaner("reason.log");
 			   fileCleaner("start.time");
 			   
@@ -2765,15 +2789,17 @@ public class UtilitiesTestHelper {
 			/** Prints Test End and Sub-Total Time */
 			public void endTime() throws IOException {
 			   long finish = System.currentTimeMillis();
+			   fileCleaner("failed.temp"); // fileWriter("failed.temp", "false");
 			   
 			// Cleaning:
-			   fileCleaner("match.log");
-			   fileCleaner("max.log");
-			   fileCleaner("order.log");
-			   fileCleaner("xml.log");
-			   fileCleaner("error.log");
-			   fileCleaner("reason.log");
+			   fileCleaner("match.log"  );
+			   fileCleaner("max.log"    );
+			   fileCleaner("order.log"  );
+			   fileCleaner("xml.log"    );
+			   fileCleaner("error.log"  );
+			   fileCleaner("reason.log" );
 			   fileCleaner("finish.time");
+			   fileCleaner("failed.try" );
 			   
 			   fileWriter("finish.time", convertLongToString(finish));
 			// Scanning Test Counter record:
@@ -3100,6 +3126,16 @@ public class UtilitiesTestHelper {
 			    pw.println(printLine);
 			    pw.close();
 			}
+            
+            /** Over-Writes a File with a String line */
+            public static void fileOverWriter(String fileName, Object printLine) throws NumberFormatException, IOException {
+            	fileCleaner(fileName); fileWriter(fileName, printLine); 
+            }
+            
+            /** Over-Writes a File with a String line */
+            public static void fileOverWriter(String path, String fileName, Object printLine) throws NumberFormatException, IOException {
+            	fileCleaner(path, fileName); fileWriter(path, fileName, printLine); 
+            }
             
 			/** Writes an empty line into "print.log" File, as well as through System Out Print Line */
             public static void fileWriterPrinter() throws NumberFormatException, IOException {
@@ -3599,8 +3635,7 @@ public class UtilitiesTestHelper {
     			outputCleaner(true);
                 fileCleaner("email.all"  );
                 fileCleaner("email.cont" );
-                fileCleaner("email.subj" );
-                fileCleaner("failed.log" );		
+                fileCleaner("email.subj" );	
                 fileCleaner("finish.time");
                 fileCleaner("ini.time"   );
                 fileCleaner("print.log"  );
@@ -3611,7 +3646,9 @@ public class UtilitiesTestHelper {
                 fileCleaner("xml.path"   );
                 fileCleaner("source.html");
                 fileCleaner("test.num"   );
+                fileCleaner("failed.log" );	
                 fileCleaner("failed.num" );
+                fileCleaner("failed.try" );
 			    fileCleaner("coverage.csv");
                 fileCleaner("emailable-report.html");
                 fileCleaner("extent-test-report.html");
@@ -3625,6 +3662,7 @@ public class UtilitiesTestHelper {
         		public void afterCleaner() throws NumberFormatException, IOException{
     			   fileCleaner("ini.time"   );
     			   fileCleaner("failed.num" );
+    			   fileCleaner("failed.try" );
 //    			   fileCleaner("test.num"   );
     			   fileCleaner("add.num"    );
 //    			   fileCleaner("prev.num"   );
@@ -3640,7 +3678,7 @@ public class UtilitiesTestHelper {
         // ####################### LOG FILES HANDLER END #######################
 
             /** Returns Suffix based on Number */
-			public String getNumberSuffix(int num) {
+			public static String getNumberSuffix(int num) {
 				String s = String.valueOf(num);
 				if (s.endsWith("0")) { return "st"; }
 				else if (s.endsWith("1"))  { return "st"; }

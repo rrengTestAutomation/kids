@@ -99,13 +99,14 @@ public class RetryOnFail implements IRetryAnalyzer {
             try {
             	helper.counter("test.num", -1);
             	helper.counter("failed.num", -1);
+            	helper.fileOverWriter("failed.try", (retryCount + 1));
+            	if (retryCount == maxRetryCount - 1) { helper.fileOverWriter("failed.temp", "true"); }          	
 				helper.fileWriter(   "run.log", "\n   Retrying test with status of " + getResultStatusName(result.getStatus()) + " for the " + (retryCount + 2)  + "-" + time[retryCount + 1] + " time:");
-				helper.fileWriter("failed.log",   "   Retrying: " + (retryCount + 2) + "-" + time[retryCount + 1] + " time...\n");
 //				helper.getExceptionDescriptive(result.getThrowable(), result.getThrowable().getStackTrace()[2]);				
 				helper.fileWriterPrinter("   Executed: ---> " +  (retryCount + 1)  + "-" + time[retryCount] + " time");
 				helper.fileWriterPrinter("     Result: ---> "  + getResultStatusName(result.getStatus()));
 				helper.fileWriterPrinter("    Details: "  + err);
-				helper.fileWriterPrinter("\n" + "Retrying the test \"" + result.getTestClass().getName() +"."+ result.getMethod().getMethodName() + "\" with status of " + getResultStatusName(result.getStatus()) + " for the " + (retryCount + 2)  + "-" + time[retryCount + 1] + " time:");
+				helper.fileWriterPrinter("\n" + "Retrying the test \"" + result.getTestClass().getName() +"."+ result.getMethod().getMethodName() + "\" with status of " + getResultStatusName(result.getStatus()) + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
 			} catch (NumberFormatException | IOException e) { /* TODO Auto-generated catch block */ e.printStackTrace(); }
             retryCount++;
             return true;

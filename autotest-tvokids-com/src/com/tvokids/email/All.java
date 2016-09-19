@@ -196,6 +196,7 @@ public class All {
 		helper.fileCleaner("start.time" );
 		helper.fileCleaner("stack.trace");				
 		helper.fileCleaner("xml.path"   );
+        helper.fileCleaner("failed.try" );
 		
 	 // STORE LAST TEST NUMBER:
 		helper.fileCopy("test.num", "last.num");
