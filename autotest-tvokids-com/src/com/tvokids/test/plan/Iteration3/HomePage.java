@@ -24,7 +24,7 @@ import com.tvokids.test.retry.*;
 public class HomePage {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
-
+    
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
@@ -59,7 +59,7 @@ public class HomePage {
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
-
+    
 	/**
 	 * Test Background color for age groups
 	 * <p>Date Created: 2016-09-15</p>

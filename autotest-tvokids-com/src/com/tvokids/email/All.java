@@ -3,6 +3,7 @@ package com.tvokids.email;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Properties;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -21,7 +22,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+
 import org.testng.annotations.*;
+
 import com.tvokids.locator.Email;
 import com.tvokids.locator.Common;
 import com.tvokids.test.helper.*;
@@ -212,13 +215,17 @@ public void finish() throws Exception {
 	if (helper.fileExist("email.subj", false)) { helper.fileCleaner("email.subj"); }
 	String result = "ALL PASSED!";
 	if ( Integer.valueOf(lastTestNum()) == 1 ) { result = "PASSED!"; }
+	
 	if (helper.fileExist("failed.log", false)) { 
 		if (helper.fileExist("failed.num", false)) { 
-			result = "FAILED: " + helper.fileScanner("failed.num");
-			if ( Integer.valueOf(lastTestNum()) == Integer.valueOf(helper.fileScanner("failed.num")) ) { result = "ALL FAILED..."; }
-			if ( Integer.valueOf(lastTestNum()) == 1 ) { result = "FAILED..."; }
+			if (Integer.valueOf(helper.fileScanner("failed.num")) > 0) {
+				result = "FAILED: " + helper.fileScanner("failed.num");
+				if ( Integer.valueOf(lastTestNum()) == Integer.valueOf(helper.fileScanner("failed.num")) ) { result = "ALL FAILED..."; }
+				if ( Integer.valueOf(lastTestNum()) == 1 ) { result = "FAILED..."; }
+				}
+			}
 		}
-		}	
+	
 	String subject = "TVOKids.com ---> Automated " + helper.fileScanner("test.type") + 
 			         " Result ---> Total tests run: " + lastTestNum() + 
 			         " ---> " + result + "  [ " + helper.getCurrentDateYearMonthDay() + "   " + helper.getCurrentTimeHourMin() + " ]";

@@ -9,9 +9,11 @@
     
     <test name="test-single">
         <classes>
-           <class name="com.tvokids.report.Log"></class>
+           <!-- <class name="com.tvokids.report.Log"></class> -->
            <!-- <class name="com.tvokids.send.Mail"></class> -->
            <!-- <class name="com.tvokids.email.All"></class> -->
+
+<class name="com.tvokids.send.Mail"></class>
 
 <!--
 COVERED BY AUTOMATED TEST: -->

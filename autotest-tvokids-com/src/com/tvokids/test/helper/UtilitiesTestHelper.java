@@ -53,11 +53,9 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipOutputStream;
-
+import java.util.zip.ZipEntry;
 import javax.swing.JTextField;
-
 import org.apache.commons.io.FileUtils;
-import org.apache.tools.zip.ZipEntry;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
