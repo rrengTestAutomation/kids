@@ -21,7 +21,6 @@ import org.openqa.selenium.interactions.Actions;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Drupal;
 import com.tvokids.utilities.*;
-import com.tvokids.rerun.*;
 
 @SuppressWarnings("static-access")
 public class BrandPage {
@@ -41,8 +40,7 @@ public class BrandPage {
      * <p>Xpath: 1</p>
      * <p>Test Cases: 36101 3758</p>
      */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-36101","US-3758"}, priority = 39)
+	@Test(groups = {"TC-36101","US-3758"}, priority = 39)
     public void testAgeGroupFiltersOnAllContentPage() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -138,8 +136,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36113 3996</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-36113","US-3996"}, priority = 41)
+	@Test(groups = {"TC-36113","US-3996"}, priority = 41)
 	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -182,8 +179,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36114 3997 699</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-36114","US-3997","BUG-699","OPEN"}, enabled = true, priority = 42)
+	@Test(groups = {"TC-36114","US-3997","BUG-699","OPEN"}, enabled = true, priority = 42)
 	public void testNewSizeOfCharacterBubbleImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:

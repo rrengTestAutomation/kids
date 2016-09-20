@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.testng.annotations.DataProvider;
 
-import com.tvokids.rerun.xmlParser;
+import com.tvokids.retry.xmlParser;
 
 /**
  * Data provider class, provide times to run the test.

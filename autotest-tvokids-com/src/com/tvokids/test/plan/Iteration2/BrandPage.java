@@ -23,7 +23,6 @@ import org.openqa.selenium.interactions.Actions;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Drupal;
 import com.tvokids.utilities.*;
-import com.tvokids.rerun.*;
 
 @SuppressWarnings("static-access")
 public class BrandPage {
@@ -43,8 +42,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131 3229</p> 
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35131","US-3229"}, priority = 1)
+	@Test(groups = {"TC-35131","US-3229"}, priority = 1)
     public void testCustomBrandFieldsExist() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -76,8 +74,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35131 35153 3229</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35131","TC-35153","US-3229"}, priority = 2)
+	@Test(groups = {"TC-35131","TC-35153","US-3229"}, priority = 2)
 	public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
@@ -123,8 +120,7 @@ public class BrandPage {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131 35153 3229 524 528 529</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -226,8 +222,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 35131 3229</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35153","TC-35131","US-3229"}, priority = 4)
+	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 4)
 	public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
@@ -273,8 +268,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 35131 3229</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35153","TC-35131","US-3229"}, priority = 5)
+	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 5)
 	public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -343,8 +337,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 3229 650</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = false, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = false, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -425,8 +418,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34558 3461</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34558","US-3461"}, priority = 23)
+	@Test(groups = {"TC-34558","US-3461"}, priority = 23)
     public void testBrandPageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -489,8 +481,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154 3311</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35154","US-3311"}, priority = 24)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 24)
     public void testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -535,8 +526,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154 3311</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35154","US-3311"}, priority = 25)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 25)
     public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	    	   // INITIALISATION:
@@ -601,8 +591,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154 3311</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35154","US-3311"}, priority = 26)
+	@Test(groups = {"TC-35154","US-3311"}, priority = 26)
     public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -645,8 +634,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35154 3311 35220 3188</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35154","US-3311","TC-35220","US-3188"}, priority = 27)
+	@Test(groups = {"TC-35154","US-3311","TC-35220","US-3188"}, priority = 27)
     public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -714,8 +702,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 707</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","BUG-707","CLOSED"}, priority = 28)
+	@Test(groups = {"TC-35220","US-3188","BUG-707","CLOSED"}, priority = 28)
     public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -757,8 +744,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996"}, priority = 29)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 29)
     public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -801,8 +787,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996"}, priority = 30)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 30)
     public void testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -847,8 +832,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 699</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = true, priority = 31)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = true, priority = 31)
     public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -913,8 +897,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996"}, priority = 32)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 32)
     public void testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -957,8 +940,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996"}, priority = 33)
+	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 33)
     public void testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1004,8 +986,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 708</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35220","US-3188","US-3996","BUG-708","NEW"}, enabled = true, priority = 34)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","NEW"}, enabled = true, priority = 34)
     public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1070,8 +1051,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35158 3610</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35158","US-3610"}, priority = 35)
+	@Test(groups = {"TC-35158","US-3610"}, priority = 35)
     public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1115,8 +1095,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35160 3610</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35160","US-3610"}, priority = 36)
+	@Test(groups = {"TC-35160","US-3610"}, priority = 36)
     public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -1160,8 +1139,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35161 3610</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35161","US-3610"}, priority = 37)
+	@Test(groups = {"TC-35161","US-3610"}, priority = 37)
     public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -1249,8 +1227,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35404 3522 3202</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
+	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
     public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	           

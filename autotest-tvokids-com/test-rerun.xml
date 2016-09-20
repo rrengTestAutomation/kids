@@ -5,6 +5,7 @@
 
     <listeners>
         <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
+        <listener class-name="com.tvokids.retry.RetryListener"/>
     </listeners>
     
     <test name="test-rerun">

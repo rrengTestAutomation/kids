@@ -21,7 +21,6 @@ import org.openqa.selenium.interactions.Actions;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Drupal;
 import com.tvokids.utilities.*;
-import com.tvokids.rerun.*;
 
 @SuppressWarnings("static-access")
 public class Banner {
@@ -41,8 +40,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34144 2025 3655</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34144","US-2025","US-3655"}, priority = 15)
+	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 15)
 	public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -158,8 +156,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34144 2025 3655</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34144","US-2025","US-3655"}, priority = 16)
+	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 16)
 	public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -233,8 +230,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34147 2024 3656</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34147","US-2024","US-3656"}, priority = 17)
+	@Test(groups = {"TC-34147","US-2024","US-3656"}, priority = 17)
 	public void testCharacterBannerIsInfiniteLooped() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -317,8 +313,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34169 2769</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34169","US-2769"}, priority = 18)
+	@Test(groups = {"TC-34169","US-2769"}, priority = 18)
 	public void testTVOKidsLogoIsAnimated() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -367,8 +362,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34460 2829</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34460","US-2829"}, priority = 19)
+	@Test(groups = {"TC-34460","US-2829"}, priority = 19)
 	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -403,8 +397,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34140 1990</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34140","US-1990"}, priority = 20)
+	@Test(groups = {"TC-34140","US-1990"}, priority = 20)
 	public void testTVOKidsLogoRedirectsToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -488,8 +481,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34143 2023</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34143","US-2023"}, priority = 21)
+	@Test(groups = {"TC-34143","US-2023"}, priority = 21)
 	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -598,8 +590,7 @@ public class Banner {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34462 2831</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
-    groups = {"TC-34462","US-2831"}, priority = 22)
+	@Test(groups = {"TC-34462","US-2831"}, priority = 22)
     public void testCharacterBannerInteractivityBubblesAnimationIsCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
