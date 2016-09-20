@@ -1,4 +1,4 @@
-package com.tvokids.test.helper;
+package com.tvokids.utilities;
 
 import java.awt.AWTException;
 import java.awt.Robot;

@@ -1,7 +1,8 @@
 package com.tvokids.catalog;
 
 import java.io.IOException;
-import com.tvokids.test.helper.*;
+
+import com.tvokids.utilities.*;
 
 public class EmailAllToReportLogModifier {
 	static UtilitiesTestHelper helper = new UtilitiesTestHelper();

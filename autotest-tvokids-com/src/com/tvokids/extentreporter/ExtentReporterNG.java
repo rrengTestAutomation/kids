@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 /*
 import java.io.IOException;
 import javax.mail.MessagingException;
@@ -16,12 +17,13 @@ import org.testng.ISuiteResult;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.xml.XmlSuite;
+
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import com.tvokids.send.Mail;
 import com.tvokids.email.All;
-import com.tvokids.test.helper.*;
+import com.tvokids.utilities.*;
  
 public class ExtentReporterNG implements IReporter {
     private ExtentReports extent;

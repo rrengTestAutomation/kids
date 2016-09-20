@@ -27,7 +27,7 @@ import org.testng.annotations.*;
 
 import com.tvokids.locator.Email;
 import com.tvokids.locator.Common;
-import com.tvokids.test.helper.*;
+import com.tvokids.utilities.*;
 
 @SuppressWarnings({ "static-access" })
 public class All {

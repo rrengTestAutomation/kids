@@ -2,7 +2,9 @@ package com.tvokids.rerun;
 
 import java.io.IOException;
 import java.util.Map;
-import com.tvokids.test.helper.*;
+
+import com.tvokids.utilities.*;
+
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 

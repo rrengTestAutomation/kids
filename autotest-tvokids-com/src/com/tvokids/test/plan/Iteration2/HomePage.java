@@ -9,7 +9,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -20,7 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 */
 import java.lang.reflect.Method;
 import com.tvokids.locator.Common;
-import com.tvokids.test.helper.*;
+import com.tvokids.utilities.*;
 import com.tvokids.rerun.*;
 
 @SuppressWarnings("static-access")
