@@ -13,13 +13,12 @@
            <!-- <class name="com.tvokids.send.Mail"></class> -->
            <!-- <class name="com.tvokids.email.All"></class> -->
 
-<class name="com.tvokids.send.Mail"></class>
+<class name="com.tvokids.report.Log"></class>
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.HomePage"><methods>
-       <include name="testHomePageBrowserTitle"/>
-       <include name="testBackgroundColorForAgeGroups"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration3.HomePage"><methods><include name="testHomePageBrowserTitle"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.HomePage"><methods><include name="testResponsiveDesktopAndMobileDevicesHomePageAgeImagesPosition"/></methods></class>
      
         </classes>
      </test>

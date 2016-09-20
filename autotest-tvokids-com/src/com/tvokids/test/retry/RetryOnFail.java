@@ -96,24 +96,36 @@ public class RetryOnFail implements IRetryAnalyzer {
     	String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
         if ( (retryCount < maxRetryCount) && (retryOnFail) ) {
             String err = result.getThrowable().getMessage().toString().replace("\n\n", "\n");
-            try {
-            	helper.counter("test.num", -1);
-            	helper.counter("failed.num", -1);
-            	helper.fileOverWriter("failed.try", (retryCount + 1));
-            	if (retryCount == maxRetryCount - 1) { helper.fileOverWriter("failed.temp", "true"); }          	
-				helper.fileWriter(   "run.log", "\n   Retrying test with status of " + getResultStatusName(result.getStatus())
-						                      + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
-//				helper.getExceptionDescriptive(result.getThrowable(), result.getThrowable().getStackTrace()[2]);				
+            try {            	
+				helper.fileWriter("run.log", "\n   Retrying "
+					 + "Test #" + helper.fileScanner("test.num")
+				  // + "test"
+					 + " with status of " + getResultStatusName(result.getStatus())
+					 + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
+				
+//				helper.getExceptionDescriptive(result.getThrowable(), result.getThrowable().getStackTrace()[2]);
+				
 				helper.fileWriterPrinter("   Executed: ---> " +  (retryCount + 1)  + "-" + time[retryCount] + " time");
 				helper.fileWriterPrinter("     Result: ---> "  + getResultStatusName(result.getStatus()));
 				helper.fileWriterPrinter("    Details: "  + err);
-				helper.fileWriterPrinter("\n" + "Retrying "
+				
+				helper.fileWriterPrinter("\n   Retrying "
+					 + "Test #" + helper.fileScanner("test.num")
 				  // + "the test "
-					 + "\""
+			      // + "\""
 				  // + result.getTestClass().getName() + "."
-				     + result.getMethod().getMethodName() + "\" with status of " + getResultStatusName(result.getStatus())
+				  // + result.getMethod().getMethodName()
+				  // + "\""
+				     + " with status of " + getResultStatusName(result.getStatus())
 				     + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
+				
+            	helper.counter("test.num", -1);
+            	helper.counter("failed.num", -1);
+            	helper.fileOverWriter("failed.try", (retryCount + 1));
+            	if (retryCount == maxRetryCount - 1) { helper.fileOverWriter("failed.temp", "true"); }
+				
 			} catch (NumberFormatException | IOException e) { /* TODO Auto-generated catch block */ e.printStackTrace(); }
+            
             retryCount++;
             return true;
         }
