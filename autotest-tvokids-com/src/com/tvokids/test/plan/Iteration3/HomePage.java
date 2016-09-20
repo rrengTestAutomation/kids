@@ -2,11 +2,14 @@ package com.tvokids.test.plan.Iteration3;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -17,8 +20,9 @@ import org.openqa.selenium.interactions.Actions;
 */
 import java.lang.reflect.Method;
 import com.tvokids.locator.Common;
+import com.tvokids.logger.DataProviderForTest;
 import com.tvokids.test.helper.*;
-import com.tvokids.test.retry.*;
+import com.tvokids.rerun.*;
 
 @SuppressWarnings("static-access")
 public class HomePage {
@@ -69,7 +73,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36144 3414 742</p>
 	 */
-	@Test(retryAnalyzer = RetryOnFail.class, /*dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,*/
+	@Test(retryAnalyzer = RetryOnFail.class, dataProvider = "numberOfTimesToRun", dataProviderClass = DataProviderForTest.class,
     groups = {"US-36144","US-3414","BUG-742","NEW"}, enabled = false, priority = 43)
 	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{

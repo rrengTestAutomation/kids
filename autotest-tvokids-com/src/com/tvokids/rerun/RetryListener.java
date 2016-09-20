@@ -1,4 +1,4 @@
-package com.tvokids.test.retry;
+package com.tvokids.rerun;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

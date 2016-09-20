@@ -1,4 +1,4 @@
-package com.tvokids.test.retry;
+package com.tvokids.logger;
 /**
  * Logger class, responsible to log data to file
  * @author 

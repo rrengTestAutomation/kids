@@ -1,7 +1,10 @@
-package com.tvokids.test.retry;
+package com.tvokids.logger;
 
 import java.util.Map;
+
 import org.testng.annotations.DataProvider;
+
+import com.tvokids.rerun.xmlParser;
 
 /**
  * Data provider class, provide times to run the test.
