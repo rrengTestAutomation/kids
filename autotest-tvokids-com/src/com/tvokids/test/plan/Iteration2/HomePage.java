@@ -255,16 +255,16 @@ public class HomePage {
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
 		       // ASSERT MOBILE LANDSCAPE AGE 5 TITLE IS SIMMETRIC TO AGE 5 IMAGE:
-		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderTitle);		       
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);		       
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));		       
 		       // ASSERT MOBILE LANDSCAPE AGE 6 TITLE IS SIMMETRIC TO AGE 6 IMAGE:
-		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);		       
+		       symmetryRatio = helper.getInternalElementHorizontalalSymmetry(driver, Common.homePageSixAndOverTitle, Common.homePageFiveAndUnderBlock);		       
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], (symmetryRatio >= 75) && (symmetryRatio <= 100));	       
 		       // ASSERT MOBILE LANDSCAPE AGE 5 IMAGE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR RIGHT:
 		       alignment = helper.getElementHorizontalalAlignmentRight(driver, Common.homePageFiveAndUnderImage, Common.homePageFiveAndUnderBlock);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
 		       // ASSERT MOBILE LANDSCAPE AGE 6 IMAGE AND AGE 6 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverBlock);
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverBlock, Common.homePageSixAndOverImage);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 	
 		       // MOBILE PORTRAIT:
@@ -273,13 +273,13 @@ public class HomePage {
 		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);		       
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
 		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
-		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverTitle);
+		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
 		       // ASSERT MOBILE PORTRAIT AGE 5 TITLE AND AGE 5 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
 		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderImage);		       
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);		       
 		       // ASSERT MOBILE PORTRAIT AGE 6 TITLE AND AGE 6 IMAGE ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverImage, Common.homePageSixAndOverTitle);
+		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageSixAndOverTitle, Common.homePageSixAndOverImage);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 	     
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
