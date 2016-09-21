@@ -280,7 +280,7 @@ public class BrandPage {
 	   }
 	
 	/**
-	 * Test display Title while scrolling
+	 * Test display Title while vertical scrolling
 	 * <p>Date Created: 2016-09-21</p>
 	 * <p>Date Modified: 2016-09-21</p>
 	 * <p>Original Version: V1</p>
@@ -289,11 +289,11 @@ public class BrandPage {
 	 * <p>Test Cases: 36146 3496</p>
 	 */
 	@Test(groups = {"TC-36146","US-3496"}, priority = 44)
-	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testDisplayTitleWhileVerticalScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
-	           String title, titleURL, description, xpath, xpathCharTitle;
-	    	   int X, Y, x, y;
+	           String title, titleURL, description, xpath, xpathCharTitle, xpathPageTitle;
+	    	   int Y, y;
 	    	   Long value;
 	    	   
 	           // INITIALISATION:
@@ -312,7 +312,7 @@ public class BrandPage {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-//	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -324,52 +324,62 @@ public class BrandPage {
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
 	           xpathCharTitle = Common.title + Common.TextEntireAddToXpath(title);
+	           xpathPageTitle = Common.titleBrandPage + Common.TextEntireAddToXpath(title);
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
-	           helper.fileWriterPrinter(       "CHAR - TITLE XPATH = " + xpathCharTitle + "\n");
+	           helper.fileWriterPrinter(       "CHAR - TITLE XPATH = " + xpathCharTitle);
+	           helper.fileWriterPrinter(       "PAGE - TITLE XPATH = " + xpathPageTitle + "\n");
 	           
-	           // AGE 5 AND UNDER REDIRECT TEST:	           
+	           // AGE 5 AND UNDER REDIRECT TEST:
+	           driver.manage().window().maximize();
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	           
 	           // NAVIGATE TO BRAND PAGE:
-	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
-	           	           
-//	           // AGE 6 AND OVER REDIRECT TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
-//	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
-		       
-//		       // DESKTOP:
-//		       helper.fileWriterPrinter("\n" + "DESKTOP:");
-//		       driver.manage().window().maximize();
-      
-//	           helper.getUrlWaitUntil(driver, 15, "http://dev30.tvo.org/5-and-under/1474483509561-vrdakleeahrc");
-	        	   
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           	              
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
-		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
-		       
+		       // ASSERT TITLES EXIST:
 		       helper.fileWriterPrinter("nSCROLLING DOWN:\n");
-		       X = driver.manage().window().getSize().getWidth();
 		       Y = driver.manage().window().getSize().getHeight();
 		       y = 0;
-		       while ( y < Y) {
+		       while (y < Y) {
 					helper.fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
-					helper.fileWriterPrinter("Current Char-Title position (coordinate Y) = " + helper.getElementLocationY(driver, xpathCharTitle) + "\n");
 					((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)", "");
 					Thread.sleep(500);
 					value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
 					y = Integer.valueOf(String.valueOf(value));
-//					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
+					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
+					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathPageTitle);
 					}
 		       
-//		       // MOBILE PORTRAIT:
-//		       helper.switchWindowSizeToMobilePortrait(driver);
-	     
+	           // AGE 6 AND OVER REDIRECT TEST:
+		       driver.manage().window().maximize();
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           Thread.sleep(1000);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       // ASSERT TITLES EXIST:
+		       helper.fileWriterPrinter("nSCROLLING DOWN:\n");
+		       Y = driver.manage().window().getSize().getHeight();
+		       y = 0;
+		       while (y < Y) {
+					helper.fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+					((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)", "");
+					Thread.sleep(500);
+					value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+					y = Integer.valueOf(String.valueOf(value));
+					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
+					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathPageTitle);
+					}
+		       
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 }

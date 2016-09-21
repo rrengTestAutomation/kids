@@ -72,7 +72,8 @@ public class Common {
 	  public static String logout = "//a[text()='Log out']";
 
 	  /**********common web elements*******************/	  
-	  public static String title = "//div[@class='tile-title']/h1"; // USED TO BE: "//div[contains(@id,'tile-node')]/h1;"
+	  public static String title                = "//div[@class='tile-title']/h1"; // USED TO BE: "//div[contains(@id,'tile-node')]/h1;"
+	  public static String titleBrandPage       = "//div[@class='content']/h1";
 	  public static String ajaxProgressThrobber = "/descendant::div[@class='ajax-progress ajax-progress-throbber']/div[@class='throbber']";	  
 	  public static String ajaxThrobber         = "//*[contains(.,'ajax')]/descendant::div[@class='throbber']";
 	  public static String throbber             = "/descendant::div[@class='throbber']";
