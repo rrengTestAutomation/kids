@@ -7,7 +7,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -27,9 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
-import org.testng.annotations.BeforeSuite;
-
+import org.testng.annotations.*;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Email;
 import com.tvokids.utilities.*;

@@ -1864,7 +1864,7 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
-		      if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+		      if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  if(fileExist("failed.try",false)) {  
@@ -1911,15 +1911,10 @@ public class UtilitiesTestHelper {
 		 */
 		@SuppressWarnings("unused")
 		public static void getExceptionDescriptive(Throwable e, StackTraceElement l) throws IOException {
-		  	
-		  	 String message1 = null;					
-		  	 try{
-		  		 message1 = e.getCause().toString();
-		  	 } 
-		  	 catch (NullPointerException e1) {
-		  	 message1 = ".getCause() by NullPointerException:";
-		  	 }
-		  	 finally {					
+		   String message1 = null;					
+		   try{ message1 = e.getCause().toString(); } 
+		   catch (NullPointerException e1) { message1 = ".getCause() by NullPointerException:"; }
+		   finally {					
 			  	 String message2 = e.getMessage();
 			  	 String [] multiline1 = message1.replaceAll("\\r", "").split("\\n");
 			  	 String [] multiline2 = message2.replaceAll("\\r", "").split("\\n");
@@ -1955,7 +1950,7 @@ public class UtilitiesTestHelper {
 			  	     }
 			  	   
 			  	 // Append an Error record:
-			  	 if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			  	 if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  	 if(fileExist("failed.try",false)) {  
@@ -2000,7 +1995,7 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
-		      if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+		      if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  if(fileExist("failed.try",false)) {  
@@ -2155,7 +2150,7 @@ public class UtilitiesTestHelper {
 		   		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
-			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2213,7 +2208,7 @@ public class UtilitiesTestHelper {
 	   		      // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
-			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2271,7 +2266,7 @@ public class UtilitiesTestHelper {
    		          // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 		         }
 			  // Append an Error record:
-			       if(fileExist("failed.temp",false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2789,7 +2784,6 @@ public class UtilitiesTestHelper {
 			/** Prints Test End and Sub-Total Time */
 			public void endTime() throws IOException {
 			   long finish = System.currentTimeMillis();
-			   fileCleaner("failed.temp"); // fileWriter("failed.temp", "false");
 			   
 			// Cleaning:
 			   fileCleaner("match.log"  );
@@ -2800,6 +2794,7 @@ public class UtilitiesTestHelper {
 			   fileCleaner("reason.log" );
 			   fileCleaner("finish.time");
 			   fileCleaner("failed.try" );
+			   fileCleaner("failed.temp"); // fileWriter("failed.temp", "false");
 			   
 			   fileWriter("finish.time", convertLongToString(finish));
 			// Scanning Test Counter record:
@@ -3497,13 +3492,16 @@ public class UtilitiesTestHelper {
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "<suite name=\"" + suiteName + "\">");
         		
         		// LISTENERS:
-				String extentReporterClassPath; 
-        		extentReporterClassPath = new Object(){}.getClass().getPackage().getName();
-        		extentReporterClassPath = extentReporterClassPath.substring(0, extentReporterClassPath.lastIndexOf("."));
-        		extentReporterClassPath = extentReporterClassPath.substring(0, extentReporterClassPath.lastIndexOf("."));
-        		extentReporterClassPath = extentReporterClassPath + ".extentreporter.ExtentReporterNG";               
+				String packagePath = new Object(){}.getClass().getPackage().getName();
+				packagePath = packagePath.substring(0, packagePath.lastIndexOf("."));
+				// EXTENT-REPORT XML LISTENER-LINE:
+				String extentReporterClassPath = packagePath + ".extentreporter.ExtentReporterNG";			
+        		// RE-TRY XML LISTENER-LINE:
+				String retryListenerClassPath = packagePath + ".retry.RetryListener";
+				// LISTENERS-BLOCK XML-WRITER :
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "  <listeners>");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "    <listener class-name=\"" + extentReporterClassPath + "\"/>");
+				fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "    <listener class-name=\"" + retryListenerClassPath + "\"/>");
         		fileWriter(System.getProperty("user.dir"), xmlOutputFileName, "  </listeners>");
         		
         		// TEST:
