@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
+//import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -272,5 +277,99 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   }	
+	   }
+	
+	/**
+	 * Test display Title while scrolling
+	 * <p>Date Created: 2016-09-21</p>
+	 * <p>Date Modified: 2016-09-21</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36146 3496</p>
+	 */
+	@Test(groups = {"TC-36146","US-3496"}, priority = 44)
+	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	           String title, titleURL, description, xpath, xpathCharTitle;
+	    	   int X, Y, x, y;
+	    	   Long value;
+	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+//	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           xpathCharTitle = Common.title + Common.TextEntireAddToXpath(title);
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           helper.fileWriterPrinter(       "CHAR - TITLE XPATH = " + xpathCharTitle + "\n");
+	           
+	           // AGE 5 AND UNDER REDIRECT TEST:	           
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+	           	           
+//	           // AGE 6 AND OVER REDIRECT TEST:
+//	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
+//	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+//	           // NAVIGATE TO BRAND PAGE:
+//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+		       
+//		       // DESKTOP:
+//		       helper.fileWriterPrinter("\n" + "DESKTOP:");
+//		       driver.manage().window().maximize();
+      
+//	           helper.getUrlWaitUntil(driver, 15, "http://dev30.tvo.org/5-and-under/1474483509561-vrdakleeahrc");
+	        	   
+		       // MOBILE LANDSCAPE:
+		       helper.switchWindowSizeToMobileLandscape(driver);
+		       helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
+		       
+		       helper.fileWriterPrinter("nSCROLLING DOWN:\n");
+		       X = driver.manage().window().getSize().getWidth();
+		       Y = driver.manage().window().getSize().getHeight();
+		       y = 0;
+		       while ( y < Y) {
+					helper.fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+					helper.fileWriterPrinter("Current Char-Title position (coordinate Y) = " + helper.getElementLocationY(driver, xpathCharTitle) + "\n");
+					((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)", "");
+					Thread.sleep(500);
+					value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+					y = Integer.valueOf(String.valueOf(value));
+//					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
+					}
+		       
+//		       // MOBILE PORTRAIT:
+//		       helper.switchWindowSizeToMobilePortrait(driver);
+	     
+	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
 }

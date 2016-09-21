@@ -54,7 +54,9 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.swing.JTextField;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -824,6 +826,15 @@ public class UtilitiesTestHelper {
 		  if(string.length() < length) { length = string.length(); }
 		  if(string.length() > 0) { string = string.substring(0, length); }
 		  return reFormatStringForURL(string);
+		  }
+	
+	/**
+	 * Get the beginning of a String as per given length
+	 */
+	public String getStringBeginning(String string, int length) {
+		  if(string.length() < length) { length = string.length(); }
+		  if(string.length() > 0) { string = string.substring(0, length); }
+		  return string;
 		  }
 	 
 	  /**
@@ -5492,6 +5503,18 @@ public class UtilitiesTestHelper {
 	    Thread.sleep(1000);
 	}
 	
+	public void scrollVertical(WebDriver driver, int stepPixel, int stepTimeMSec, Boolean ifPrompt) throws IOException, InterruptedException {
+	    int Y = driver.manage().window().getSize().getHeight();
+	    int y = 0;
+	    while ( y < Y) {
+				fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+				((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + stepPixel + ")", "");
+				Thread.sleep(stepTimeMSec);
+				Long value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+				y = Integer.valueOf(String.valueOf(value));
+				}  
+	}
+	
 	public String stringsDifference(String str1, String str2) {
 		int INDEX_NOT_FOUND = -1;
 		String EMPTY = "";
@@ -6025,16 +6048,20 @@ public class UtilitiesTestHelper {
 		return alignment;
 		}
 	
-	/** Outputs element Hight */
-	public int getElementHeight(WebDriver driver, WebElement element) { return element.getSize().getHeight(); }
+	/** Outputs element X-Location */
+	public int getElementLocationX(WebDriver driver, WebElement element) { return element.getLocation().getX(); }
+	public int getElementLocationX(WebDriver driver, String xpath) { return getElementLocationX(driver, driver.findElement(By.xpath(xpath))); }
+	
+	/** Outputs element Y-Location */
+	public int getElementLocationY(WebDriver driver, WebElement element) { return element.getLocation().getY(); }
+	public int getElementLocationY(WebDriver driver, String xpath) { return getElementLocationY(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** Outputs element Hight */
+	public int getElementHeight(WebDriver driver, WebElement element) { return element.getSize().getHeight(); }
 	public int getElementHeight(WebDriver driver, String xpath) { return getElementHeight(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** Outputs element Width */
 	public int getElementWidth(WebDriver driver, WebElement element) { return element.getSize().getWidth(); }
-	
-	/** Outputs element Width */
 	public int getElementWidth(WebDriver driver, String xpath) { return getElementWidth(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** 
