@@ -1851,7 +1851,7 @@ public class UtilitiesTestHelper {
 		      subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		     
 			  fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
-			  getScreenShot(l, description, driver);
+			  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  
 		      // APPEND A NEW LOG RECORD:
 		      if (fileExist("run.log", false)) {
@@ -1932,7 +1932,7 @@ public class UtilitiesTestHelper {
 			  	 String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 			  	 fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
 		  	 
-			  	 //getScreenShot(l, description, driver);
+			  	 //if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 		   
 			  	 // Creating New or Updating existing Failed Counter record:  
 		  	 
@@ -2136,7 +2136,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");
-		  	  getScreenShot(l, description, driver);
+		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2194,7 +2194,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (actual.equals(expected) == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + expected + "\n     Actual: ---> " + actual + "\n");
-		  	  getScreenShot(l, description, driver);
+		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2252,7 +2252,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == true) {			  
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "false" + "\n     Actual: ---> " + b + "\n");
-		  	  getScreenShot(l, description, driver);
+		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
