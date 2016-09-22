@@ -294,6 +294,9 @@ public class BrandPage {
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, xpathCharTitle, xpathPageTitle;
 	    	   int Y, y;
+	    	   int charTitleTopY, charTitleH, charTitleBottomY;
+	    	   int pageTitleTopY, pageTitleH, pageTitleBottomY;
+	    	   Boolean charTitleVisible, pageTitleVisible;
 	    	   Long value;
 	    	   
 	           // INITIALISATION:
@@ -345,13 +348,27 @@ public class BrandPage {
 		       Y = driver.manage().window().getSize().getHeight();
 		       y = 0;
 		       while (y < Y) {
-					helper.fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+		    	   	// MEASUREMENT LOGIC OF SWITHING TITLES VISIBILITY:				
+					charTitleTopY    = helper.getElementLocationY(driver, xpathCharTitle) - y;
+					charTitleH       = helper.getElementHeight(driver, xpathCharTitle);
+					charTitleBottomY = charTitleTopY + charTitleH;
+					charTitleVisible  = ( (charTitleH > 0) && (charTitleBottomY > charTitleH) );
+					pageTitleTopY    = helper.getElementLocationY(driver, xpathPageTitle) - y;
+					pageTitleH       = helper.getElementHeight(driver, xpathPageTitle);
+					pageTitleBottomY = pageTitleTopY + pageTitleH;
+					pageTitleVisible  = ( (pageTitleH > 0) && (pageTitleBottomY > pageTitleH) );					
+					helper.fileWriterPrinter("Current Scroll-Bar Y-position (screen coordinate) = " + y);
+					helper.fileWriterPrinter("Current Char-Title (VISIBLE, HEIGHT, TOP, BOTTOM) = " + charTitleVisible + ", " + charTitleH + ", " + charTitleTopY + ", " + charTitleBottomY);
+					helper.fileWriterPrinter("Current Page-Title (VISIBLE, HEIGHT, TOP, BOTTOM) = " + pageTitleVisible + ", " + pageTitleH + ", " + pageTitleTopY + ", " + pageTitleBottomY);
+					
+					// ASSERT SWITHING TITLES VISIBILITY:
+					helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (charTitleVisible || pageTitleVisible));
+					
+					// ONE-MORE DOWN-STEP SCROLL:
 					((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)", "");
 					Thread.sleep(500);
 					value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
 					y = Integer.valueOf(String.valueOf(value));
-					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
-					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathPageTitle);
 					}
 		       
 	           // AGE 6 AND OVER REDIRECT TEST:
@@ -371,13 +388,27 @@ public class BrandPage {
 		       Y = driver.manage().window().getSize().getHeight();
 		       y = 0;
 		       while (y < Y) {
-					helper.fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+		    	   	// MEASUREMENT LOGIC OF SWITHING TITLES VISIBILITY:				
+					charTitleTopY    = helper.getElementLocationY(driver, xpathCharTitle) - y;
+					charTitleH       = helper.getElementHeight(driver, xpathCharTitle);
+					charTitleBottomY = charTitleTopY + charTitleH;
+					charTitleVisible  = ( (charTitleH > 0) && (charTitleBottomY > charTitleH) );
+					pageTitleTopY    = helper.getElementLocationY(driver, xpathPageTitle) - y;
+					pageTitleH       = helper.getElementHeight(driver, xpathPageTitle);
+					pageTitleBottomY = pageTitleTopY + pageTitleH;
+					pageTitleVisible  = ( (pageTitleH > 0) && (pageTitleBottomY > pageTitleH) );					
+					helper.fileWriterPrinter("Current Scroll-Bar Y-position (screen coordinate) = " + y);
+					helper.fileWriterPrinter("Current Char-Title (VISIBLE, HEIGHT, TOP, BOTTOM) = " + charTitleVisible + ", " + charTitleH + ", " + charTitleTopY + ", " + charTitleBottomY);
+					helper.fileWriterPrinter("Current Page-Title (VISIBLE, HEIGHT, TOP, BOTTOM) = " + pageTitleVisible + ", " + pageTitleH + ", " + pageTitleTopY + ", " + pageTitleBottomY);
+					
+					// ASSERT SWITHING TITLES VISIBILITY:
+					helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (charTitleVisible || pageTitleVisible));
+					
+					// ONE-MORE DOWN-STEP SCROLL:
 					((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)", "");
 					Thread.sleep(500);
 					value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
 					y = Integer.valueOf(String.valueOf(value));
-					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathCharTitle);
-					helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpathPageTitle);
 					}
 		       
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }

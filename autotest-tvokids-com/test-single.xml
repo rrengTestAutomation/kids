@@ -18,9 +18,8 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.HomePage"><methods>
-       <include name="testDisplayTitleWhileScrolling"/>
-       </methods></class>
+<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+<include name="testDisplayTitleWhileScrolling"/></methods></class>
      
         </classes>
      </test>
