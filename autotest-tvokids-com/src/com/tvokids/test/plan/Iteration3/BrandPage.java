@@ -280,7 +280,7 @@ public class BrandPage {
 	   }
 	
 	/**
-	 * Test display Title while vertical scrolling
+	 * Test display Title while scrolling
 	 * <p>Date Created: 2016-09-21</p>
 	 * <p>Date Modified: 2016-09-21</p>
 	 * <p>Original Version: V1</p>
@@ -289,7 +289,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36146 3496</p>
 	 */
 	@Test(groups = {"TC-36146","US-3496"}, priority = 44)
-	public void testDisplayTitleWhileVerticalScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, xpathCharTitle, xpathPageTitle;
@@ -341,7 +341,7 @@ public class BrandPage {
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
 		       // ASSERT TITLES EXIST:
-		       helper.fileWriterPrinter("nSCROLLING DOWN:\n");
+		       helper.fileWriterPrinter("\nSCROLLING DOWN:\n");
 		       Y = driver.manage().window().getSize().getHeight();
 		       y = 0;
 		       while (y < Y) {
@@ -367,7 +367,7 @@ public class BrandPage {
 		       // MOBILE LANDSCAPE:
 		       helper.switchWindowSizeToMobileLandscape(driver);
 		       // ASSERT TITLES EXIST:
-		       helper.fileWriterPrinter("nSCROLLING DOWN:\n");
+		       helper.fileWriterPrinter("\nSCROLLING DOWN:\n");
 		       Y = driver.manage().window().getSize().getHeight();
 		       y = 0;
 		       while (y < Y) {
@@ -382,4 +382,5 @@ public class BrandPage {
 		       
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
+	
 }
