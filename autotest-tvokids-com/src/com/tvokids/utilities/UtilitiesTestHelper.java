@@ -35,28 +35,11 @@ import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
-import java.util.zip.ZipOutputStream;
-import java.util.zip.ZipEntry;
-
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+import java.util.zip.*;
 import javax.swing.JTextField;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -86,6 +69,7 @@ import org.testng.annotations.Test;
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
+import com.tvokids.retry.*;
 
 public class UtilitiesTestHelper {
 	WebDriver driverHelper;
@@ -1862,7 +1846,7 @@ public class UtilitiesTestHelper {
 		      subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		     
 			  fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
-			  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+			  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  
 		      // APPEND A NEW LOG RECORD:
 		      if (fileExist("run.log", false)) {
@@ -1875,7 +1859,7 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
-		      if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  if(fileExist("failed.try",false)) {  
@@ -1890,7 +1874,7 @@ public class UtilitiesTestHelper {
 		   	  fileWriter("failed.log", "    Runtime: " + runtime);
 		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   	  fileWriter("failed.log", "");
-		      }}
+		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
 			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
@@ -1943,7 +1927,7 @@ public class UtilitiesTestHelper {
 			  	 String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 			  	 fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
 		  	 
-			  	 //if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+			  	 //if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 		   
 			  	 // Creating New or Updating existing Failed Counter record:  
 		  	 
@@ -1961,7 +1945,7 @@ public class UtilitiesTestHelper {
 			  	     }
 			  	   
 			  	 // Append an Error record:
-			  	 if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			  	 if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  	 if(fileExist("failed.try",false)) {  
@@ -1975,7 +1959,7 @@ public class UtilitiesTestHelper {
 			  	 fileWriter("failed.log", "    Runtime: " + runtime);
 			  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
 			  	 fileWriter("failed.log", "");
-			  	 }}
+			  	 }
 			  	 }		  	 
 		  }
 		  
@@ -2006,7 +1990,7 @@ public class UtilitiesTestHelper {
 		      }
 		      
 		      // APPEND AN ERROR RECORD:
-		      if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 			  if(fileExist("failed.try",false)) {  
@@ -2021,7 +2005,7 @@ public class UtilitiesTestHelper {
 		   	  fileWriter("failed.log", "    Runtime: " + runtime);
 		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   	  fileWriter("failed.log", "");
-		      }}
+		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
 			  Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
@@ -2147,7 +2131,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");
-		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2161,7 +2145,8 @@ public class UtilitiesTestHelper {
 		   		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
-			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			     if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ){}
+			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2177,7 +2162,7 @@ public class UtilitiesTestHelper {
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   		   fileWriter("failed.log", "");
-			       }}
+			       }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + true + "\n  Actual: " + b + "\n  Result: OK\n");
 			  }
@@ -2205,7 +2190,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (actual.equals(expected) == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + expected + "\n     Actual: ---> " + actual + "\n");
-		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2219,7 +2204,7 @@ public class UtilitiesTestHelper {
 	   		      // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
 			  // Append an Error record:
-			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2235,7 +2220,7 @@ public class UtilitiesTestHelper {
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   		   fileWriter("failed.log", "");
-			       }}
+			       }
 		      } else {
 		      fileWriterPrinter("\nExpected: " + expected + "\n  Actual: " + actual + "\n  Result: OK\n");
 		      }
@@ -2263,7 +2248,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == true) {			  
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "false" + "\n     Actual: ---> " + b + "\n");
-		  	  if( fileExist("failed.temp", false) && Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2277,7 +2262,7 @@ public class UtilitiesTestHelper {
    		          // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 		         }
 			  // Append an Error record:
-			       if(fileExist("failed.temp", false)) { if(Boolean.valueOf(fileScanner("failed.temp"))) {
+			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				   if(fileExist("failed.try",false)) {  
@@ -2293,7 +2278,7 @@ public class UtilitiesTestHelper {
 		   		   fileWriter("failed.log", "    Runtime: " + runtime);
 		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
 		   		   fileWriter("failed.log", "");
-			       }}
+			       }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + false + "\n  Actual: " + b + "\n  Result: OK\n");
 			  }
@@ -6529,5 +6514,15 @@ public class UtilitiesTestHelper {
 		    return i;
 		    }
 	    // ########### ELEMENT APPEARER END ############
+	    
+//	    /**
+//	     * Retreaving Retry On Fail parameter from Configuration File (EXTERNAL)
+//	     * @throws IOException 
+//	     */
+//		public Boolean retryOnFail() throws IOException {
+//		  Map<String, String> configs;
+//		  configs = xmlParser.parseConfigFileXMLforVariables("config.xml","setupvariables");
+//		  return Boolean.parseBoolean(configs.get("retryOnFail"));
+//	     } 
     
 }

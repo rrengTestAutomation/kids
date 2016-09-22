@@ -18,9 +18,9 @@ public class RetryOnFail implements IRetryAnalyzer {
 	
     /**
      * Retreaving Retry On Fail parameter from Configuration File (EXTERNAL)
-     * @throws Exception 
+     * @throws IOException 
      */
-	public Boolean retryOnFail() throws Exception {
+	public static Boolean retryOnFail() throws IOException {
 	  Map<String, String> configs;
 	  configs = xmlParser.parseConfigFileXMLforVariables("config.xml","setupvariables");
 	  return Boolean.parseBoolean(configs.get("retryOnFail"));
@@ -28,9 +28,9 @@ public class RetryOnFail implements IRetryAnalyzer {
 	
     /**
      * Retreaving Start Retry Count parameter from Configuration File (EXTERNAL)
-     * @throws Exception 
+     * @throws IOException 
      */
-	public int retryCountStart() throws Exception {
+	public int retryCountStart() throws IOException {
 	  Map<String, String> configs;
 	  configs = xmlParser.parseConfigFileXMLforVariables("config.xml","setupvariables");
 	  return Integer.parseInt(configs.get("retryCountStart"));
@@ -38,9 +38,9 @@ public class RetryOnFail implements IRetryAnalyzer {
 	    
     /**
      * Retreaving Max Retry Count parameter from Configuration File (EXTERNAL)
-     * @throws Exception 
+     * @throws IOException 
      */
-	public int maxRetryCount() throws Exception {
+	public int maxRetryCount() throws IOException {
 	  Map<String, String> configs;
 	  configs = xmlParser.parseConfigFileXMLforVariables("config.xml","setupvariables");
 	  return Integer.parseInt(configs.get("maxRetryCount"));
@@ -48,9 +48,9 @@ public class RetryOnFail implements IRetryAnalyzer {
   
     /**
      * Activating Max Retry Count parameter from Configuration File using Constructor
-     * @throws Exception
+     * @throws IOException
      */
-	public RetryOnFail() throws Exception {
+	public RetryOnFail() throws IOException {
 		super();		
 //	    // INTERNAL RETREAVING (OPTIONAL ALL-IN-ONE):
 //		Map<String, String> configs;

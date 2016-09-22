@@ -1,5 +1,6 @@
 package com.tvokids.retry;
 
+import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import org.w3c.dom.NodeList;
 public class xmlParser {
 	
 		public static Map<String, String> parseConfigFileXMLforVariables(
-				String xmlPath, String tagName) throws Exception {
+				String xmlPath, String tagName) throws IOException {
 			try {
 				Map<String, String> configs = new HashMap<String, String>();
 
@@ -35,7 +36,7 @@ public class xmlParser {
 				return configs;
 			} catch (Throwable t) {
 				// Logger.writeErrorLogEntry(t.getMessage());
-				throw new Exception(t.getMessage());
+				throw new IOException(t.getMessage());
 			}
 		}
 
