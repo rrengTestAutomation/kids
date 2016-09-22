@@ -67,6 +67,7 @@ public class RetryOnFail implements IRetryAnalyzer {
 //     * Below method returns 'true' if the test method has to be retried else 'false'
 //     * and it takes the 'Result' as parameter of the test method that just ran
 //     */
+//	  @Override
 //    public boolean retry(ITestResult result) {
 //      String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
 //      if (retryCount < maxRetryCount) {
@@ -93,6 +94,7 @@ public class RetryOnFail implements IRetryAnalyzer {
      * and it takes the 'Result' as parameter of the test method that just ran
      */
     @SuppressWarnings("static-access")
+    @Override
 	public boolean retry(ITestResult result) {
     	UtilitiesTestHelper helper = new UtilitiesTestHelper();
     	String[] time = {"st","nd","rd","th","th","th","th","th","th","th","th","th","th","th"};
