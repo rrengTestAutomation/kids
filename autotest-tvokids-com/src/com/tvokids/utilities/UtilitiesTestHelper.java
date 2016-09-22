@@ -3316,7 +3316,15 @@ public class UtilitiesTestHelper {
         	        && (!str.contains("\"closeBrowsers\""))
         	        && (!str.contains("\"endTime\""))
         	        && (!str.contains("\"start\""))
-        	        && (!str.contains("\"finish\""))       	        
+        	        && (!str.contains("\"finish\""))      	        
+        	        && (!str.contains("groups>")) 
+        	        && (!str.contains("run>"))
+        	        && (!str.contains("\"TC-"))
+        	        && (!str.contains("\"US-"))
+        	        && (!str.contains("\"BUG-"))
+        	        && (!str.contains("\"CLOSED\""))
+        	        && (!str.contains("\"OPEN\""))
+        	        && (!str.contains("\"REJECTED\""))    	        
         	        && (str.length() != 0)       	        
         	        	) { lines.add(str); }
         	        }

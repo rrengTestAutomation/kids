@@ -2,7 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="test-group"> 
-   
+
+  <listeners>
+    <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
+    <listener class-name="com.tvokids.retry.RetryListener"/>
+  </listeners>
+
   <test name="before-cleaner">
 
     <classes>
@@ -13,7 +18,7 @@
   
   <test verbose="1" name="test-group">
         <groups><run>       
-        <include name="TC-36146"/>
+        <include name="TC-36144"/>
         </run></groups>
         <packages><package name="com.tvokids.test.*"></package></packages>      
   </test>
