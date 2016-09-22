@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="test-single" parallel="false">
-
+<suite name="test-single">
+    
     <listeners>
         <listener class-name="com.tvokids.extentreporter.ExtentReporterNG"/>
         <listener class-name="com.tvokids.retry.RetryListener"/>
     </listeners>
     
-    <test name="test-single">
+    <test verbose="1" name="test-single">
         <classes>
            <!-- <class name="com.tvokids.report.Log"></class> -->
            <!-- <class name="com.tvokids.send.Mail"></class> -->

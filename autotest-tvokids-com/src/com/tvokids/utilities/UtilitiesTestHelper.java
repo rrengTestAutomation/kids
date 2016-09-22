@@ -6521,16 +6521,5 @@ public class UtilitiesTestHelper {
 		    Thread.sleep(1000);
 		    return i;
 		    }
-	    // ########### ELEMENT APPEARER END ############
-	    
-//	    /**
-//	     * Retreaving Retry On Fail parameter from Configuration File (EXTERNAL)
-//	     * @throws IOException 
-//	     */
-//		public Boolean retryOnFail() throws IOException {
-//		  Map<String, String> configs;
-//		  configs = xmlParser.parseConfigFileXMLforVariables("config.xml","setupvariables");
-//		  return Boolean.parseBoolean(configs.get("retryOnFail"));
-//	     } 
-    
+	    // ########### ELEMENT APPEARER END ############ 
 }
