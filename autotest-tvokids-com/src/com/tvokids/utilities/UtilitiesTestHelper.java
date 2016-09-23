@@ -5484,29 +5484,84 @@ public class UtilitiesTestHelper {
 	}
 	/* ##### TAB SWITCH HANDLER WITH CLICK END ##### */
 				
+	/* ##### NAVIGATION START ##### */		
 	public void moveToElement(WebDriver driver, String scrollTo) throws InterruptedException{
-		moveToElement(driver, By.xpath(scrollTo));
-	}
-	
-	public void moveToElement(WebDriver driver, By by) throws InterruptedException{
-        WebElement element = driver.findElement(by);
+        WebElement element = driver.findElement(By.xpath(scrollTo));
         Coordinates coordinate = ((Locatable)element).getCoordinates(); 
         coordinate.onPage(); 
         coordinate.inViewPort();
 	    Thread.sleep(1000);
-	}
+	    }
 	
-	public void scrollVertical(WebDriver driver, int stepPixel, int stepTimeMSec, Boolean ifPrompt) throws IOException, InterruptedException {
-	    int Y = driver.manage().window().getSize().getHeight();
+	public void moveToElement(WebDriver driver, By element) throws InterruptedException{
+        WebElement e = driver.findElement(element);
+        Coordinates coordinate = ((Locatable)e).getCoordinates(); 
+        coordinate.onPage(); 
+        coordinate.inViewPort();
+	    Thread.sleep(1000);
+	    }
+	
+	public void moveToElementCenter(WebDriver driver, By element) throws InterruptedException, IOException{
+        WebElement e = driver.findElement(element);
+        String name = ""; 
+        int windowCenterX = driver.manage().window().getSize().getWidth()/2;
+        int windowCenterY = driver.manage().window().getSize().getHeight()/2;	        
+        int elementX = getElementLocationX(driver, e) + getElementWidth(driver, e)/2;
+        int elementY = getElementLocationY(driver, e) + getElementHeight(driver, e)/2;	        
+        String dirX = "NOT REQUIRED", dirY = "NOT REQUIRED";        
+        int scrollX  = windowCenterX - elementX; if(scrollX < 0) {dirX = "LEFT";} else if(scrollX > 0) {dirX = "RIGHT";}
+        int scrollY  = windowCenterY - elementY; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }	        
+        if(!e.getText().isEmpty()) { name = "\"" + e.getText() + "\" "; }
+        fileWriterPrinter("\nELEMENT " + name + "WILL BE PLACED INTO CENTER OF SCREEN BY:");
+        fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(" + scrollX + ",0)", "");
+        Thread.sleep(1000);	        
+        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
+        Thread.sleep(1000);
+        }
+
+	public void moveToWindowTopLeft(WebDriver driver) throws InterruptedException, IOException{
+        Long valueX = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageXOffset;");
+        Long valueY = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");	        
+        int x = Integer.valueOf(String.valueOf(valueX));
+        int y = Integer.valueOf(String.valueOf(valueY));
+        String dirX = "NOT REQUIRED", dirY = "NOT REQUIRED";	        
+        int scrollX  = -x; if(scrollX < 0) {dirX = "LEFT";} else if(scrollX > 0) {dirX = "RIGHT";}
+        int scrollY  = -y; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }
+        fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP-LEFT BY:");
+        fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(" + scrollX + ",0)", "");
+        Thread.sleep(1000);
+        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
+        Thread.sleep(1000);
+        }
+	
+	public void moveToWindowTop(WebDriver driver) throws InterruptedException, IOException{
+        Long valueY = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+        int y = Integer.valueOf(String.valueOf(valueY));
+        String dirY = "NOT REQUIRED";
+        int scrollY  = -y; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }
+        fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP BY:");
+        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
+        Thread.sleep(1000);
+	    }
+	  
+	public void scrollVerticalUntilWindowPercent(WebDriver driver, int percentOfWindowToStop, int percentOfWindowToStep, int stepTimeMilliseconds, Boolean ifPrompt) throws IOException, InterruptedException {
+		moveToWindowTop(driver);
+		int Y = driver.manage().window().getSize().getHeight();
 	    int y = 0;
-	    while ( y < Y) {
+	    while ( y < (Y*percentOfWindowToStop/100)) {
 				fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
-				((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + stepPixel + ")", "");
-				Thread.sleep(stepTimeMSec);
+				((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + (Y*percentOfWindowToStep/100) + ")", "");
+				Thread.sleep(stepTimeMilliseconds);
 				Long value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
 				y = Integer.valueOf(String.valueOf(value));
-				}  
-	}
+				}
+	    }
+	/* ##### NAVIGATION END ##### */
 	
 	public String stringsDifference(String str1, String str2) {
 		int INDEX_NOT_FOUND = -1;
