@@ -528,8 +528,9 @@ public class UtilitiesTestHelper {
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
-			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText,
+			                      Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
+			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile, Boolean ifPublish
 			                     ) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
@@ -588,7 +589,7 @@ public class UtilitiesTestHelper {
 				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateLarge)).clear(); driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText); }
 				}
 			
-			if(tile.length() > 0) { addTilePlacement(driver, tile);}
+			if(tile.length() > 0) { addTilePlacement(driver, tile, ifPublish);}
 
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
@@ -597,6 +598,20 @@ public class UtilitiesTestHelper {
 			
 //		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
             return fingerprint;
+	  }
+	
+	/**
+	 * Create a Custom Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText,
+			                      Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
+			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile
+			                     ) throws AWTException, InterruptedException, IOException
+	  {
+		return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, ifAlternateText, ifSubmit, ifRetry, t, bannerImage, heroImage, titleSmallImage, titleLargeImage, tile, true);
 	  }
 	
 	/**
@@ -1358,10 +1373,23 @@ public class UtilitiesTestHelper {
 	    * @throws IOException
 	    */
 	  public void addTilePlacement(WebDriver driver, String tileTextSelection) throws IOException {
+		  addTilePlacement(driver, tileTextSelection, true);
+		  }
+	  
+	   /**
+	    * Add Tile Placement
+		* @throws AWTException 
+	    * @throws IOException
+	    */
+	  public void addTilePlacement(WebDriver driver, String tileTextSelection, Boolean ifPublish) throws IOException {
+		  String tab = Drupal.tileVerticalTab + Drupal.verticalTabActive;
+		  ajaxProtectedClick(driver, tab, "", false, "", true, false);;
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
-		  ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, 5, false);
+		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, 5, false); }
 		  ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, 5, false);
 		  }
+	  
+	  // optgroup label="Custom Brand Pages"
 	  
 	  /**
 	   * Image tab-clicked upload

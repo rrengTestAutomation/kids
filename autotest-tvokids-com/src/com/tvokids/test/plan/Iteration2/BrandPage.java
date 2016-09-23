@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +13,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -1216,23 +1219,6 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, BrandPageUrlAgeSix, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	       }
-	
-	/**
-	 * Test sort Tiles on the reorder interface
-	 * <p>Date Created: 2016-09-09</p>
-	 * <p>Date Modified: 2016-09-09</p>
-	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
-	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35404 3522 3202</p>
-	 */
-	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
-    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
-	       try{
-	           
-	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-
 	       }
 	
 }

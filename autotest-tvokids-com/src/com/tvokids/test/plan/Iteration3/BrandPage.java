@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -36,6 +38,60 @@ public class BrandPage {
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
 
+	/**
+	 * Test sort Tiles on the reorder interface
+	 * <p>Date Created: 2016-09-09</p>
+	 * <p>Date Modified: 2016-09-09</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35404 3522 3202</p>
+	 */
+	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
+    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
+	   try{
+    	   // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+           
+           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           helper.logIn(driver,"content_editor","changeme");
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           
+           // DECLARATION:
+           int total = 3;
+           String[] title = new String[total];
+           String[] titleURL = new String[total];
+           String[] description = new String[total];
+           String[] xpath = new String[total];
+           long[] fingerprint = new long[total];
+           String tile = "";
+           
+           for (int i = 0; i < total; i++) {
+        	   // CREATE TITLES FOR CONTENTS:
+        	   fingerprint[i] = System.currentTimeMillis();
+        	   title[i] = String.valueOf(fingerprint[i]) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+        	   title[i] = helper.getStringBeginning(title[i], Drupal.titleMaxCharsNumber);
+        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
+        	   // CREATE DESCRIPTION FOR CONTENT:
+        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+        	   // LINK GENERIC XPATH:
+	           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
+    		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
+	           if(i > 0) { tile = title[0]; }
+
+    		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new RuntimeException().getStackTrace()[0],
+    				                   "bubble.jpg", "hero.jpg", "small.jpg", "", tile, true
+    				                   );	           
+    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");
+           }
+             
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
+	}
+	
     /**
      * Test Age group filters on the "ALL Content" page in Drupal
      * <p>Date Created: 2016-09-12</p>
