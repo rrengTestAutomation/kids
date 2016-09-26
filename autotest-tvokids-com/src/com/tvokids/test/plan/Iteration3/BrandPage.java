@@ -1,5 +1,6 @@
 package com.tvokids.test.plan.Iteration3;
 
+import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -9,10 +10,15 @@ import org.openqa.selenium.By;
 //import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
+
+
 
 
 
@@ -46,9 +52,11 @@ public class BrandPage {
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35404 3522 3202</p>
+	 * @throws InterruptedException 
+	 * @throws AWTException 
 	 */
 	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
-    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException {
+    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException, AWTException {
 	   try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -82,14 +90,70 @@ public class BrandPage {
 	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
     		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	           if(i > 0) { tile = title[0]; }
-
     		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new RuntimeException().getStackTrace()[0],
     				                   "bubble.jpg", "hero.jpg", "small.jpg", "", tile, true
     				                   );	           
-    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");
+    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");    
            }
-             
-	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
+                
+////////////////////////////////          
+           
+//           helper.hoverElement(driver, By.linkText("Manage Tile"));
+//           driver.findElement(By.linkText("Reorder Tiles")).click();
+//           helper.waitUntilElement(driver, Common.TextEntireToXpath("Reorder Content Tiles"));
+//           
+//           new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//      
+//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
+//           
+//           Thread.sleep(5000);
+           
+/////////////////////////////////
+
+//           driver.findElement(By.linkText("Manage Tile")).click();
+//           helper.waitUntilElement(driver, Common.TextEntireToXpath("Manage Content Tiles"));
+//           
+//           new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//      
+//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText("Character Brand");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText("Custom Brand");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText("No");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText("Yes");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//           
+//           driver.findElement(By.id("edit-submit--2")).click();
+//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+//
+//           driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
+//           
+//           Thread.sleep(5000);
+           
+/////////////////////////////////          
+           
+	   } catch(IOException | InterruptedException | AWTException e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
 	}
 	
     /**

@@ -39,7 +39,9 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 import java.util.zip.*;
+
 import javax.swing.JTextField;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -790,6 +792,65 @@ public class UtilitiesTestHelper {
 		    waitUntilElementInvisibility(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
 		    }
 		}
+	
+	/**
+	 * Execute "Manage Tile" Drupal operation
+	 * @throws NumberFormatException 
+	 * @throws IOException 
+	 */
+	public void executeManageTile(
+			WebDriver driver, String ageGroup, String landingPage, String contentType, Boolean ifPublished, Boolean ifSentToSortedList
+			) throws NumberFormatException, IOException {
+	  String published;
+      driver.findElement(By.linkText("Manage Tile")).click();
+      waitUntilElement(driver, Common.TextEntireToXpath("Manage Content Tiles"));
+      
+      new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText(ageGroup);
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText(landingPage);
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText(contentType);
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      if(ifPublished) { published = "Yes"; } else { published = "No"; }
+      new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText(published);
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      if(ifSentToSortedList) { 
+          new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
+          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+          driver.findElement(By.id("edit-submit--2")).click();
+          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+          driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
+          // SUBMIT
+          // WAIT
+          // GET CONFIRMATION
+          }
+	}
+	
+	/**
+	 * Execute "Reorder Tiles" Drupal operation
+	 * @throws NumberFormatException 
+	 * @throws IOException 
+	 */
+	public void executeReorderTiles(WebDriver driver) throws NumberFormatException, IOException {
+      hoverElement(driver, By.linkText("Manage Tile"));
+      driver.findElement(By.linkText("Reorder Tiles")).click();
+      waitUntilElement(driver, Common.TextEntireToXpath("Reorder Content Tiles"));
+      
+      new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+ 
+      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
+      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+      
+      driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
+	}
 	
 	public static void setClipboardData(String string) throws NumberFormatException, IOException {
 			StringSelection stringSelection = new StringSelection(string);
