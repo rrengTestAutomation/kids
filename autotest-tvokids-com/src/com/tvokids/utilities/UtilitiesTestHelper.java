@@ -458,15 +458,6 @@ public class UtilitiesTestHelper {
 	}
 	
 	/**
-	 * Extracts selected text line number (1, 2, 3, etc.) from multi-line text
-	 */
-	public String getTextLine(String text, int line) {
-		String[] string = text.split("\\n");
-   		if( (string.length >= line) && (line > 0) ) { return string[line - 1]; } 
-   		else { return ""; }
-   		}
-	
-	/**
 	 * Create a Character Brand
 	 * @throws AWTException 
 	 * @throws IOException
@@ -2544,14 +2535,15 @@ public class UtilitiesTestHelper {
 			   fileCleaner("xml.path");
 			   fileWriter( "xml.path", xml);
 			// Append Test Coverage:
-			   if( fileExist("test.type", false) && fileExist("coverage.info", false) ) { 
-			       if( fileScanner("test.type").contains("Regression Test") ) { 
-			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
-			    	   fileWriter("coverage.csv", 
-			    			       fileScanner("test.num") + "," + packageNameOnly + "," + classNameOnly + "," + l.getMethodName() + "," + fileScanner("coverage.info").replaceAll(", ", ",")
-			    			       );
+			   if( fileExist("test.type", false) && fileExist("coverage.info", false) ) {				   
+			       if( fileScanner("test.type").contains("Regression Test") ) {
+			    	   // Test Coverage recorder:
+			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileCleaner("coverage.csv"); fileWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
+			    	   String record = fileScanner("test.num") + "," + packageNameOnly + "," + classNameOnly + "," + l.getMethodName() + "," + fileScanner("coverage.info").replaceAll(", ", ",");
+			    	   String last = readFileOutputLastLine("coverage.csv");
+			    	   if( ! record.equals(last) ) {fileWriter("coverage.csv", record);}
 			    	   }
-			    	}			   
+			       }			   
 			// Renew Stack Trace Element record:
 			   fileCleaner("stack.trace");
 			   fileWriter( "stack.trace", l);
@@ -3361,7 +3353,7 @@ public class UtilitiesTestHelper {
         	}
         // ####################### TESTNG-FAILED XML CONVERTER END #######################
         	
-        // ####################### TEST-FAILED XML MODIFIER START #######################	
+        // ####################### TEST-FAILED XML MODIFIER START #######################
             /**
          	 * This METHOD modifies Test-Failed XML file into Test-Failed XML of user-selected reporting option
          	 */
@@ -3556,6 +3548,81 @@ public class UtilitiesTestHelper {
 		// ####################### TEST-FAILED XML CREATER END #######################
         		
         // ####################### TEST-NG XML READER-EXTRACTOR-CREATER START #######################
+        	/**
+        	 * Extracts selected text line number (1, 2, 3, etc.) from multi-line text
+        	 */
+        	public String getTextLine(String text, int line) {
+        		String[] string = text.split("\\n");
+           		if( (string.length >= line) && (line > 0) ) { return string[line - 1]; } 
+           		else { return ""; }
+           		}
+
+        	/**
+        	 * This METHOD reads any Text File and extracts last text line
+        	 */
+        	public String readFileOutputLastLine(String fileName) throws IOException{
+        		String[] string = readFileOutputLinesArray(fileName);
+        		return string[string.length - 1];
+        		}
+
+        	/**
+        	 * This METHOD reads any Text File and extracts last text line
+        	 */
+        	public String readFileOutputLastLine(String path, String fileName) throws IOException{
+        		String[] string = readFileOutputLinesArray(path, fileName);
+        		return string[string.length - 1];
+        		}
+        	
+        	/**
+        	 * This METHOD reads any Text File and extracts selected text line number (1, 2, 3, etc.)
+        	 */
+        	public String readFileOutputLine(String fileName, int line) throws IOException{
+        		String Line = "";
+        		String[] string = readFileOutputLinesArray(fileName);
+        		if(line >= 1) {
+            		if(line <= string.length) { Line = string[line - 1]; }
+            		else { Line = string[string.length - 1]; }
+            		}
+        		return Line;
+        		}
+        	
+        	/**
+        	 * This METHOD reads any Text File and extracts selected text line number (1, 2, 3, etc.)
+        	 */
+        	public String readFileOutputLine(String path, String fileName, int line) throws IOException{
+        		String Line = "";
+        		String[] string = readFileOutputLinesArray(path, fileName);
+        		if(line >= 1) {
+            		if(line <= string.length) { Line = string[line - 1]; }
+            		else { Line = string[string.length - 1]; }
+            		}
+        		return Line;
+        		}
+
+        	/**
+        	 * This METHOD reads any Text File,
+        	 * converts and outputs all the text lines as an ASC sorted String Array
+        	 */
+        	public String[] readFileOutputLinesArray(String fileName) throws IOException{
+        		return readFileOutputLinesArray(Common.testOutputFileDir, fileName);
+        		}
+        	
+        	/**
+        	 * This METHOD reads any Text File,
+        	 * converts and outputs all the text lines as an ASC sorted String Array
+        	 */
+        	@SuppressWarnings("resource")
+        	public String[] readFileOutputLinesArray(String path, String fileName) throws IOException{
+        	    BufferedReader in = new BufferedReader(new FileReader((path + File.separator + fileName).replace(File.separator + File.separator, File.separator)));
+        	    String str=null;
+        	    ArrayList<String> lines = new ArrayList<String>();
+        	    while ((str = in.readLine()) != null) {
+        	        if (str.length() != 0) { lines.add(str); }
+        	        }
+        	    String[] linesArray = lines.toArray(new String[lines.size()]);
+        	    return linesArray;
+        	}
+
         	/**
         	 * This METHOD reads any Text File,
         	 * converts and outputs all the text lines as an ASC sorted String Array
