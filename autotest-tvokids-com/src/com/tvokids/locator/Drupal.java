@@ -59,10 +59,14 @@ public class Drupal{
 	  public static String drupalHomeIcon                       = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton                     = "//*[@id='tabs']/descendant::a[text()='Edit']";
 	  public static String statusPerformedDelete                = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
+	  public static String statusPerformedSend                = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Send')]";
 	  public static String executeButton                        = "//*[@id='edit-submit--2']";
-      public static String selectAllCheckBox                    = "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
+      public static String selectAllCheckBox                    = "(/descendant::input[@class='vbo-table-select-all form-checkbox'])[2]";
+                                                                   // used to be:  "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
       public static String selectAllRowsButton                  = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
-
+      public static String messageNoContentAvailable            = "//*[contains(text(),'No content available.')]";
+                                                                   // used to be: "//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]";
+      
       /************common once*********************/
 	  public static String title   = "edit-title";
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
@@ -155,6 +159,11 @@ public class Drupal{
 	  public static String urlRedirectsAdd  = urlRedirects + "/add";
 	  public static String urlRedirectsFrom = "edit-source";
 	  public static String urlRedirectsTo   = "edit-redirect";
+	  
+	  /************reorder******************/
+	  public static String reorderTileHandle(int i) {
+		  return "//table[@id='draggableviews-table-content-tiles-reorder-content-tiles']/tbody/tr[" + i + "]/td[1]/a/div";
+		  }
 	  	  
 	  /************meta*********************/
 	  public static String metaTagsTab            = "//a/strong[text()='Meta tags']";

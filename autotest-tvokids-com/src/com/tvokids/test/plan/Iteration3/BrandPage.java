@@ -5,24 +5,19 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 //import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+//import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-
-
-
-
-
-
-
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -55,7 +50,7 @@ public class BrandPage {
 	 * @throws InterruptedException 
 	 * @throws AWTException 
 	 */
-	@Test(groups = {"TC-35404","US-3522","US-3202"}, priority = 38)
+	@Test(groups = {"TC-35404","US-3522","US-3202"}, enabled = false, priority = 38)
     public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException, AWTException {
 	   try{
     	   // INITIALISATION:
@@ -74,6 +69,7 @@ public class BrandPage {
            String[] titleURL = new String[total];
            String[] description = new String[total];
            String[] xpath = new String[total];
+           String[] tileXpath = new String[total];
            long[] fingerprint = new long[total];
            String tile = "";
            
@@ -92,68 +88,77 @@ public class BrandPage {
 	           if(i > 0) { tile = title[0]; }
     		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new RuntimeException().getStackTrace()[0],
     				                   "bubble.jpg", "hero.jpg", "small.jpg", "", tile, true
-    				                   );	           
+    				                   );
+    		   tileXpath[i] = Common.TextEntireToXpath(title[i]) + "/ancestor::a";
     		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");    
-           }
-                
-////////////////////////////////          
+    		   }
+       
+           // AGE 5 AND UNDER SORTED AS-IS TEST:
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+//         helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+//         Thread.sleep(1000);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT AS-IS TILES SORTING:
+           for (int i = total - 1; i > 1; i--) {
+        	   int bottomUpper = helper.getElementLocationY(driver, tileXpath[i]) + helper.getElementHeight(driver, tileXpath[i]);
+        	   int topOfNext = helper.getElementLocationY(driver, tileXpath[i - 1]) + helper.getElementHeight(driver, tileXpath[i - 1]);
+        	   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        	   }
            
-//           helper.hoverElement(driver, By.linkText("Manage Tile"));
-//           driver.findElement(By.linkText("Reorder Tiles")).click();
-//           helper.waitUntilElement(driver, Common.TextEntireToXpath("Reorder Content Tiles"));
-//           
-//           new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//      
-//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
-//           
-//           Thread.sleep(5000);
+           // SEND TILES TO SORTED LIST:
+           helper.sendTilesToSortedList(driver, "", tile, "", true, true, new RuntimeException().getStackTrace()[0]);
+           // NAVIGATE TO SORTING LIST:
+           helper.sendTilesToUnSortedList(driver, "", tile, false, new RuntimeException().getStackTrace()[0]);
+           // DRAG UP:
+           for (int i = total - 1; i > 1; i--) {
+//        	   String topXpath = Drupal.reorderTileHandle(i - 1);
+        	   String bottomXpath = Drupal.reorderTileHandle(i);
+        	   helper.fileWriterPrinter(bottomXpath);
+        	   
+//               int dragUP = helper.getElementLocationY(driver, bottomXpath) - helper.getElementLocationY(driver, 
+//            		   Drupal.selectAllCheckBox
+//            		   );
+//               helper.fileWriterPrinter("DRUGGING Y CALCULATED = " + dragUP); 
+//               helper.dragAndDrop(driver, bottomXpath, 0, -300, true, 500);
+               
+               driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
+               WebElement From = driver.findElement(By.xpath(bottomXpath)); 
+//             WebElement To = driver.findElement(By.xpath(Drupal.selectAllCheckBox));
+               
+               Actions builder = new Actions(driver);
+//             Action dragAndDrop = builder.moveToElement(From).clickAndHold(From).moveToElement(To).release(To).build();
+//             dragAndDrop.perform(); Thread.sleep(1000);
+               builder.dragAndDropBy(From, 0, -50); Thread.sleep(1000);
+               
+               driver.findElement(By.id("edit-save-order")).click();
+               Thread.sleep(1000);
+               
+//               (new Actions(driver)).dragAndDrop(
+//            		   driver.findElement(By.xpath(bottomXpath)),
+//            		   driver.findElement(By.xpath("//th[@class='views-field views-field-views-bulk-operations']"))
+//            		   ).perform();
+               }
            
-/////////////////////////////////
-
-//           driver.findElement(By.linkText("Manage Tile")).click();
-//           helper.waitUntilElement(driver, Common.TextEntireToXpath("Manage Content Tiles"));
-//           
-//           new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//      
-//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText("Character Brand");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText("Custom Brand");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText("No");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText("Yes");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//           
-//           driver.findElement(By.id("edit-submit--2")).click();
-//           helper.waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-//
-//           driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
-//           
-//           Thread.sleep(5000);
+           // AGE 5 AND UNDER TEST RE-SORTED ORDER:
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+//         helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+//         Thread.sleep(1000);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT AS-IS TILES SORTING:
+           for (int i = 1; i < total - 1; i++) {
+        	   int bottomUpper = helper.getElementLocationY(driver, tileXpath[i]) + helper.getElementHeight(driver, tileXpath[i]);
+        	   int topOfNext = helper.getElementLocationY(driver, tileXpath[i - 1]) + helper.getElementHeight(driver, tileXpath[i - 1]);
+        	   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        	   }
            
-/////////////////////////////////          
            
-	   } catch(IOException | InterruptedException | AWTException e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
+	   } catch(IOException | InterruptedException /*| AWTException*/ e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
 	}
 	
     /**

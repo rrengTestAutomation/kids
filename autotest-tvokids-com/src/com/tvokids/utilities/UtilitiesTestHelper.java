@@ -254,7 +254,7 @@ public class UtilitiesTestHelper {
 				driver.findElement(By.id("edit-submit-admin-views-node")).click(); //apply button;
 	            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
 				
-				List<WebElement> list = driver.findElements(By.xpath("//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]"));
+				List<WebElement> list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
 
 				int i = 1;
 				while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
@@ -276,7 +276,7 @@ public class UtilitiesTestHelper {
 				clickThis.selectByVisibleText("Delete");
 				Thread.sleep(2000);	
 	
-				driver.findElement(By.id("edit-submit--2")).click(); // 'Execute' button;
+				driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
 				waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
 				driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
 				waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
@@ -287,7 +287,7 @@ public class UtilitiesTestHelper {
 				waitUntilElementVisibility(driver, 30, Drupal.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
 				By message = By.xpath(Drupal.statusPerformedMessage);
 				if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
-				list = driver.findElements(By.xpath("//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]"));
+				list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
 				i++;
 				}
 			    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
@@ -794,62 +794,118 @@ public class UtilitiesTestHelper {
 		}
 	
 	/**
-	 * Execute "Manage Tile" Drupal operation
+	 * Navigates to Drupal "Manage Tile" with option to perform or not the operation of sending tiles to sorted list
 	 * @throws NumberFormatException 
 	 * @throws IOException 
 	 */
-	public void executeManageTile(
-			WebDriver driver, String ageGroup, String landingPage, String contentType, Boolean ifPublished, Boolean ifSentToSortedList
-			) throws NumberFormatException, IOException {
+	public void sendTilesToSortedList(
+			WebDriver driver, String ageGroup, String landingPage, String contentType, Boolean ifPublished, Boolean ifSentToSortedList, StackTraceElement t
+			) throws NumberFormatException, IOException {	  
+	  // DECLARATION:
 	  String published;
+	  // MANAGE TILE CLICK:
       driver.findElement(By.linkText("Manage Tile")).click();
       waitUntilElement(driver, Common.TextEntireToXpath("Manage Content Tiles"));
-      
-      new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText(ageGroup);
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
-      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText(landingPage);
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
-      new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText(contentType);
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
+      // AGE GROUP:
+      if(ageGroup.length() > 0) {
+    	  new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText(ageGroup);
+    	  waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+    	  }
+      // LANDING PAGE:
+      if(landingPage.length() > 0) {
+          new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText(landingPage);
+          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+          }
+      // TYPE:
+      if(contentType.length() > 0) {
+          new Select(driver.findElement(By.id("edit-type"))).selectByVisibleText(contentType);
+          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+          }
+      // PUBLISHED/SCHEDULED:
       if(ifPublished) { published = "Yes"; } else { published = "No"; }
       new Select(driver.findElement(By.id("edit-published"))).selectByVisibleText(published);
       waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
+      // EXECUTION:
       if(ifSentToSortedList) { 
-          new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
-          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-          driver.findElement(By.id("edit-submit--2")).click();
-          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-          driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
-          // SUBMIT
-          // WAIT
-          // GET CONFIRMATION
+    	  List<WebElement> list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+    	  int i = 1;
+    	  while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {			
+    		  // SENDING TILES TO SORTED LIST:
+    		  fileWriterPrinter("\nPAGE-" + i + ": SENDING TILES TO SORTED LIST...");
+    		  waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+    		  ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+    		  // OPERATIONS:
+    		  new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
+              waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+              // EXECUTE:
+              driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
+			  // ARE YOU SURE?
+              waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
+              driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+              waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+              waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+              if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }
+              // STATUS CHECK:
+              waitUntilElementVisibility(driver, 30, Drupal.statusPerformedSend, "\"Performed Send\"", new Exception().getStackTrace()[0]);
+              By message = By.xpath(Drupal.statusPerformedMessage);
+              if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
+              list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+              i++;
+              }
           }
 	}
 	
 	/**
-	 * Execute "Reorder Tiles" Drupal operation
+	 * Navigates to Drupal "Reorder Tiles" with option to perform or not the operation of sending tiles to un-sorted list
 	 * @throws NumberFormatException 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void executeReorderTiles(WebDriver driver) throws NumberFormatException, IOException {
+	public void sendTilesToUnSortedList(WebDriver driver, String ageGroup, String landingPage, Boolean ifSentToUnSortedList, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+	  // MANAGE TILE CLICK:
       hoverElement(driver, By.linkText("Manage Tile"));
       driver.findElement(By.linkText("Reorder Tiles")).click();
       waitUntilElement(driver, Common.TextEntireToXpath("Reorder Content Tiles"));
-      
-      new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText("5 and Under");
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
- 
-      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("- Select -");
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
-      new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText("Age Landing Page");
-      waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
-      
-      driver.findElement(By.xpath("(//input[@value='1'])[2]")).click();
+      // AGE GROUP:
+      if(ageGroup.length() > 0) {
+    	  new Select(driver.findElement(By.id("edit-term-node-tid-depth-1"))).selectByVisibleText(ageGroup);
+    	  waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+    	  }
+      // LANDING PAGE:
+      if(landingPage.length() > 0) {
+          new Select(driver.findElement(By.id("edit-nid"))).selectByVisibleText(landingPage);
+          waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+          }
+      driver.navigate().refresh();
+      Thread.sleep(3000);
+      // EXECUTION:
+      if(ifSentToUnSortedList) { 
+    	  List<WebElement> list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+    	  int i = 1;
+    	  while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {			
+    		  // SENDING TILES TO SORTED LIST:
+    		  fileWriterPrinter("\nPAGE-" + i + ": SENDING TILES TO UN-SORTED LIST...");
+    		  waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+    		  ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+    		  // OPERATIONS:
+    		  new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to UnSorted List");
+              waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
+              // EXECUTE:
+              driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
+			  // ARE YOU SURE?
+              waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
+              driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+              waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+              waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+              if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }
+              // STATUS CHECK:
+              waitUntilElementVisibility(driver, 30, Drupal.statusPerformedSend, "\"Performed Send\"", new Exception().getStackTrace()[0]);
+              By message = By.xpath(Drupal.statusPerformedMessage);
+              if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
+              list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+              i++;
+              }
+          }    
 	}
 	
 	public static void setClipboardData(String string) throws NumberFormatException, IOException {
