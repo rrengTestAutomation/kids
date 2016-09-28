@@ -5,25 +5,20 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
-import org.openqa.selenium.By;
-//import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.interactions.Action;
+
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-//import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 */
 import com.tvokids.locator.Common;
@@ -47,17 +42,18 @@ public class BrandPage {
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35404 3522 3202</p>
-	 * @throws InterruptedException 
+	 * @throws IOException 
 	 * @throws AWTException 
 	 */
-	@Test(groups = {"TC-35404","US-3522","US-3202"}, enabled = false, priority = 38)
-    public void testSortTilesOnReorderInterface() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException, AWTException {
+	@Test(groups = {"TC-35404","US-3522","US-3202"}, enabled = true, priority = 38)
+    public void testSortTilesOnReorderInterface() throws IOException, AWTException {
 	   try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
            driver = helper.getServerName(driver);
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           driver.manage().window().maximize();
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
@@ -76,7 +72,7 @@ public class BrandPage {
            for (int i = 0; i < total; i++) {
         	   // CREATE TITLES FOR CONTENTS:
         	   fingerprint[i] = System.currentTimeMillis();
-        	   title[i] = String.valueOf(fingerprint[i]) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+        	   title[i] = String.valueOf(fingerprint[i]) + " " + (i + 1) + "-" + helper.randomWord(Drupal.titleMaxCharsNumber);
         	   title[i] = helper.getStringBeginning(title[i], Drupal.titleMaxCharsNumber);
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
@@ -93,11 +89,26 @@ public class BrandPage {
     		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");    
     		   }
        
-           // AGE 5 AND UNDER SORTED AS-IS TEST:
-           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+           // AGE 5 AND UNDER BEFORE-REORDER TEST (SORTED AS-IS):
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER BEFORE-REORDER TEST (SORTED AS-IS):");  
            helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-//         helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
-//         Thread.sleep(1000);
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+           Thread.sleep(1000);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT AS-IS TILES SORTING:
+           for (int i = total - 1; i > 1; i--) {
+        	   int bottomUpper = helper.getElementLocationY(driver, tileXpath[i]) + helper.getElementHeight(driver, tileXpath[i]);
+        	   int topOfNext = helper.getElementLocationY(driver, tileXpath[i - 1]) + helper.getElementHeight(driver, tileXpath[i - 1]);
+        	   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        	   }
+           
+           // AGE 6 AND OVER BEFORE-REORDER TEST (SORTED AS-IS):
+           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER BEFORE-REORDER TEST (SORTED AS-IS):");  
+           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+           Thread.sleep(1000);
            helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
            // NAVIGATE TO BRAND PAGE:
            helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
@@ -112,55 +123,79 @@ public class BrandPage {
            helper.sendTilesToSortedList(driver, "", tile, "", true, true, new RuntimeException().getStackTrace()[0]);
            // NAVIGATE TO SORTING LIST:
            helper.sendTilesToUnSortedList(driver, "", tile, false, new RuntimeException().getStackTrace()[0]);
+          
            // DRAG UP:
            for (int i = total - 1; i > 1; i--) {
-//        	   String topXpath = Drupal.reorderTileHandle(i - 1);
+        	   String topXpath = Drupal.reorderTileHandle(i - 1);
         	   String bottomXpath = Drupal.reorderTileHandle(i);
-        	   helper.fileWriterPrinter(bottomXpath);
+        	   helper.fileWriterPrinter("\nABOVE THE LAST XPATH: " + topXpath);
+        	   helper.fileWriterPrinter(  "          LAST XPATH: " + bottomXpath);
         	   
-//               int dragUP = helper.getElementLocationY(driver, bottomXpath) - helper.getElementLocationY(driver, 
-//            		   Drupal.selectAllCheckBox
-//            		   );
-//               helper.fileWriterPrinter("DRUGGING Y CALCULATED = " + dragUP); 
-//               helper.dragAndDrop(driver, bottomXpath, 0, -300, true, 500);
-               
-               driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
-               WebElement From = driver.findElement(By.xpath(bottomXpath)); 
-//             WebElement To = driver.findElement(By.xpath(Drupal.selectAllCheckBox));
-               
-               Actions builder = new Actions(driver);
-//             Action dragAndDrop = builder.moveToElement(From).clickAndHold(From).moveToElement(To).release(To).build();
-//             dragAndDrop.perform(); Thread.sleep(1000);
-               builder.dragAndDropBy(From, 0, -50); Thread.sleep(1000);
+               int drag = helper.getElementLocationY(driver, topXpath) - helper.getElementLocationY(driver, bottomXpath);
+               String Drag = " N/A";
+               if(drag < 0) { Drag = Math.abs(drag) + " pixels UP"; }
+               if(drag > 0) { Drag = Math.abs(drag) + " pixels DOWN"; }
+               helper.fileWriterPrinter("\nDRUG-AND-DROP Y-DIRECTION MOVEMENT REQUIRED: " + Drag);
+
+//             (new Actions(driver)).dragAndDrop(driver.findElement(By.xpath(bottomXpath)), driver.findElement(By.xpath(topXpath))).perform(); 
+               (new Actions(driver)).dragAndDropBy(driver.findElement(By.xpath(bottomXpath)), 0, drag).perform();  
+               Thread.sleep(1000);
                
                driver.findElement(By.id("edit-save-order")).click();
                Thread.sleep(1000);
-               
-//               (new Actions(driver)).dragAndDrop(
-//            		   driver.findElement(By.xpath(bottomXpath)),
-//            		   driver.findElement(By.xpath("//th[@class='views-field views-field-views-bulk-operations']"))
-//            		   ).perform();
                }
            
-           // AGE 5 AND UNDER TEST RE-SORTED ORDER:
-           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+           // AGE 5 AND UNDER AFTER-REORDER TEST:
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER AFTER-REORDER TEST:");  
            helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-//         helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
-//         Thread.sleep(1000);
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+           Thread.sleep(1000);
            helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
            // NAVIGATE TO BRAND PAGE:
            helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
-           // ASSERT AS-IS TILES SORTING:
-           for (int i = 1; i < total - 1; i++) {
+           // ASSERT AFTER-REORDER TILES SORTING:
+           for (int i = total - 1; i > 1; i--) {
         	   int bottomUpper = helper.getElementLocationY(driver, tileXpath[i]) + helper.getElementHeight(driver, tileXpath[i]);
         	   int topOfNext = helper.getElementLocationY(driver, tileXpath[i - 1]) + helper.getElementHeight(driver, tileXpath[i - 1]);
-        	   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        	   
+        	   if(bottomUpper > topOfNext) {
+        		   helper.fileWriterPrinter("\"" + title[i - 1] + "\" is above \"" + title[i] + "\"" );
+        		   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper > topOfNext);
+        		   }
+        	   
+        	   if(bottomUpper < topOfNext) {
+        		   helper.fileWriterPrinter("\"" + title[i] + "\" is above \"" + title[i - 1] + "\"" );
+        		   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        		   }
         	   }
            
+           // AGE 6 AND OVER AFTER-REORDER TEST:
+           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER AFTER-REORDER TEST:");  
+           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+           Thread.sleep(1000);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT AFTER-REORDER TILES SORTING:
+           for (int i = total - 1; i > 1; i--) {
+        	   int bottomUpper = helper.getElementLocationY(driver, tileXpath[i]) + helper.getElementHeight(driver, tileXpath[i]);
+        	   int topOfNext = helper.getElementLocationY(driver, tileXpath[i - 1]) + helper.getElementHeight(driver, tileXpath[i - 1]);
+        	   
+        	   if(bottomUpper > topOfNext) {
+        		   helper.fileWriterPrinter("\"" + title[i - 1] + "\" is above \"" + title[i] + "\"" );
+        		   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper > topOfNext);
+        		   }
+        	   
+        	   if(bottomUpper < topOfNext) {
+        		   helper.fileWriterPrinter("\"" + title[i] + "\" is above \"" + title[i - 1] + "\"" );
+        		   helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], bottomUpper < topOfNext);
+        		   }
+        	   }
            
 	   } catch(IOException | InterruptedException /*| AWTException*/ e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); } 
 	}
-	
+
     /**
      * Test Age group filters on the "ALL Content" page in Drupal
      * <p>Date Created: 2016-09-12</p>
