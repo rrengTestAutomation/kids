@@ -53,6 +53,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.internal.Coordinates;
@@ -88,7 +89,10 @@ public class UtilitiesTestHelper {
 			}
 			else if (remoteOrLocal.equalsIgnoreCase("local") && browser.equalsIgnoreCase("chrome")){
 				System.setProperty("webdriver.chrome.driver", Common.localDriversDir + "chromedriver.exe");
-				driver = new ChromeDriver();
+			 // driver = new ChromeDriver();
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--disable-extensions");
+				driver = new ChromeDriver(options);	
 			}
 			else if (remoteOrLocal.equalsIgnoreCase("remote") && browser.equalsIgnoreCase("chrome")){
 				driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), DesiredCapabilities.chrome());
