@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 
 
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -606,7 +607,6 @@ public class BrandPage {
 	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-	           driver.manage().window().maximize();
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
 	           
 	           // CREATE TITLE FOR CONTENT:
@@ -636,16 +636,21 @@ public class BrandPage {
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           
 	           // EDIT:
-	           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);
-	           helper.filterAllContent(driver, title, "", "content_editor", "", false, false, new Exception().getStackTrace()[0]);
-	           driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
-	           Thread.sleep(1000);
-	           helper.waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-	           Boolean checked = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
-	           helper.fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checked);
-	           if (checked) { driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000); }
-	           helper.clickLinkUrlWaitUntil(driver, 10, By.id(Drupal.submit), new Exception().getStackTrace()[0]);
-
+	           int i = 0;
+	    	   Boolean ifTitle = true;
+	    	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
+		           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);
+		           helper.filterAllContent(driver, title, "", "", "", false, false, new Exception().getStackTrace()[0]);
+		           driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
+		           Thread.sleep(1000);
+		           helper.waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+		           Boolean checked = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
+		           helper.fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checked);
+		           if (checked) { driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000); }
+				   i = helper.contentSubmit(Common.adminContentURL, driver, i);
+				   if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
+				   }
+	    	   
 	           // AGE 5 AND UNDER NOT EXIST TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
