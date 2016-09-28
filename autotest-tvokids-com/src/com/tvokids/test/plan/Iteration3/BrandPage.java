@@ -53,7 +53,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-           driver.manage().window().maximize();
+//           driver.manage().window().maximize();
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
@@ -542,9 +542,8 @@ public class BrandPage {
 		       driver.manage().window().maximize();
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-	           Thread.sleep(1000);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-	           
+	           Thread.sleep(1000);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
@@ -578,6 +577,85 @@ public class BrandPage {
 					y = Integer.valueOf(String.valueOf(value));
 					}
 		       
+	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test New Character Banner Visibility
+	 * <p>Date Created: 2016-09-28</p>
+	 * <p>Date Modified: 2016-09-28</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36414 4097</p>
+	 */
+	@Test(groups = {"TC-36414","US-4097"}, priority = 45)
+	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	           String title, titleURL, description, xpath;
+	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver,"content_editor","changeme");
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           driver.manage().window().maximize();
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new RuntimeException().getStackTrace()[0],
+	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           
+	           // AGE 5 AND UNDER EXIST TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+		       
+	           // AGE 6 AND OVER EXIST TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
+	           // EDIT:
+	           helper.getUrlWaitUntil(driver, 15, Common.adminContentURL);
+	           helper.filterAllContent(driver, title, "", "content_editor", "", false, false, new Exception().getStackTrace()[0]);
+	           driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
+	           Thread.sleep(1000);
+	           helper.waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+	           Boolean checked = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
+	           helper.fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checked);
+	           if (checked) { driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000); }
+	           helper.clickLinkUrlWaitUntil(driver, 10, By.id(Drupal.submit), new Exception().getStackTrace()[0]);
+
+	           // AGE 5 AND UNDER NOT EXIST TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], xpath);
+		       
+	           // AGE 6 AND OVER NOT EXIST TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");	           	           
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], xpath);
+	           
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	

@@ -13,8 +13,9 @@ public class Drupal{
 	  public static String video          = Common.homeURL + "/node/add/video"; 
 	  
 	  /**************content admin*******************/
-	  public static String adminContentRowFirst    = "/descendant::tr[@class='odd views-row-first views-row-last']";
-	  public static String adminContentFieldTitles = "/descendant::td[@class='views-field views-field-title']/a";
+	  public static String adminContentRowFirst     = "/descendant::tr[@class='odd views-row-first views-row-last']";
+	  public static String adminContentRowFirstEdit = adminContentRowFirst + "/descendant::a[text()='edit']";
+	  public static String adminContentFieldTitles  = "/descendant::td[@class='views-field views-field-title']/a";
 
 	  /************drupal cache*********************/
 	  public static String flushAllCachesButton     = "//a[@class='admin-menu-destination'][(.='Flush all caches')]";
@@ -103,7 +104,8 @@ public class Drupal{
 	  
 	  /************vertical tab - character banner*********************/
 	  public static String characterBannerVerticalTab = "//ul[@class='vertical-tabs-list']/li[1]/a/strong";
-	  public static String characterBannerFieldSet = "//fieldset[1]/div/div";
+	  public static String characterBannerVisibleOn   = "edit-field-is-visible-und";
+	  public static String characterBannerFieldSet    = "//fieldset[1]/div/div";
 	  public static String characterBannerBrowse = characterBannerFieldSet + browse;
 	  public static String characterBannerUpload = characterBannerFieldSet + upload;
 	  public static String characterBannerRemove = characterBannerFieldSet + remove;

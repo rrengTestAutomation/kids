@@ -5479,13 +5479,23 @@ public class UtilitiesTestHelper {
 				
 	// ################# CLICK LINK AND WAIT UNTIL URL CHANGE START ################
 	            /**
+	             * In current page it will click a link/tab/locator and wait until url opens with exception trace control
+	             * @throws IOException
+	             */
+				public void clickLinkUrlWaitUntil(WebDriver driver, int seconds, By by, StackTraceElement t) throws IOException{    
+					try {	
+						final String previousURL = driver.getCurrentUrl();	  
+						driver.findElement(by).click();		  
+						waitUntilUrl(driver, seconds, previousURL);					
+					} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+					}
+				
+	            /**
 	             * In current page it will click a link/tab/locator and wait until url opens
 	             * @throws IOException
 	             */
 				public void clickLinkUrlWaitUntil(WebDriver driver, int seconds, String locator) throws IOException{    	
-					final String previousURL = driver.getCurrentUrl();	  	
-					driver.findElement(By.xpath(locator)).click();		  	
-					waitUntilUrl(driver, seconds, previousURL);
+					clickLinkUrlWaitUntil(driver, seconds, By.xpath(locator), new Exception().getStackTrace()[0]);
 					}
 				
 	            /**
@@ -5493,12 +5503,8 @@ public class UtilitiesTestHelper {
 	             * @throws IOException
 	             */
 				public void clickLinkUrlWaitUntil(WebDriver driver, int seconds, String locator, StackTraceElement t) throws IOException{    
-					try {	
-						final String previousURL = driver.getCurrentUrl();	  
-						driver.findElement(By.xpath(locator)).click();		  
-						waitUntilUrl(driver, seconds, previousURL);					
-					} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
-				}			
+					clickLinkUrlWaitUntil(driver, seconds, By.xpath(locator), t);
+					}
     // ################# CLICK LINK AND WAIT UNTIL URL CHANGE END ################
 
 
