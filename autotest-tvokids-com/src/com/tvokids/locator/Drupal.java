@@ -163,8 +163,11 @@ public class Drupal{
 	  /************reorder******************/
 	  public static String reorderTileHandle(int i) {
 		  return "//table[@id='draggableviews-table-content-tiles-reorder-content-tiles']/tbody/tr[" + i + "]/td[1]/a/div";
+		  }  	  
+	  public static String reorderTileImageSize(int i) {
+		  return "//table[@id='draggableviews-table-content-tiles-reorder-content-tiles']/tbody/tr[" + i + "]/descendant::td[@class='views-field views-field-is-big-image']";
 		  }
-	  	  
+	  
 	  /************meta*********************/
 	  public static String metaTagsTab            = "//a/strong[text()='Meta tags']";
 	  public static String metaTagDescription     = "edit-metatags-und-description-value";

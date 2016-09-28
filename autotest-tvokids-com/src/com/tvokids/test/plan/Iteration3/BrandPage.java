@@ -122,8 +122,15 @@ public class BrandPage {
            // SEND TILES TO SORTED LIST:
            helper.sendTilesToSortedList(driver, "", tile, "", true, true, new RuntimeException().getStackTrace()[0]);
            // NAVIGATE TO SORTING LIST:
-           helper.sendTilesToUnSortedList(driver, "", tile, false, new RuntimeException().getStackTrace()[0]);
-          
+           helper.sendTilesToUnSortedList(driver, "", tile, false, new RuntimeException().getStackTrace()[0]);        
+           // ASSERT IMAGE SIZE:
+           for (int i = total - 1; i > 0; i--) {
+        	   String Xpath = Drupal.reorderTileImageSize(i);
+        	   String expected = "Small";
+        	   String actual = driver.findElement(By.xpath(Xpath)).getText();
+        	   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+        	   }
+           
            // DRAG UP:
            for (int i = total - 1; i > 1; i--) {
         	   String topXpath = Drupal.reorderTileHandle(i - 1);
