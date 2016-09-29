@@ -2653,21 +2653,19 @@ public class UtilitiesTestHelper {
 		       String xml = "<class name=\"" + packageNameOnly + "." + classNameOnly + "\"><methods><include name=\"" + l.getMethodName() + "\"/></methods></class>";
 			   fileWriterPrinter("   XML Path: " + xml);
 			// Renew XML record:
-			   fileCleaner("xml.path");
-			   fileWriter( "xml.path", xml);
+			   fileOverWriter("xml.path", xml); 
 			// Append Test Coverage:
 			   if( fileExist("test.type", false) && fileExist("coverage.info", false) ) {				   
 			       if( fileScanner("test.type").contains("Regression Test") ) {
 			    	   // Test Coverage recorder:
-			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileCleaner("coverage.csv"); fileWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
+			    	   if( Integer.valueOf(fileScanner("test.num")) == 1 ) { fileOverWriter("coverage.csv", "ID,PACKAGE,CLASS,TEST,COVERAGE"); }
 			    	   String record = fileScanner("test.num") + "," + packageNameOnly + "," + classNameOnly + "," + l.getMethodName() + "," + fileScanner("coverage.info").replaceAll(", ", ",");
 			    	   String last = readFileOutputLastLine("coverage.csv");
 			    	   if( ! record.equals(last) ) {fileWriter("coverage.csv", record);}
 			    	   }
 			       }			   
 			// Renew Stack Trace Element record:
-			   fileCleaner("stack.trace");
-			   fileWriter( "stack.trace", l);
+			   fileOverWriter("stack.trace", l); 
 			// Append a New Log record:
 			   if (fileExist("run.log", false)) { fileWriter("run.log", "   XML Path: " + xml); }      
 		}
@@ -2885,8 +2883,7 @@ public class UtilitiesTestHelper {
 			   fileWriterPrinter(  "      Start: "  + date);
 			// Anotation output (coverage groups):
 			   fileWriterPrinter(  "   Coverage: " + printAnnotationGroups(method));
-			   fileCleaner("coverage.info");
-			   fileWriter("coverage.info", printAnnotationGroups(method));  
+			   fileOverWriter("coverage.info", printAnnotationGroups(method));   
 			// Append a Start Log record with Annotation:
 			   if (fileExist("run.log", false)) {
 			       fileWriter("run.log", "");
@@ -3371,10 +3368,7 @@ public class UtilitiesTestHelper {
 			    }
     		    
         		// UPDATE FAILED TEST NUMBER AS PER FAILED:
-        		if (fileExist("failed.num", false)){
-        			fileCleaner("failed.num");
-        			fileWriter("failed.num", failed);
-        		}
+        		if (fileExist("failed.num", false)){ fileOverWriter("failed.num", failed); }
         		
     		    if (fileExist("test.num", false)) {
     		    	if (Integer.valueOf(fileScanner("test.num")) == 1 ) {
@@ -3498,10 +3492,7 @@ public class UtilitiesTestHelper {
  			    }
      		    
          		// UPDATE FAILED TEST NUMBER AS PER FAILED:
-         		if (fileExist("failed.num", false)){
-         			fileCleaner("failed.num");
-         			fileWriter("failed.num", failed);
-         		}
+         		if (fileExist("failed.num", false)){ fileOverWriter("failed.num", failed); }
          		
      		    if (fileExist("test.num", false)) {
      		    	if (Integer.valueOf(fileScanner("test.num")) == 1 ) {
@@ -3615,20 +3606,17 @@ public class UtilitiesTestHelper {
         			
 //        		// UPDATE PREVIOUS TEST NUMBER AS PER FAILED:
 //        		if (fileExist("prev.num", false)){
-//        			fileCleaner("prev.num");
-//        			fileWriter("prev.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+//        			fileOverWriter("prev.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
 //        		}
         			
 //        		// UPDATE LAST TEST NUMBER AS PER FAILED:
 //        		if (fileExist("last.num", false)){
-//        			fileCleaner("last.num");
-//        			fileWriter("last.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+//        			fileOverWriter("last.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
 //        		}
         			
             	// UPDATE FAILED TEST NUMBER AS PER FAILED:
             	if (fileExist("failed.num", false)){
-            		fileCleaner("failed.num");
-            		fileWriter("failed.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
+            		fileOverWriter("failed.num", convertXmlArrayToTestNG(readLogOutputXmlLinesArray(sourceFileName)).length);
             	}
         		
         		// HEADER:

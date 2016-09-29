@@ -48,13 +48,11 @@ public class All {
 		
 		// TEST TYPE MANAGEMENT:
 		String test = testType();
-		if(helper.fileExist("test.type", false)) { helper.fileCleaner("test.type"); }
-		helper.fileWriter("test.type", test);
+		helper.fileOverWriter("test.type", test); 
 		
 		// SHOW TEST NUMBER DIFFERENCE MANAGEMENT:
 		Boolean show = addTestOption();
-		if(helper.fileExist("add.show", false)) { helper.fileCleaner("add.show"); }
-		helper.fileWriter("add.show", show);
+		helper.fileOverWriter("add.show", show); 
 		if( helper.fileExist("add.show", false) && Boolean.valueOf(helper.fileScanner("add.show")) ) {
 			     System.out.println("Will show the difference between quantity of Tests executed during the last and previous runs!\n");
 		} else { System.out.println("Won't show the difference between quantity of Tests executed during the last and previous runs...\n"); }
@@ -76,15 +74,13 @@ public class All {
 		
 		// E-MAIL PERMEATION MANAGEMENT
 		boolean send = emailOptionDouble();
-		if(helper.fileExist("email.opt", false)) { helper.fileCleaner("email.opt"); }
-		helper.fileWriter("email.opt", send);
+		helper.fileOverWriter("email.opt", send); 
 		if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
 			   System.out.println("\nWill send Automated E-Mail notification about Test Results!\n");
 			   
 			   // E-MAIL ADDRESSES SELECTION MANAGEMENT:
 			   boolean all = emailAddresses();
-			   if(helper.fileExist("email.all", false)) { helper.fileCleaner("email.all"); }
-			   helper.fileWriter("email.all", all);
+			   helper.fileOverWriter("email.all", all); 
 			   if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all")) ) {
 				   System.out.println("E-Mail will be sent to All assigned Recepients!\n");
 			   } else { System.out.println("E-Mail will be sent to Automation Tester Only...\n"); }
@@ -180,8 +176,7 @@ public class All {
 	    }
 
 	 // FINAL LOG EMAIL:
-	    if (helper.fileExist("email.cont", false)) { helper.fileCleaner("email.cont"); }
-	    	helper.fileWriter("email.cont", "         FAILED: " + failed);
+	    helper.fileOverWriter("email.cont", "         FAILED: " + failed); 
     	    helper.fileWriter("email.cont", "    TEST  START: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(start));
     	    helper.fileWriter("email.cont", "    TEST FINISH: " + time);
     	    helper.fileWriter("email.cont", "    TOTAL  TIME: " + helper.convertTimeMillisecondsAsLongToDuration(finish - start));
@@ -371,8 +366,7 @@ public String testType() throws NumberFormatException, IOException {
   			    if ( helper.fileScanner("test.type").equals("Test Failures Re-Run (Part 2 of 2)") ) { s = "Test Failures Re-Run (Part 2 of 2)"; }
   			    if ( helper.fileScanner("test.type").equals("Regression Test")      )               { s = "Test Failures Re-Run";     }	
   			    if ( helper.fileScanner("test.type").equals("Test Failures Re-Run") )               { s = "Test Failures Re-Run";     }
-  			    helper.fileCleaner("test.type");
-				helper.fileWriter("test.type", s);
+  			    helper.fileOverWriter("test.type", s); 
 				} 
 	      
 	      System.out.println("You selected to run " + s.toUpperCase() + "\n");
@@ -390,8 +384,7 @@ public String dateBox(){ return helper.getCurrentDateTimeHourMinSec(); }
 public String devServer() throws NumberFormatException, IOException {
 	 // DETECTING DEFAULT SERVER:
 	 String server = Common.homeURL.substring(Common.homeURL.indexOf(":") + 3, Common.homeURL.length());
-	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-	 helper.fileWriter("server.info", server);
+	 helper.fileOverWriter("server.info", server);
 	 return server;
 }
 

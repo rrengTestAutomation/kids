@@ -25,8 +25,7 @@ public class Log {
 		String time = helper.getCurrentDateTimeFull(); // System.out.print(" TEST START: " + time + "\n");
 		helper.fileWriter("ini.time", helper.convertLongToString(System.currentTimeMillis()));
 		// INITIAL TEST TYPE RECORD:
-		helper.fileCleaner("test.type");
-		helper.fileWriter("test.type", "Single Test");
+		helper.fileOverWriter("test.type", "Single Test");
 		// INITIAL LOG RECORD:
 		helper.fileWriter("run.log", " TEST START: " + time);
 		helper.fileWriter("run.log", "");

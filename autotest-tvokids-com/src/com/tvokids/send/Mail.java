@@ -53,13 +53,11 @@ public class Mail {
 		
 		// TEST TYPE MANAGEMENT:
 		String test = testType();
-		if(helper.fileExist("test.type", false)) { helper.fileCleaner("test.type"); }
-		helper.fileWriter("test.type", test);
+		helper.fileOverWriter("test.type", test); 
 		
 		// SHOW TEST NUMBER DIFFERENCE MANAGEMENT:
 		Boolean show = addTestOption();
-		if(helper.fileExist("add.show", false)) { helper.fileCleaner("add.show"); }
-		helper.fileWriter("add.show", show);
+		helper.fileOverWriter("add.show", show); 
 		if( helper.fileExist("add.show", false) && Boolean.valueOf(helper.fileScanner("add.show")) ) {
 			     System.out.println("Will show the difference between quantity of Tests executed during the last and previous runs!\n");
 		} else { System.out.println("Won't show the difference between quantity of Tests executed during the last and previous runs...\n");                    }
@@ -96,15 +94,13 @@ public class Mail {
         
 		// E-MAIL PERMEATION MANAGEMENT
 		boolean send = emailOptionDouble();
-		if(helper.fileExist("email.opt", false)) { helper.fileCleaner("email.opt"); }
-		helper.fileWriter("email.opt", send);
+		helper.fileOverWriter("email.opt", send); 
 		if( helper.fileExist("email.opt", false) && Boolean.valueOf(helper.fileScanner("email.opt")) ) {
 			   System.out.println("\nWill send Automated E-Mail notification about Test Results!\n");
 			   
 			   // E-MAIL ADDRESSES SELECTION MANAGEMENT:
 			   boolean all = emailAddresses();
-			   if(helper.fileExist("email.all", false)) { helper.fileCleaner("email.all"); }
-			   helper.fileWriter("email.all", all);
+			   helper.fileOverWriter("email.all", all); 
 			   if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all")) ) {
 				   System.out.println("E-Mail will be sent to All assigned Recepients!\n");
 			   } else { System.out.println("E-Mail will be sent to Automation Tester Only...\n"); }
@@ -219,8 +215,7 @@ public class Mail {
 	    }
 
 	    // FINAL LOG EMAIL:
-	    if (helper.fileExist("email.cont", false)) { helper.fileCleaner("email.cont"); }
-	    	helper.fileWriter("email.cont", "         FAILED: " + failed);
+	    helper.fileOverWriter("email.cont", "         FAILED: " + failed); 
     	    helper.fileWriter("email.cont", "    TEST  START: " + helper.convertCalendarMillisecondsAsLongToDateTimeHourMinSec(start));
     	    helper.fileWriter("email.cont", "    TEST FINISH: " + time);
     	    helper.fileWriter("email.cont", "    TOTAL  TIME: " + helper.convertTimeMillisecondsAsLongToDuration(finish - start));
@@ -373,8 +368,7 @@ public class Mail {
 		if(helper.fileExist("test.num", false)) {			
 		   if(helper.fileExist("test.max", false)){ 
 			   if( Integer.valueOf(helper.fileScanner("test.max")) < Integer.valueOf(helper.fileScanner("test.num")) ) {
-				   helper.fileCleaner("test.max");
-				   helper.fileWriter("test.max", helper.fileScanner("test.num"));
+				   helper.fileOverWriter("test.max", helper.fileScanner("test.num"));
 				   }
 			    } else {
 			       helper.fileWriter("test.max", helper.fileScanner("test.num"));
@@ -383,8 +377,7 @@ public class Mail {
 		    	if(helper.fileExist("prev.num", false)) {
 				   if(helper.fileExist("test.max", false)){ 
 					   if( Integer.valueOf(helper.fileScanner("test.max")) < Integer.valueOf(helper.fileScanner("prev.num")) ) {
-						   helper.fileCleaner("test.max");
-						   helper.fileWriter("test.max", helper.fileScanner("prev.num"));
+						   helper.fileOverWriter("test.max", helper.fileScanner("prev.num"));
 						   }
 					    } else {
 					       helper.fileWriter("test.max", helper.fileScanner("prev.num"));					       
@@ -512,8 +505,7 @@ public class Mail {
 		 public String devServer() throws NumberFormatException, IOException {
 		 	 // DETECTING DEFAULT SERVER:
 		 	 String server = Common.homeURL.substring(Common.homeURL.indexOf(":") + 3, Common.homeURL.length());
-		 	 if(helper.fileExist("server.info", false)) { helper.fileCleaner("server.info"); }
-		 	 helper.fileWriter("server.info", server);
+		 	 helper.fileOverWriter("server.info", server);
 		 	 return server;
 		 }
 
@@ -554,8 +546,7 @@ public class Mail {
 		 		 isCorrect = ( !helper.isInteger(branch) );
 		 	  // System.out.println("Is the entry of \"" + branch + "\" satisfying the acceptance criteria? \nAnswer: " + isCorrect + "\n");
 		 		 } 
-		 	 if(helper.fileExist("branch.info", false)) { helper.fileCleaner("branch.info"); }
-		 	 helper.fileWriter("branch.info", branch);
+		 	 helper.fileOverWriter("branch.info", branch);
 		 	 return branch;
 		 	 }
 		 
