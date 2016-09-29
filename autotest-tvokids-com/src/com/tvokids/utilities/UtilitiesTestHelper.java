@@ -463,6 +463,32 @@ public class UtilitiesTestHelper {
 	   return iteration;	   
 	}
 	
+	/** Converts Boolean status value into user-friendly message */
+	public String checkBoxStatus(Boolean ifChecked) { if(ifChecked) { return "CHECKED"; } else { return "UN-CHECKED"; } }
+	
+	/**
+	 * Enforces the "Visible on character banner" Check-Box to be checked
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 * @throws InterruptedException 
+	 */
+	@SuppressWarnings("finally")
+	public Boolean checkVisibleOnCharacterBanner(WebDriver driver) throws NumberFormatException, IOException, InterruptedException {
+	Boolean status = false;
+	try {
+		if ( driver.findElements(By.id(Drupal.characterBannerVisibleOn)).size() == 1) {
+			status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
+			fileWriterPrinter("Check-Box \"Visible on character banner\"           status:   " + checkBoxStatus(status)); 
+			if (!status) { 
+				fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
+				driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000);
+				status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
+				fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
+				}
+			}
+		} catch (Exception e) { e.printStackTrace(); } finally { return status; }
+	}
+	
 	/**
 	 * Create a Character Brand
 	 * @throws AWTException 
@@ -498,7 +524,8 @@ public class UtilitiesTestHelper {
 			browse = Drupal.characterBannerBrowse;
 			upload = Drupal.characterBannerUpload;
 			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
-
+			checkVisibleOnCharacterBanner(driver);
+			
 		    tab    = Drupal.heroBoxVerticalTab;
 			browse = Drupal.heroBoxBrowse;
 			upload = Drupal.heroBoxUpload;
@@ -561,6 +588,7 @@ public class UtilitiesTestHelper {
 				browse = Drupal.characterBannerBrowse;
 				upload = Drupal.characterBannerUpload;
 				upload(driver, bannerImage, tab, browse, upload);
+				checkVisibleOnCharacterBanner(driver);
 				}
 
 			if(heroImage.length() > 0) {
@@ -656,6 +684,7 @@ public class UtilitiesTestHelper {
 			browse = Drupal.characterBannerBrowse;
 			upload = Drupal.characterBannerUpload;
 			upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", t);
+			checkVisibleOnCharacterBanner(driver);
 
 		    tab    = Drupal.heroBoxVerticalTab;
 			browse = Drupal.heroBoxBrowse;
@@ -719,7 +748,8 @@ public class UtilitiesTestHelper {
 //			browse = By.xpath(Drupal.characterBannerBrowse);
 //			upload = By.xpath(Drupal.characterBannerUpload);					
 //			uploader(driver, "bubble.jpg", browse, upload, robot, "thumbnail");
-//			
+//			checkVisibleOnCharacterBanner(driver);
+//	
 //		    driver.findElement(By.xpath(Drupal.heroBoxVerticalTab)).click();
 //			browse = By.xpath(Drupal.heroBoxBrowse);
 //			upload = By.xpath(Drupal.heroBoxUpload);

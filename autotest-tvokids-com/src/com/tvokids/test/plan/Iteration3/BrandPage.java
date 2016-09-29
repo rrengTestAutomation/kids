@@ -645,8 +645,10 @@ public class BrandPage {
 		           Thread.sleep(1000);
 		           helper.waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 		           Boolean checked = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
-		           helper.fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checked);
+		           helper.fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + helper.checkBoxStatus(checked));
 		           if (checked) { driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000); }
+		           checked = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
+		           helper.fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + helper.checkBoxStatus(checked));
 				   i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
 				   }
