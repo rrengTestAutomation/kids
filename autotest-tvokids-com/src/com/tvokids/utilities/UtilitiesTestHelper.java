@@ -481,7 +481,7 @@ public class UtilitiesTestHelper {
 				fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
 				driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000);
 				status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
-				fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
+				fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status) + "\n");
 				}
 			} else { assertWebElementExist(driver, Drupal.characterBannerVisibleOn, t); }
 		return status;
