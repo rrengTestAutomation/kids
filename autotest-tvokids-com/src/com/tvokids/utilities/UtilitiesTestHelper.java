@@ -467,26 +467,34 @@ public class UtilitiesTestHelper {
 	public String checkBoxStatus(Boolean ifChecked) { if(ifChecked) { return "CHECKED"; } else { return "UN-CHECKED"; } }
 	
 	/**
-	 * Enforces the "Visible on character banner" Check-Box to be checked
+	 * Detects Enforces the "Visible on character banner" Check-Box to be checked
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 * @throws InterruptedException 
 	 */
-	@SuppressWarnings("finally")
-	public Boolean checkVisibleOnCharacterBanner(WebDriver driver) throws NumberFormatException, IOException, InterruptedException {
-	Boolean status = false;
-	try {
+	public Boolean checkVisibleOnCharacterBanner(WebDriver driver, Boolean ifCheckOn, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+		Boolean status = false;
 		if ( driver.findElements(By.id(Drupal.characterBannerVisibleOn)).size() == 1) {
 			status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
 			fileWriterPrinter("Check-Box \"Visible on character banner\"           status:   " + checkBoxStatus(status)); 
-			if (!status) { 
+			if ( (!status) && ifCheckOn ) { 
 				fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
 				driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000);
 				status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
 				fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
 				}
-			}
-		} catch (Exception e) { e.printStackTrace(); } finally { return status; }
+			} else { assertWebElementExist(driver, Drupal.characterBannerVisibleOn, t); }
+		return status;
+	}
+	
+	/**
+	 * Enforces the "Visible on character banner" Check-Box to be checked
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 * @throws InterruptedException 
+	 */
+	public Boolean checkVisibleOnCharacterBanner(WebDriver driver) throws NumberFormatException, IOException, InterruptedException {
+		return checkVisibleOnCharacterBanner(driver, true, new RuntimeException().getStackTrace()[0]);
 	}
 	
 	/**

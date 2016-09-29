@@ -588,9 +588,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36414 4097</p>
+	 * <p>Test Cases: 36414 4097 798</p>
 	 */
-	@Test(groups = {"TC-36414","US-4097"}, priority = 45)
+	@Test(groups = {"TC-36414","US-4097","BUG-798","NEW"}, enabled = false, priority = 45)
 	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -608,6 +608,9 @@ public class BrandPage {
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // ASSERT "VISIBLE ON CHARACTER BANNER" DEFAULT OPTION:
+	           helper.assertBooleanFalse(driver, new Exception().getStackTrace()[0], helper.checkVisibleOnCharacterBanner(driver, false, new RuntimeException().getStackTrace()[0]));
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();

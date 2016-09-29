@@ -20,7 +20,15 @@
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
 <include name="testNewCharacterBannerVisibility"/></methods></class>
-     
+
+<!--
+   FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6
+PARTIAL STEPS COVERAGE: N/A
+ NOT AUTOMATABLE STEPS: N/A
+ FOUND DEFECT ON STEPS: N/A
+  FOUND DEFECT NUMBERS: N/A
+ -->
+
         </classes>
      </test>
   
