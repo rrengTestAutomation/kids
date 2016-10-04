@@ -225,7 +225,69 @@ public class UtilitiesTestHelper {
 
 			    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
 		  }
-	
+		
+		   /**
+			* Modifies all the Contents pre-selected by "Filter" function
+			* @throws IOException
+			*/
+			public void operateOnContent(WebDriver driver, String operation, Boolean ifAll, StackTraceElement t) throws InterruptedException, IOException{
+				try {
+					if (operation.length() == 0) { operation = "- Choose an operation -"; }
+					int quantity = 0;
+
+					int i = 1;
+					while ((quantity == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
+					fileWriterPrinter("\nPAGE-" + i + ": PERFORMING " + operation.toUpperCase() + "...");
+					waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+					
+					
+					if(ifAll) {
+						// all rows selection:
+						ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+						List<WebElement> elements = driver.findElements(By.xpath(Drupal.allRowsSelectorButton));
+						if (elements.size() > 0) {
+						   WebElement element = driver.findElement(By.xpath(Drupal.allRowsSelectorButton));
+						   fileWriterPrinter(element.getAttribute("value"));
+						   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+						}
+					} else {
+						// first row selection:
+						ajaxProtectedClick(driver, Drupal.firstRowCheckBox, "Select First", false, "", true, false); //checks the "First Row" check-box
+					}
+
+					new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText(operation);
+					Thread.sleep(1000);	
+					driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
+					
+		            if(operation.equals("Delete")) {
+					waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
+					driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+					waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+		            }
+		            
+					waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+					if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }   
+					waitUntilElementVisibility(driver, 30, Drupal.statusPerformed, "\"Performed " + operation + "\"", new Exception().getStackTrace()[0]);
+					
+					By message = By.xpath(Drupal.statusPerformedMessage);
+					if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
+					
+					if(ifAll) { quantity = driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size(); } else { quantity = 1; }
+					i++;
+					}
+				    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+			  }
+		
+		public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+			try {
+				getUrlWaitUntil(driver, 15, Common.adminContentURL);
+				filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
+				waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", new Exception().getStackTrace()[0]);
+				driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
+				waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+			} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+		}
+		
 	   /**
 		* Deletes all the Contents by Content type ("" for all types) on user demand
 		* @throws IOException
@@ -263,13 +325,13 @@ public class UtilitiesTestHelper {
 				int i = 1;
 				while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
 				fileWriterPrinter("\nPAGE-" + i + ": DELETING...");
-				waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-				ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+				waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+				ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
 				
 				// all rows selection			
-				List<WebElement> elements = driver.findElements(By.xpath(Drupal.selectAllRowsButton));
+				List<WebElement> elements = driver.findElements(By.xpath(Drupal.allRowsSelectorButton));
 				if (elements.size() > 0) {
-				   WebElement element = driver.findElement(By.xpath(Drupal.selectAllRowsButton));
+				   WebElement element = driver.findElement(By.xpath(Drupal.allRowsSelectorButton));
 				   fileWriterPrinter(element.getAttribute("value"));
 				   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
 				}
@@ -622,7 +684,7 @@ public class UtilitiesTestHelper {
 				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateLarge)).clear(); driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText); }
 				}
 			
-			if(tile.length() > 0) { addTilePlacement(driver, tile, ifPublish);}
+			if(tile.length() > 0) { addTilePlacement(driver, tile, ifPublish, false);}
 
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
@@ -874,8 +936,8 @@ public class UtilitiesTestHelper {
     	  while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {			
     		  // SENDING TILES TO SORTED LIST:
     		  fileWriterPrinter("\nPAGE-" + i + ": SENDING TILES TO SORTED LIST...");
-    		  waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-    		  ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+    		  waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+    		  ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
     		  // OPERATIONS:
     		  new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to Sorted List");
               waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
@@ -927,8 +989,8 @@ public class UtilitiesTestHelper {
     	  while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {			
     		  // SENDING TILES TO SORTED LIST:
     		  fileWriterPrinter("\nPAGE-" + i + ": SENDING TILES TO UN-SORTED LIST...");
-    		  waitUntilElementVisibility(driver, 30, Drupal.selectAllCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-    		  ajaxProtectedClick(driver, Drupal.selectAllCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+    		  waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+    		  ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
     		  // OPERATIONS:
     		  new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText("Send Tiles to UnSorted List");
               waitUntilElementInvisibility(driver, 10, Common.throbber, "Throbber", new Exception().getStackTrace()[0]);
@@ -1523,7 +1585,7 @@ public class UtilitiesTestHelper {
 	    * @throws IOException
 	    */
 	  public void addTilePlacement(WebDriver driver, String tileTextSelection) throws IOException {
-		  addTilePlacement(driver, tileTextSelection, true);
+		  addTilePlacement(driver, tileTextSelection, true, true);
 		  }
 	  
 	   /**
@@ -1531,12 +1593,20 @@ public class UtilitiesTestHelper {
 		* @throws AWTException 
 	    * @throws IOException
 	    */
-	  public void addTilePlacement(WebDriver driver, String tileTextSelection, Boolean ifPublish) throws IOException {
-		  String tab = Drupal.tileVerticalTab + Drupal.verticalTabActive;
+	  public void addTilePlacement(WebDriver driver, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException {
+		  addTilePlacement(driver, Drupal.tileVerticalTab + Drupal.verticalTabActive, tileTextSelection, ifPublish, ifAdd);
+		  }
+	  
+	   /**
+	    * Add Tile Placement
+		* @throws AWTException 
+	    * @throws IOException
+	    */
+	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException {
 		  ajaxProtectedClick(driver, tab, "", false, "", true, false);;
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
 		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, 5, false); }
-		  ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, 5, false);
+		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, 5, false); }
 		  }
 	  
 	  // optgroup label="Custom Brand Pages"

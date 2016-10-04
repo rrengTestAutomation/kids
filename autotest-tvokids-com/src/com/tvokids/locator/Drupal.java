@@ -13,7 +13,7 @@ public class Drupal{
 	  public static String video          = Common.homeURL + "/node/add/video"; 
 	  
 	  /**************content admin*******************/
-	  public static String adminContentRowFirst     = "/descendant::tr[@class='odd views-row-first views-row-last']";
+	  public static String adminContentRowFirst     = "/descendant::tr[contains(@class,'views-row-first')]";
 	  public static String adminContentRowFirstEdit = adminContentRowFirst + "/descendant::a[text()='edit']";
 	  public static String adminContentFieldTitles  = "/descendant::td[@class='views-field views-field-title']/a";
 
@@ -59,12 +59,16 @@ public class Drupal{
       public static String logout                               = "//a[text()='Log out']";
 	  public static String drupalHomeIcon                       = "//*[@id='admin-menu-icon']/descendant::*[text()='Home']";  // used to be: "//*[@id='admin-menu-icon']";		
 	  public static String drupalEditButton                     = "//*[@id='tabs']/descendant::a[text()='Edit']";
-	  public static String statusPerformedDelete                = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Delete')]";
-	  public static String statusPerformedSend                = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Send')]";
+	  public static String statusPerformed                      = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em";
+	  public static String statusPerformedDelete                = statusPerformed + "[contains(text(),'Delete')]";
+	  public static String statusPerformedSend                  = statusPerformed + "[contains(text(),'Send')]";
 	  public static String executeButton                        = "//*[@id='edit-submit--2']";
-      public static String selectAllCheckBox                    = "(/descendant::input[@class='vbo-table-select-all form-checkbox'])[2]";
+	  public static String allRows                              = "/descendant::tr[@class]";
+	  public static String allRowsCheckBoxes                    = "/descendant::input[contains(@class,'select')]";
+	  public static String firstRowCheckBox                     = adminContentRowFirst + allRowsCheckBoxes;
+      public static String allInOneCheckBox                     = "(/descendant::input[@class='vbo-table-select-all form-checkbox'])[2]";
                                                                    // used to be:  "//*[@class='views-table sticky-enabled cols-7 tableheader-processed sticky-table']/descendant::input[@class='vbo-table-select-all form-checkbox']";
-      public static String selectAllRowsButton                  = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
+      public static String allRowsSelectorButton                = "//*[@id='views-form-admin-views-node-system-1']/descendant::*[contains(@value,'Select all') and contains(@value,'rows in this view')]";
       public static String messageNoContentAvailable            = "//*[contains(text(),'No content available.')]";
                                                                    // used to be: "//*[@id='views-form-admin-views-node-system-1']//*[contains(text(),'No content available.')]";
       
@@ -146,6 +150,9 @@ public class Drupal{
 	  public static String brandPageDescriptionCounterCSS         = "div#edit-field-brand-page-description-und-0-value-counter.counter strong";
 	  public static    int descriptionMaxCharsNumber              = 135;
 	  public static String programTelescopeAssetId                = "edit-field-telescope-asset-id-und-0-value";
+	  
+	  /************video********************/
+	  public static String tileVerticalTabOnVideo = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
 	  
 	  /************url redirect*********************/
 	  public static String urlRedirects    = Common.homeURL + "/admin/config/search/redirect";
