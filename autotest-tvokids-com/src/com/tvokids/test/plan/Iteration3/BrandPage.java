@@ -594,7 +594,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36414 4097 798</p>
 	 */
-	@Test(groups = {"TC-36414","US-4097","BUG-798","NEW"}, enabled = true, priority = 45)
+	@Test(groups = {"TC-36414","US-4097","BUG-798","CLOSED"}, enabled = true, priority = 45)
 	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -682,7 +682,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36413 3550 832</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","NEW"}, enabled = true, priority = 46)
+	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 46)
 	public void testCreateVideoTileOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:

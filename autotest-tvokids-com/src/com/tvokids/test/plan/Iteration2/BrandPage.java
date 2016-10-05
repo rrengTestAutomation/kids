@@ -989,7 +989,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 708</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","NEW"}, enabled = true, priority = 34)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","OPEN"}, enabled = true, priority = 34)
     public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
