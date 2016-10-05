@@ -13,10 +13,12 @@ public class Drupal{
 	  public static String video          = Common.homeURL + "/node/add/video"; 
 	  
 	  /**************content admin*******************/
-	  public static String adminContentRowFirst     = "/descendant::tr[contains(@class,'views-row-first')]";
-	  public static String adminContentRowFirstEdit = adminContentRowFirst + "/descendant::a[text()='edit']";
-	  public static String adminContentFieldTitles  = "/descendant::td[@class='views-field views-field-title']/a";
-
+	  public static String adminContentRowFirst      = "/descendant::tr[contains(@class,'views-row-first')]";
+	  public static String adminContentFieldTitles   = "/descendant::td[@class='views-field views-field-title']/a";
+	  public static String adminContentRowEdit       = "/descendant::a[text()='edit']";
+	  public static String adminContentRowFirstEdit  = adminContentRowFirst + adminContentRowEdit;
+	  public static String adminContentRowFirstTitle = adminContentRowFirst + adminContentFieldTitles;
+	  
 	  /************drupal cache*********************/
 	  public static String flushAllCachesButton     = "//a[@class='admin-menu-destination'][(.='Flush all caches')]";
 	  public static String messageEveryCacheCleared = "//div[@class='messages status'][contains(.,'Every cache cleared.')]";

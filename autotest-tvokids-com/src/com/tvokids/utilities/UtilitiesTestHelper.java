@@ -159,202 +159,204 @@ public class UtilitiesTestHelper {
 	public String  convertEmptyStringToNotAvailable(String s) { if( (s.length() == 0 ) || (s.equals(null)) ) { return "N/A"; } else { return s; }
 	}
 	
-	   /**
-		* Filters all the Contents by any selected cathegory ("" for "any") on user demand
-		* @throws IOException
-		*/
-		public void filterAllContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
-			try {
-				String ageGroup = "- Any -";
-				if (type.length() == 0) { type = "- Any -"; }
-				if (published.length() == 0) { published = "- Any -"; }
-				if ( (ifAgeUnder) && (!ifAgeOver) ) { ageGroup = "5 and Under"; }
-				if ( (!ifAgeUnder) && (ifAgeOver) ) { ageGroup = "6 and Over"; }
-
-				fileWriterPrinter("\n" + "Title     FILTER:  " + convertEmptyStringToNotAvailable(title));
-				fileWriterPrinter(       "Type      FILTER:  " + type.replace("- ", "").replace(" -", ""));
-				fileWriterPrinter(       "Author    FILTER:  " + convertEmptyStringToNotAvailable(author));
-				fileWriterPrinter(       "Published FILTER:  " + published.replace("- ", "").replace(" -", ""));
-				fileWriterPrinter(       "Age Group FILTER:  " + ageGroup.replace("- ", "").replace(" -", "") + "\n");
-				
-				getUrlWaitUntil(driver, 15, Common.adminContentURL);
-
-				// TITLE FILTER:
-				if(title.length() > 0) { driver.findElement(By.id("edit-title")).clear(); driver.findElement(By.id("edit-title")).sendKeys(title); }
-				
-				// TYPE FILTER:
-				WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
-				Select clickThis = new Select(dropwDownListBox);
-				Thread.sleep(2000);
-				clickThis.selectByVisibleText(type);
-				Thread.sleep(2000);
-				
-				// TYPE AUTHOR (USER):
-				driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
-				if(author.length() > 0) { 
-					driver.findElement(By.id("edit-author")).sendKeys(author); 
-					int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
-		            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
-		            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
-		            }
-				
-				// PUBLISHED FILTER:
-				dropwDownListBox = driver.findElement(By.id("edit-status"));
-				clickThis = new Select(dropwDownListBox);
-				Thread.sleep(2000);
-				clickThis.selectByVisibleText(published);
-				Thread.sleep(2000);
-				
-				// AGE GROUP FILTER:
-				dropwDownListBox = driver.findElement(By.id("edit-field-age-group-tid"));
-				clickThis = new Select(dropwDownListBox);
-				Thread.sleep(2000);
-				clickThis.selectByVisibleText(ageGroup);
-				Thread.sleep(2000);
-				
-                // APPLY:
-				driver.findElement(By.id("edit-submit-admin-views-node")).click();
-	            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-				
-				String result = driver.findElement(By.xpath("//tr[contains(@class,'views-row-first')]/td[1]")).getText();
-				if (result.length() == 0) { result = "Content available."; }
-				fileWriterPrinter("\n" + "          RESULT:  " + result + "\n");
-
-			    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
-		  }
+	   
+	/**
+	 * Filters all the Contents by any selected cathegory ("" for "any") on user demand
+	 * @throws IOException
+	 */
 		
-		   /**
-			* Modifies all the Contents pre-selected by "Filter" function
-			* @throws IOException
-			*/
-			public void operateOnContent(WebDriver driver, String operation, Boolean ifAll, StackTraceElement t) throws InterruptedException, IOException{
-				try {
-					if (operation.length() == 0) { operation = "- Choose an operation -"; }
-					int quantity = 0;
+	public void filterAllContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+		try {
+			String ageGroup = "- Any -";
+			if (type.length() == 0) { type = "- Any -"; }
+			if (published.length() == 0) { published = "- Any -"; }
+			if ( (ifAgeUnder) && (!ifAgeOver) ) { ageGroup = "5 and Under"; }
+			if ( (!ifAgeUnder) && (ifAgeOver) ) { ageGroup = "6 and Over"; }
 
-					int i = 1;
-					while ((quantity == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
-					fileWriterPrinter("\nPAGE-" + i + ": PERFORMING " + operation.toUpperCase() + "...");
-					waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
-					
-					
-					if(ifAll) {
-						// all rows selection:
-						ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
-						List<WebElement> elements = driver.findElements(By.xpath(Drupal.allRowsSelectorButton));
-						if (elements.size() > 0) {
-						   WebElement element = driver.findElement(By.xpath(Drupal.allRowsSelectorButton));
-						   fileWriterPrinter(element.getAttribute("value"));
-						   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
-						}
-					} else {
-						// first row selection:
-						ajaxProtectedClick(driver, Drupal.firstRowCheckBox, "Select First", false, "", true, false); //checks the "First Row" check-box
-					}
+			fileWriterPrinter("\n" + "Title     FILTER:  " + convertEmptyStringToNotAvailable(title));
+			fileWriterPrinter(       "Type      FILTER:  " + type.replace("- ", "").replace(" -", ""));
+			fileWriterPrinter(       "Author    FILTER:  " + convertEmptyStringToNotAvailable(author));
+			fileWriterPrinter(       "Published FILTER:  " + published.replace("- ", "").replace(" -", ""));
+			fileWriterPrinter(       "Age Group FILTER:  " + ageGroup.replace("- ", "").replace(" -", "") + "\n");
+			
+			getUrlWaitUntil(driver, 15, Common.adminContentURL);
 
-					new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText(operation);
-					Thread.sleep(1000);	
-					driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
-					
-		            if(operation.equals("Delete")) {
-					waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
-					driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
-					waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
-		            }
-		            
-					waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
-					if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }   
-					waitUntilElementVisibility(driver, 30, Drupal.statusPerformed, "\"Performed " + operation + "\"", new Exception().getStackTrace()[0]);
-					
-					By message = By.xpath(Drupal.statusPerformedMessage);
-					if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
-					
-					if(ifAll) { quantity = driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size(); } else { quantity = 1; }
-					i++;
-					}
-				    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
-			  }
+			// TITLE FILTER:
+			if(title.length() > 0) { driver.findElement(By.id("edit-title")).clear(); driver.findElement(By.id("edit-title")).sendKeys(title); }
+			
+			// TYPE FILTER:
+			WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
+			Select clickThis = new Select(dropwDownListBox);
+			Thread.sleep(2000);
+			clickThis.selectByVisibleText(type);
+			Thread.sleep(2000);
+			
+			// TYPE AUTHOR (USER):
+			driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
+			if(author.length() > 0) { 
+				driver.findElement(By.id("edit-author")).sendKeys(author); 
+				int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+	            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+	            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+	            }
+			
+			// PUBLISHED FILTER:
+			dropwDownListBox = driver.findElement(By.id("edit-status"));
+			clickThis = new Select(dropwDownListBox);
+			Thread.sleep(2000);
+			clickThis.selectByVisibleText(published);
+			Thread.sleep(2000);
+			
+			// AGE GROUP FILTER:
+			dropwDownListBox = driver.findElement(By.id("edit-field-age-group-tid"));
+			clickThis = new Select(dropwDownListBox);
+			Thread.sleep(2000);
+			clickThis.selectByVisibleText(ageGroup);
+			Thread.sleep(2000);
+			
+         // APPLY:
+			driver.findElement(By.id("edit-submit-admin-views-node")).click();
+            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			
+			String result = driver.findElement(By.xpath("//tr[contains(@class,'views-row-first')]/td[1]")).getText();
+			if (result.length() == 0) { result = "Content available."; }
+			fileWriterPrinter("\n" + "          RESULT:  " + result + "\n");
+
+		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+	}
 		
-		public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
-			try {
-				getUrlWaitUntil(driver, 15, Common.adminContentURL);
-				filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
-				waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", new Exception().getStackTrace()[0]);
-				driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
-				waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-			} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
-		}
-		
-	   /**
-		* Deletes all the Contents by Content type ("" for all types) on user demand
-		* @throws IOException
-		*/
-		public void deleteAllContent(WebDriver driver, String type, String title, String user, StackTraceElement t) throws InterruptedException, IOException{
-			try {
-				if (type.length() == 0) { type = "- Any -"; }
-				fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
-				fileWriterPrinter("Delete Content Title:  " + title);
-				fileWriterPrinter("Delete Content Author: " + user);
-				getUrlWaitUntil(driver, 15, Common.adminContentURL);
-				
-				WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
-				Select clickThis = new Select(dropwDownListBox);
-				Thread.sleep(2000);
-				clickThis.selectByVisibleText(type);
-				Thread.sleep(2000);
-							
-				driver.findElement(By.id("edit-title")).clear();          //pre-clear the Title filter field
-				if(title.length() > 0) { driver.findElement(By.id("edit-title")).sendKeys(title); }  //typing selected title name - full or partial
-				
-				driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
-				if(user.length() > 0) { 
-					driver.findElement(By.id("edit-author")).sendKeys(user); 
-					int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
-		            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
-		            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
-		            } //typing the Author name filter as User Name
+	/**
+	 * Modifies all the Contents pre-selected by "Filter" function
+	 * @throws IOException
+	 */
+	public void operateOnContent(WebDriver driver, String operation, Boolean ifAll, StackTraceElement t) throws InterruptedException, IOException{
+		try {
+			if (operation.length() == 0) { operation = "- Choose an operation -"; }
+			int quantity = 0;
 
-				driver.findElement(By.id("edit-submit-admin-views-node")).click(); //apply button;
-	            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
-				
-				List<WebElement> list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
-
-				int i = 1;
-				while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
-				fileWriterPrinter("\nPAGE-" + i + ": DELETING...");
-				waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+			int i = 1;
+			while ((quantity == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
+			fileWriterPrinter("\nPAGE-" + i + ": PERFORMING " + operation.toUpperCase() + "...");
+			waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+			
+			
+			if(ifAll) {
+				// all rows selection:
 				ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
-				
-				// all rows selection			
 				List<WebElement> elements = driver.findElements(By.xpath(Drupal.allRowsSelectorButton));
 				if (elements.size() > 0) {
 				   WebElement element = driver.findElement(By.xpath(Drupal.allRowsSelectorButton));
 				   fileWriterPrinter(element.getAttribute("value"));
 				   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
 				}
-				
-				dropwDownListBox = driver.findElement(By.id("edit-operation"));
-				clickThis = new Select(dropwDownListBox);
-				Thread.sleep(2000);
-				clickThis.selectByVisibleText("Delete");
-				Thread.sleep(2000);	
-	
-				driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
-				waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
-				driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
-				waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
-				waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
-				
-				if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }
-				    
-				waitUntilElementVisibility(driver, 30, Drupal.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
-				By message = By.xpath(Drupal.statusPerformedMessage);
-				if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
-				list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
-				i++;
-				}
-			    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
-		  }
+			} else {
+				// first row selection:
+				ajaxProtectedClick(driver, Drupal.firstRowCheckBox, "Select First", false, "", true, false); //checks the "First Row" check-box
+			}
+
+			new Select(driver.findElement(By.id("edit-operation"))).selectByVisibleText(operation);
+			Thread.sleep(1000);	
+			driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
+			
+            if(operation.equals("Delete")) {
+			waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
+			driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+			waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+            }
+            
+			waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+			if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }   
+			waitUntilElementVisibility(driver, 30, Drupal.statusPerformed, "\"Performed " + operation + "\"", new Exception().getStackTrace()[0]);
+			
+			By message = By.xpath(Drupal.statusPerformedMessage);
+			if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
+			
+			if(ifAll) { quantity = driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size(); } else { quantity = 1; }
+			i++;
+			}
+		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+	}
+		
+	public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+		try {
+			getUrlWaitUntil(driver, 15, Common.adminContentURL);
+			filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
+			waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", new Exception().getStackTrace()[0]);
+			driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
+		} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+	}
+		
+	/**
+	 * Deletes all the Contents by Content type ("" for all types) on user demand
+	 * @throws IOException
+	 */
+	public void deleteAllContent(WebDriver driver, String type, String title, String user, StackTraceElement t) throws InterruptedException, IOException{
+		try {
+			if (type.length() == 0) { type = "- Any -"; }
+			fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
+			fileWriterPrinter("Delete Content Title:  " + title);
+			fileWriterPrinter("Delete Content Author: " + user);
+			getUrlWaitUntil(driver, 15, Common.adminContentURL);
+			
+			WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
+			Select clickThis = new Select(dropwDownListBox);
+			Thread.sleep(2000);
+			clickThis.selectByVisibleText(type);
+			Thread.sleep(2000);
+						
+			driver.findElement(By.id("edit-title")).clear();          //pre-clear the Title filter field
+			if(title.length() > 0) { driver.findElement(By.id("edit-title")).sendKeys(title); }  //typing selected title name - full or partial
+			
+			driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
+			if(user.length() > 0) { 
+				driver.findElement(By.id("edit-author")).sendKeys(user); 
+				int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+	            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+	            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+	            } //typing the Author name filter as User Name
+
+			driver.findElement(By.id("edit-submit-admin-views-node")).click(); //apply button;
+            waitUntilElementInvisibility(driver, 30, Common.ajaxThrobber, "Throbber", new Exception().getStackTrace()[0]);
+			
+			List<WebElement> list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+
+			int i = 1;
+			while ((list.size() == 0) && (driver.findElements(By.xpath(Drupal.errorAjax)).size() < 1)) {
+			fileWriterPrinter("\nPAGE-" + i + ": DELETING...");
+			waitUntilElementVisibility(driver, 30, Drupal.allInOneCheckBox, "\"Select All\"", new Exception().getStackTrace()[0]);
+			ajaxProtectedClick(driver, Drupal.allInOneCheckBox, "Select All", false, "", true, false); //checks the "Select All" check-box
+			
+			// all rows selection			
+			List<WebElement> elements = driver.findElements(By.xpath(Drupal.allRowsSelectorButton));
+			if (elements.size() > 0) {
+			   WebElement element = driver.findElement(By.xpath(Drupal.allRowsSelectorButton));
+			   fileWriterPrinter(element.getAttribute("value"));
+			   ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+			}
+			
+			dropwDownListBox = driver.findElement(By.id("edit-operation"));
+			clickThis = new Select(dropwDownListBox);
+			Thread.sleep(2000);
+			clickThis.selectByVisibleText("Delete");
+			Thread.sleep(2000);	
+
+			driver.findElement(By.xpath(Drupal.executeButton)).click(); // 'Execute' button;
+			waitUntilElementVisibility(driver, 30, "//*[contains(text(),'You selected the following')]", "\"You selected the following\"", new Exception().getStackTrace()[0]);
+			driver.findElement(By.id(Drupal.submit)).click(); // 'Confirm' button
+			waitUntilElementInvisibility(driver, 5, By.id(Drupal.submit), "\"Save\" Button", new Exception().getStackTrace()[0]);
+			waitUntilElementInvisibility(driver, 600, By.id(Drupal.progress), "Progress Bar", new Exception().getStackTrace()[0]);
+			
+			if(driver.findElements(By.xpath(Drupal.errorAjax)).size() > 0) { assertWebElementNotExist(driver, t, Drupal.errorAjax); }
+			    
+			waitUntilElementVisibility(driver, 30, Drupal.statusPerformedDelete, "\"Performed Delete\"", new Exception().getStackTrace()[0]);
+			By message = By.xpath(Drupal.statusPerformedMessage);
+			if (driver.findElements(message).size() > 0) { fileWriterPrinter(driver.findElement(message).getText()); }
+			list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
+			i++;
+			}
+		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+	}
 				
 	/**
 	 * Submits Content and reports result (if final URL doesn't start with String - failure condition)
