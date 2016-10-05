@@ -68,6 +68,9 @@ public class Common {
 	  public static String brandDescriptionFontSize   = "16px";
 	  public static String brandDescriptionFontColour = "#000000";
 	  
+	  public static String brandVideoTiles = "//div[@data-tile-type='video']/descendant::span[@class='tile-title']";
+	  public static String brandVideoTile(String videoTitle) { return brandVideoTiles + TextEntireAddToXpath(videoTitle); }
+	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";
 

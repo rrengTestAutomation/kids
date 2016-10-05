@@ -711,7 +711,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, title, description, false, true, false, true, true, new RuntimeException().getStackTrace()[0],
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new RuntimeException().getStackTrace()[0],
 	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -736,7 +736,17 @@ public class BrandPage {
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
 		           }
 	           
-	           // AGE 6 AND OVER EXIST TEST:
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER BEFORE-REORDER TEST (SORTED AS-IS):");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	           
+	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER REDIRECT TEST:");  
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
