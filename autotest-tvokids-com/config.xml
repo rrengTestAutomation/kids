@@ -5,6 +5,6 @@
         <item name="retryOnFail"        value="true"/>
         <item name="retryCountStart"    value="0"/>
         <item name="numberOfTimesToRun" value="1"/>
-        <item name="maxRetryCount"      value="1"/>
+        <item name="maxRetryCount"      value="2"/>
     </setupvariables>
 </config>
