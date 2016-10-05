@@ -721,15 +721,16 @@ public class BrandPage {
 	           Boolean ifTitle = true;
 	           while ( (ifTitle || (i == 0)) && (i < 25) ) {
 		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
-		           helper.filterAllContent(driver, "", "Video", "", "No", false, false, new RuntimeException().getStackTrace()[0]);
-		           helper.operateOnContent(driver, "Publish", false, new RuntimeException().getStackTrace()[0]);
-		           helper.reopenContent(driver, "", "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]);
-		           helper.waitUntilElementPresence(driver, 5, By.id(Drupal.tilePlacementSelection), "Tile Placement Selection", new RuntimeException().getStackTrace()[0]);
-                   //ASSERT TILE PLACEMENT:
-	        	   helper.assertWebElementExist(driver, Drupal.tilePlacementSelection, new Exception().getStackTrace()[0]);
-	        	   // PLACE VIDEO TO TILE:
+	        	   helper.filterAllContent(driver, "", "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]);
+	        	   if( driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 1 ) {
+	        		   helper.filterAllContent(driver, "", "Video", "", "No", false, false, new RuntimeException().getStackTrace()[0]);
+			           helper.operateOnContent(driver, "Publish", false, new RuntimeException().getStackTrace()[0]);
+			           }
+	        	   helper.reopenContent(driver, "", "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]);
+		           helper.waitUntilElementPresence(driver, 5, Drupal.tileVerticalTabOnVideo, "Tile Vertical Tab (Video)", new RuntimeException().getStackTrace()[0], false);
+	        	   // PLACE VIDEO TO TILE WITH  TILE PLACEMENT ASSERTION:
 		           String videoTitle = driver.findElement(By.id(Drupal.title)).getAttribute("value");
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, false);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }

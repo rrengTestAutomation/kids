@@ -103,7 +103,6 @@ public class RetryOnFail implements IRetryAnalyzer {
             try {            	
 				helper.fileWriter("run.log", "\n   Retrying "
 					 + "Test #" + helper.fileScanner("test.num")
-				  // + "test"
 					 + " with status of " + getResultStatusName(result.getStatus())
 					 + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
 				

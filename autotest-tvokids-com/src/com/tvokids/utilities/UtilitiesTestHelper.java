@@ -39,9 +39,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 import java.util.zip.*;
-
 import javax.swing.JTextField;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -68,7 +66,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
@@ -1583,8 +1580,9 @@ public class UtilitiesTestHelper {
 	    * Add Tile Placement
 		* @throws AWTException 
 	    * @throws IOException
+	    * @throws InterruptedException 
 	    */
-	  public void addTilePlacement(WebDriver driver, String tileTextSelection) throws IOException {
+	  public void addTilePlacement(WebDriver driver, String tileTextSelection) throws IOException, InterruptedException {
 		  addTilePlacement(driver, tileTextSelection, true, true);
 		  }
 	  
@@ -1592,8 +1590,9 @@ public class UtilitiesTestHelper {
 	    * Add Tile Placement
 		* @throws AWTException 
 	    * @throws IOException
+	    * @throws InterruptedException 
 	    */
-	  public void addTilePlacement(WebDriver driver, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException {
+	  public void addTilePlacement(WebDriver driver, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException, InterruptedException {
 		  addTilePlacement(driver, Drupal.tileVerticalTab + Drupal.verticalTabActive, tileTextSelection, ifPublish, ifAdd);
 		  }
 	  
@@ -1601,9 +1600,21 @@ public class UtilitiesTestHelper {
 	    * Add Tile Placement
 		* @throws AWTException 
 	    * @throws IOException
+	    * @throws InterruptedException 
 	    */
-	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException {
-		  ajaxProtectedClick(driver, tab, "", false, "", true, false);;
+	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException, InterruptedException {
+		  addTilePlacement(driver, tab, tileTextSelection, ifPublish, ifAdd, null);
+		  }
+	  
+	   /**
+	    * Add Tile Placement
+		* @throws AWTException 
+	    * @throws IOException
+	    * @throws InterruptedException 
+	    */
+	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd, StackTraceElement t) throws IOException, InterruptedException {
+		  if(tab.length() > 0) { scrollToElementCenter(driver, tab, false); ajaxProtectedClick(driver, tab, "", false, "", true, false); }
+		  if(t != null) { assertWebElementExist(driver, Drupal.tilePlacementSelection, t); }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
 		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, 5, false); }
 		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, 5, false); }
@@ -5172,32 +5183,6 @@ public class UtilitiesTestHelper {
 	// ################# WAIT UNTIL ELEMENT DISAPPEARS END #####################
 
 	// ################# WAIT UNTIL ELEMENT PRESENTS START #####################
-				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final String xpath, String elementName, StackTraceElement t) throws IOException {
-					long start = System.currentTimeMillis();
-					WebDriverWait wait = new WebDriverWait(driver, seconds);
-					try { wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))); }
-					catch(Exception e) {
-					if (driver.findElements(By.xpath(xpath)).size() == 0) { fileWriterPrinter("\n" + elementName + " not found!\nXPATH: " + xpath); }
-					getScreenShot(t, elementName.replace("\"", "''") + " presence Time-Out", driver);
-					}
-				    fileWriterPrinter("Waiting time for " + padRight(elementName, 30 - elementName.length()) + " presence: " + waitTimeConroller(start, seconds, elementName) + " sec");
-				    return (driver.findElements(By.xpath(xpath)).size() > 0);
-				}
-				
-				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final By element, String elementName, StackTraceElement t) throws IOException {
-					long start = System.currentTimeMillis();					
-					// SOURCE EXAMPLE of "element" VARIABLE ENTRY:     By element = By.xpath("xpath string");     By element = By.id("id string")   etc.	
-					WebDriverWait wait = new WebDriverWait(driver, seconds);
-					List<WebElement> list = driver.findElements(element);					
-					try { wait.until(ExpectedConditions.presenceOfElementLocated(element)); }										
-					catch(Exception e) {
-					if (list.size() == 0) { fileWriterPrinter("\n" + elementName + " not found!\n\"By\" ELEMENT: " + element); }
-					getScreenShot(t, elementName.replace("\"", "''") + " presence Time-Out", driver);
-					}
-				    fileWriterPrinter("Waiting time for " + padRight(elementName, 30 - elementName.length()) + " presence: " + waitTimeConroller(start, seconds, elementName) + " sec");
-				    return (list.size() > 0);
-				}
-				
 				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final By element, String elementName, StackTraceElement t, Boolean ifScreenshot) throws IOException {
 					long start = System.currentTimeMillis();					
 					// SOURCE EXAMPLE of "element" VARIABLE ENTRY:     By element = By.xpath("xpath string");     By element = By.id("id string")   etc.	
@@ -5212,18 +5197,16 @@ public class UtilitiesTestHelper {
 				    return (list.size() > 0);
 				}
 				
-				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final ByAll locator, String elementName, StackTraceElement t) throws IOException {
-					long start = System.currentTimeMillis();
-					// SOURCE EXAMPLE of "locator" VARIABLE ENTRY:     ByAll locator = (ByAll) By.xpath("xpath string")     ByAll locator = (ByAll) By.id("id string")   etc.					
-					WebDriverWait wait = new WebDriverWait(driver, seconds);
-					List<WebElement> list = driver.findElements(locator);					
-					try { wait.until(ExpectedConditions.presenceOfElementLocated(locator)); }										
-					catch(Exception e) {
-					if (list.size() == 0) { fileWriterPrinter("\n" + elementName + " not found!\n\"ByAll\" LOCATOR: " + locator); }
-					getScreenShot(t, elementName.replace("\"", "''") + " presence Time-Out", driver);
-					}
-				    fileWriterPrinter("Waiting time for " + padRight(elementName, 30 - elementName.length()) + " presence: " + waitTimeConroller(start, seconds, elementName) + " sec");
-				    return (list.size() > 0);
+				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final String xpath, String elementName, StackTraceElement t, Boolean ifScreenshot) throws IOException {
+					return waitUntilElementPresence(driver, seconds, By.xpath(xpath), elementName, t, ifScreenshot);
+				}
+				
+				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final By element, String elementName, StackTraceElement t) throws IOException {
+					return waitUntilElementPresence(driver, seconds, element, elementName, t, true);
+				}
+							
+				public Boolean waitUntilElementPresence(WebDriver driver, int seconds, final String xpath, String elementName, StackTraceElement t) throws IOException {
+					return waitUntilElementPresence(driver, seconds, By.xpath(xpath), elementName, t);
 				}
 	// ################# WAIT UNTIL ELEMENT PRESENTS END #######################
 				
@@ -5803,8 +5786,8 @@ public class UtilitiesTestHelper {
 	/* ##### TAB SWITCH HANDLER WITH CLICK END ##### */
 				
 	/* ##### NAVIGATION START ##### */		
-	public void moveToElement(WebDriver driver, String scrollTo) throws InterruptedException{
-        WebElement element = driver.findElement(By.xpath(scrollTo));
+	public void moveToElement(WebDriver driver, String xpath) throws InterruptedException{
+        WebElement element = driver.findElement(By.xpath(xpath));
         Coordinates coordinate = ((Locatable)element).getCoordinates(); 
         coordinate.onPage(); 
         coordinate.inViewPort();
@@ -5819,7 +5802,7 @@ public class UtilitiesTestHelper {
 	    Thread.sleep(1000);
 	    }
 	
-	public void moveToElementCenter(WebDriver driver, By element) throws InterruptedException, IOException{
+	public void moveToElementCenter(WebDriver driver, By element, Boolean ifPrompt) throws InterruptedException, IOException{
         WebElement e = driver.findElement(element);
         String name = ""; 
         int windowCenterX = driver.manage().window().getSize().getWidth()/2;
@@ -5830,16 +5813,18 @@ public class UtilitiesTestHelper {
         int scrollX  = windowCenterX - elementX; if(scrollX < 0) {dirX = "LEFT";} else if(scrollX > 0) {dirX = "RIGHT";}
         int scrollY  = windowCenterY - elementY; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }	        
         if(!e.getText().isEmpty()) { name = "\"" + e.getText() + "\" "; }
-        fileWriterPrinter("\nELEMENT " + name + "WILL BE PLACED INTO CENTER OF SCREEN BY:");
-        fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+        if(ifPrompt) {
+        	fileWriterPrinter("\nELEMENT " + name + "WILL BE PLACED INTO CENTER OF SCREEN BY:");
+            fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+            }
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(" + scrollX + ",0)", "");
         Thread.sleep(1000);	        
-        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        if(ifPrompt) { fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n"); }
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
         Thread.sleep(1000);
         }
 
-	public void moveToWindowTopLeft(WebDriver driver) throws InterruptedException, IOException{
+	public void moveToWindowTopLeft(WebDriver driver, Boolean ifPrompt) throws InterruptedException, IOException{
         Long valueX = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageXOffset;");
         Long valueY = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");	        
         int x = Integer.valueOf(String.valueOf(valueX));
@@ -5847,38 +5832,72 @@ public class UtilitiesTestHelper {
         String dirX = "NOT REQUIRED", dirY = "NOT REQUIRED";	        
         int scrollX  = -x; if(scrollX < 0) {dirX = "LEFT";} else if(scrollX > 0) {dirX = "RIGHT";}
         int scrollY  = -y; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }
-        fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP-LEFT BY:");
-        fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+        if(ifPrompt) {
+        	fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP-LEFT BY:");
+        	fileWriterPrinter("SCROLLING (HORIZONTAL): " + Math.abs(scrollX) + " pixels " + dirX);
+        	}
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(" + scrollX + ",0)", "");
         Thread.sleep(1000);
-        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        if(ifPrompt) { fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n"); }
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
         Thread.sleep(1000);
         }
 	
-	public void moveToWindowTop(WebDriver driver) throws InterruptedException, IOException{
+	public void moveToWindowTop(WebDriver driver, Boolean ifPrompt) throws InterruptedException, IOException{
         Long valueY = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
         int y = Integer.valueOf(String.valueOf(valueY));
         String dirY = "NOT REQUIRED";
         int scrollY  = -y; if(scrollY < 0) {dirY = "UP";  } else if(scrollY > 0) {dirY = "DOWN"; }
-        fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP BY:");
-        fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        if(ifPrompt) { 
+        	fileWriterPrinter("\nWINDOW WILL BE NAVIGATED TO TOP BY:");
+        	fileWriterPrinter("SCROLLING   (VERTICAL): " + Math.abs(scrollY) + " pixels " + dirY + "\n");
+        	}
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
         Thread.sleep(1000);
 	    }
 	  
 	public void scrollVerticalUntilWindowPercent(WebDriver driver, int percentOfWindowToStop, int percentOfWindowToStep, int stepTimeMilliseconds, Boolean ifPrompt) throws IOException, InterruptedException {
-		moveToWindowTop(driver);
+		moveToWindowTop(driver, ifPrompt);
 		int Y = driver.manage().window().getSize().getHeight();
 	    int y = 0;
 	    while ( y < (Y*percentOfWindowToStop/100)) {
-				fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y);
+	    	    if(ifPrompt) { fileWriterPrinter("Current scroll-bar position (coordinate Y) = " + y); }
 				((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + (Y*percentOfWindowToStep/100) + ")", "");
 				Thread.sleep(stepTimeMilliseconds);
 				Long value = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
 				y = Integer.valueOf(String.valueOf(value));
 				}
 	    }
+	
+	// SCROLL TO ELEMENT BOTTOM:
+	public void scrollToElementBottom(WebDriver driver, By element, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+		int Y = getElementLocationY(driver, element) + getElementHeight(driver, element);
+		int H = driver.manage().window().getSize().getHeight();
+		double x = Y - H;
+		float p = (float) ( ((double)x)/((double)H) * 100 );
+		int P = (int)p;
+		if(ifPrompt){ fileWriterPrinter("\nBROWSER WINDOW WILL BE SCROLLED DOWN BY: " + P + " %"); }
+		scrollVerticalUntilWindowPercent(driver, P, 10, 200, false);
+		}
+	
+	public void scrollToElementBottom(WebDriver driver, String xpath, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+		scrollToElementBottom(driver, By.xpath(xpath), ifPrompt);
+		}
+
+	// SCROLL TO ELEMENT CENTER:
+	public void scrollToElementCenter(WebDriver driver, By element, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+		double Y = (double)getElementLocationY(driver, element) + (double)getElementHeight(driver, element)/2;
+		int H = driver.manage().window().getSize().getHeight();
+		double x = (double)Y - ((double)H/2);
+		float p = (float) ( x/((double)H) * 100 );
+		int P = (int)p;
+		if(ifPrompt){ fileWriterPrinter("\nBROWSER WINDOW WILL BE SCROLLED DOWN BY: " + P + " %"); }
+		scrollVerticalUntilWindowPercent(driver, P, 10, 200, false);
+		}
+	
+	public void scrollToElementCenter(WebDriver driver, String xpath, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+		scrollToElementCenter(driver, By.xpath(xpath), ifPrompt);
+		}
 	/* ##### NAVIGATION END ##### */
 	
 	public String stringsDifference(String str1, String str2) {
@@ -6420,10 +6439,12 @@ public class UtilitiesTestHelper {
 	
 	/** Outputs element Y-Location */
 	public int getElementLocationY(WebDriver driver, WebElement element) { return element.getLocation().getY(); }
+	public int getElementLocationY(WebDriver driver, By element) { return getElementLocationY(driver, driver.findElement(element)); }
 	public int getElementLocationY(WebDriver driver, String xpath) { return getElementLocationY(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** Outputs element Hight */
 	public int getElementHeight(WebDriver driver, WebElement element) { return element.getSize().getHeight(); }
+	public int getElementHeight(WebDriver driver, By element) { return getElementHeight(driver, driver.findElement(element)); }
 	public int getElementHeight(WebDriver driver, String xpath) { return getElementHeight(driver, driver.findElement(By.xpath(xpath))); }
 	
 	/** Outputs element Width */
