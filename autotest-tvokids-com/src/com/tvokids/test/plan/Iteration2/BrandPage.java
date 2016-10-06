@@ -338,9 +338,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35153 3229 650</p>
+	 * <p>Test Cases: 35153 3229 650 838</p>
 	 */
-	@Test(groups = {"TC-35153","US-3229","BUG-650","NEW"}, enabled = true, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-838","NEW"}, enabled = true, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -381,6 +381,8 @@ public class BrandPage {
 	           // ASSERT LINK IS CORRECT:
 	           expectedURL = Common.fiveAndUnderURL + "/" + titleURL;
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           helper.hoverElement(driver, xpath);
+	           Thread.sleep(1000);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandTitle,
 	        		   Common.brandTitleFontName, "font-family",
@@ -399,6 +401,8 @@ public class BrandPage {
 	           expectedURL = Common.sixAndOverURL + "/" + titleURL;
 	           driver.findElement(By.xpath(Common.charBannerButtonLeft)).click();
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+	           helper.hoverElement(driver, xpath);
+	           Thread.sleep(1000);
 	           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], xpath, expectedURL, false, true);
 	           helper.assertFont(driver, new Exception().getStackTrace()[0], Common.brandTitle,
 	        		   Common.brandTitleFontName, "font-family",
