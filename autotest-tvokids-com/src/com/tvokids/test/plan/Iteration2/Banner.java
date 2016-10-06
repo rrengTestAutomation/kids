@@ -641,7 +641,6 @@ public class Banner {
 	           // ASSERT:
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], X > x);
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Y > y);
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], X - x, Y - y);
 
 	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
@@ -659,7 +658,6 @@ public class Banner {
 	           // ASSERT:
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], X > x);
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Y > y);
-	           helper.assertEquals(driver, new Exception().getStackTrace()[0], X - x, Y - y);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	       }	
