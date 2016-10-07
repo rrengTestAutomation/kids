@@ -589,7 +589,7 @@ public class UtilitiesTestHelper {
 			String id = driver.findElement(element).getAttribute("id");
 			if(!Boolean.valueOf(id)) { name = " ";} 
 			else { 
-				name = Common.IdToXpath(id) + "/follomwing-sibling::label";
+				name = Common.IdToXpath(id) + "/following-sibling::label";
 				name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
 				}
 			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
