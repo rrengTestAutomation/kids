@@ -587,13 +587,13 @@ public class UtilitiesTestHelper {
 		String name = "";
 		if ( driver.findElements(element).size() == 1) {
 			String id = driver.findElement(element).getAttribute("id");
-			if(!Boolean.valueOf(id)) { name = " ";} 
+			if( (id.length() == 0) || (id.equals(null)) ){ name = " "; } 
 			else { 
 				name = Common.IdToXpath(id) + "/following-sibling::label";
 				name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
 				}
 			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-			fileWriterPrinter("Check-Box" + name + "           status:   " + checkBoxStatus(status)); 
+			fileWriterPrinter("Check-Box" + padRight(name, 40 - name.length()) + " status:   " + checkBoxStatus(status)); 
 			if ( (!status) && ifCheckOn ) { 
 				fileWriterPrinter("\nCURRENT" + name.toUpperCase() + "CHECK-BOX STATUS: " + checkBoxStatus(status));
 				driver.findElement(element).click(); Thread.sleep(1000);
