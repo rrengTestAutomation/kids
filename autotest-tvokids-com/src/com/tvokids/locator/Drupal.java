@@ -18,6 +18,9 @@ public class Drupal{
 	  public static String adminContentRowEdit       = "/descendant::a[text()='edit']";
 	  public static String adminContentRowFirstEdit  = adminContentRowFirst + adminContentRowEdit;
 	  public static String adminContentRowFirstTitle = adminContentRowFirst + adminContentFieldTitles;
+	  public static String adminContentRow(int i) { return "/descendant::tbody/tr[" + (i + 1) + "]"; }
+	  public static String adminContentRowEdit(int i) { return "/descendant::tbody/tr[" + (i + 1) + "]" + adminContentRowEdit; }
+	  public static String adminContentFieldTitles(int i) { return "/descendant::tbody/tr[" + (i + 1) + "]" + adminContentRowEdit; }
 	  
 	  /************drupal cache*********************/
 	  public static String flushAllCachesButton     = "//a[@class='admin-menu-destination'][(.='Flush all caches')]";

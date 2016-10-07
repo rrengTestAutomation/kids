@@ -19,8 +19,8 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testCreateVideoTileOnCustomBrandPage"/>
-<!-- <include name="testCreateVideoTileOnCharacterBrandPage"/> -->
+<include name="testCreateVideoTileOnCustomBrandPageOnFiveAndUnder"/>
+<include name="testCreateVideoTileOnCustomBrandPageOnSixAndOver"/>
 </methods></class>
 
 <!--

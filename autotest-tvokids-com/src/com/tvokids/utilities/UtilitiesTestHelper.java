@@ -39,7 +39,9 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 import java.util.zip.*;
+
 import javax.swing.JTextField;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -66,6 +68,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import com.tvokids.locator.Common;
 import com.tvokids.locator.Dictionary;
 import com.tvokids.locator.Drupal;
@@ -182,7 +185,8 @@ public class UtilitiesTestHelper {
 			getUrlWaitUntil(driver, 15, Common.adminContentURL);
 
 			// TITLE FILTER:
-			if(title.length() > 0) { driver.findElement(By.id("edit-title")).clear(); driver.findElement(By.id("edit-title")).sendKeys(title); }
+			driver.findElement(By.id("edit-title")).clear();
+			if(title.length() > 0) { driver.findElement(By.id("edit-title")).sendKeys(title); }
 			
 			// TYPE FILTER:
 			WebElement dropwDownListBox = driver.findElement(By.id("edit-type"));
@@ -278,14 +282,59 @@ public class UtilitiesTestHelper {
 	}
 		
 	public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+		reopenContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, true, t);
+	}
+	
+	public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t) throws InterruptedException, IOException{
 		try {
 			getUrlWaitUntil(driver, 15, Common.adminContentURL);
 			filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
-			waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", new Exception().getStackTrace()[0]);
+			waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, ifPrompt);
 			driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
-			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
-		} catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", t, ifPrompt);
+		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } }
 	}
+	
+	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+	   return reopenVideo(driver, title, ifPublished, true, ifAgeUnder, ifAgeOver, t);
+	}
+	
+	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifRepublish, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+	       // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
+		   String videoTitle = "";
+		   String published = "Yes", unpublished = "No";
+		   String publish = "Publish", unpublish = "Unpublish";
+		   if(!ifPublished) { unpublished = "Yes"; published = "No"; publish = "Unpublish"; unpublish = "Publish"; }
+		   Boolean acception = false;
+		   int i = 1;
+		   while (!acception) {
+			   if(i == 1) { filterAllContent(driver, title, "Video", "", published, ifAgeUnder, ifAgeOver, t); }
+		 	   if( driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 1 ) {
+		 		   filterAllContent(driver, title, "Video", "", unpublished, ifAgeUnder, ifAgeOver, t);
+			       operateOnContent(driver, publish, !ifRepublish, t);
+			       }
+		 	   try {
+		 		   // (RE)OPEN AND CHECK:
+		 		   if(ifRepublish) { i = 1; }
+		 		   getUrlWaitUntil(driver, 15, Common.adminContentURL);
+		 		   waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, false);
+				   driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
+			       waitUntilElementPresence(driver, 5, Drupal.tileVerticalTabOnVideo, "Tile Vertical Tab (Video)", t, false);
+			 	   // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
+			       videoTitle = driver.findElement(By.id(Drupal.title)).getAttribute("value");
+			       Boolean five = checkBoxStatus(driver, By.id(Drupal.ageGroup5), false, false, t).equals(ifAgeUnder);
+			       Boolean six = checkBoxStatus(driver, By.id(Drupal.ageGroup6), false, false, t).equals(ifAgeOver);
+			       acception = five && six;
+			       if(ifAgeUnder && !ifAgeOver) { acception = five; }
+			       if(!ifAgeUnder && ifAgeOver) { acception = six;  }
+			       } catch (Exception e) {}
+		       if(!acception) {
+		    	   if(ifRepublish){ operateOnContent(driver, unpublish, false, t); }
+		    	   i++;
+		       }
+	       }
+		   return videoTitle;
+		}
 		
 	/**
 	 * Deletes all the Contents by Content type ("" for all types) on user demand
@@ -528,7 +577,35 @@ public class UtilitiesTestHelper {
 	public String checkBoxStatus(Boolean ifChecked) { if(ifChecked) { return "CHECKED"; } else { return "UN-CHECKED"; } }
 	
 	/**
-	 * Detects Enforces the "Visible on character banner" Check-Box to be checked
+	 * Detects and Enforces the Check-Box to be checked
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 * @throws InterruptedException 
+	 */
+	public Boolean checkBoxStatus(WebDriver driver, By element, Boolean ifCheckOn, Boolean ifAssert, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+		Boolean status = false;
+		String name = "";
+		if ( driver.findElements(element).size() == 1) {
+			String id = driver.findElement(element).getAttribute("id");
+			if(!Boolean.valueOf(id)) { name = " ";} 
+			else { 
+				name = Common.IdToXpath(id) + "/follomwing-sibling::label";
+				name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
+				}
+			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
+			fileWriterPrinter("Check-Box" + name + "           status:   " + checkBoxStatus(status)); 
+			if ( (!status) && ifCheckOn ) { 
+				fileWriterPrinter("\nCURRENT" + name.toUpperCase() + "CHECK-BOX STATUS: " + checkBoxStatus(status));
+				driver.findElement(element).click(); Thread.sleep(1000);
+				status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
+				fileWriterPrinter("    NEW" + name.toUpperCase() + "CHECK-BOX STATUS: " + checkBoxStatus(status) + "\n");
+				}
+			} else { if(ifAssert) { assertWebElementExist(driver, t, element); } }
+		return status;
+	}
+	
+	/**
+	 * Detects and Enforces the "Visible on character banner" Check-Box to be checked
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 * @throws InterruptedException 
@@ -1618,8 +1695,8 @@ public class UtilitiesTestHelper {
 		  if(tab.length() > 0) { scrollToElementCenter(driver, tab, false); ajaxProtectedClick(driver, tab, "", false, "", true, false); }
 		  if(t != null) { assertWebElementExist(driver, Drupal.tilePlacementSelection, t); }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
-		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, 5, false); }
-		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, 5, false); }
+		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, -1, false); }
+		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, -1, false); }
 		  }
 	  
 	  // optgroup label="Custom Brand Pages"
@@ -5257,19 +5334,18 @@ public class UtilitiesTestHelper {
 				
 	// ################# WAIT UNTIL ELEMENT INVISIBLE START #####################
 				public void waitUntilElementInvisibility(WebDriver driver, int seconds, final String xpath, String elementName, StackTraceElement t) throws IOException {
-					long start = System.currentTimeMillis();
-					WebDriverWait wait = new WebDriverWait(driver, seconds);
-					try { wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath))); }
-					catch(Exception e) {
-						if (driver.findElements(By.xpath(xpath)).size() > 0) { 
-							fileWriterPrinter("\n" + elementName + " is still visible!\nXPATH: " + xpath);
-							getScreenShot(t, elementName.replace("\"", "''") + " invisibility Time-Out", driver);
-							}
-						}
-					    fileWriterPrinter("Waiting time for " + padRight(elementName, 26 - elementName.length()) + " invisibility: " + waitTimeConroller(start, seconds, elementName) + " sec");
+					waitUntilElementInvisibility(driver, seconds, By.xpath(xpath), elementName, true, t);
+					}
+				
+				public void waitUntilElementInvisibility(WebDriver driver, int seconds, final String xpath, String elementName, Boolean ifScreenshot, StackTraceElement t) throws IOException {
+					waitUntilElementInvisibility(driver, seconds, By.xpath(xpath), elementName, ifScreenshot, t);
 					}
 
 				public void waitUntilElementInvisibility(WebDriver driver, int seconds, final By element, String elementName, StackTraceElement t) throws IOException {
+					waitUntilElementInvisibility(driver, seconds, element, elementName, true, t);
+					}
+				
+				public void waitUntilElementInvisibility(WebDriver driver, int seconds, final By element, String elementName, Boolean ifScreenshot, StackTraceElement t) throws IOException {
 					long start = System.currentTimeMillis();
 					// SOURCE EXAMPLE of "element" VARIABLE ENTRY:     By element = By.xpath("xpath string");     By element = By.id("id string")   etc.
 					WebDriverWait wait = new WebDriverWait(driver, seconds);
@@ -5277,21 +5353,7 @@ public class UtilitiesTestHelper {
 					catch(Exception e) {
 						if (driver.findElements(element).size() > 0) { 
 							fileWriterPrinter("\n" + elementName + " is still visible!\n\"By\" ELEMENT: " + element);
-							getScreenShot(t, elementName.replace("\"", "''") + " invisibility Time-Out", driver);
-							}
-						}
-					    fileWriterPrinter("Waiting time for " + padRight(elementName, 26 - elementName.length()) + " invisibility: " + waitTimeConroller(start, seconds, elementName) + " sec");
-					}
-				
-				public void waitUntilElementInvisibility(WebDriver driver, int seconds, final ByAll locator, String elementName, StackTraceElement t) throws IOException {
-					long start = System.currentTimeMillis();
-					// SOURCE EXAMPLE of "locator" VARIABLE ENTRY:     ByAll locator = (ByAll) By.xpath("xpath string")     ByAll locator = (ByAll) By.id("id string")   etc.
-					WebDriverWait wait = new WebDriverWait(driver, seconds);
-					try { wait.until(ExpectedConditions.invisibilityOfElementLocated(locator)); }
-					catch(Exception e) {
-						if (driver.findElements(locator).size() > 0) { 
-							fileWriterPrinter("\n" + elementName + " is still visible!\n\"ByAll\" LOCATOR: " + locator);
-							getScreenShot(t, elementName.replace("\"", "''") + " invisibility Time-Out", driver);
+							if(ifScreenshot) { getScreenShot(t, elementName.replace("\"", "''") + " invisibility Time-Out", driver); }
 							}
 						}
 					    fileWriterPrinter("Waiting time for " + padRight(elementName, 26 - elementName.length()) + " invisibility: " + waitTimeConroller(start, seconds, elementName) + " sec");
@@ -6077,34 +6139,40 @@ public class UtilitiesTestHelper {
 		catch(Exception e){ return false; }
     }
 	
-	public void alertHandler(WebDriver driver) throws NumberFormatException, IOException{
+	public void alertHandler(WebDriver driver) throws NumberFormatException, IOException, InterruptedException{
 	  if(isAlertPresent(driver)){
         driver.switchTo().alert();
-        fileWriterPrinter(driver.switchTo().alert().getText());
-        driver.switchTo().alert().accept();   
+        String text = driver.switchTo().alert().getText();
+        fileWriterPrinter(text);
+        driver.switchTo().alert().accept();
+        waitUntilElementInvisibility(driver, 5, Common.TextEntireToXpath(text), text.substring(0, 21), new Exception().getStackTrace()[0]);
         driver.switchTo().defaultContent();
       }
 	}
 	
-	public boolean ifAlertHandler(WebDriver driver) throws NumberFormatException, IOException{
+	public boolean ifAlertHandler(WebDriver driver) throws NumberFormatException, IOException, InterruptedException{
 		boolean ifAlert = isAlertPresent(driver);
 		if(isAlertPresent(driver)){
 	        driver.switchTo().alert();
-	        fileWriterPrinter(driver.switchTo().alert().getText());
-	        driver.switchTo().alert().accept();   
+	        String text = driver.switchTo().alert().getText();
+	        fileWriterPrinter(text);
+	        driver.switchTo().alert().accept();
+	        waitUntilElementInvisibility(driver, 5, Common.TextEntireToXpath(text), text.substring(0, 21), new Exception().getStackTrace()[0]);
 	        driver.switchTo().defaultContent();
 	      }
 		return ifAlert;
 		}
 	
-	public boolean ifAlertHandler(WebDriver driver, Boolean ifScreenshot, StackTraceElement t, String comment) throws NumberFormatException, IOException{
+	public boolean ifAlertHandler(WebDriver driver, Boolean ifScreenshot, StackTraceElement t, String comment) throws NumberFormatException, IOException, InterruptedException{
 		boolean ifAlert = isAlertPresent(driver);
 		if(isAlertPresent(driver)){
 	        driver.switchTo().alert();
-	        fileWriterPrinter(driver.switchTo().alert().getText());
-	        driver.switchTo().alert().accept();   
+	        String text = driver.switchTo().alert().getText();
+	        fileWriterPrinter(text);
+	        driver.switchTo().alert().accept();
+	        if(!ifScreenshot) { waitUntilElementInvisibility(driver, 5, Common.TextEntireToXpath(text), text.substring(0, 21), ifScreenshot, t); }
 	        driver.switchTo().defaultContent();
-	        if(ifScreenshot) { getScreenShot(new Exception().getStackTrace()[0], "AJAX issue after " + comment, driver); }
+	        if(ifScreenshot) { getScreenShot(new Exception().getStackTrace()[0], text.substring(0, 21) + " " + comment, driver); }
 	      }
 		return ifAlert;
 		}
