@@ -10,17 +10,18 @@
     
     <test verbose="1" name="test-single">
         <classes>
-           <!-- <class name="com.tvokids.report.Log"></class> -->
-           <!-- <class name="com.tvokids.send.Mail"></class> -->
-           <!-- <class name="com.tvokids.email.All"></class> -->
-
-<class name="com.tvokids.report.Log"></class>
+        
+<!-- <class name="com.tvokids.report.Log"></class> -->
+<class name="com.tvokids.send.Mail"></class>
+<!-- <class name="com.tvokids.email.All"></class> -->
 
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testCreateVideoTileOnCustomBrandPageOnFiveAndUnder"/>
-<include name="testCreateVideoTileOnCustomBrandPageOnSixAndOver"/>
+<include name="testCreateVideoTileOnCustomBrandPageForFiveAndUnder"/>
+<include name="testCreateVideoTileOnCustomBrandPageForSixAndOver"/>
+<include name="testCreateVideoTileOnCharacterBrandPageForFiveAndUnder"/>
+<include name="testCreateVideoTileOnCharacterBrandPageForSixAndOver"/>
 </methods></class>
 
 <!--

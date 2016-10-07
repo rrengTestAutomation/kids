@@ -88,9 +88,10 @@ public class Drupal{
 	  public static String alternateSmallText  = "This is an Alternate Text of Small Tile";
 	  public static String alternateLargeText  = "This is an Alternate Text of Large Tile";
 	  
-	  public static String ageGroup5   = "edit-field-age-group-und-1";
-	  public static String ageGroup6   = "edit-field-age-group-und-2";
-	  public static String keywords    = "edit-field-keywords-und";
+	  public static String ageGroup5        = "edit-field-age-group-und-1";
+	  public static String ageGroup6        = "edit-field-age-group-und-2";
+	  public static String keywords         = "edit-field-keywords-und";
+	  public static String noAutoVideoTiles = "edit-field-no-auto-video-tiles-und";
 
 	  public static String browse  = "/descendant::*[contains(@id, '-und-0-upload')][@class='form-file']";
 	  public static String upload  = "/descendant::*[contains(@id, '-und-0-upload')][contains(@class,'form-submit')]";

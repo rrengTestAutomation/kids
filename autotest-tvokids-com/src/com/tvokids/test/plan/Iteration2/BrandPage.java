@@ -138,7 +138,7 @@ public class BrandPage {
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -351,7 +351,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -436,7 +436,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath, actual, expected;
@@ -450,7 +450,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCharacterBrand(driver, title, description, 281374, true, true, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, 281374, false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -652,7 +652,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -682,9 +682,9 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           // ASSERT ALERNATE IS NOT SHOWN:
-	           alternate = Common.XpathContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
+	           alternate = Common.XpathDescContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
-               alternate = Common.XpathContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
+               alternate = Common.XpathDescContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
 	           
 	           // AGE 6 AND OVER TEST:
@@ -692,9 +692,9 @@ public class BrandPage {
 	           helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           // ASSERT ALERNATE IS NOT SHOWN:
-	           alternate = Common.XpathContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
+	           alternate = Common.XpathDescContainsStart + Drupal.alternateSmallText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
-               alternate = Common.XpathContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
+               alternate = Common.XpathDescContainsStart + Drupal.alternateLargeText + Common.XpathContainsEnd;
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -1160,7 +1160,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           helper.deleteUrlRedirect(driver, redirectURL);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:

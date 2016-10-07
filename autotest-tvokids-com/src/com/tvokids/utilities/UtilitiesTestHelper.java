@@ -589,16 +589,15 @@ public class UtilitiesTestHelper {
 			String id = driver.findElement(element).getAttribute("id");
 			if( (id.length() == 0) || (id.equals(null)) ){ name = " "; } 
 			else { 
-				name = Common.IdToXpath(id) + "/following-sibling::label";
-				name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
-				}
+				  name = Common.IdToXpath(id) + "/following-sibling::label";
+				  name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
+				  }
 			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-			fileWriterPrinter("Check-Box" + padRight(name, 40 - name.length()) + " status:   " + checkBoxStatus(status)); 
+			fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + "     status:   " + checkBoxStatus(status)); 
 			if ( (!status) && ifCheckOn ) { 
-				fileWriterPrinter("\nCURRENT" + name.toUpperCase() + "CHECK-BOX STATUS: " + checkBoxStatus(status));
 				driver.findElement(element).click(); Thread.sleep(1000);
 				status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-				fileWriterPrinter("    NEW" + name.toUpperCase() + "CHECK-BOX STATUS: " + checkBoxStatus(status) + "\n");
+				fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + " new status:   " + checkBoxStatus(status));
 				}
 			} else { if(ifAssert) { assertWebElementExist(driver, t, element); } }
 		return status;
@@ -611,18 +610,7 @@ public class UtilitiesTestHelper {
 	 * @throws InterruptedException 
 	 */
 	public Boolean checkVisibleOnCharacterBanner(WebDriver driver, Boolean ifCheckOn, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
-		Boolean status = false;
-		if ( driver.findElements(By.id(Drupal.characterBannerVisibleOn)).size() == 1) {
-			status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
-			fileWriterPrinter("Check-Box \"Visible on character banner\"           status:   " + checkBoxStatus(status)); 
-			if ( (!status) && ifCheckOn ) { 
-				fileWriterPrinter("\nCURRENT CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status));
-				driver.findElement(By.id(Drupal.characterBannerVisibleOn)).click(); Thread.sleep(1000);
-				status = Boolean.valueOf(driver.findElement(By.id(Drupal.characterBannerVisibleOn)).getAttribute("checked"));
-				fileWriterPrinter("    NEW CHARACTER VISIBILITY CHECK-BOX STATUS: " + checkBoxStatus(status) + "\n");
-				}
-			} else { assertWebElementExist(driver, Drupal.characterBannerVisibleOn, t); }
-		return status;
+		return checkBoxStatus(driver, By.id(Drupal.characterBannerVisibleOn), ifCheckOn, true, t);
 	}
 	
 	/**
@@ -641,7 +629,7 @@ public class UtilitiesTestHelper {
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifNoAutoVideoTiles, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
@@ -665,6 +653,8 @@ public class UtilitiesTestHelper {
 			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 
 			if (assetID > 0) { driver.findElement(By.id(Drupal.programTelescopeAssetId)).sendKeys(String.valueOf(assetID)); }
+			
+			checkBoxStatus(driver, By.id(Drupal.noAutoVideoTiles), ifNoAutoVideoTiles, false, new Exception().getStackTrace()[0]);
 			
 			tab    = Drupal.characterBannerVerticalTab;
 			browse = Drupal.characterBannerBrowse;
@@ -1682,7 +1672,7 @@ public class UtilitiesTestHelper {
 	    * @throws InterruptedException 
 	    */
 	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd) throws IOException, InterruptedException {
-		  addTilePlacement(driver, tab, tileTextSelection, ifPublish, ifAdd, null);
+		  addTilePlacement(driver, tab, tileTextSelection, true, ifPublish, ifAdd, null);
 		  }
 	  
 	   /**
@@ -1691,9 +1681,13 @@ public class UtilitiesTestHelper {
 	    * @throws IOException
 	    * @throws InterruptedException 
 	    */
-	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifPublish, Boolean ifAdd, StackTraceElement t) throws IOException, InterruptedException {
-		  if(tab.length() > 0) { scrollToElementCenter(driver, tab, false); ajaxProtectedClick(driver, tab, "", false, "", true, false); }
-		  if(t != null) { assertWebElementExist(driver, Drupal.tilePlacementSelection, t); }
+	  public void addTilePlacement(WebDriver driver, String tab, String tileTextSelection, Boolean ifAssert, Boolean ifPublish, Boolean ifAdd, StackTraceElement t) throws IOException, InterruptedException {
+		  if( tab.length() > 0 ) { scrollToElementCenter(driver, tab, false); ajaxProtectedClick(driver, tab, "", false, "", true, false); }
+		  if( (t != null) && ifAssert ) { 
+			  assertWebElementExist(driver, Drupal.tilePlacementSelection, t);
+			  scrollToElementCenter(driver, By.id(Drupal.tilePlacementSelection), false, false);
+			  assertWebElementsExist(driver, t, Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection));
+			  }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
 		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, -1, false); }
 		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, -1, false); }
@@ -5919,9 +5913,9 @@ public class UtilitiesTestHelper {
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0," + scrollY + ")", "");
         Thread.sleep(1000);
 	    }
-	  
-	public void scrollVerticalUntilWindowPercent(WebDriver driver, int percentOfWindowToStop, int percentOfWindowToStep, int stepTimeMilliseconds, Boolean ifPrompt) throws IOException, InterruptedException {
-		moveToWindowTop(driver, ifPrompt);
+
+	public void scrollVerticalUntilWindowPercent(WebDriver driver, int percentOfWindowToStop, int percentOfWindowToStep, int stepTimeMilliseconds, Boolean ifPrompt, Boolean ifFromTop) throws IOException, InterruptedException {
+		if(ifFromTop) { moveToWindowTop(driver, ifPrompt); }
 		int Y = driver.manage().window().getSize().getHeight();
 	    int y = 0;
 	    while ( y < (Y*percentOfWindowToStop/100)) {
@@ -5933,30 +5927,38 @@ public class UtilitiesTestHelper {
 				}
 	    }
 	
+	public void scrollVerticalUntilWindowPercent(WebDriver driver, int percentOfWindowToStop, int percentOfWindowToStep, int stepTimeMilliseconds, Boolean ifPrompt) throws IOException, InterruptedException {
+		scrollVerticalUntilWindowPercent(driver, percentOfWindowToStop, percentOfWindowToStep, stepTimeMilliseconds, ifPrompt, true);
+	    }
+	
 	// SCROLL TO ELEMENT BOTTOM:
-	public void scrollToElementBottom(WebDriver driver, By element, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+	public void scrollToElementBottom(WebDriver driver, By element, Boolean ifPrompt, Boolean ifFromTop) throws NumberFormatException, IOException, InterruptedException{
 		int Y = getElementLocationY(driver, element) + getElementHeight(driver, element);
 		int H = driver.manage().window().getSize().getHeight();
 		double x = Y - H;
 		float p = (float) ( ((double)x)/((double)H) * 100 );
 		int P = (int)p;
 		if(ifPrompt){ fileWriterPrinter("\nBROWSER WINDOW WILL BE SCROLLED DOWN BY: " + P + " %"); }
-		scrollVerticalUntilWindowPercent(driver, P, 10, 200, false);
+		scrollVerticalUntilWindowPercent(driver, P, 10, 200, ifPrompt, ifFromTop);
 		}
 	
 	public void scrollToElementBottom(WebDriver driver, String xpath, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
-		scrollToElementBottom(driver, By.xpath(xpath), ifPrompt);
+		scrollToElementBottom(driver, By.xpath(xpath), ifPrompt, true);
 		}
 
 	// SCROLL TO ELEMENT CENTER:
-	public void scrollToElementCenter(WebDriver driver, By element, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+	public void scrollToElementCenter(WebDriver driver, By element, Boolean ifPrompt, Boolean ifFromTop) throws NumberFormatException, IOException, InterruptedException{
 		double Y = (double)getElementLocationY(driver, element) + (double)getElementHeight(driver, element)/2;
 		int H = driver.manage().window().getSize().getHeight();
 		double x = (double)Y - ((double)H/2);
 		float p = (float) ( x/((double)H) * 100 );
 		int P = (int)p;
 		if(ifPrompt){ fileWriterPrinter("\nBROWSER WINDOW WILL BE SCROLLED DOWN BY: " + P + " %"); }
-		scrollVerticalUntilWindowPercent(driver, P, 10, 200, false);
+		scrollVerticalUntilWindowPercent(driver, P, 10, 200, ifPrompt, ifFromTop);
+		}
+	
+	public void scrollToElementCenter(WebDriver driver, By element, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
+		scrollToElementCenter(driver, element, ifPrompt, true);
 		}
 	
 	public void scrollToElementCenter(WebDriver driver, String xpath, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException{
@@ -6012,7 +6014,8 @@ public class UtilitiesTestHelper {
 	
     /** Gets a String and returs it with added n spaces to right */
 	public String padRight(String s, int n) {
-		if (n < 0) { n = 0; }
+//		if (n < 0) { n = 0; }
+		while (n < 0) { n++; }
 		if (s.equals(null)) { s = ""; }
 		for (int i = 0; i < n; i++) {
 			s = s + " ";

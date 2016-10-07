@@ -100,7 +100,13 @@ public class Common {
 	  public static String XpathEqualsTextStartQuot   = "//*[text()=\"";
 	  
 	  public static String XpathAddEqualsTextStart       = "[text()='";
-	  public static String XpathAddEqualsTextStartQuot   = "[text()=\"";	  
+	  public static String XpathAddEqualsTextStartQuot   = "[text()=\"";
+	  
+	  public static String XpathDescEqualsStart     = "/descendant::*[.='";
+	  public static String XpathDescEqualsStartQuot = "/descendant::*[.=\"";
+	  public static String XpathDescEqualsTextStart     = "/descendant::*[text()='";
+	  public static String XpathDescEqualsTextStartQuot = "/descendant::*[text()=\"";
+	  
 	  public static String XpathAddContainsTextStart      = "[contains(text(),'";
 	  public static String XpathAddContainsTextStartQuot  = "[contains(text(),\"";
 	  
@@ -109,10 +115,10 @@ public class Common {
 	  public static String XpathAddContainsStart      = "[contains(.,'";
 	  public static String XpathAddContainsStartQuot  = "[contains(.,\"";
 	  
-	  public static String XpathContainsStart         = "/descendant::*[contains(.,'";
-	  public static String XpathContainsStartQuot     = "/descendant::*[contains(.,\"";	  
-	  public static String XpathContainsTextStart     = "/descendant::*[contains(text(),'";
-	  public static String XpathContainsTextStartQuot = "/descendant::*[contains(text(),\"";
+	  public static String XpathDescContainsStart         = "/descendant::*[contains(.,'";
+	  public static String XpathDescContainsStartQuot     = "/descendant::*[contains(.,\"";	  
+	  public static String XpathDescContainsTextStart     = "/descendant::*[contains(text(),'";
+	  public static String XpathDescContainsTextStartQuot = "/descendant::*[contains(text(),\"";
 	  
 	  public static String XpathContainsAnyStart      = "/descendant::*[@*[contains(.,'";
 	  public static String XpathContainsAnyStartQuot  = "/descendant::*[@*[contains(.,\"";
@@ -131,13 +137,16 @@ public class Common {
 	  public static String IdToXpath(String id) { return "//*[@id='" + id + "']"; }
 	  
 	  public static String TextEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
-	  public static String TextPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
+	  public static String TextPartOfToXpath(String text) { return XpathDescContainsTextStart + text + XpathContainsEnd; }
 	  
 	  public static String TextEntireAddToXpath(String text) { return XpathAddEqualsTextStart   + text + XpathEqualsEnd; }
-	  public static String TextPartOfAddToXpath(String text) { return XpathAddContainsStart + text + XpathContainsEnd; }
+	  public static String TextEntireAddDescToXpath(String text) { return XpathDescEqualsTextStart   + text + XpathEqualsEnd; }
 	  
 	  public static String ContentEntireToXpath(String text) { return XpathEqualsTextStart   + text + XpathEqualsEnd; }
-	  public static String ContentPartOfToXpath(String text) { return XpathContainsTextStart + text + XpathContainsEnd; }
+	  public static String ContentPartOfToXpath(String text) { return XpathDescContainsTextStart + text + XpathContainsEnd; }
+	  
+	  public static String TextPartOfAddToXpath(String text) { return XpathAddContainsStart + text + XpathContainsEnd; }
+	  public static String TextPartOfAddDescToXpath(String text) { return XpathDescContainsStart + text + XpathContainsEnd; }	  
 	  
 	  public static String ContentEntireAddToXpath(String text) { return XpathAddEqualsTextStart   + text + XpathEqualsEnd; }
 	  public static String ContentPartOfAddToXpath(String text) { return XpathAddContainsTextStart + text + XpathContainsEnd; }

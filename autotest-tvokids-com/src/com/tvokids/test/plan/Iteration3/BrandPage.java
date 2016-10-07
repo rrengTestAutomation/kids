@@ -62,7 +62,7 @@ public class BrandPage {
            helper.logIn(driver,"content_editor","changeme");
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
            
            // DECLARATION:
            int total = 3;
@@ -226,7 +226,7 @@ public class BrandPage {
            
            // CLEAN-UP:
            helper.logIn(driver);
-           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
            helper.logOut(driver);
            
            // DECLARATION:
@@ -252,7 +252,7 @@ public class BrandPage {
 	           if (i == 0) {
 	        	// CREATE A CHARACTER BRAND CONTENT WITH BOTH AGES SELECTED:
         		   helper.logIn(driver);  // LOGIN TO DRUPAL AS AN ADMIN
-    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, true, true, false, true, true, new Exception().getStackTrace()[0]);
+    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, false, true, true, false, true, true, new Exception().getStackTrace()[0]);
     	           helper.logOut(driver);
     	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
 	           } else {
@@ -479,7 +479,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -608,7 +608,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -674,7 +674,7 @@ public class BrandPage {
 	}
 	
 	/**
-	 * Test the create video Tile operation on Custom Brand Page
+	 * Test the create video Tile operation on Custom Brand Page for the age group of 5 and under
 	 * <p>Date Created: 2016-10-03</p>
 	 * <p>Date Modified: 2016-10-03</p>
 	 * <p>Original Version: V1</p>
@@ -683,7 +683,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 832</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 46)
-	public void testCreateVideoTileOnCustomBrandPageOnFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -696,7 +696,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -724,7 +724,7 @@ public class BrandPage {
 		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
 		           videoTitle = helper.reopenVideo(driver, "", true, false, true, false, new Exception().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
@@ -750,7 +750,7 @@ public class BrandPage {
 	}
 	
 	/**
-	 * Test the create video Tile operation on Custom Brand Page
+	 * Test the create video Tile operation on Custom Brand Page for the age group of 6 and over
 	 * <p>Date Created: 2016-10-03</p>
 	 * <p>Date Modified: 2016-10-03</p>
 	 * <p>Original Version: V1</p>
@@ -759,7 +759,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 832</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 47)
-	public void testCreateVideoTileOnCustomBrandPageOnSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testCreateVideoTileOnCustomBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -772,7 +772,7 @@ public class BrandPage {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -800,7 +800,159 @@ public class BrandPage {
 		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
 		           videoTitle = helper.reopenVideo(driver, "", true, false, false, true, new Exception().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           // SUBMIT:
+		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
+				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
+		           }
+	           
+	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
+	           expected = videoTitle;
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	           
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           
+	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+    /**
+	 * Test the create video Tile operation on Character Brand Page for the age group of 5 and under
+	 * <p>Date Created: 2016-10-05</p>
+	 * <p>Date Modified: 2016-10-05</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36413 3550 832</p>
+	 */
+	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 48)
+	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	           String title, titleURL, description, xpath, videoTitle, actual, expected;
+	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver);
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCharacterBrand(driver, title, description, 2654, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+
+	           int i = 0;
+	           Boolean ifTitle = true;
+	           while ( (ifTitle || (i == 0)) && (i < 25) ) {
+		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
+		           videoTitle = helper.reopenVideo(driver, "", true, false, true, false, new Exception().getStackTrace()[0]);
+		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           // SUBMIT:
+		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
+				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
+		           }
+	           
+	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
+	           expected = videoTitle;
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           
+	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+    /**
+	 * Test the create video Tile operation on Character Brand Page for the age group of 6 and over
+	 * <p>Date Created: 2016-10-05</p>
+	 * <p>Date Modified: 2016-10-05</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36413 3550 832</p>
+	 */
+	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 48)
+	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{
+	    	   // DECLARATION:
+	           String title, titleURL, description, xpath, videoTitle, actual, expected;
+	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // LOGIN TO DRUPAL AS AN ADMIN:
+	           helper.logIn(driver);
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCharacterBrand(driver, title, description, 2654, true, false, true, false, true, true, new Exception().getStackTrace()[0]);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+
+	           int i = 0;
+	           Boolean ifTitle = true;
+	           while ( (ifTitle || (i == 0)) && (i < 25) ) {
+		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
+		           videoTitle = helper.reopenVideo(driver, "", true, false, false, true, new Exception().getStackTrace()[0]);
+		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }

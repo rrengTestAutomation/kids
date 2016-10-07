@@ -51,7 +51,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -168,7 +168,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -241,7 +241,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -406,7 +406,7 @@ public class Banner {
 	           
 	           // CLEAN-UP:
 	           helper.logIn(driver);
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           helper.logOut(driver);	           
 	           
 	           // DECLARATION:
@@ -430,7 +430,7 @@ public class Banner {
 	        	   if (helper.isEven(i)) {
 	        		   // CREATE A CHARACTER BRAND CONTENT WITH BOTH AGES SELECTED:
 	        		   helper.logIn(driver);  // LOGIN TO DRUPAL AS AN ADMIN
-	    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, true, true, false, true, true, new Exception().getStackTrace()[0]);
+	    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	    	           helper.logOut(driver);
 	    	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
 	        	   } else {
@@ -492,7 +492,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -601,7 +601,7 @@ public class Banner {
 	           helper.logIn(driver,"content_editor","changeme");
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
