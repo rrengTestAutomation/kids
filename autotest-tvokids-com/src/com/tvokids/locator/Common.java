@@ -94,7 +94,12 @@ public class Common {
 	  
 	  
 	  public static String metaTag            = "//meta[@name]";
-	  public static String metaTagDescription = "//meta[@name='description']";	  
+	  public static String metaTagDescription = "//meta[@name='description']";
+	  
+	  public static String selectionListOptionOne   = "/descendant::option[1][@value]";
+	  public static String selectionListOptionTwo   = "/descendant::option[2][@value]";
+	  public static String selectionListOptionThree = "/descendant::option[3][@value]";
+	  
 	  public static String XpathEqualsStart       = "//*[.='";
 	  public static String XpathEqualsStartQuot   = "//*[.=\"";	  
 	  public static String XpathEqualsTextStart       = "//*[text()='";

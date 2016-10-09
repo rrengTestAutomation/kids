@@ -1692,20 +1692,17 @@ public class UtilitiesTestHelper {
 		  if( (t != null) && ifAssert ) { 
 			  assertWebElementExist(driver, Drupal.tilePlacementSelection, t);
 			  scrollToElementCenter(driver, By.id(Drupal.tilePlacementSelection), false, false);
+			  // ASSERT IF TEXT SELECTION IS MISSING:
 			  if(driver.findElements(By.xpath(Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection))).size() == 0) {
-				  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { 
-					  driver.findElement(By.id(Drupal.tilePlacementSelection)).click();
-					  getScreenShotOfDesktopScreens(t, "Element not found!");
-					  }
-				  } 
-			  assertWebElementsExist(driver, t, Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection));
+				  driver.findElement(By.id(Drupal.tilePlacementSelection)).click();
+				  waitUntilElementPresence(driver, 1, Common.IdToXpath(Drupal.tilePlacementSelection) + Common.selectionListOptionTwo, "Selection List Option", t, false);
+				  assertWebElementsExist(driver, t, Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection), true);
+				  }
 			  }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
 		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, -1, false); }
 		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, -1, false); }
 		  }
-	  
-	  // optgroup label="Custom Brand Pages"
 	  
 	  /**
 	   * Image tab-clicked upload
@@ -1714,7 +1711,7 @@ public class UtilitiesTestHelper {
 	   * @throws InterruptedException 
 	   */
 	  public void upload(WebDriver driver, String image, String tab, String browse, String upload) throws NumberFormatException, IOException, InterruptedException {
-//		  String parentWindowHandle = driver.getWindowHandle();
+	  //  String parentWindowHandle = driver.getWindowHandle();
 		  String tabActive = tab  + Drupal.verticalTabActive;
 		  By Tab = By.xpath(tabActive);
 		  By Browse = By.xpath(browse);
@@ -2366,21 +2363,33 @@ public class UtilitiesTestHelper {
 	// ################# DESCRIPTIVE END ##############################
 
 	// ################# SMART ASSERTIONS BEGIN #######################
-		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, By by) throws IOException {
+		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, By by, Boolean ifScreenShotFull) throws IOException {
 			   List <WebElement> list = driver.findElements(by);
-			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
+			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0, ifScreenShotFull));
+			   }
+		   
+		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, By by) throws IOException {
+			   assertWebElementsExist(driver, t, by, false);
+			   }
+		   
+		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, String xpath, Boolean ifScreenShotFull) throws IOException {
+			   List <WebElement> list = driver.findElements(By.xpath(xpath));
+			   if (list.size() == 0) { fileWriterPrinter("\n      XPATH: ---> " + xpath); }
+			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0, ifScreenShotFull));
 			   }
 		   
 		   public void assertWebElementsExist(WebDriver driver, StackTraceElement t, String xpath) throws IOException {
-			   List <WebElement> list = driver.findElements(By.xpath(xpath));
-			   if (list.size() == 0) { fileWriterPrinter("\n      XPATH: ---> " + xpath); }
-			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
+			   assertWebElementsExist(driver, t, xpath, false);
+			   }
+		   
+		   public void assertWebElementsExist(WebDriver driver, String id, StackTraceElement t, Boolean ifScreenShotFull) throws IOException {
+			   List <WebElement> list = driver.findElements(By.id(id));
+			   if (list.size() == 0) { fileWriterPrinter("\n         ID: ---> " + id); }
+			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0, ifScreenShotFull));
 			   }
 		   
 		   public void assertWebElementsExist(WebDriver driver, String id, StackTraceElement t) throws IOException {
-			   List <WebElement> list = driver.findElements(By.id(id));
-			   if (list.size() == 0) { fileWriterPrinter("\n         ID: ---> " + id); }
-			   Assert.assertTrue(list.size() > 0, getAssertTrue(t, driver, "Element not found!", list.size() > 0));
+			   assertWebElementsExist(driver, id, t, false);
 			   }
 		   
 		   public void assertWebElementExist(WebDriver driver, StackTraceElement t, By by) throws IOException {
@@ -2465,7 +2474,7 @@ public class UtilitiesTestHelper {
 			   assertFont(driver, t, By.xpath(xpath), expectedFontName, fontNameCssValue, expectedFontSize, fontSizeCssValue, expectedFontColour, fontColourCssValue);
 			   }
 		   
-		   public static String getAssertTrue(StackTraceElement l, WebDriver driver, String description, Boolean b) throws IOException {
+		   public static String getAssertTrue(StackTraceElement l, WebDriver driver, String description, Boolean b, Boolean ifScreenShotFull) throws IOException {
 		       String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 		       String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
 		       String location = packageNameOnly + File.separator + classNameOnly + File.separator + l.getMethodName() + ", line # " + l.getLineNumber();
@@ -2475,7 +2484,9 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");
-		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
+		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { 
+		  		  if(ifScreenShotFull) { getScreenShotOfDesktop(l, description); } else { getScreenShot(l, description, driver); } 
+		  		  }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
 			  // Append a New Log record:
@@ -2522,6 +2533,10 @@ public class UtilitiesTestHelper {
 			       + xml
 			       + "\n"
 				+ "\nStack Traces:";
+		      }
+		   
+		   public static String getAssertTrue(StackTraceElement l, WebDriver driver, String description, Boolean b) throws IOException {
+		       return getAssertTrue(l, driver, description, b, false);
 		      }
 
 		   public static String getAssertEquals(StackTraceElement l, WebDriver driver, String description, Object actual, Object expected) throws IOException {
@@ -2852,7 +2867,7 @@ public class UtilitiesTestHelper {
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
-				public void getScreenShotOfDesktopFull(StackTraceElement l, String description) throws NumberFormatException, IOException {
+				public static void getScreenShotOfDesktop(StackTraceElement l, String description) throws NumberFormatException, IOException {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 					String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 					String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
