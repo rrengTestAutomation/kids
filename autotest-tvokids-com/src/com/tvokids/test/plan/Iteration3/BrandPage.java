@@ -728,7 +728,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", true, false, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
@@ -804,7 +804,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, true, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
@@ -880,7 +880,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", true, false, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
@@ -956,7 +956,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, true, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
