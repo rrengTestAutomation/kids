@@ -2764,10 +2764,10 @@ public class UtilitiesTestHelper {
 				}
 				
 				/**
-				 * Creates two png files as per user-defined path;
-				 * One is for primary and the other is for the secondary screen;
+				 * Creates Screen-Shot png-files as per user-defined path;
+				 * (one is for primary and the rest are for the secondary screens)
 				 * Also prints the Bounds information about the Displays;
-				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * For All-In-One Display image: add the width of all monitors;
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
@@ -2819,10 +2819,10 @@ public class UtilitiesTestHelper {
 				}
 				
 				/**
-				 * Creates two png files as per user-defined path;
-				 * One is for primary and the other is for the secondary screen;
+				 * Creates Screen-Shot png-files as per user-defined path;
+				 * (one is for primary and the rest are for the secondary screens)
 				 * Also prints the Bounds information about the Displays;
-				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * For All-In-One Display image: add the width of all monitors;
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
@@ -2860,10 +2860,9 @@ public class UtilitiesTestHelper {
 				}
 				
 				/**
-				 * Creates two png files as per user-defined path;
-				 * One is for primary and the other is for the secondary screen;
-				 * Also prints the Bounds information about the Displays;
-				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * Creates a full-desktop Screen-Shot png-file (All-In-One Display image) as per user-defined path;
+				 * (for any number of screens)
+				 * Also prints the Bounds information about the Display;
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
