@@ -1,10 +1,15 @@
 package com.tvokids.utilities;
 
 import java.awt.AWTException;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -40,6 +45,7 @@ import java.util.concurrent.*;
 import java.util.regex.*;
 import java.util.zip.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FileUtils;
@@ -1686,6 +1692,12 @@ public class UtilitiesTestHelper {
 		  if( (t != null) && ifAssert ) { 
 			  assertWebElementExist(driver, Drupal.tilePlacementSelection, t);
 			  scrollToElementCenter(driver, By.id(Drupal.tilePlacementSelection), false, false);
+			  if(driver.findElements(By.xpath(Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection))).size() == 0) {
+				  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { 
+					  driver.findElement(By.id(Drupal.tilePlacementSelection)).click();
+					  getScreenShotOfDesktopScreens(t, "Element not found!");
+					  }
+				  } 
 			  assertWebElementsExist(driver, t, Common.IdToXpath(Drupal.tilePlacementSelection) + Common.TextEntireAddDescToXpath(tileTextSelection));
 			  }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
@@ -2735,6 +2747,144 @@ public class UtilitiesTestHelper {
 				FileUtils.copyFile(scrFile, new File(outputFile));
 				}
 				}
+				
+				/**
+				 * Creates two png files as per user-defined path;
+				 * One is for primary and the other is for the secondary screen;
+				 * Also prints the Bounds information about the Displays;
+				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * @throws IOException 
+				 * @throws NumberFormatException 
+				 */
+				public void getScreenShotOfDesktopScreens(StackTraceElement l, Exception e, String description) throws NumberFormatException, IOException {
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
+					String message1 = null;
+					String exception = "";
+					if(description.length() > 0) { description = ", " + description; }
+					try{ message1 = e.getCause().toString(); }
+					catch(NullPointerException e1) { message1 = ".getCause() by NullPointerException:"; }
+					finally {
+							String [] multiline1 = message1.replaceAll("\\r", "").split("\\n");
+							String firstLine = multiline1[0];
+							String errorCause = firstLine.substring(0,firstLine.indexOf(":"));
+							String exceptionThrown = errorCause.substring(1 + errorCause.lastIndexOf("."), errorCause.length());
+							exception = ", " + exceptionThrown;
+
+							String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+							String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+							
+							String screenshot = classNameOnly + "." + l.getMethodName() + exception + description + ", line # " + l.getLineNumber();
+							String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
+							String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;
+							
+						    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+						    GraphicsDevice[] gDevs = ge.getScreenDevices();
+
+						    for (GraphicsDevice gDev : gDevs) {
+						        DisplayMode mode   = gDev.getDisplayMode();
+						        Rectangle bounds   = gDev.getDefaultConfiguration().getBounds();
+						        String displayName = gDev.getIDstring().replace("\\","");
+						        fileWriterPrinter("\n" + displayName + ": ");
+						        fileWriterPrinter( "Min: (" + (int)bounds.getMinX() + ", " + (int)bounds.getMinY() + "); "
+				        		         + "Max: (" + (int)bounds.getMaxX() + ", " + (int)bounds.getMaxY() + "); "
+						        		 + "Width: " + mode.getWidth() + "; Height:" + mode.getHeight());
+						        try {
+						            Robot robot = new Robot();
+						            BufferedImage image = robot.createScreenCapture(new Rectangle((int) bounds.getMinX(),
+						                                  (int) bounds.getMinY(), (int) bounds.getWidth(), (int) bounds.getHeight()));
+						            String displayFileName = displayName + ".png";
+						            String displayshotName = screenshotName + displayFileName.replace(".png", "].png");
+						            ImageIO.write(image, "png", new File(Common.outputDir + displayFileName));				            
+						            fileWriterPrinter(outputDir + displayshotName);
+									fileCopy(Common.outputFileDir, displayFileName, outputDir, displayshotName);
+									fileCleaner(Common.outputFileDir, displayFileName);			
+						        } catch (AWTException | IOException E) {  E.printStackTrace(); }
+						    }					    
+					}
+				}
+				
+				/**
+				 * Creates two png files as per user-defined path;
+				 * One is for primary and the other is for the secondary screen;
+				 * Also prints the Bounds information about the Displays;
+				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * @throws IOException 
+				 * @throws NumberFormatException 
+				 */
+				public void getScreenShotOfDesktopScreens(StackTraceElement l, String description) throws NumberFormatException, IOException {
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
+					String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+					String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+					String screenshot = classNameOnly + "." + l.getMethodName() + ", " + description + ", line # " + l.getLineNumber();
+					String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
+					String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;
+					
+				    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				    GraphicsDevice[] gDevs = ge.getScreenDevices();
+
+				    for (GraphicsDevice gDev : gDevs) {
+				        DisplayMode mode   = gDev.getDisplayMode();
+				        Rectangle bounds   = gDev.getDefaultConfiguration().getBounds();
+				        String displayName = gDev.getIDstring().replace("\\","");
+				        fileWriterPrinter("\n" + displayName + ": ");
+				        fileWriterPrinter( "Min: (" + (int)bounds.getMinX() + ", " + (int)bounds.getMinY() + "); "
+		        		         + "Max: (" + (int)bounds.getMaxX() + ", " + (int)bounds.getMaxY() + "); "
+				        		 + "Width: " + mode.getWidth() + "; Height:" + mode.getHeight());				        
+				        try {
+				            Robot robot = new Robot();
+				            BufferedImage image = robot.createScreenCapture(new Rectangle((int) bounds.getMinX(),
+				                                  (int) bounds.getMinY(), (int) bounds.getWidth(), (int) bounds.getHeight()));
+				            String displayFileName = displayName + ".png";
+				            String displayshotName = screenshotName + displayFileName.replace(".png", "].png");
+				            ImageIO.write(image, "png", new File(Common.outputDir + displayFileName));				            
+				            fileWriterPrinter(outputDir + displayshotName);
+							fileCopy(Common.outputFileDir, displayFileName, outputDir, displayshotName);
+							fileCleaner(Common.outputFileDir, displayFileName);			
+				        } catch (AWTException | IOException E) {  E.printStackTrace(); }
+				    }
+				}
+				
+				/**
+				 * Creates two png files as per user-defined path;
+				 * One is for primary and the other is for the secondary screen;
+				 * Also prints the Bounds information about the Displays;
+				 * if you want both displays in one image - just add the width of both monitors and you will have it
+				 * @throws IOException 
+				 * @throws NumberFormatException 
+				 */
+				public void getScreenShotOfDesktopFull(StackTraceElement l, String description) throws NumberFormatException, IOException {
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
+					String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
+					String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
+					String screenshot = classNameOnly + "." + l.getMethodName() + ", " + description + ", line # " + l.getLineNumber();
+					String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
+					String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;					
+				    
+					GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				    GraphicsDevice[] gDevs = ge.getScreenDevices();
+			        
+				    Rectangle bounds;
+			        int maxX = 0;
+			        int maxY = 0;
+					for (int i = 0; i < gDevs.length; i++) {
+						bounds = gDevs[i].getDefaultConfiguration().getBounds();
+						if((int)bounds.getMaxX() > maxX) { maxX = (int)bounds.getMaxX(); }
+						if((int)bounds.getMaxY() > maxY) { maxY = (int)bounds.getMaxY(); }			
+					}						
+			        String displayName = "Display";
+			        fileWriterPrinter("\n" + displayName + ": ");
+			        fileWriterPrinter( "Width: " + maxX + "; Height:" + maxY);				        
+			        try {
+			            Robot robot = new Robot();
+			            BufferedImage image = robot.createScreenCapture(new Rectangle(0, 0, maxX, maxY));
+			            String displayFileName = displayName + ".png";
+			            String displayshotName = screenshotName + displayFileName.replace(".png", "].png");
+			            ImageIO.write(image, "png", new File(Common.outputDir + displayFileName));				            
+			            fileWriterPrinter(outputDir + displayshotName);
+						fileCopy(Common.outputFileDir, displayFileName, outputDir, displayshotName);
+						fileCleaner(Common.outputFileDir, displayFileName);			
+			        } catch (AWTException | IOException E) {  E.printStackTrace(); }			    
+				}
 	// ################# SCREEN-SHOT END ##############################
 
 	// ################# STRING CONVERTER START #######################   
@@ -3374,6 +3524,7 @@ public class UtilitiesTestHelper {
 			 * @throws NumberFormatException
 			 */ 
 			public static Boolean fileExist(String path, String fileName, Boolean silentMode) throws NumberFormatException, IOException {
+				if(path.endsWith(File.separator)) { path = path.substring(0, path.length() - 1); }
 				File f = new File((path + File.separator + fileName).replace(File.separator + File.separator, File.separator));
 				if (! (f.exists() && f.isFile()) ) { if (silentMode) { fileWriterPrinter(f + " is missing..."); } }
 				return (f.exists() && f.isFile());
@@ -3386,6 +3537,8 @@ public class UtilitiesTestHelper {
 			
 			/** @throws IOException */ 
 			public static void fileCopy(String pathSource, String fileSource, String pathDest, String fileDest) throws IOException {
+				if(pathSource.endsWith(File.separator)) { pathSource = pathSource.substring(0, pathSource.length() - 1); }
+				if(pathDest.endsWith(File.separator))   { pathDest = pathDest.substring(0, pathDest.length() - 1); }
 				File s = new File((pathSource + File.separator + fileSource).replace(File.separator + File.separator, File.separator));
 				File d = new File((pathDest   + File.separator + fileDest  ).replace(File.separator + File.separator, File.separator));
 				if (s.exists() && s.isFile()) { FileUtils.copyFile(s, d); }
@@ -3394,7 +3547,8 @@ public class UtilitiesTestHelper {
 			/** Edit the target file by searching content throug all lines, replacing them, and overwriting that target file */
 			public static void fileEditor(String path, String search, String replace) {	    	
 			try {
-				 File log= new File(path);	    	
+				 if(path.endsWith(File.separator)) { path = path.substring(0, path.length() - 1); }
+				 File log = new File(path);	    	
 			     FileReader fr = new FileReader(log);
 			     String s;
 			     String totalStr = "";
@@ -3411,6 +3565,8 @@ public class UtilitiesTestHelper {
 			/** Searching content throug all lines of source file, replacing them, and saving as new target file */
 			public static void fileEditor(String sourcePath, String targetPath, String search, String replace) {	    	
 			try {
+				 if(sourcePath.endsWith(File.separator)) { sourcePath = sourcePath.substring(0,sourcePath.length() - 1); }
+				 if(targetPath.endsWith(File.separator)) { targetPath = targetPath.substring(0,targetPath.length() - 1); }
 				 File log= new File(sourcePath);
 				 File tar= new File(targetPath);	    	
 			     FileReader fr = new FileReader(log);
@@ -3440,6 +3596,7 @@ public class UtilitiesTestHelper {
 			/** Writes a String line into File */
             public static void fileWriter(String path, String fileName, Object printLine) throws NumberFormatException, IOException {
              // Create File:
+            	if(path.endsWith(File.separator)) { path = path.substring(0, path.length() - 1); }
 				File f = new File(path + File.separator + fileName);				                                                                      
 			 // Write or add a String line into File:	
 			    FileWriter fw = new FileWriter(f,true);

@@ -24,8 +24,9 @@ public class Common {
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
 	  public static String localImageDir     = localResourceDir + File.separator + "images";                                                                                     
-	  public static String localFileDir      = localResourceDir + File.separator + "files";                                                                                      
-	  public static String outputFileDir     = System.getProperty("user.dir") + File.separator + "output" + File.separator;
+	  public static String localFileDir      = localResourceDir + File.separator + "files";
+	  public static String outputDir         = "output" + File.separator;
+	  public static String outputFileDir     = System.getProperty("user.dir") + File.separator + outputDir;
 	  public static String testOutputFileDir = System.getProperty("user.dir") + File.separator + "test-output" + File.separator;
 	  public static String testIconFileDir   = localResourceDir + File.separator + "icons" + File.separator;
 	  
