@@ -1700,7 +1700,13 @@ public class UtilitiesTestHelper {
 				  }
 			  }
 		  new Select(driver.findElement(By.id(Drupal.tilePlacementSelection))).selectByVisibleText(tileTextSelection);
-		  if(ifPublish) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, -1, false); }
+		  if(ifPublish) { 
+			  Boolean status = false;
+			  while (!status) {
+				  ajaxProtectedClick(driver, By.id(Drupal.tilePlacementPublished), "Published", true, Common.ajaxThrobber, true, -1, false);
+				  status = checkBoxStatus(driver, By.id(Drupal.tilePlacementPublished), false, false, t);
+				  }
+			  }
 		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, -1, false); }
 		  }
 	  

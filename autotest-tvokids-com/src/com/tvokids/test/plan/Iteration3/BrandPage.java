@@ -78,7 +78,6 @@ public class BrandPage {
         	   // CREATE TITLES FOR CONTENTS:
         	   fingerprint[i] = System.currentTimeMillis();
         	   title[i] = String.valueOf(fingerprint[i]) + " " + (i + 1) + "-" + helper.randomWord(Drupal.titleMaxCharsNumber);
-        	   title[i] = helper.getStringBeginning(title[i], Drupal.titleMaxCharsNumber);
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
         	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -240,7 +239,7 @@ public class BrandPage {
            for (int i = 0; i < total; i++) {
         	   // CREATE TITLES FOR CONTENTS:
         	   fingerprint[i] = System.currentTimeMillis();
-        	   title[i] = String.valueOf(fingerprint[i]) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
+        	   title[i] = String.valueOf(fingerprint[i]) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint[i]).length() - 1);
                if (i > 0) { title[i] = title[i].substring(0, Drupal.titleMaxCharsNumber); }
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
@@ -486,8 +485,7 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -618,8 +616,7 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -704,8 +701,7 @@ public class BrandPage {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -780,8 +776,7 @@ public class BrandPage {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -856,8 +851,7 @@ public class BrandPage {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
@@ -932,8 +926,7 @@ public class BrandPage {
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber);
-	           title = helper.getStringBeginning(title, Drupal.titleMaxCharsNumber);
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
