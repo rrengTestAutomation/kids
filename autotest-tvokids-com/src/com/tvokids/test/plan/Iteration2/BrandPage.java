@@ -53,7 +53,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);                
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-           helper.logIn(driver,"content_editor","changeme");
+           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -88,7 +88,7 @@ public class BrandPage {
 	       String expectedURL, title, description, actual, expected;
 	       
 	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	       helper.logIn(driver,"content_editor","changeme");
+	       helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	       
 	       // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -135,10 +135,10 @@ public class BrandPage {
            String actualText, expectedText, expectedURLend, title, xpath;
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-           helper.logIn(driver,"content_editor","changeme");
+           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -236,7 +236,7 @@ public class BrandPage {
 	       String expectedURL, title, actual, expected;
 	       
 	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	       helper.logIn(driver,"content_editor","changeme");
+	       helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	       
 	       // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -279,7 +279,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -348,10 +348,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -436,7 +436,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath, actual, expected;
@@ -496,7 +496,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 
 	           // DECLARATION:
 	           String actual, expected;
@@ -541,7 +541,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -606,7 +606,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected, image = "hero more then 75Kb.png";
@@ -649,10 +649,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -717,7 +717,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -759,7 +759,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected, image = "small more then 75Kb.jpg";
@@ -802,7 +802,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String actual, expected;
@@ -847,7 +847,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -912,7 +912,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected, image = "large more then 100Kb.jpg";
@@ -955,7 +955,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String actual, expected;
@@ -1001,7 +1001,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, actual, expected;
@@ -1069,7 +1069,7 @@ public class BrandPage {
 	           String redirectURL = "http://www.veoh.com";
 	        		   
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // ADD REEDIRECT:
 	           helper.createUrlRedirect(driver, Common.fiveAndUnderURL, redirectURL);
@@ -1082,7 +1082,7 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, redirectURL, false, false);
 	           
 	           // DELETE REDIRECT:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           helper.deleteUrlRedirect(driver, redirectURL);
 	           helper.logOut(driver);
 	           
@@ -1113,7 +1113,7 @@ public class BrandPage {
 	           String redirectURL = "http://www.veoh.com";
 	        		   
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // ADD REEDIRECT:
 	           helper.createUrlRedirect(driver, Common.sixAndOverURL, redirectURL);
@@ -1126,7 +1126,7 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, redirectURL, false, false);
 	           
 	           // DELETE REDIRECT:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           helper.deleteUrlRedirect(driver, redirectURL);
 	           helper.logOut(driver);
 	           
@@ -1157,10 +1157,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           helper.deleteUrlRedirect(driver, redirectURL);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:

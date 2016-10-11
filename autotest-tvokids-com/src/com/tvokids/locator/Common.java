@@ -3,12 +3,39 @@ package com.tvokids.locator;
 import java.io.File;
 
 public class Common {
+//	static WebDriver driver;
 
 	  /**********common credentiald***********/
 	  public static String adminUsername = "dev";
 	  public static String adminPassword = "dev";
-	  public static String contentEditorUsername = "content_editor";
-	  public static String contentEditorPassword = "changeme";
+	  
+	  public static String contentEditorUsername   = "content_editor";
+	  public static String executiveEditorUsername = "executive_editor";
+	  public static String editorPassword          = "changeme";
+	  
+	  public static String testerUsername = "rweinbrand";
+	  
+	  public static String adminUsername() {
+		  String username = "dev";
+		  if(homeURL.contains("qa-kids.tvokids.com")){ username = testerUsername; }
+		  return username;
+		  }
+	  
+	  public static String userPassword(String username) {
+		  String password = "";
+		  if(homeURL.contains("dev30.tvo.org")){
+			  if(username.equals(adminUsername))           { password = adminPassword;  }
+			  if(username.equals(contentEditorUsername))   { password = editorPassword; }
+			  if(username.equals(executiveEditorUsername)) { password = editorPassword; }
+			  }
+		  if(homeURL.contains("qa-kids.tvokids.com")){
+			  if(username.equals(testerUsername))          { password = "lala(ASDJ@JddNI&@7272";      }
+			  if(username.equals(adminUsername))           { password = "XSKOuS*H*@[A029382A:";       }
+			  if(username.equals(contentEditorUsername))   { password = ":S<DWO(@(m9cs9<Mk92";        }
+			  if(username.equals(executiveEditorUsername)) { password = "9j299sM X(S(@E)203;'AS0291"; }
+			  }		  
+		  return password;
+		  }
 	
 	  /**********common url*******************/
 	  public static String homeURL         = System.getProperty("URL");

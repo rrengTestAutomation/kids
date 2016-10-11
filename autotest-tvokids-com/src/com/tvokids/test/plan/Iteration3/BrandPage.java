@@ -20,6 +20,8 @@ import org.testng.annotations.Test;
 
 
 
+
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -37,7 +39,7 @@ public class BrandPage {
 
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
     @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @AfterMethod  @AfterClass   public static void closeBrowsers() throws InterruptedException, IOException { driver.quit(); }
 
 	/**
 	 * Test sort Tiles on the reorder interface
@@ -59,10 +61,10 @@ public class BrandPage {
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 //           driver.manage().window().maximize();
-           helper.logIn(driver,"content_editor","changeme");
+           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
            
            // DECLARATION:
            int total = 3;
@@ -225,7 +227,7 @@ public class BrandPage {
            
            // CLEAN-UP:
            helper.logIn(driver);
-           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
            helper.logOut(driver);
            
            // DECLARATION:
@@ -255,7 +257,7 @@ public class BrandPage {
     	           helper.logOut(driver);
     	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
 	           } else {
-	        	   helper.logIn(driver,"content_editor","changeme"); // LOGIN TO DRUPAL AS A CONTENT EDITOR
+	        	   helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername)); // LOGIN TO DRUPAL AS A CONTENT EDITOR
 		           if (helper.isOdd(i)) {
 		        	// CREATE A CUSTOM BRAND CONTENT WITH AGE 5 AND UNDER ONLY SELECTED:	        		   
 	        		   helper.createCustomBrand(driver, title[i], description[i], true, false, false, true, true, new Exception().getStackTrace()[0]);
@@ -271,7 +273,7 @@ public class BrandPage {
            }
            
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-           helper.logIn(driver,"content_editor","changeme");
+           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            driver.manage().window().maximize();
            
            // FILTER BOTH AGES VISIBLE (ANY AGE VISIBLE):
@@ -323,7 +325,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // NAVIGATE TO CONTENT ADD CUSTOM BRAND:
 		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -366,7 +368,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS CONTENT-EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // NAVIGATE TO CONTENT ADD CUSTOM BRAND:
 		       helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -475,10 +477,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -603,10 +605,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -690,10 +692,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -769,10 +771,10 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver,"content_editor","changeme");
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -851,7 +853,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -930,7 +932,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "dev, content_editor", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);

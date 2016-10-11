@@ -124,10 +124,11 @@ public class UtilitiesTestHelper {
 	 * @throws InterruptedException 
 	 */
 	public void logIn(WebDriver driver) throws IOException, InterruptedException {
+		if((driver.findElements(By.xpath(Common.logout)).size() > 0)) { logOut(driver); }
 		getUrlWaitUntil(driver, 15, Common.userLoginPage);		
 		waitUntilElementPresence(driver, 60, By.id("edit-name"), "\"Username\" ", new RuntimeException().getStackTrace()[0]);		
-		driver.findElement(By.id("edit-name")).sendKeys(Common.adminUsername);
-		driver.findElement(By.id("edit-pass")).sendKeys(Common.adminPassword);
+		driver.findElement(By.id("edit-name")).sendKeys(Common.adminUsername());
+		driver.findElement(By.id("edit-pass")).sendKeys(Common.userPassword(Common.adminUsername()));
 		driver.findElement(By.id(Drupal.submit)).click();
 		Thread.sleep(500);
         if (driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1   ) {
@@ -141,7 +142,8 @@ public class UtilitiesTestHelper {
 	 * @throws InterruptedException 
 	 */
 	public void logIn(WebDriver driver, String username, String password) throws IOException, InterruptedException {
-		getUrlWaitUntil(driver, 15, Common.userLoginPage);		
+		if((driver.findElements(By.xpath(Common.logout)).size() > 0)) { logOut(driver); }
+		getUrlWaitUntil(driver, 15, Common.userLoginPage);
 		waitUntilElementPresence(driver, 60, By.id("edit-name"), "\"Username\" ", new RuntimeException().getStackTrace()[0]);		
 		driver.findElement(By.id("edit-name")).sendKeys(username);
 		driver.findElement(By.id("edit-pass")).sendKeys(password);
@@ -2491,7 +2493,7 @@ public class UtilitiesTestHelper {
 		   if (b == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");
 		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { 
-		  		  if(ifScreenShotFull) { getScreenShotOfDesktop(l, description); } else { getScreenShot(l, description, driver); } 
+		  		  if(ifScreenShotFull) { getScreenShotOfDesktop(l, description, false); } else { getScreenShot(l, description, driver); } 
 		  		  }
 			  // Creating New or Updating existing Failed Counter record:  
 				 counter("failed.num");
@@ -2777,7 +2779,7 @@ public class UtilitiesTestHelper {
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
-				public void getScreenShotOfDesktopScreens(StackTraceElement l, Exception e, String description) throws NumberFormatException, IOException {
+				public void getScreenShotOfScreens(StackTraceElement l, Exception e, String description) throws NumberFormatException, IOException {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 					String message1 = null;
 					String exception = "";
@@ -2798,8 +2800,8 @@ public class UtilitiesTestHelper {
 							String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
 							String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;
 							
-						    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-						    GraphicsDevice[] gDevs = ge.getScreenDevices();
+						    GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+						    GraphicsDevice[] gDevs = gEnv.getScreenDevices();
 
 						    for (GraphicsDevice gDev : gDevs) {
 						        DisplayMode mode   = gDev.getDisplayMode();
@@ -2832,7 +2834,7 @@ public class UtilitiesTestHelper {
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
-				public void getScreenShotOfDesktopScreens(StackTraceElement l, String description) throws NumberFormatException, IOException {
+				public void getScreenShotOfScreens(StackTraceElement l, String description) throws NumberFormatException, IOException {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 					String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 					String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
@@ -2840,8 +2842,8 @@ public class UtilitiesTestHelper {
 					String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
 					String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;
 					
-				    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				    GraphicsDevice[] gDevs = ge.getScreenDevices();
+				    GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				    GraphicsDevice[] gDevs = gEnv.getScreenDevices();
 
 				    for (GraphicsDevice gDev : gDevs) {
 				        DisplayMode mode   = gDev.getDisplayMode();
@@ -2872,16 +2874,15 @@ public class UtilitiesTestHelper {
 				 * @throws IOException 
 				 * @throws NumberFormatException 
 				 */
-				public static void getScreenShotOfDesktop(StackTraceElement l, String description) throws NumberFormatException, IOException {
+				public static void getScreenShotOfDesktop(StackTraceElement l, String description, Boolean ifDesktop) throws NumberFormatException, IOException {
 					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, HH.mm.ss");
 					String packageNameOnly = l.getClassName().substring(0, l.getClassName().lastIndexOf("."));
 					String classNameOnly = l.getClassName().substring(1 + l.getClassName().lastIndexOf("."), l.getClassName().length());
-					String screenshot = classNameOnly + "." + l.getMethodName() + ", " + description + ", line # " + l.getLineNumber();
-					String screenshotName = screenshot + " (" + dateFormat.format(new Date()) + ") [";
+					String screenshot = classNameOnly + "." + l.getMethodName() + ", " + description + ", line # " + l.getLineNumber() + " (" + dateFormat.format(new Date()) + ").png";
 					String outputDir = Common.outputFileDir + packageNameOnly + File.separator + classNameOnly + File.separator;					
 				    
-					GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				    GraphicsDevice[] gDevs = ge.getScreenDevices();
+					GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				    GraphicsDevice[] gDevs = gEnv.getScreenDevices();
 			        
 				    Rectangle bounds;
 			        int maxX = 0;
@@ -2891,18 +2892,18 @@ public class UtilitiesTestHelper {
 						if((int)bounds.getMaxX() > maxX) { maxX = (int)bounds.getMaxX(); }
 						if((int)bounds.getMaxY() > maxY) { maxY = (int)bounds.getMaxY(); }			
 					}						
-			        String displayName = "Display";
-			        fileWriterPrinter("\n" + displayName + ": ");
+			        String display = "Display";
+			        fileWriterPrinter("\n" + display + ": ");
 			        fileWriterPrinter( "Width: " + maxX + "; Height:" + maxY);				        
 			        try {
 			            Robot robot = new Robot();
-			            BufferedImage image = robot.createScreenCapture(new Rectangle(0, 0, maxX, maxY));
-			            String displayFileName = displayName + ".png";
-			            String displayshotName = screenshotName + displayFileName.replace(".png", "].png");
-			            ImageIO.write(image, "png", new File(Common.outputDir + displayFileName));				            
-			            fileWriterPrinter(outputDir + displayshotName);
-						fileCopy(Common.outputFileDir, displayFileName, outputDir, displayshotName);
-						fileCleaner(Common.outputFileDir, displayFileName);			
+			            BufferedImage image = robot.createScreenCapture(new Rectangle(0, 0, maxX, maxY));		            
+			            if(ifDesktop) { screenshot.replace(".png"," [" + display + "].png"); } 
+			            
+			            ImageIO.write(image, "png", new File(Common.outputDir + screenshot));				            
+			            fileWriterPrinter(outputDir + screenshot);
+						fileCopy(Common.outputFileDir, screenshot, outputDir, screenshot);
+						fileCleaner(Common.outputFileDir, screenshot);			
 			        } catch (AWTException | IOException E) {  E.printStackTrace(); }			    
 				}
 	// ################# SCREEN-SHOT END ##############################
@@ -3277,7 +3278,9 @@ public class UtilitiesTestHelper {
 		            return s;
 		            }
 			
-			/** Prints Test End and Sub-Total Time */
+			/** Prints Test End and Sub-Total Time 
+			 * @throws IOException
+			 */
 			public void endTime() throws IOException {
 			   long finish = System.currentTimeMillis();
 			   
@@ -3308,7 +3311,7 @@ public class UtilitiesTestHelper {
 		    	   fileWriter("run.log",   "   Duration: " + testRunTime("start.time", finish));
         	       if (n > 1) { fileWriter("run.log", "   Subtotal: " + testRunTime("ini.time", finish)); }
 		       }
-    }
+			}
         
     /** Outputs Test Run Time as HH:MM:SS */
 			public static String testRunTime(String startFileName) throws IOException {
