@@ -121,9 +121,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: V3</p>
 	 * <p>Xpath: 3</p>
-	 * <p>Test Cases: 35131 35153 3229 524 528 529</p>
+	 * <p>Test Cases: 35131 35153 3229 524 528 529 852</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","CLOSED"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-852","NEW"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:

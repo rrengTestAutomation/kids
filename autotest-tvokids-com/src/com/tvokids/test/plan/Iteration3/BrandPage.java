@@ -677,9 +677,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 832</p>
+	 * <p>Test Cases: 36413 3550 832 853</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 46)
+	@Test(groups = {"TC-36413","US-3550","BUG-832","BUG-853","NEW"}, enabled = true, priority = 46)
 	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -827,9 +827,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 832</p>
+	 * <p>Test Cases: 36413 3550 854</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 48)
+	@Test(groups = {"TC-36413","US-3550","BUG-854","NEW"}, enabled = true, priority = 48)
 	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -902,9 +902,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 832</p>
+	 * <p>Test Cases: 36413 3550 854</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 49)
+	@Test(groups = {"TC-36413","US-3550","BUG-854","NEW"}, enabled = true, priority = 49)
 	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
