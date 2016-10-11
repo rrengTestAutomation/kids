@@ -72,6 +72,7 @@ public class Common {
 	  public static String brandVideoTile = "//div[@data-tile-type='video']/descendant::span[@class='tile-title']";
 	  public static String brandVideoTile(int i) { return "//div[" + i + "][@data-tile-type='video']/descendant::span[@class='tile-title']"; }
 	  public static String brandVideoTile(String videoTitle) { return brandVideoTile + TextEntireAddToXpath(videoTitle); }
+	  public static int    brandVideoTileMaxCharsNumber = 35;
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

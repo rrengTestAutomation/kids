@@ -677,9 +677,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 832 853</p>
+	 * <p>Test Cases: 36413 3550 4271 832</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","BUG-853","NEW"}, enabled = true, priority = 46)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 46)
 	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -740,6 +740,10 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
 	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
 	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
+	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
+	        	   expected = expected.substring(0,actual.length());
+	        	   }
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -752,9 +756,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 832</p>
+	 * <p>Test Cases: 36413 3550 4271 832</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-832","CLOSED"}, enabled = true, priority = 47)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 47)
 	public void testCreateVideoTileOnCustomBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -815,6 +819,10 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
 	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
 	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
+	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
+	        	   expected = expected.substring(0,actual.length());
+	        	   }
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -827,9 +835,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 854</p>
+	 * <p>Test Cases: 36413 3550 4271 854</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-854","NEW"}, enabled = true, priority = 48)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","NEW"}, enabled = true, priority = 48)
 	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -890,6 +898,10 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
 	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
 	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
+	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
+	        	   expected = expected.substring(0,actual.length());
+	        	   }
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
@@ -902,9 +914,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 854</p>
+	 * <p>Test Cases: 36413 3550 4271 854</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","BUG-854","NEW"}, enabled = true, priority = 49)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","NEW"}, enabled = true, priority = 49)
 	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -965,6 +977,10 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
 	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
 	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
+	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
+	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
+	        	   expected = expected.substring(0,actual.length());
+	        	   }
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	    } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
