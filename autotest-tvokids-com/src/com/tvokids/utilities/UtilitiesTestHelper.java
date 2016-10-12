@@ -686,7 +686,7 @@ public class UtilitiesTestHelper {
 			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 			
-	   if(ifSubmit) {
+	   if(ifSubmit && ifRetry) {
 		   String url = driver.getCurrentUrl();
 		   String expected = reFormatStringForURL(title);
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
@@ -772,7 +772,7 @@ public class UtilitiesTestHelper {
 			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 	   
-	   if(ifSubmit) {
+	   if(ifSubmit && ifRetry) {
 		   String url = driver.getCurrentUrl();
 		   String expected = reFormatStringForURL(title);
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
@@ -871,10 +871,12 @@ public class UtilitiesTestHelper {
 			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 						
-	   String url = driver.getCurrentUrl();
-	   String expected = reFormatStringForURL(title);
-	   String actual = url.substring( (url.length() - expected.length()), url.length() );
-	   assertEquals(driver, t, actual, expected);
+	   if(ifSubmit && ifRetry) {
+		   String url = driver.getCurrentUrl();
+		   String expected = reFormatStringForURL(title);
+		   String actual = url.substring( (url.length() - expected.length()), url.length() );
+		   assertEquals(driver, t, actual, expected);
+		   }
 	   
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
 	   return fingerprint;
