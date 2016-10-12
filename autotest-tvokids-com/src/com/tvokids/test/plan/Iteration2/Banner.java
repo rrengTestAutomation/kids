@@ -51,7 +51,7 @@ public class Banner {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -148,7 +148,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	    }
@@ -174,7 +174,7 @@ public class Banner {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -228,7 +228,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	    }
@@ -253,7 +253,7 @@ public class Banner {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -317,7 +317,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	    }
@@ -372,7 +372,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	   }
@@ -413,7 +413,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	   }
@@ -436,7 +436,7 @@ public class Banner {
 	           
 	           // CLEAN-UP:
 	           helper.logIn(driver);
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           helper.logOut(driver);	           
 	           
 	           // DECLARATION:
@@ -504,7 +504,7 @@ public class Banner {
 		   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	       }
@@ -528,7 +528,7 @@ public class Banner {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -618,7 +618,7 @@ public class Banner {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	    }
@@ -643,7 +643,7 @@ public class Banner {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -705,7 +705,7 @@ public class Banner {
 		   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	       }	

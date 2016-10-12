@@ -59,7 +59,7 @@ public class HomePage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	   }
@@ -104,7 +104,7 @@ public class HomePage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	    }
