@@ -348,7 +348,7 @@ public class UtilitiesTestHelper {
 	 * Deletes all the Contents by Content type ("" for all types) on user demand
 	 * @throws IOException
 	 */
-	public void deleteAllContent(WebDriver driver, String type, String title, String user, StackTraceElement t) throws InterruptedException, IOException{
+	public void deleteAllContent(WebDriver driver, String title, String type, String user, StackTraceElement t) throws InterruptedException, IOException{
 		try {
 			if (type.length() == 0) { type = "- Any -"; }
 			fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));

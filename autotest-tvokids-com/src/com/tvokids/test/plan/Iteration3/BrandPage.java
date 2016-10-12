@@ -54,7 +54,7 @@ public class BrandPage {
            helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
            
            // DECLARATION:
            int total = 3;
@@ -201,7 +201,7 @@ public class BrandPage {
 	   finally { 
            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
        	       helper.logIn(driver);
-       	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+       	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 		       }
            } 
 	}
@@ -224,7 +224,7 @@ public class BrandPage {
            
            // CLEAN-UP:
            helper.logIn(driver);
-           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
            helper.logOut(driver);
            
            // DECLARATION:
@@ -274,13 +274,13 @@ public class BrandPage {
            driver.manage().window().maximize();
            
            // FILTER BOTH AGES VISIBLE (ANY AGE VISIBLE):
-           helper.filterAllContent(driver, "", "147", "", "", true, true, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, "147", "", "", "", true, true, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i]));
            }
            
            // FILTER AGE 5 AND UNDER ONLY VISIBLE:
-           helper.filterAllContent(driver, "", "147", "", "", true, false, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, "147", "", "", "", true, false, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   if(i == 0) { helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i])); }
         	   else {
@@ -290,7 +290,7 @@ public class BrandPage {
            }
            
            // FILTER AGE 6 AND OVER ONLY VISIBLE:
-           helper.filterAllContent(driver, "", "147", "", "", false, true, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, "147", "", "", "", false, true, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   if(i == 0) { helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i])); }
         	   else {
@@ -303,7 +303,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
        }
@@ -352,7 +352,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	   }
@@ -462,7 +462,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	   }
@@ -495,7 +495,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -601,7 +601,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}
@@ -629,7 +629,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -694,7 +694,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}
@@ -722,7 +722,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -779,7 +779,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}
@@ -807,7 +807,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -864,7 +864,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}
@@ -892,7 +892,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -949,7 +949,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}
@@ -977,7 +977,7 @@ public class BrandPage {
 	           helper.logIn(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -1034,7 +1034,7 @@ public class BrandPage {
 	   finally { 
 	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
 	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "", "147", "", new RuntimeException().getStackTrace()[0]);
+	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 			           }
 	            }
 	}

@@ -17,7 +17,9 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testCustomBrandDescriptionIsMandatory"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+<include name="testAgeGroupFiltersOnAllContentPage"/>
+</methods></class>
 
 <!-- <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods> -->
 <!-- <include name="testCreateVideoTileOnCustomBrandPageForFiveAndUnder"/> -->
