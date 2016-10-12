@@ -686,10 +686,12 @@ public class UtilitiesTestHelper {
 			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 			
-	   String url = driver.getCurrentUrl();
-	   String expected = reFormatStringForURL(title);
-	   String actual = url.substring( (url.length() - expected.length()), url.length() );
-	   assertEquals(driver, t, actual, expected);
+	   if(ifSubmit) {
+		   String url = driver.getCurrentUrl();
+		   String expected = reFormatStringForURL(title);
+		   String actual = url.substring( (url.length() - expected.length()), url.length() );
+		   assertEquals(driver, t, actual, expected);
+		   }
 	   
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
 	   return fingerprint;
@@ -769,12 +771,14 @@ public class UtilitiesTestHelper {
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
 			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
-			
-	   String url = driver.getCurrentUrl();
-	   String expected = reFormatStringForURL(title);
-	   String actual = url.substring( (url.length() - expected.length()), url.length() );
-	   assertEquals(driver, t, actual, expected);
 	   
+	   if(ifSubmit) {
+		   String url = driver.getCurrentUrl();
+		   String expected = reFormatStringForURL(title);
+		   String actual = url.substring( (url.length() - expected.length()), url.length() );
+		   assertEquals(driver, t, actual, expected);
+		   }	
+
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
 	   return fingerprint;
 	}
