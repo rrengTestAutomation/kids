@@ -38,7 +38,7 @@ public class HomePage {
      * <p>Test Cases: 36104 3852</p>
      */
     @Test(groups = {"TC-36104","US-3852"}, priority = 40)
-	public void testHomePageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testHomePageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
 	       try{
 	    	   // DECLARATION:
 	    	   String expected, actual;
@@ -56,6 +56,12 @@ public class HomePage {
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	   finally { 
+	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
+	        	       helper.logIn(driver);
+	        	       helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
+			           }
+	            }
 	   }
 
 	/**
@@ -68,7 +74,7 @@ public class HomePage {
 	 * <p>Test Cases: 36144 3414 742</p>
 	 */
 	@Test(groups = {"TC-36144","US-3414","BUG-742","NEW"}, enabled = true, priority = 43)
-	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -94,7 +100,13 @@ public class HomePage {
 		       // ASSERT 6 AND OVER BACKGROUND COLOR:
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultBackground, Common.homePageSixAndOverBlockBackgroundColorDefault);
 		       
-	        } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	   finally { 
+	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
+	        	       helper.logIn(driver);
+	        	       helper.deleteAllContent(driver, "", "147", "dev, content_editor, rweinbrand", new RuntimeException().getStackTrace()[0]);
+			           }
+	            }
 	    }
 	
 }
