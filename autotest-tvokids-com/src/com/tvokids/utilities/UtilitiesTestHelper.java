@@ -366,8 +366,8 @@ public class UtilitiesTestHelper {
 			if(title.length() > 0) { driver.findElement(By.id("edit-title")).sendKeys(title); }  //typing selected title name - full or partial
 			
 			driver.findElement(By.id("edit-author")).clear();         //pre-clear the Author filter field
-			if(user.length() > 0) { 
-				driver.findElement(By.id("edit-author")).sendKeys(user); 
+			if(user.length() > 0) {
+				driver.findElement(By.id("edit-author")).sendKeys(user);
 				int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
 	            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
 	            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
@@ -644,7 +644,7 @@ public class UtilitiesTestHelper {
 //     try {
 	   int i = 0;
 	   Boolean ifTitle = true;
-	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
+	   while ( (ifTitle || (i == 0)) && (i < 5) ) {
             getUrlWaitUntil(driver, 15, Drupal.characterBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
@@ -683,12 +683,17 @@ public class UtilitiesTestHelper {
 			
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))); } }
-			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
-						
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;
-	  }
+			
+	   String url = driver.getCurrentUrl();
+	   String expected = reFormatStringForURL(title);
+	   String actual = url.substring( (url.length() - expected.length()), url.length() );
+	   assertEquals(driver, t, actual, expected);
+	   
+//	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
+	   return fingerprint;
+	}
 	
 	/**
 	 * Create a Custom Brand
@@ -706,7 +711,7 @@ public class UtilitiesTestHelper {
 //     try {
 	   int i = 0;
 	   Boolean ifTitle = true;
-	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
+	   while ( (ifTitle || (i == 0)) && (i < 5) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			if(title.length() > 0) {
@@ -762,12 +767,17 @@ public class UtilitiesTestHelper {
 
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
-			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 			
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;
-	  }
+	   String url = driver.getCurrentUrl();
+	   String expected = reFormatStringForURL(title);
+	   String actual = url.substring( (url.length() - expected.length()), url.length() );
+	   assertEquals(driver, t, actual, expected);
+	   
+//	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
+	   return fingerprint;
+	}
 	
 	/**
 	 * Create a Custom Brand
@@ -808,7 +818,7 @@ public class UtilitiesTestHelper {
 //     try {
 	   int i = 0;
 	   Boolean ifTitle = true;
-	   while ( (ifTitle || (i == 0)) && (i < 25) ) {
+	   while ( (ifTitle || (i == 0)) && (i < 5) ) {
             getUrlWaitUntil(driver, 15, Drupal.customBrand);
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 			
@@ -854,12 +864,17 @@ public class UtilitiesTestHelper {
 		
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
 			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title, Drupal.titleMaxCharsNumber))); } }
-			if( (!ifSubmit) || (!ifRetry) ) { i = 25; }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
 			}
 						
-//		    } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-            return fingerprint;
-	  }
+	   String url = driver.getCurrentUrl();
+	   String expected = reFormatStringForURL(title);
+	   String actual = url.substring( (url.length() - expected.length()), url.length() );
+	   assertEquals(driver, t, actual, expected);
+	   
+//	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
+	   return fingerprint;
+	}
 	
 //	/**
 //	 * Create a Custom Brand using Robot
@@ -872,7 +887,7 @@ public class UtilitiesTestHelper {
 //	   By browse, upload;
 ////     try {
 //    	    int i = 0;
-//    	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 25)) {
+//    	    while (((! driver.getCurrentUrl().contains(String.valueOf(fingerprint))) || (i == 0)) && (i < 5)) {
 //    	    getUrlWaitUntil(driver, 15, Drupal.customBrand);
 //			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", new Exception().getStackTrace()[0]);
 //			
@@ -911,9 +926,14 @@ public class UtilitiesTestHelper {
 //
 //			i = contentSubmit(driver, fingerprint, i);			
 //          }
-////     } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }
-//       return fingerprint;	
-//	  }
+//	   String url = driver.getCurrentUrl();
+//	   String expected = reFormatStringForURL(title);
+//	   String actual = url.substring( (url.length() - expected.length()), url.length() );
+//	   assertEquals(driver, t, actual, expected);
+//	   
+////   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
+//	   return fingerprint;
+//	}
 //	
 //	/**
 //	 * Create a Custom Brand using Robot
