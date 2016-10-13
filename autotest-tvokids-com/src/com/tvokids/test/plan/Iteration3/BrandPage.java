@@ -25,8 +25,8 @@ public class BrandPage {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterTest  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass  public static void closeBrowsers() { driver.quit(); }
+    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
 
 	/**
 	 * Test sort Tiles on the reorder interface
