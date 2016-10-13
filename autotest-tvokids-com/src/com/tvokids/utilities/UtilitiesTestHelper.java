@@ -3303,6 +3303,21 @@ public class UtilitiesTestHelper {
 		            if(s.length() == 0 ) { s = "N/A"; }
 		            return s;
 		            }
+		    
+		    /** 
+		     * Performes user defined AfterTest activities (if required) 
+			 * @throws IOException
+			 */
+			public void endTest() throws IOException {
+			    try {
+					if(Common.homeURL.contains("qa-kids.tvokids.com")){
+						WebDriver driver = getServerName(driverHelper);
+					    logIn(driver);
+					    deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+					    driver.quit();
+					    }
+					} catch (IllegalArgumentException | InterruptedException e) { e.printStackTrace(); }
+			    }
 			
 			/** Prints Test End and Sub-Total Time 
 			 * @throws IOException

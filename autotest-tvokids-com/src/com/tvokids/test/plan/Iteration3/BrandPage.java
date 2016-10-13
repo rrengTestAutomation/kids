@@ -8,10 +8,7 @@ import java.net.MalformedURLException;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -28,8 +25,8 @@ public class BrandPage {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() throws InterruptedException, IOException { driver.quit(); }
+    @AfterTest  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass  public static void closeBrowsers() { driver.quit(); }
 
 	/**
 	 * Test sort Tiles on the reorder interface
@@ -43,7 +40,7 @@ public class BrandPage {
 	 * @throws AWTException 
 	 */
 	@Test(groups = {"TC-35404","US-3522","US-3202"}, enabled = true, priority = 38)
-    public void testSortTilesOnReorderInterface() throws IOException, AWTException, InterruptedException {
+    public void testSortTilesOnReorderInterface() throws IOException, AWTException {
 	   try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -198,12 +195,6 @@ public class BrandPage {
         	   }
            
 	   } catch(IOException | InterruptedException /*| AWTException*/ e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-           if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-       	       helper.logIn(driver);
-       	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-		       }
-           } 
 	}
 
     /**
@@ -216,7 +207,7 @@ public class BrandPage {
      * <p>Test Cases: 36101 3758</p>
      */
 	@Test(groups = {"TC-36101","US-3758"}, priority = 39)
-    public void testAgeGroupFiltersOnAllContentPage() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testAgeGroupFiltersOnAllContentPage() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -300,12 +291,6 @@ public class BrandPage {
            }
     	  
        } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
        }
 	
 	/**
@@ -318,7 +303,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36113 3996</p>
 	 */
 	@Test(groups = {"TC-36113","US-3996"}, priority = 41)
-	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	    	   String expected, actual;
@@ -349,12 +334,6 @@ public class BrandPage {
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -367,7 +346,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36114 3997 699</p>
 	 */
 	@Test(groups = {"TC-36114","US-3997","BUG-699","OPEN"}, enabled = true, priority = 42)
-	public void testNewSizeOfCharacterBubbleImageDescription() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testNewSizeOfCharacterBubbleImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	    	   String expected, actual, image;
@@ -459,12 +438,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 		       
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -477,7 +450,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36146 3496</p>
 	 */
 	@Test(groups = {"TC-36146","US-3496"}, priority = 44)
-	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, xpathCharTitle, xpathPageTitle;
@@ -598,12 +571,6 @@ public class BrandPage {
 					}
 		       
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
 	/**
@@ -616,7 +583,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36414 4097 798</p>
 	 */
 	@Test(groups = {"TC-36414","US-4097","BUG-798","CLOSED"}, enabled = true, priority = 45)
-	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath;
@@ -691,12 +658,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], xpath);
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
 	/**
@@ -709,7 +670,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 4271 832</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 46)
-	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -776,12 +737,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
 	/**
@@ -794,7 +749,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 4271 832</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 47)
-	public void testCreateVideoTileOnCustomBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCreateVideoTileOnCustomBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -861,12 +816,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
     /**
@@ -879,7 +828,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 4271 854</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","NEW"}, enabled = true, priority = 48)
-	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -946,12 +895,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
     /**
@@ -964,7 +907,7 @@ public class BrandPage {
 	 * <p>Test Cases: 36413 3550 4271 854</p>
 	 */
 	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","NEW"}, enabled = true, priority = 49)
-	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, videoTitle, actual, expected;
@@ -1031,12 +974,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	}
 	
 }

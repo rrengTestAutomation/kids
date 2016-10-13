@@ -4,17 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-
+import org.testng.annotations.*;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -32,9 +26,9 @@ public class BrandPage {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
-    @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }
+    @AfterTest  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass  public static void closeBrowsers() { driver.quit(); }
     
 	/**
 	 * Test Custom Brand Meta-Data Attributes - elements exist
@@ -46,7 +40,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35131 3229</p> 
 	 */
 	@Test(groups = {"TC-35131","US-3229"}, priority = 1)
-    public void testCustomBrandFieldsExist() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testCustomBrandFieldsExist() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -66,12 +60,6 @@ public class BrandPage {
            helper.assertWebElementExist(driver, Drupal.keywords, new RuntimeException().getStackTrace()[0]);
     	  
            } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
        }
 	
 	/**
@@ -84,7 +72,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35131 35153 3229</p>
 	 */
 	@Test(groups = {"TC-35131","TC-35153","US-3229"}, priority = 2)
-	public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCustomBrandTitleIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
 	       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -118,12 +106,6 @@ public class BrandPage {
            helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -136,7 +118,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35131 35153 3229 524 528 529 852</p>
 	 */
 	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-852","NEW"}, priority = 3)
-    public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -226,12 +208,6 @@ public class BrandPage {
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actualText, expectedText);  
            
            } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
        }
 	
 	/**
@@ -244,7 +220,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35153 35131 3229</p>
 	 */
 	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 4)
-	public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCustomBrandDescriptionIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	   try{
 		   // INITIALISATION:
 	       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -278,12 +254,6 @@ public class BrandPage {
            helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -296,7 +266,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35153 35131 3229</p>
 	 */
 	@Test(groups = {"TC-35153","TC-35131","US-3229"}, priority = 5)
-	public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCustomBrandDescriptionIsLimited() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -353,12 +323,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 
 	/**
@@ -371,7 +335,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35153 3229 650 838</p>
 	 */
 	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-838","NEW"}, enabled = true, priority = 6)
-    public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -444,12 +408,6 @@ public class BrandPage {
 	        		   Common.brandDescriptionFontColour, "color");
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -462,7 +420,7 @@ public class BrandPage {
 	 * <p>Test Cases: 34558 3461</p>
 	 */
 	@Test(groups = {"TC-34558","US-3461"}, priority = 23)
-    public void testBrandPageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -513,12 +471,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -531,7 +483,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35154 3311</p>
 	 */
 	@Test(groups = {"TC-35154","US-3311"}, priority = 24)
-    public void testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageHeroBoxImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -564,12 +516,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);           
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -582,7 +528,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35154 3311</p>
 	 */
 	@Test(groups = {"TC-35154","US-3311"}, priority = 25)
-    public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageHeroBoxImageUploadLessThenMinDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -635,12 +581,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -653,7 +593,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35154 3311</p>
 	 */
 	@Test(groups = {"TC-35154","US-3311"}, priority = 26)
-    public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -684,12 +624,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -702,7 +636,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35154 3311 35220 3188</p>
 	 */
 	@Test(groups = {"TC-35154","US-3311","TC-35220","US-3188"}, priority = 27)
-    public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void  testBrandPageHeroBoxImageUploadAlternativeTextNotExist() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -758,12 +692,6 @@ public class BrandPage {
                helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], alternate);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -776,7 +704,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 707</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","BUG-707","CLOSED"}, priority = 28)
-    public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -806,12 +734,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 
 	/**
@@ -824,7 +746,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 29)
-    public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -855,12 +777,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -873,7 +789,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 30)
-    public void testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageSmallTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -906,12 +822,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);  
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -924,7 +834,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996 699</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699","OPEN"}, enabled = true, priority = 31)
-    public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -977,12 +887,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -995,7 +899,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 32)
-    public void testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -1026,12 +930,6 @@ public class BrandPage {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], actual, expected);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -1044,7 +942,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 33)
-    public void testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageLargeTileImageUploadOnlyJpgJpegPngFilesAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -1078,12 +976,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], error);  
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -1096,7 +988,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35220 3188 3996 708</p>
 	 */
 	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708","OPEN"}, enabled = true, priority = 34)
-    public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -1149,12 +1041,6 @@ public class BrandPage {
 	           helper.assertWebElementNotExist(driver,  new Exception().getStackTrace()[0], Drupal.errorUpload);
 
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -1167,7 +1053,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35158 3610</p>
 	 */
 	@Test(groups = {"TC-35158","US-3610"}, priority = 35)
-    public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testUrlRedirectAgeFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -1199,12 +1085,6 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageFiveAndUnderTitle, Common.fiveAndUnderURL, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -1217,7 +1097,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35160 3610</p>
 	 */
 	@Test(groups = {"TC-35160","US-3610"}, priority = 36)
-    public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testUrlRedirectAgeSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -1249,12 +1129,6 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.homePageSixAndOverTitle, Common.sixAndOverURL, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 	/**
@@ -1267,7 +1141,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35161 3610</p>
 	 */
 	@Test(groups = {"TC-35161","US-3610"}, priority = 37)
-    public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testUrlRedirectCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	           String title, titleURL, description, xpath, BrandPageUrlAgeFive, BrandPageUrlAgeSix, redirectURL = "http://www.veoh.com";
@@ -1343,12 +1217,6 @@ public class BrandPage {
 	           helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], xpath, BrandPageUrlAgeSix, false, false);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	
 }

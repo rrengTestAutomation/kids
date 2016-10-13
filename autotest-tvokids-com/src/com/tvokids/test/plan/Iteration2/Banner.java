@@ -6,10 +6,7 @@ import java.text.DecimalFormat;
 import java.lang.reflect.Method;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -28,8 +25,8 @@ public class Banner {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @AfterTest  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass  public static void closeBrowsers() { driver.quit(); }
     
 	/**
 	 * Test Desktop - Character banner rotation using Banner Arrows
@@ -41,7 +38,7 @@ public class Banner {
 	 * <p>Test Cases: 34144 2025 3655</p>
 	 */
 	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 15)
-	public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -145,12 +142,6 @@ public class Banner {
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(ReturntRatio) > 0 );
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	    }
 	
 	/**
@@ -163,7 +154,7 @@ public class Banner {
 	 * <p>Test Cases: 34144 2025 3655</p>
 	 */
 	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 16)
-	public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -225,12 +216,6 @@ public class Banner {
 		       helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Math.abs(MovementRatioBack) > 0 );
 		       	       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	    }
 	
 	/**
@@ -243,7 +228,7 @@ public class Banner {
 	 * <p>Test Cases: 34147 2024 3656</p>
 	 */
 	@Test(groups = {"TC-34147","US-2024","US-3656"}, priority = 17)
-	public void testCharacterBannerIsInfiniteLooped() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testCharacterBannerIsInfiniteLooped() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -314,12 +299,6 @@ public class Banner {
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], (countAppear >= countDisappear) && (countDisappear >= 0) );
 	           
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	    }
 	
 	/**
@@ -332,7 +311,7 @@ public class Banner {
 	 * <p>Test Cases: 34169 2769</p>
 	 */
 	@Test(groups = {"TC-34169","US-2769"}, priority = 18)
-	public void testTVOKidsLogoIsAnimated() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testTVOKidsLogoIsAnimated() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -369,12 +348,6 @@ public class Banner {
 		    	   }
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -387,7 +360,7 @@ public class Banner {
 	 * <p>Test Cases: 34460 2829</p>
 	 */
 	@Test(groups = {"TC-34460","US-2829"}, priority = 19)
-	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -410,12 +383,6 @@ public class Banner {
 		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.sixAndOverSearchURL, true, false);
 	
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 	
 	/**
@@ -428,7 +395,7 @@ public class Banner {
 	 * <p>Test Cases: 34140 1990</p>
 	 */
 	@Test(groups = {"TC-34140","US-1990"}, priority = 20)
-	public void testTVOKidsLogoRedirectsToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testTVOKidsLogoRedirectsToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -501,12 +468,6 @@ public class Banner {
 	        	   }
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }
 	/**
 	 * Test character banner images Prioritization Business Rule
@@ -518,7 +479,7 @@ public class Banner {
 	 * <p>Test Cases: 34143 2023</p>
 	 */
 	@Test(groups = {"TC-34143","US-2023"}, priority = 21)
-	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -615,12 +576,6 @@ public class Banner {
 	           helper.assertEquals(driver, new RuntimeException().getStackTrace()[0], backCoordinateX, movedCoordinateX);
 	           
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	    }
 	
 	/**
@@ -633,7 +588,7 @@ public class Banner {
 	 * <p>Test Cases: 34462 2831</p>
 	 */
 	@Test(groups = {"TC-34462","US-2831"}, priority = 22)
-    public void testCharacterBannerInteractivityBubblesAnimationIsCorrect() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+    public void testCharacterBannerInteractivityBubblesAnimationIsCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -702,12 +657,6 @@ public class Banner {
 	           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], Y > y);
 	           
 	           } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-		   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	       }	
 	
 }

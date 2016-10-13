@@ -3,10 +3,7 @@ package com.tvokids.test.plan.Iteration3;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -25,8 +22,8 @@ public class HomePage {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
     
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @AfterTest  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  @AfterClass  public static void closeBrowsers() { driver.quit(); }
     
     /**
      * Test Home page Browser Title
@@ -38,7 +35,7 @@ public class HomePage {
      * <p>Test Cases: 36104 3852</p>
      */
     @Test(groups = {"TC-36104","US-3852"}, priority = 40)
-	public void testHomePageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testHomePageBrowserTitle() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
 	    	   String expected, actual;
@@ -56,12 +53,6 @@ public class HomePage {
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	   }
 
 	/**
@@ -74,7 +65,7 @@ public class HomePage {
 	 * <p>Test Cases: 36144 3414 742</p>
 	 */
 	@Test(groups = {"TC-36144","US-3414","BUG-742","NEW"}, enabled = true, priority = 43)
-	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException, InterruptedException {
+	public void testBackgroundColorForAgeGroups() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
@@ -101,12 +92,6 @@ public class HomePage {
 		       helper.assertEquals(driver, new Exception().getStackTrace()[0], colorDefaultBackground, Common.homePageSixAndOverBlockBackgroundColorDefault);
 		       
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-	   finally { 
-	            if(Common.homeURL.contains("qa-kids.tvokids.com")){	
-	        	       helper.logIn(driver);
-	        	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-			           }
-	            }
 	    }
 	
 }
