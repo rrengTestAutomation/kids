@@ -17,7 +17,8 @@ public class Common {
 	  
 	  public static String adminUsername() {
 		  String username = "dev";
-		  if(homeURL.contains("qa-kids.tvokids.com")){ username = testerUsername; }
+		  if(homeURL.contains("qa-kids.tvokids.com")){ username = adminUsername; }
+		  if(homeURL.contains("dev30.tvo.org"))      { username = adminUsername; }
 		  return username;
 		  }
 	  
