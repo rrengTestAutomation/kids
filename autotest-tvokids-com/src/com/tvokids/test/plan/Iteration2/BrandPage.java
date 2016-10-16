@@ -128,11 +128,11 @@ public class BrandPage {
            int actual, expected, number;
            String actualText, expectedText, expectedURLend, title, xpath;
            
-           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
-           
-           // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	       // CLEAN-UP:
+	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+			   
+	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	       helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
            
            // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
            helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -340,12 +340,12 @@ public class BrandPage {
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
-	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
-	           
+	       
 	           // CLEAN-UP:
 	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	       
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -426,11 +426,11 @@ public class BrandPage {
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
 	           
-	           // LOGIN TO DRUPAL AS AN ADMIN:
-	           helper.logIn(driver);
-	           
-	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+               // CLEAN-UP:
+               helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+
+               // LOGIN TO DRUPAL AS AN ADMIN:
+               helper.logIn(driver);
 	           
 	           // DECLARATION:
 	           String title, titleURL, description, xpath, actual, expected;
@@ -641,12 +641,12 @@ public class BrandPage {
 	    	   // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
-	           
-	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
-	           
+	       
 	           // CLEAN-UP:
 	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	       
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
 	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
@@ -1149,12 +1149,14 @@ public class BrandPage {
 	           // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
+	       
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
-	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           // DELETE REDIRECT:
 	           helper.deleteUrlRedirect(driver, redirectURL);
 	           
 	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:

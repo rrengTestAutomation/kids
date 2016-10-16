@@ -160,11 +160,12 @@ public class UtilitiesTestHelper {
 	 */
 	public void logOut(WebDriver driver) throws IOException {		
 		while ( (driver.findElements(By.xpath(Common.logout)).size() > 0) || (driver.findElements(By.xpath(Common.notFoundError)).size() > 0) ) {
-			getUrlWaitUntil(driver, 15, Common.homeURL);
-			driver.findElement(By.xpath(Common.logout)).click();
-			waitUntilElementInvisibility(driver, 15, By.xpath(Common.logout), "\"Log out\" Button", new RuntimeException().getStackTrace()[0]);
-			}
+			try {
+				driver.findElement(By.xpath(Common.logout)).click();
+				waitUntilElementInvisibility(driver, 15, By.xpath(Common.logout), "\"Log out\" Button", new RuntimeException().getStackTrace()[0]);
+			} catch (Exception e) { e.printStackTrace(); }
 		}
+	}
 	
 	/** Converts empty String to "N/A" */
 	public String  convertEmptyStringToNotAvailable(String s) { if( (s.length() == 0 ) || (s.equals(null)) ) { return "N/A"; } else { return s; }
@@ -350,6 +351,8 @@ public class UtilitiesTestHelper {
 	 */
 	public void deleteAllContent(WebDriver driver, String title, String type, String user, StackTraceElement t) throws InterruptedException, IOException{
 		try {
+			logOut(driver);
+			logIn(driver);
 			if (type.length() == 0) { type = "- Any -"; }
 			fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
 			fileWriterPrinter("Delete Content Title:  " + title);
@@ -412,7 +415,7 @@ public class UtilitiesTestHelper {
 			list = driver.findElements(By.xpath(Drupal.messageNoContentAvailable));
 			i++;
 			}
-		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
+		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); } finally { logOut(driver); }
 	}
 				
 	/**
@@ -3312,7 +3315,6 @@ public class UtilitiesTestHelper {
 			    try {
 					if(Common.homeURL.contains("qa-kids.tvokids.com")){
 						WebDriver driver = getServerName(driverHelper);
-					    logIn(driver);
 					    deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
 					    driver.quit();
 					    }
