@@ -81,8 +81,15 @@ public class Drupal{
 	  public static String title   = "edit-title";
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
 	  public static int titleMaxCharsNumber       = 26;
-	  	  
-	  public static String description    = "//*[contains(@id,'-description-und-0-value')]";
+
+	  /************************description******************************/
+	  public static String description          = "//*[contains(@id,'-description-und-0-value')]";
+	  public static String editDescription      = "edit-field-description-und-0-value";
+	  public static String editLongDescription  = "edit-field-long-description-und-0-value";
+	  public static String editShortDescription = "edit-field-short-description-und-0-value";
+	  public static String editSummary          = "edit-field-summary-und-0-value";
+	  
+	  /************************alternate******************************/
 	  public static String alternateSmall = "//*[@id='edit-field-small-tile-image-und-0-alt']";
 	  public static String alternateLarge = "//*[@id='edit-field-large-tile-image-und-0-alt']";
 	  public static String alternateSmallText  = "This is an Alternate Text of Small Tile";
@@ -106,9 +113,7 @@ public class Drupal{
 	  public static String submit                 = "edit-submit";
 	  public static String statusPerformedMessage = "//*[@id='console']/descendant::*[contains(.,'on ') and contains(.,' item')]";	  
 	  public static String statusPerformedCancel  = "//*[@id='console']/descendant::*[contains(text(),'Status message')]/following-sibling::em[contains(text(),'Cancel')]";
-	  public static String longDescription        = "edit-field-description-und-0-value";
-	  public static String shortDescription       = "edit-field-summary-und-0-value";
-	  
+
 	  /************************active tab******************************/
 	  public static String verticalTabActive = "/parent::*/span[@id='active-vertical-tab']";
 	  
@@ -150,6 +155,12 @@ public class Drupal{
 	  public static String tileLargeDescriptionOfFormat    = "\nAllowed file types: png jpg jpeg.";
 	  public static String tileLargeDescriptionOfDimension = "\nImages must be exactly 708x836 pixels.";
 	  
+	  
+	  /************vertical tab - publishing*********************/
+	  public static String publishingOptionsVerticalTab         = "//ul[@class='vertical-tabs-list']/descendant::a/strong[text()='Publishing options']";
+	  public static String publishingOptionsVerticalTabCss      = "li.vertical-tab-button.last > a > strong";
+	  public static String publishingOptionsPublishedCheckBoxId = "edit-status";
+
 	  /************content******************/
 	  public static String brandPageDescriptionID                 = "edit-field-brand-page-description-und-0-value";	  
 	  public static String brandPageDescriptionContentLimitMsgCSS = "div#edit-field-brand-page-description-und-0-value-counter.counter";
@@ -159,6 +170,8 @@ public class Drupal{
 	  
 	  /************video********************/
 	  public static String tileVerticalTabOnVideo = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
+	  public static String brightcoveRefID        = "edit-field-bc-ref-id-und-0-value";
+	  public static String telescopeAssetId       = "edit-field-telescope-asset-id-und-0-value";
 	  
 	  /************url redirect*********************/
 	  public static String urlRedirects    = Common.homeURL + "/admin/config/search/redirect";

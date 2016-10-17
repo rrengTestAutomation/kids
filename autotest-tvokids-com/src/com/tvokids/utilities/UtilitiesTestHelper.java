@@ -657,8 +657,8 @@ public class UtilitiesTestHelper {
 			driver.findElement(By.xpath(Drupal.description)).clear();
 			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
 
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			if (ifAgeUnder) { driver.findElement(By.id(Drupal.ageGroup5)).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id(Drupal.ageGroup6)).click(); }
 			
 			driver.findElement(By.id(Drupal.keywords)).clear();
 			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
@@ -729,8 +729,8 @@ public class UtilitiesTestHelper {
 				driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
 				}
 			
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			if (ifAgeUnder) { driver.findElement(By.id(Drupal.ageGroup5)).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id(Drupal.ageGroup6)).click(); }
 			
 			if(title.length() > 0) {
 				driver.findElement(By.id(Drupal.keywords)).clear();
@@ -835,8 +835,8 @@ public class UtilitiesTestHelper {
 			driver.findElement(By.xpath(Drupal.description)).clear();
 			driver.findElement(By.xpath(Drupal.description)).sendKeys(description);
 
-			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+			if (ifAgeUnder) { driver.findElement(By.id(Drupal.ageGroup5)).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id(Drupal.ageGroup6)).click(); }
 			
 			driver.findElement(By.id(Drupal.keywords)).clear();
 			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
@@ -906,8 +906,8 @@ public class UtilitiesTestHelper {
 //			driver.findElement(By.xpath(Drupal.description)).clear();
 //          driver.findElement(By.xpath(Drupal.description)).sendKeys("This is \"" + title + "\" Description");
 //
-//			if (ifAgeUnder) { driver.findElement(By.id("edit-field-age-group-und-1")).click(); }
-//			if (ifAgeOver)  { driver.findElement(By.id("edit-field-age-group-und-2")).click(); }
+//			if (ifAgeUnder) { driver.findElement(By.id(Drupal.ageGroup5)).click(); }
+//			if (ifAgeOver)  { driver.findElement(By.id(Drupal.ageGroup6)).click(); }
 //			
 //			driver.findElement(By.id(Drupal.keywords)).clear();
 //			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
@@ -999,6 +999,69 @@ public class UtilitiesTestHelper {
 		    waitUntilElementInvisibility(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
 		    }
 		}
+	
+	/**
+	 * Create a Video
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
+	public long createVideo(WebDriver driver, String title, String shortDescription, String longDescription, String brandTitle, 
+			                  String brightcoveRefID, String telescopeAssetId,
+			                  Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPublish, 
+			                  Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws Exception {
+		long fingerprint = System.currentTimeMillis();
+        // try {
+		int i = 0;
+		Boolean ifTitle = true;
+		while ( (ifTitle || (i == 0)) && (i < 5) ) {
+			getUrlWaitUntil(driver, 10, Drupal.video, false);
+			waitUntilElementPresence(driver, 10, By.id(Drupal.title), "Title", t);
+
+		    driver.findElement(By.id(Drupal.title)).clear();
+		    driver.findElement(By.id(Drupal.title)).sendKeys(title);
+		    
+            driver.findElement(By.id(Drupal.editShortDescription)).clear();
+            driver.findElement(By.id(Drupal.editShortDescription)).sendKeys(shortDescription);
+            driver.findElement(By.id(Drupal.editLongDescription)).clear();
+            driver.findElement(By.id(Drupal.editLongDescription)).sendKeys(longDescription);
+
+			if (ifAgeUnder) { driver.findElement(By.id(Drupal.ageGroup5)).click(); }
+			if (ifAgeOver)  { driver.findElement(By.id(Drupal.ageGroup6)).click(); }
+
+		    driver.findElement(By.id("edit-field-program-und-0-target-id")).clear();
+		    driver.findElement(By.id("edit-field-program-und-0-target-id")).sendKeys(brandTitle);
+		    int size = waitUntilElementList(driver, 5, Common.autoComplete, "auto-complete").size();
+            if (size == 1) { try { driver.findElement(By.xpath(Common.autoComplete)).click(); } catch(Exception e) { } }
+            waitUntilElementInvisibility(driver, 15, Common.autoComplete, "auto-complete", new Exception().getStackTrace()[0]);
+              
+		    driver.findElement(By.id(Drupal.brightcoveRefID)).clear();
+		    driver.findElement(By.id(Drupal.brightcoveRefID)).sendKeys(brightcoveRefID);
+		    
+		    driver.findElement(By.id(Drupal.telescopeAssetId)).clear();
+		    driver.findElement(By.id(Drupal.telescopeAssetId)).sendKeys(telescopeAssetId);
+		    
+		    if(ifPublish){
+		    	driver.findElement(By.xpath(Drupal.publishingOptionsVerticalTab)).click();
+		    	waitUntilElementPresence(driver, 10, By.id(Drupal.publishingOptionsPublishedCheckBoxId), "Published Check Box", t);
+		    	driver.findElement(By.id(Drupal.publishingOptionsPublishedCheckBoxId)).click();
+		    	}
+		    
+			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title), ifRetry); }
+			if(ifRetry)  { if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().endsWith(reFormatStringForURL(title))); } }
+			if( (!ifSubmit) || (!ifRetry) ) { i = 5; }
+			}
+			
+	   if(ifSubmit && ifRetry) {
+		   String url = driver.getCurrentUrl();
+		   String expected = reFormatStringForURL(title);
+		   String actual = url.substring( (url.length() - expected.length()), url.length() );
+		   assertEquals(driver, t, actual, expected);
+		   }
+	   
+//	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
+	   return fingerprint;
+	}
 	
 	/**
 	 * Navigates to Drupal "Manage Tile" with option to perform or not the operation of sending tiles to sorted list
