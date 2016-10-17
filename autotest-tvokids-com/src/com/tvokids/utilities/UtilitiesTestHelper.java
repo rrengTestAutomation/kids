@@ -3397,11 +3397,9 @@ public class UtilitiesTestHelper {
 			   fileCleaner("xml.log"    );
 			   fileCleaner("error.log"  );
 			   fileCleaner("reason.log" );
-			   fileCleaner("finish.time");
 			   fileCleaner("failed.try" );
-			   fileCleaner("failed.temp"); // fileWriter("failed.temp", "false");
-			   
-			   fileWriter("finish.time", convertLongToString(finish));
+			   fileCleaner("failed.temp"); // fileOverWriter("failed.temp", "false");
+			   fileOverWriter("finish.time", convertLongToString(finish));
 			// Scanning Test Counter record:
 			   int n = 1;
 			   if (fileExist("test.num", false)) { 
