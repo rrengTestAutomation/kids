@@ -691,7 +691,7 @@ public class UtilitiesTestHelper {
 			
 	   if(ifSubmit && ifRetry) {
 		   String url = driver.getCurrentUrl();
-		   String expected = reFormatStringForURL(title);
+		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
 //		   throwNotEquals(actual, expected);
@@ -778,7 +778,7 @@ public class UtilitiesTestHelper {
 	   
 	   if(ifSubmit && ifRetry) {
 		   String url = driver.getCurrentUrl();
-		   String expected = reFormatStringForURL(title);
+		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
 //		   throwNotEquals(actual, expected);
@@ -878,7 +878,7 @@ public class UtilitiesTestHelper {
 						
 	   if(ifSubmit && ifRetry) {
 		   String url = driver.getCurrentUrl();
-		   String expected = reFormatStringForURL(title);
+		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
 //		   throwNotEquals(actual, expected);
@@ -939,7 +939,7 @@ public class UtilitiesTestHelper {
 //			i = contentSubmit(driver, fingerprint, i);			
 //          }
 //	   String url = driver.getCurrentUrl();
-//	   String expected = reFormatStringForURL(title);
+//	   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 //	   String actual = url.substring( (url.length() - expected.length()), url.length() );
 //	   assertEquals(driver, t, actual, expected);
 ////	   throwNotEquals(actual, expected);

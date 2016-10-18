@@ -80,7 +80,7 @@ public class Drupal{
       /************common once*********************/
 	  public static String title   = "edit-title";
 	  public static String titleRemainCharsNumber = "//div[@id='edit-title-counter']/strong";
-	  public static int titleMaxCharsNumber       = 26;
+	  public static int titleMaxCharsNumber       = 35;
 
 	  /************************description******************************/
 	  public static String description          = "//*[contains(@id,'-description-und-0-value')]";

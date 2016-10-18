@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.*;
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -115,9 +117,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: V3</p>
 	 * <p>Xpath: 3</p>
-	 * <p>Test Cases: 35131 35153 3229 524 528 529 852</p>
+	 * <p>Test Cases: 35131 35153 2958 3229 524 528 529 823 852</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-852","NEW"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","US-2958","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-823","BUG-852","CLOSED"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -168,8 +170,8 @@ public class BrandPage {
 //            text = helper.randomEnglishText(DrupalAddContentLocators.titleMaxCharsNumber + 10);
 //            text = helper.randomWord(DrupalAddContentLocators.titleMaxCharsNumber + 10);
            long fingerprint = System.currentTimeMillis();
-           title = String.valueOf(fingerprint) + " " +  helper.randomText(Drupal.titleMaxCharsNumber + 10);
-             
+           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1 + 10);
+
            driver.findElement(By.id(Drupal.title)).sendKeys(title);
            actual = Integer.valueOf( driver.findElement(By.xpath(Drupal.titleRemainCharsNumber)).getText() );
            expected = 0;
