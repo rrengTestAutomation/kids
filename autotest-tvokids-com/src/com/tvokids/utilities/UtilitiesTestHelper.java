@@ -694,7 +694,6 @@ public class UtilitiesTestHelper {
 		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
-//		   throwNotEquals(actual, expected);
 		   }
 	   
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
@@ -789,7 +788,6 @@ public class UtilitiesTestHelper {
 		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
-//		   throwNotEquals(actual, expected);
 		   }	
 
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
@@ -903,7 +901,6 @@ public class UtilitiesTestHelper {
 		   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 		   String actual = url.substring( (url.length() - expected.length()), url.length() );
 		   assertEquals(driver, t, actual, expected);
-//		   throwNotEquals(actual, expected);
 		   }
 	   
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
@@ -964,7 +961,6 @@ public class UtilitiesTestHelper {
 //	   String expected = reFormatStringForURL(title.substring(0, Drupal.titleMaxCharsNumber));
 //	   String actual = url.substring( (url.length() - expected.length()), url.length() );
 //	   assertEquals(driver, t, actual, expected);
-////	   throwNotEquals(actual, expected);
 //	   
 ////   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
 //	   return fingerprint;
@@ -1902,7 +1898,7 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, Browse, image); }
+		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
 		  else { uploader(driver, image, Browse, Upload); }
       }
 	  
@@ -1932,7 +1928,7 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, Browse, image); }
+		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
 		  else { uploader(driver, image, Browse, Upload, name, t); }
       }
 	  
@@ -1945,7 +1941,7 @@ public class UtilitiesTestHelper {
 	   * @throws IOException
 	   * @throws InterruptedException 
 	   */
-	  public void uploader(WebDriver driver, By browse, String file) throws IOException, InterruptedException {
+	  public void uploader(WebDriver driver, String file, By browse) throws IOException, InterruptedException {
 		  String parentWindowHandle = driver.getWindowHandle();
 		  int i = 0;
 		  int size = driver.findElements(browse).size();
