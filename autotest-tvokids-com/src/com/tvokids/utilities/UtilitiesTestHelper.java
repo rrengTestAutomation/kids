@@ -1726,7 +1726,7 @@ public class UtilitiesTestHelper {
 		public void smartClickLinkUrlWaitUntil(WebDriver driver, int seconds, By element, Boolean ifPromptResult, Boolean ifPromptUrl) 
 		throws IOException, NumberFormatException, InterruptedException {
 			Dimension size = driver.manage().window().getSize();
-			driver.manage().window().maximize();
+			if(ifPromptResult) { driver.manage().window().maximize(); }
 			int iteration = 0;
 			Boolean ifRetry = true;
 			String type = "click";
