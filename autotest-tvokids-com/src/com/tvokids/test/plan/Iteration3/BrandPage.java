@@ -1011,6 +1011,7 @@ public class BrandPage {
 	           long[] fingerprint = new long[total];
 	           
 	           String  badge = "", tile = "", actual, expected = "", svg;
+	           Boolean ifPublish = false;
 	           
 	           for (int i = 0; i < total; i++) {
 	        	   // CREATE TITLES FOR CONTENTS:
@@ -1023,10 +1024,11 @@ public class BrandPage {
 	        	   // LINK GENERIC XPATH:
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
-	    		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
-		           if(i > 0) { badge = "new-episode.svg"; }
+		           // PUBLISH FIRST BRAND TILE ON REST BRANDS:
+		           if(i > 0) { badge = "new-episode.svg"; tile = title[0]; ifPublish = true; }
+		           // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	    		   helper.createCustomBrand(driver, title[i], description[i], true, true, false, true, true, new RuntimeException().getStackTrace()[0],
-                                           "bubble.jpg", "hero.jpg", "small.jpg", "", badge, "", false);
+                                           "bubble.jpg", "hero.jpg", "small.jpg", "", badge, tile, ifPublish);
 	    		   tileXpath[i] = Common.TextEntireToXpath(title[i]) + "/ancestor::a";
 	    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");
 	    		   
@@ -1043,17 +1045,17 @@ public class BrandPage {
 							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
 							   }
 	    		   
-	    			   j = 0;
-			           ifTitle = true;
-			           while ( (ifTitle || (j == 0)) && (j < 25) ) {
-					           // FILTER BY CURRENT TITLE AND EDIT THE CONTENT:
-					           helper.reopenContent(driver, title[i], "", "", "", false, false, true, new Exception().getStackTrace()[0]);
-					           // PUBLISH FIRST TITLE ON CURRENT BRAND WITH TILE PLACEMENT ASSERTION:
-					           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title[0], true, true, false, new Exception().getStackTrace()[0]);
-					           // SUBMIT:
-					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
-							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
-							   }
+//	    			   j = 0;
+//			           ifTitle = true;
+//			           while ( (ifTitle || (j == 0)) && (j < 25) ) {
+//					           // FILTER BY CURRENT TITLE AND EDIT THE CONTENT:
+//					           helper.reopenContent(driver, title[i], "", "", "", false, false, true, new Exception().getStackTrace()[0]);
+//					           // PUBLISH FIRST TITLE ON CURRENT BRAND WITH TILE PLACEMENT ASSERTION:
+//					           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title[0], true, true, false, new Exception().getStackTrace()[0]);
+//					           // SUBMIT:
+//					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
+//							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
+//							   }
 			           }
 	    		   }
 	           
