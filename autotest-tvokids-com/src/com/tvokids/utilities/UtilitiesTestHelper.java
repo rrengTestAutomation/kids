@@ -328,7 +328,7 @@ public class UtilitiesTestHelper {
 		 		   getUrlWaitUntil(driver, 15, Common.adminContentURL);
 		 		   waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, false);
 				   driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
-			       waitUntilElementPresence(driver, 5, Drupal.tileVerticalTabOnVideo, "Tile Vertical Tab (Video)", t, false);
+			       waitUntilElementPresence(driver, 5, Drupal.tileVerticalTab, "Tile Vertical Tab (Video)", t, false);
 			 	   // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
 			       videoTitle = driver.findElement(By.id(Drupal.title)).getAttribute("value");
 			       Boolean five = checkBoxStatus(driver, By.id(Drupal.ageGroup5), false, false, t).equals(ifAgeUnder);

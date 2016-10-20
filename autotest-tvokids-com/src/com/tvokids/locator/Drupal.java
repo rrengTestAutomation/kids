@@ -138,7 +138,7 @@ public class Drupal{
 	  public static String heroBoxRemove      = heroBoxFieldSet + remove;
 	  
 	  /************vertical tab - tile*********************/
-	  public static String tileVerticalTab = "//ul[@class='vertical-tabs-list']/li[3]/a/strong";
+	  public static String tileVerticalTab = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
 	  public static String tileFieldSet    = "//fieldset[3]/div/div";
 	  public static String tileSmallBrowse = tileFieldSet + subSet1 + browse;
 	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
@@ -180,7 +180,6 @@ public class Drupal{
 	  public static String programTelescopeAssetId                = "edit-field-telescope-asset-id-und-0-value";
 	  
 	  /************video********************/
-	  public static String tileVerticalTabOnVideo = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
 	  public static String brightcoveRefID        = "edit-field-bc-ref-id-und-0-value";
 	  public static String telescopeAssetId       = "edit-field-telescope-asset-id-und-0-value";
 	  

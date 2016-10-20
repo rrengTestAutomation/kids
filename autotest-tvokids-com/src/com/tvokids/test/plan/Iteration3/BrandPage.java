@@ -707,7 +707,7 @@ public class BrandPage {
 		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
 		           videoTitle = helper.reopenVideo(driver, "", true, false, true, false, new Exception().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
@@ -786,7 +786,7 @@ public class BrandPage {
 		           // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
 		           videoTitle = helper.reopenVideo(driver, "", true, false, false, true, new Exception().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
@@ -870,7 +870,7 @@ public class BrandPage {
 		           // REOPEN VIDEO BY TITLE:
 		           helper.reopenContent(driver, videoTitle, "Video", "", "", false, false, true, new RuntimeException().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
@@ -952,7 +952,7 @@ public class BrandPage {
 		           // REOPEN VIDEO BY TITLE:
 		           helper.reopenContent(driver, videoTitle, "Video", "", "", false, false, true, new RuntimeException().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
-		           helper.addTilePlacement(driver, Drupal.tileVerticalTabOnVideo, title, true, true, false, new Exception().getStackTrace()[0]);
+		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
@@ -988,7 +988,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35413 3309</p>
 	 */
-	@Test(groups = {"TC-35413","US-3309"})
+	@Test(groups = {"TC-35413","US-3309"}, enabled = true, priority = 50)
 	public void testBadgeForTileOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1009,8 +1009,8 @@ public class BrandPage {
 	           String[] xpath = new String[total];
 	           String[] tileXpath = new String[total];
 	           long[] fingerprint = new long[total];
-	           String tile = "";
-	           String[] badge = {"new-episode.svg",""};
+	           
+	           String  badge = "", tile = "", actual, expected = "", svg;
 	           
 	           for (int i = 0; i < total; i++) {
 	        	   // CREATE TITLES FOR CONTENTS:
@@ -1024,45 +1024,66 @@ public class BrandPage {
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
 	    		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
-		           if(i > 0) { tile = title[0]; }
+		           if(i > 0) { badge = "new-episode.svg"; }
 	    		   helper.createCustomBrand(driver, title[i], description[i], true, true, false, true, true, new RuntimeException().getStackTrace()[0],
-                                           "bubble.jpg", "hero.jpg", "small.jpg", "", badge[i], "", false);
+                                           "bubble.jpg", "hero.jpg", "small.jpg", "", badge, "", false);
 	    		   tileXpath[i] = Common.TextEntireToXpath(title[i]) + "/ancestor::a";
-	    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");    
+	    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");
+	    		   
+	    		   if(i > 0) {
+	    			   int j = 0;
+			           Boolean ifTitle = true;
+			           while ( (ifTitle || (j == 0)) && (j < 25) ) {
+					           // FILTER BY FIRST TITLE AND EDIT THE CONTENT:
+					           helper.reopenContent(driver, title[0], "", "", "", false, false, true, new Exception().getStackTrace()[0]);
+					           // PUBLISH CURRENT TITLE ON FIRST BRAND WITH TILE PLACEMENT ASSERTION:
+					           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title[i], true, true, false, new Exception().getStackTrace()[0]);
+					           // SUBMIT:
+					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
+							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
+							   }
+	    		   
+	    			   j = 0;
+			           ifTitle = true;
+			           while ( (ifTitle || (j == 0)) && (j < 25) ) {
+					           // FILTER BY CURRENT TITLE AND EDIT THE CONTENT:
+					           helper.reopenContent(driver, title[i], "", "", "", false, false, true, new Exception().getStackTrace()[0]);
+					           // PUBLISH FIRST TITLE ON CURRENT BRAND WITH TILE PLACEMENT ASSERTION:
+					           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title[0], true, true, false, new Exception().getStackTrace()[0]);
+					           // SUBMIT:
+					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
+							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
+							   }
+			           }
 	    		   }
 	           
-//	           // CREATE TITLE FOR CONTENT:
-//	           long fingerprint = System.currentTimeMillis();
-//
-//	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-//	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-//	           
-//	           // CREATE DESCRIPTION FOR CONTENT:
-//	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-//	           
-//	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-//	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new RuntimeException().getStackTrace()[0],
-//	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "optimised.svg", "", false);
-//	           
-//	           // LINK GENERIC XPATH:
-//	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-//	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
-	           
-//	           // AGE 5 AND UNDER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
-//	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
-//	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
-//	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
-//	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
-//	        	   expected = expected.substring(0,actual.length());
-//	        	   }
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           for (int i = 0; i < total; i++) {
+		           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+		           Thread.sleep(1000);
+		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
+		           // NAVIGATE TO BRAND PAGE:
+		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
+		           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	        	   if(i == 0) {
+	        		   for (int j = 1; j < total; j++) {
+	        			   expected = title[total - j];
+	        			   actual   = driver.findElement(By.xpath(Common.brandTile("", j))).getText();
+		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+		        		   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile("", j) + Common.brandBadgeParticle);
+		        		   svg = driver.findElement(By.xpath(Common.brandTile("", j) + Common.brandBadgeParticle)).getAttribute("src");
+		        		   svg = svg.substring(svg.lastIndexOf("/") + 1, svg.length());
+		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], svg, badge);
+		        		   }
+	        	   } else { 
+	        		   expected = title[0];
+	        		   actual   = driver.findElement(By.xpath(Common.brandTile("", 1))).getText();
+	        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	        		   helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], Common.brandTile("", 1) + Common.brandBadgeParticle);
+	        		   }
+		           }
 	           
 //	           // AGE 6 AND OVER TEST:
 //	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");  

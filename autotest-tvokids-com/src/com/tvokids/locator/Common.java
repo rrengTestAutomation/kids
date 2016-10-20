@@ -97,10 +97,25 @@ public class Common {
 	  public static String brandDescriptionFontSize   = "16px";
 	  public static String brandDescriptionFontColour = "#000000";
 	  
-	  public static String brandVideoTile = "//div[@data-tile-type='video']/descendant::span[@class='tile-title']";
-	  public static String brandVideoTile(int i) { return "//div[" + i + "][@data-tile-type='video']/descendant::span[@class='tile-title']"; }
+	  /**********brand tile*********/
+	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";
+	  public static String brandTile(String type) {
+		  if (type.length() > 0) { type = "='" + type + "'"; }
+		  return "//div[@data-tile-type" + type + "]/descendant::span[@class='tile-title']";
+		  }
+	  public static String brandTile(String type, int i) {
+		  if (type.length() > 0) { type = "='" + type + "'"; }
+		  return "//div[" + i + "]" + brandTile(type).replace("//div","");
+		  }
+	  
+	  /**********brand tile (video)*********/
+	  public static String brandVideoTile        = brandTile("video");
+	  public static String brandVideoTile(int i) { return brandTile("video", i); }
 	  public static String brandVideoTile(String videoTitle) { return brandVideoTile + TextEntireAddToXpath(videoTitle); }
 	  public static int    brandVideoTileMaxCharsNumber = 35;
+	  
+	  /**********brand badge*********/
+	  public static String brandBadgeParticle = "/parent::*/parent::*/descendant::img[contains(@src,'.svg')]";
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";
