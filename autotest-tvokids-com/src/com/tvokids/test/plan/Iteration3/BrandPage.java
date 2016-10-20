@@ -1002,7 +1002,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
-	           int total = 2;
+	           int total = 3;
 	           String[] title = new String[total];
 	           String[] titleURL = new String[total];
 	           String[] description = new String[total];
@@ -1044,18 +1044,6 @@ public class BrandPage {
 					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
 							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
 							   }
-	    		   
-//	    			   j = 0;
-//			           ifTitle = true;
-//			           while ( (ifTitle || (j == 0)) && (j < 25) ) {
-//					           // FILTER BY CURRENT TITLE AND EDIT THE CONTENT:
-//					           helper.reopenContent(driver, title[i], "", "", "", false, false, true, new Exception().getStackTrace()[0]);
-//					           // PUBLISH FIRST TITLE ON CURRENT BRAND WITH TILE PLACEMENT ASSERTION:
-//					           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title[0], true, true, false, new Exception().getStackTrace()[0]);
-//					           // SUBMIT:
-//					           j = helper.contentSubmit(Common.adminContentURL, driver, j);
-//							   ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL));
-//							   }
 			           }
 	    		   }
 	           
@@ -1087,21 +1075,33 @@ public class BrandPage {
 	        		   }
 		           }
 	           
-//	           // AGE 6 AND OVER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	           
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
-//	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
-//	           actual   = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
-//	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
-//	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
-//	        	   expected = expected.substring(0,actual.length());
-//	        	   }
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           for (int i = 0; i < total; i++) {
+		           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+		           Thread.sleep(1000);
+		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
+		           // NAVIGATE TO BRAND PAGE:
+		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
+		           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	        	   if(i == 0) {
+	        		   for (int j = 1; j < total; j++) {
+	        			   expected = title[total - j];
+	        			   actual   = driver.findElement(By.xpath(Common.brandTile("", j))).getText();
+		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+		        		   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile("", j) + Common.brandBadgeParticle);
+		        		   svg = driver.findElement(By.xpath(Common.brandTile("", j) + Common.brandBadgeParticle)).getAttribute("src");
+		        		   svg = svg.substring(svg.lastIndexOf("/") + 1, svg.length());
+		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], svg, badge);
+		        		   }
+	        	   } else { 
+	        		   expected = title[0];
+	        		   actual   = driver.findElement(By.xpath(Common.brandTile("", 1))).getText();
+	        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	        		   helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], Common.brandTile("", 1) + Common.brandBadgeParticle);
+	        		   }
+		           }
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
