@@ -105,6 +105,7 @@ public class Drupal{
 	  public static String remove  = "/descendant::*[contains(@id, '-und-0-remove-button')][contains(@class,'form-submit')]";
 	  public static String subSet1 = "[1]";
 	  public static String subSet2 = "[2]";
+	  public static String subSet3 = "[3]";
 	  
 	  public static String progress               = "updateprogress";
 	  public static String tilePlacementSelection = "edit-tvokids-content-tile-fieldset-0-landing-page";
@@ -155,6 +156,16 @@ public class Drupal{
 	  public static String tileLargeDescriptionOfFormat    = "\nAllowed file types: png jpg jpeg.";
 	  public static String tileLargeDescriptionOfDimension = "\nImages must be exactly 708x836 pixels.";
 	  
+	  public static String badgeBrowseText = "Open File Browser";
+	  public static String badgeBrowseXpath = Common.TextEntireAddDescToXpath(badgeBrowseText);
+	  public static String badgeBrowse = tileFieldSet + subSet3 + badgeBrowseXpath;
+	  
+	  public static String badgeUpload = tileFieldSet + subSet3 + upload;
+	  public static String badgeRemove = tileFieldSet + subSet3 + remove;
+	  public static String badgeSelect = "//a[@name='sendto'][@title='Select']/span[text()='Select']";
+	  public static String badgeDescription            = tileFieldSet + subSet3 + "/descendant::div[@class='description']";
+	  public static String badgeDescriptionOfSize      = "\nMax file size is 50 KB.";
+	  public static String badgeDescriptionOfFormat    = "Only files with the svg file extension are allowed.";
 	  
 	  /************vertical tab - publishing*********************/
 	  public static String publishingOptionsVerticalTab         = "//ul[@class='vertical-tabs-list']/descendant::a/strong[text()='Publishing options']";

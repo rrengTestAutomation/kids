@@ -709,7 +709,7 @@ public class UtilitiesTestHelper {
 //	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText,
 			                      Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
-			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile, Boolean ifPublish
+			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String badge, String tile, Boolean ifPublish
 			                     ) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
@@ -769,6 +769,14 @@ public class UtilitiesTestHelper {
 				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateLarge)).clear(); driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText); }
 				}
 			
+			if(badge.length() > 0) {
+				tab    = Drupal.tileVerticalTab;
+				browse = Drupal.badgeBrowse;
+				upload = Drupal.badgeUpload;
+				upload(driver, badge, tab, browse, upload);
+				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateLarge)).clear(); driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText); }
+				}
+			
 			if(tile.length() > 0) { addTilePlacement(driver, tile, ifPublish, false);}
 
 			if(ifSubmit) { i = contentSubmit(driver, i, reFormatStringForURL(title, Drupal.titleMaxCharsNumber), ifRetry); }
@@ -787,6 +795,20 @@ public class UtilitiesTestHelper {
 //	   } catch(Exception e) { getScreenShot(new Exception().getStackTrace()[0], e, driver); } finally { return fingerprint; }    
 	   return fingerprint;
 	}
+	
+	/**
+	 * Create a Custom Brand
+	 * @throws AWTException 
+	 * @throws IOException
+	 */
+//	@SuppressWarnings("finally")
+	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText,
+			                      Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
+			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String tile, Boolean ifPublish
+			                     ) throws AWTException, InterruptedException, IOException
+	  {
+		return createCustomBrand(driver, title, description, ifAgeUnder, ifAgeOver, ifAlternateText, ifSubmit, ifRetry, t, bannerImage, heroImage, titleSmallImage, titleLargeImage, "", tile, ifPublish);
+	  }
 	
 	/**
 	 * Create a Custom Brand
@@ -1699,6 +1721,52 @@ public class UtilitiesTestHelper {
 	          driver.switchTo().window(handle);
 	  }
 	  
+      /**
+       * In current page it will smart-click (by scrolling) a link/tab/locator and wait until url opens with exception trace control
+       * @throws IOException 
+       * @throws NumberFormatException 
+       * @throws InterruptedException 
+       */
+		public void smartClickLinkUrlWaitUntil(WebDriver driver, int seconds, By element, Boolean ifPromptResult, Boolean ifPromptUrl) 
+		throws IOException, NumberFormatException, InterruptedException {
+			Dimension size = driver.manage().window().getSize();
+			driver.manage().window().maximize();
+			int iteration = 0;
+			Boolean ifRetry = true;
+			String type = "click";
+			String text = driver.findElement(element).getText();
+			if(text.length() > 0) { type = type + " on \"" + text + "\""; }
+			while( (iteration < 3) && ifRetry ){
+				try {
+					iteration++;
+					clickLinkUrlWaitUntil(driver, seconds, element, ifPromptUrl);
+					String success = "Successful " + type + " action!";
+					String suffix = "-" + getNumberSuffix(iteration);
+					if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }
+					if ((ifPromptUrl) && (iteration > 1)) { success = "\n" +success; }
+					if(ifPromptResult) { fileWriterPrinter(success); }
+					ifRetry = false;
+				} catch (Exception e) {
+					if(ifPromptResult) { fileWriterPrinter("Not a successful " + type + " action...will try again..." + "(attempt #" + iteration + ")"); }
+		            if(iteration == 1) { scrollToElementCenter(driver, element, ifPromptResult, false); }
+		            if(iteration == 2) { scrollToElementBottom(driver, element, ifPromptResult, false);
+		            }
+		            }
+				}
+			driver.manage().window().setSize(size);
+			}
+		
+      /**
+       * In current page it will smart-click (by scrolling) a link/tab/locator and wait until url opens with exception trace control
+       * @throws IOException 
+       * @throws NumberFormatException 
+       * @throws InterruptedException 
+       */
+		public void smartClickLinkUrlWaitUntil(WebDriver driver, int seconds, String xpath, Boolean ifPrompt, Boolean ifPromptUrl) 
+		throws IOException, NumberFormatException, InterruptedException {
+			smartClickLinkUrlWaitUntil(driver, seconds, By.xpath(xpath), ifPrompt, ifPromptUrl);
+			}
+	  
 	  public int getFileSize(URL url) {
 		    HttpURLConnection conn = null;
 		    try {
@@ -1833,7 +1901,9 @@ public class UtilitiesTestHelper {
 		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
 		  
 		  // FINAL UPLOADER:
-		  uploader(driver, image, Browse, Upload);
+		  String browseText = driver.findElement(Browse).getText();
+		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, Browse, image); }
+		  else { uploader(driver, image, Browse, Upload); }
       }
 	  
 	  /**
@@ -1861,8 +1931,40 @@ public class UtilitiesTestHelper {
 		  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(tab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
 		  
 		  // FINAL UPLOADER:
-		  uploader(driver, image, Browse, Upload, name, t);
+		  String browseText = driver.findElement(Browse).getText();
+		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, Browse, image); }
+		  else { uploader(driver, image, Browse, Upload, name, t); }
       }
+	  
+	  /**
+	   * file upload engine (with new WINDOW handler)
+	   * @param driver
+	   * @param image
+	   * @param element
+	   * @param name
+	   * @throws IOException
+	   * @throws InterruptedException 
+	   */
+	  public void uploader(WebDriver driver, By browse, String file) throws IOException, InterruptedException {
+		  String parentWindowHandle = driver.getWindowHandle();
+		  int i = 0;
+		  int size = driver.findElements(browse).size();
+		  while (size == 1) {
+		         try {
+		              size = driver.findElements(browse).size();
+		              if ((i > 0) && (size == 1)) { fileWriterPrinter("Not a successful " + file + " upload...will try again..."); }
+		              smartClickLinkUrlWaitUntil(driver, 5, browse, false, false);
+		    	      for(String winHandle : driver.getWindowHandles()) { driver.switchTo().window(winHandle); }
+		              driver.findElement(By.xpath("//span" + Common.TextEntireAddToXpath(file))).click();
+	                  driver.findElement(By.xpath(Drupal.badgeSelect)).click();
+	             alertHandler(driver);
+	             closeAllOtherWindows(driver, parentWindowHandle); // driver.switchTo().window(parentWindowHandle);
+		         } catch (Exception e) {}
+		         i++;
+		         size = driver.findElements(browse).size();         
+	      }
+		  if (size == 0) { fileWriterPrinter("Successful " + file + " upload!"); }
+	  }
       
 	  /**
 	   * Image direct upload engine
@@ -5930,6 +6032,16 @@ public class UtilitiesTestHelper {
 	// ################# GET WEB PAGE SOURCE CODE END ###################
 				
 	// ################# CLICK LINK AND WAIT UNTIL URL CHANGE START ################
+	            /**
+	             * In current page it will click a link/tab/locator and wait until url opens
+	             * @throws IOException
+	             */
+				public void clickLinkUrlWaitUntil(WebDriver driver, int seconds, By element, Boolean ifPrompt) throws IOException{    	
+					final String previousURL = driver.getCurrentUrl();	  	
+					driver.findElement(element).click();		  	
+					waitUntilUrl(driver, seconds, previousURL, ifPrompt);
+					}
+				
 	            /**
 	             * In current page it will click a link/tab/locator and wait until url opens with exception trace control
 	             * @throws IOException

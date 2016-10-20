@@ -17,8 +17,8 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods>
-<include name="testCustomBrandTitleFieldContentLimit"/>
+<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+<include name="testBadgeForTileOnCustomBrandPage"/>
 </methods></class>
 
 <!--
