@@ -1004,21 +1004,23 @@ public class UtilitiesTestHelper {
 	 */
 	public void deleteUrlRedirect(WebDriver driver, String filter) throws IOException, InterruptedException {
 		getUrlWaitUntil(driver, 10, Drupal.urlRedirects);	
-		waitUntilElementPresence(driver, 5, By.id(Drupal.filterRedirects), "Filter", new Exception().getStackTrace()[0]);
+		waitUntilElementPresence(driver, 5, By.id(Drupal.filterRedirects), "Filter", new Exception().getStackTrace()[0], false);
 		if( driver.findElements(By.xpath(Drupal.selectAllRedirectsCheckBox)).size() > 0) {
 			if(filter.length() > 0) {
 				driver.findElement(By.id(Drupal.filterRedirects)).clear();
 			    driver.findElement(By.id(Drupal.filterRedirects)).sendKeys(filter);
 			    driver.findElement(By.id(Drupal.filterSubmit)).click();
-			    waitUntilElementPresence(driver, 15, By.id(Drupal.filterReset), "Reset", new Exception().getStackTrace()[0]);
+			    waitUntilElementPresence(driver, 15, By.id(Drupal.filterReset), "Reset", new Exception().getStackTrace()[0], false);
 			    }
-		    driver.findElement(By.xpath(Drupal.selectAllRedirectsCheckBox)).click();
-		    waitUntilElementPresence(driver, 15, By.id(Drupal.redirectUpdateSubmit), "Update", new Exception().getStackTrace()[0]);
-		    driver.findElement(By.id(Drupal.redirectUpdateSubmit)).click();
-		    waitUntilElementPresence(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
-		    driver.findElement(By.id(Drupal.submit)).click();
-		    waitUntilElementInvisibility(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0]);
-		    }
+			if( driver.findElements(By.xpath(Drupal.noUrlRedirects)).size() == 0) {
+			    driver.findElement(By.xpath(Drupal.selectAllRedirectsCheckBox)).click();
+			    waitUntilElementPresence(driver, 15, By.id(Drupal.redirectUpdateSubmit), "Update", new Exception().getStackTrace()[0], false);
+			    driver.findElement(By.id(Drupal.redirectUpdateSubmit)).click();
+			    waitUntilElementPresence(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", new Exception().getStackTrace()[0], false);
+			    driver.findElement(By.id(Drupal.submit)).click();
+			    waitUntilElementInvisibility(driver, 15, By.xpath(Drupal.redirectUpdateWarning), "Warning", false, new Exception().getStackTrace()[0]);
+			    }
+			}
 		}
 	
 	/**

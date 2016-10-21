@@ -17,9 +17,8 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testBrandTileStructurOnCustomBrandPage"/>
-</methods></class>
+<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testUrlRedirectCustomBrandPage"/></methods></class>
+
 
 <!--
    FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6

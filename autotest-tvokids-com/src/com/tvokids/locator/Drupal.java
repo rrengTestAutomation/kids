@@ -193,6 +193,7 @@ public class Drupal{
 	  public static String redirectUpdateSubmit       = "edit-submit--2";
 	  public static String redirectUpdateWarningText  = "Are you sure you want to delete this redirect?";
 	  public static String redirectUpdateWarning      = "//h1[@class='page-title']" + Common.TextEntireAddToXpath(redirectUpdateWarningText);
+	  public static String noUrlRedirects             = "//td[contains(text(),'No URL redirects available.')]";
 	  
 	  public static String urlRedirectsAdd  = urlRedirects + "/add";
 	  public static String urlRedirectsFrom = "edit-source";
