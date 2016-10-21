@@ -25,7 +25,7 @@ public class BrandPage {
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
     @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }   
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
+    @AfterMethod  public static void endTime() throws IOException { /*new UtilitiesTestHelper().endTest();*/ new UtilitiesTestHelper().endTime(); }
     @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
 
 	/**
@@ -1024,7 +1024,7 @@ public class BrandPage {
 	        	   // LINK GENERIC XPATH:
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
-		           // PUBLISH FIRST BRAND TILE ON REST BRANDS:
+		           // PUBLISH ON FIRST BRAND TILES OF OTHER BRANDS WITH BADGES:
 		           if(i > 0) { badge = "new-episode.svg"; tile = title[0]; ifPublish = true; }
 		           // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	    		   helper.createCustomBrand(driver, title[i], description[i], true, true, false, true, true, new RuntimeException().getStackTrace()[0],
@@ -1056,8 +1056,9 @@ public class BrandPage {
 		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
 		           // NAVIGATE TO BRAND PAGE:
 		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
-		           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+		           // ASSERTIONS:
 	        	   if(i == 0) {
+	        		   // ASSERT BADGE IS EXIST:
 	        		   for (int j = 1; j < total; j++) {
 	        			   expected = title[total - j];
 	        			   actual   = driver.findElement(By.xpath(Common.brandTile("", j))).getText();
@@ -1068,6 +1069,7 @@ public class BrandPage {
 		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], svg, badge);
 		        		   }
 	        	   } else { 
+	        		   // ASSERT BADGE IS NOT EXIST:
 	        		   expected = title[0];
 	        		   actual   = driver.findElement(By.xpath(Common.brandTile("", 1))).getText();
 	        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
@@ -1084,9 +1086,10 @@ public class BrandPage {
 		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
 		           // NAVIGATE TO BRAND PAGE:
 		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
-		           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+		           // ASSERTIONS:
 	        	   if(i == 0) {
 	        		   for (int j = 1; j < total; j++) {
+	        			   // ASSERT BADGE IS EXIST:
 	        			   expected = title[total - j];
 	        			   actual   = driver.findElement(By.xpath(Common.brandTile("", j))).getText();
 		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
@@ -1095,12 +1098,96 @@ public class BrandPage {
 		        		   svg = svg.substring(svg.lastIndexOf("/") + 1, svg.length());
 		        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], svg, badge);
 		        		   }
-	        	   } else { 
+	        	   } else {
+	        		   // ASSERT BADGE IS NOT EXIST:
 	        		   expected = title[0];
 	        		   actual   = driver.findElement(By.xpath(Common.brandTile("", 1))).getText();
 	        		   helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	        		   helper.assertWebElementNotExist(driver, new Exception().getStackTrace()[0], Common.brandTile("", 1) + Common.brandBadgeParticle);
 	        		   }
+		           }
+	           
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test Brand Tile Structure
+	 * <p>Date Created: 2016-10-21</p>
+	 * <p>Date Modified: 2016-10-21</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35459 3183</p>
+	 */
+	@Test(groups = {"US-35459","US-3183"}, enabled = true, priority = 51)
+	public void testBrandTileStructurOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
+	       try{	    	   
+	           // INITIALISATION:
+	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+	           driver = helper.getServerName(driver);
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           
+	           // DECLARATION:
+	           int total = 4;
+	           String[] title = new String[total];
+	           String[] titleURL = new String[total];
+	           String[] description = new String[total];
+	           String[] xpath = new String[total];
+	           String[] tileXpath = new String[total];
+	           long[] fingerprint = new long[total];
+	           
+	           String  tile = "", large = ""/*, actual, expected = ""*/;
+	           Boolean ifPublish = false;
+	           
+	           for (int i = 0; i < total; i++) {
+	        	   // CREATE TITLES FOR CONTENTS:
+	        	   fingerprint[i] = System.currentTimeMillis();
+	        	   title[i] = String.valueOf(fingerprint[i]) + " " + (i + 1) + "-" 
+	      	                + helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint[i]).length() - (" " + (i + 1) + "-").length());
+	        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
+	        	   // CREATE DESCRIPTION FOR CONTENT:
+	        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	        	   // LINK GENERIC XPATH:
+		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
+		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
+		           // PUBLISH ON FIRST BRAND TILES OF OTHER BRANDS:
+		           if(i > 0) { tile = title[0]; ifPublish = true; }
+		           // USE LARGE SIZE TILE FOR ALL BRANDS STARTING FROM SECOND:
+		           if(i > 1) { large = "large.jpg"; }
+		           // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
+	    		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new RuntimeException().getStackTrace()[0],
+                                        "bubble.jpg", "hero.jpg", "small.jpg", large, "", tile, ifPublish);
+	    		   tileXpath[i] = Common.TextEntireToXpath(title[i]) + "/ancestor::a";
+	    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");
+	    		   }
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           for (int i = 0; i < total; i++) {
+		           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+		           Thread.sleep(1000);
+		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
+		           // NAVIGATE TO BRAND PAGE:
+		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
+		           // ASSERTIONS:
+		           }
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           for (int i = 0; i < total; i++) {
+		           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
+		           Thread.sleep(1000);
+		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
+		           // NAVIGATE TO BRAND PAGE:
+		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
+		           // ASSERTIONS:
 		           }
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
