@@ -30,8 +30,8 @@ public class Common {
 			  if(username.equals(executiveEditorUsername)) { password = editorPassword; }
 			  }
 		  if(homeURL.contains("qa-kids.tvokids.com")){
-			  if(username.equals(testerUsername))          { password = adminPassword; /*"lala(ASDJ@JddNI&@7272";*/       }
-		  /*  if(username.equals(adminUsername))           { password = "XSKOuS*H*@[A029382A:";                           }  */
+			  if(username.equals(testerUsername))          { password = adminPassword;  /*"lala(ASDJ@JddNI&@7272";*/      }
+		      if(username.equals(adminUsername))           { password = adminPassword;  /*"XSKOuS*H*@[A029382A:"*/;       }
 			  if(username.equals(contentEditorUsername))   { password = editorPassword; /*":S<DWO(@(m9cs9<Mk92";*/        }
 			  if(username.equals(executiveEditorUsername)) { password = editorPassword; /*"9j299sM X(S(@E)203;'AS0291";*/ }
 			  }		  

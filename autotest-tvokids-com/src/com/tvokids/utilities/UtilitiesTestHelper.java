@@ -351,7 +351,6 @@ public class UtilitiesTestHelper {
 	 */
 	public void deleteAllContent(WebDriver driver, String title, String type, String user, StackTraceElement t) throws InterruptedException, IOException{
 		try {
-			logOut(driver);
 			logIn(driver);
 			if (type.length() == 0) { type = "- Any -"; }
 			fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
