@@ -36,8 +36,11 @@ public class Log {
 	 * @throws IOException
 	 * @throws Exception
 	 */
-	//@AfterSuite /** (groups = {"FINISH",}) */
+	@AfterSuite /** (groups = {"FINISH",}) */
 	public void logClose() throws IOException {
+		// AFTER SUITE CLEAN-UP:
+		helper.endTest();
+		// FINISH:
 		long finish = System.currentTimeMillis();
 		String time = helper.getCurrentDateTimeFull();
 		// SCANNING FAILURE COUNTER RECORD:

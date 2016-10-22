@@ -28,9 +28,9 @@ public class BrandPage {
 	static WebDriver driver;
 	UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
-    @BeforeMethod public static void startTime(Method method) throws IOException { new UtilitiesTestHelper().startTime(method); }
-    @AfterMethod  public static void endTime() throws IOException { new UtilitiesTestHelper().endTest(); new UtilitiesTestHelper().endTime(); }
-    @AfterMethod  @AfterClass   public static void closeBrowsers() { driver.quit(); }
+    @BeforeMethod public void startTime(Method method) throws IOException { helper.startTime(method); }
+    @AfterMethod  public void endTime() throws IOException { helper.endTime(); }
+    @AfterMethod  @AfterClass   public void closeBrowsers() { driver.quit(); }
     
 	/**
 	 * Test Custom Brand Meta-Data Attributes - elements exist

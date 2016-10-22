@@ -2358,10 +2358,7 @@ public class UtilitiesTestHelper {
 		   * @throws IOException 
 		   * @throws NumberFormatException 
 		   */
-		  public static void getExceptionDescriptive(Exception e, StackTraceElement l, WebDriver driver) throws IOException{
-		  // UPDATING THE FAILED COUNTER RECORDER:
-		  counter("failed.num");
-		  
+	  public static void getExceptionDescriptive(Exception e, StackTraceElement l, WebDriver driver) throws IOException{
 		  String message1 = "", message2 = "", firstLine = "", secondLine = "";
 		  String errorCause = "", location = "", exceptionThrown = "";
 		  String packageNameOnly = "", classNameOnly = "", xml = "";
@@ -2404,22 +2401,24 @@ public class UtilitiesTestHelper {
 	   		  //  fileWriter("run.log", "   Subtotal: ---> " + subtotal);	    	        
 		      }
 		      
-		      // APPEND AN ERROR RECORD:
+		      // UPDATING THE FAILED COUNTER, SCREEN-SHOT AND APPEND AN ERROR RECORD:
 		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-			  if(fileExist("failed.try",false)) {  
-			  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
-              fileWriter("failed.log", "   XML Path: "  + xml);
-			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
-			  fileWriter("failed.log", "Description: ---> " + secondLine);
-			  fileWriter("failed.log", "   Location: ---> " + location);
-			  fileWriter("failed.log", "   Detected: " + detected);
-		   	  fileWriter("failed.log", "    Runtime: " + runtime);
-		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   	  fileWriter("failed.log", "");
+		    	  counter("failed.num");
+		    	  getScreenShot(l, description, driver);
+		    	  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+				  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				  if(fileExist("failed.try",false)) {  
+				  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
+				  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+	              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+	              fileWriter("failed.log", "   XML Path: "  + xml);
+				  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
+				  fileWriter("failed.log", "Description: ---> " + secondLine);
+				  fileWriter("failed.log", "   Location: ---> " + location);
+				  fileWriter("failed.log", "   Detected: " + detected);
+			   	  fileWriter("failed.log", "    Runtime: " + runtime);
+			   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
+			   	  fileWriter("failed.log", "");
 		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
@@ -2433,18 +2432,23 @@ public class UtilitiesTestHelper {
 							         + xml
 							         + "\n"
 				                	 + "\nStack Traces:");
-	    	  // SCREEN-SHOT:
-	    	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
-			  } catch(Exception e1) {
-				                     String s = e1.toString(), m = s;
-				                     if( (e.getMessage().length() == 0) && (s.contains(".") && s.contains("Exception")) ) {
-				                    	 m = ".getCause() by \"" + s.substring(s.lastIndexOf(".") + 1, s.lastIndexOf("Exception")) + "\" Exception";
-				                    	 }
-				                     else { m = ".getCause() by \"" + e.getMessage().replace("!", "") + "\" Exception"; }
-				                     exceptionDescriptive(m, l);	
-				                    }
-		  }
+			  } catch(Exception e1) { getExceptionCause(e1, l);	}
+	  }
 
+	  /**
+	   * The function gets the exception cause
+	   * @param Throwable e
+	   * @param StackTraceElement l
+	   * @throws IOException
+	   */
+	  public static void getExceptionCause(Exception e, StackTraceElement l) throws IOException{
+	      String s = e.toString(), m = s;
+	      if(s.contains(".") && s.contains("Exception")) {
+	     	 m = ".getCause() by " + s.substring(s.lastIndexOf(".") + 1, s.lastIndexOf("Exception")) + " Exception";
+	     	 }
+	      exceptionDescriptive(m, l);
+	  }
+	  
 		/**
 		 * The function create fail logs
 		 * @param Throwable e
@@ -2453,10 +2457,7 @@ public class UtilitiesTestHelper {
 		 * @throws IOException
 		 */
 		@SuppressWarnings("unused")
-		public static void getExceptionDescriptive(Throwable e, StackTraceElement l) throws IOException {
-		   // UPDATING THE FAILED COUNTER RECORDER:  
-		   counter("failed.num");
-			 
+		public static void getExceptionDescriptive(Throwable e, StackTraceElement l, Boolean ifCount) throws IOException {
 		   String message1 = "", message2 = "", firstLine = "", secondLine = "";
 		   String errorCause = "", location = "", exceptionThrown = "";
 		   String packageNameOnly = "", classNameOnly = "", xml = "";  
@@ -2485,9 +2486,6 @@ public class UtilitiesTestHelper {
 
 			  	 // ERROR MESSAGE:
 				 fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
-			  	 
-				 // SCREEN-SHOT:
-				 if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShotOfDesktop(l, secondLine, false); }
 		   
 			     // APPEND A NEW LOG RECORD:		      
 			  	 if (fileExist("run.log", false)) {
@@ -2499,32 +2497,57 @@ public class UtilitiesTestHelper {
 		  		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 			  	     }
 			  	   
-			  	 // APPEND AN ERROR RECORD:
+			  	 // UPDATING THE FAILED COUNTER, SCREEN-SHOT AND APPEND AN ERROR RECORD:
 			  	 if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-			  	 if(fileExist("failed.try",false)) {  
-				 fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			  	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-			  	 fileWriter("failed.log", "   XML Path: "  + xml);			  	   
-			  	 fileWriter("failed.log", "Error Cause: ---> " + errorCause);			  	   
-			  	 fileWriter("failed.log", "Description: ---> " + secondLine);			  	   
-			  	 fileWriter("failed.log", "   Location: ---> " + location);			  	   
-			  	 fileWriter("failed.log", "   Detected: " + detected);			  	   
-			  	 fileWriter("failed.log", "    Runtime: " + runtime);
-			  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
-			  	 fileWriter("failed.log", "");
+					 if(ifCount) { counter("failed.num"); }
+					 getScreenShotOfDesktop(l, secondLine, false);
+				  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+				  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				  	 if(fileExist("failed.try",false)) {  
+					 fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
+				  	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+				  	 fileWriter("failed.log", "   XML Path: "  + xml);			  	   
+				  	 fileWriter("failed.log", "Error Cause: ---> " + errorCause);			  	   
+				  	 fileWriter("failed.log", "Description: ---> " + secondLine);			  	   
+				  	 fileWriter("failed.log", "   Location: ---> " + location);			  	   
+				  	 fileWriter("failed.log", "   Detected: " + detected);			  	   
+				  	 fileWriter("failed.log", "    Runtime: " + runtime);
+				  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
+				  	 fileWriter("failed.log", "");
 			  	 }
+			      
+			     // APPEND DESCRIPTIVE RECORD:
+				 Assert.assertFalse(true, "\n  Error Cause: ---> " + errorCause
+						                + "\n  Description: ---> " + secondLine
+						                + "\n     Location: ---> " + location
+										+ "\n     Detected: ---> " + detected
+										+ "\n      Runtime: ---> " + runtime
+										+ "\n     Subtotal: ---> " + subtotal
+						                + "\n"
+								        + xml
+								        + "\n"
+					                	+ "\nStack Traces:");
 			  	 }		  	 
 		  }
-		  
-		  /**
-		   * Gets the secondary Exception error
-		   * Regardless it is single or multi-line Prompt
-		   * @param e
-		   * @throws IOException 
-		   */
-		   public static void exceptionDescriptive(String errorCause, StackTraceElement l) throws IOException {
+
+		/**
+		 * The function create fail logs
+		 * @param Throwable e
+		 * @param StackTraceElement l
+		 * @throws IOException
+		 */
+		public static void getExceptionDescriptive(Throwable e, StackTraceElement l) throws IOException {
+			getExceptionDescriptive(e, l, true);
+		}
+		
+		/**
+		 * Gets the secondary Exception error
+		 * Regardless it is single or multi-line Prompt
+		 * @param e
+		 * @throws IOException
+		 */
+		   
+		public static void exceptionDescriptive(String errorCause, StackTraceElement l) throws IOException {
 			  String secondLine = errorCause.replace(".getCause() by ", "").replaceAll("\"", "").replace(" Exception", "") + "!";
 			  String location = "";
 			  String packageNameOnly, classNameOnly, xml, detected, runtime, subtotal;
@@ -2540,9 +2563,6 @@ public class UtilitiesTestHelper {
 		      // ERROR MESSAGE:
 		      fileWriterPrinter("\nError Cause: ---> " + errorCause + "\nDescription: ---> " + secondLine + "\n   Location: ---> " + location);
 		      
-		      // SCREEN-SHOT:
-		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShotOfDesktop(l, secondLine, false); }
-		      
 		      // APPEND A NEW LOG RECORDS:
 		      if (fileExist("run.log", false)) {
 			      fileWriter("run.log", "Error Cause: ---> " + errorCause);
@@ -2550,22 +2570,25 @@ public class UtilitiesTestHelper {
 			      fileWriter("run.log", "   Location: ---> " + location);	    	        
 		      }
 		      
-		      // APPEND AN ERROR RECORD:
+		      // UPDATING THE FAILED COUNTER, SCREEN-SHOT AND APPEND AN ERROR RECORD:
 		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-			  if(fileExist("failed.try",false)) {  
-			  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-              fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
-              fileWriter("failed.log", "   XML Path: "  + xml);
-			  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
-			  fileWriter("failed.log", "Description: ---> " + secondLine);
-			  fileWriter("failed.log", "   Location: ---> " + location);
-			  fileWriter("failed.log", "   Detected: " + detected);
-		   	  fileWriter("failed.log", "    Runtime: " + runtime);
-		   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   	  fileWriter("failed.log", "");
+		    	  counter("failed.num");
+		    	  getScreenShotOfDesktop(l, secondLine, false);
+		    	  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+				  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+				  if(fileExist("failed.try",false)) {  
+				  fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
+				  fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+				  fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+				  fileWriter("failed.log", "   XML Path: "  + xml);
+				  fileWriter("failed.log", "Error Cause: ---> " + errorCause);
+				  fileWriter("failed.log", "Description: ---> " + secondLine);
+				  fileWriter("failed.log", "   Location: ---> " + location);
+				  fileWriter("failed.log", "   Detected: " + detected);
+			   	  fileWriter("failed.log", "    Runtime: " + runtime);
+			   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
+			   	  fileWriter("failed.log", "");
+
 		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
@@ -2579,7 +2602,9 @@ public class UtilitiesTestHelper {
 							         + xml
 							         + "\n"
 				                	 + "\nStack Traces:");			 
-		   }		  
+		   
+		}		
+		  
 	// ################# DESCRIPTIVE END ##############################
 		   
 	// ################# SMART THROW EXCEPTION BEGIN #######################
@@ -2712,12 +2737,7 @@ public class UtilitiesTestHelper {
 			   String runtime  = testRunTime("start.time", System.currentTimeMillis());
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == false) {
-		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");
-		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { 
-		  		  if(ifScreenShotFull) { getScreenShotOfDesktop(l, description, false); } else { getScreenShot(l, description, driver); } 
-		  		  }
-			  // Creating New or Updating existing Failed Counter record:  
-				 counter("failed.num");
+		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "true" + "\n     Actual: ---> " + b + "\n");				 
 			  // Append a New Log record:
 			     if (fileExist("run.log", false)) {
 				     fileWriter("run.log", "Error Cause: ---> " + description);
@@ -2728,25 +2748,25 @@ public class UtilitiesTestHelper {
 		   		  // fileWriter("run.log", "    Runtime: ---> " + runtime);
 		   		  // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
-			  // Append an Error record:
-			     if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ){}
-			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-				   if(fileExist("failed.try",false)) {  
-				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
-                   fileWriter("failed.log", "   XML Path: "  + xml);
-				   fileWriter("failed.log", "Error Cause: ---> " + description);
-				   fileWriter("failed.log", "   Location: ---> " + location);
-				   fileWriter("failed.log", "   Expected: ---> " + "true");
-				   fileWriter("failed.log", "     Actual: ---> " + b);
-				   fileWriter("failed.log", "   Detected: " + detected);
-		   		   fileWriter("failed.log", "    Runtime: " + runtime);
-		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   		   fileWriter("failed.log", "");
-			       }
+			  // Appending an Error record and updating existing Failed Counter record:
+			     if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
+			    	 counter("failed.num");
+			    	 if(ifScreenShotFull) { getScreenShotOfDesktop(l, description, false); } else { getScreenShot(l, description, driver); } 
+			    	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			    	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+					 if(fileExist("failed.try",false)) { fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }   
+					 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));  
+					 fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+					 fileWriter("failed.log", "   XML Path: "  + xml);
+					 fileWriter("failed.log", "Error Cause: ---> " + description);
+					 fileWriter("failed.log", "   Location: ---> " + location);
+					 fileWriter("failed.log", "   Expected: ---> " + "true");
+					 fileWriter("failed.log", "     Actual: ---> " + b);
+					 fileWriter("failed.log", "   Detected: " + detected);
+					 fileWriter("failed.log", "    Runtime: " + runtime);
+					 fileWriter("failed.log", "   Subtotal: " + subtotal);
+					 fileWriter("failed.log", "");
+			    	 }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + true + "\n  Actual: " + b + "\n  Result: OK\n");
 			  }
@@ -2778,10 +2798,7 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (actual.equals(expected) == false) {
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + expected + "\n     Actual: ---> " + actual + "\n");
-		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
-			  // Creating New or Updating existing Failed Counter record:  
-				 counter("failed.num");
-			  // Append a New Log record:
+		  	  // Append a New Log record:
 			     if (fileExist("run.log", false)) {
 				     fileWriter("run.log", "Error Cause: ---> " + description);
 				     fileWriter("run.log", "   Location: ---> " + location);
@@ -2791,24 +2808,26 @@ public class UtilitiesTestHelper {
 	   		      // fileWriter("run.log", "    Runtime: ---> " + runtime);
 	   		      // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 				 }
-			  // Append an Error record:
-			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-				   if(fileExist("failed.try",false)) {  
-				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
-                   fileWriter("failed.log", "   XML Path: "  + xml);
-				   fileWriter("failed.log", "Error Cause: ---> " + description);
-				   fileWriter("failed.log", "   Location: ---> " + location);
-				   fileWriter("failed.log", "   Expected: ---> " + expected);
-				   fileWriter("failed.log", "     Actual: ---> " + actual);
-				   fileWriter("failed.log", "   Detected: " + detected);
-		   		   fileWriter("failed.log", "    Runtime: " + runtime);
-		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   		   fileWriter("failed.log", "");
-			       }
+			     
+			  // Appending an Error record and updating existing Failed Counter record:
+			     if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
+			    	 counter("failed.num");
+			    	 getScreenShot(l, description, driver);
+			    	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			    	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+					 if(fileExist("failed.try",false)) { fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
+					 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+					 fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+					 fileWriter("failed.log", "   XML Path: "  + xml);
+					 fileWriter("failed.log", "Error Cause: ---> " + description);
+					 fileWriter("failed.log", "   Location: ---> " + location);
+					 fileWriter("failed.log", "   Expected: ---> " + expected);
+					 fileWriter("failed.log", "     Actual: ---> " + actual);
+					 fileWriter("failed.log", "   Detected: " + detected);
+					 fileWriter("failed.log", "    Runtime: " + runtime);
+					 fileWriter("failed.log", "   Subtotal: " + subtotal);
+					 fileWriter("failed.log", "");
+					 }
 		      } else {
 		      fileWriterPrinter("\nExpected: " + expected + "\n  Actual: " + actual + "\n  Result: OK\n");
 		      }
@@ -2836,9 +2855,6 @@ public class UtilitiesTestHelper {
 			   String subtotal = testRunTime("ini.time",   System.currentTimeMillis());
 		   if (b == true) {			  
 		      fileWriterPrinter("\nError Cause: ---> " + description + "\n   Location: ---> " + location + "\n   Expected: ---> " + "false" + "\n     Actual: ---> " + b + "\n");
-		  	  if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) { getScreenShot(l, description, driver); }
-			  // Creating New or Updating existing Failed Counter record:  
-				 counter("failed.num");
 			  // Append a New Log record:
 			     if (fileExist("run.log", false)) {
 				     fileWriter("run.log", "Error Cause: ---> " + description);
@@ -2849,23 +2865,25 @@ public class UtilitiesTestHelper {
    		          // fileWriter("run.log", "    Runtime: ---> " + runtime);
    		          // fileWriter("run.log", "   Subtotal: ---> " + subtotal);
 		         }
-			  // Append an Error record:
-			       if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
-			       fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
-			       fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
-				   if(fileExist("failed.try",false)) {  
-				   fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
-			       fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
-                   fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
-                   fileWriter("failed.log", "   XML Path: "  + xml);
-				   fileWriter("failed.log", "Error Cause: ---> " + description);
-				   fileWriter("failed.log", "   Location: ---> " + location);
-				   fileWriter("failed.log", "   Expected: ---> " + "false");
-				   fileWriter("failed.log", "     Actual: ---> " + b);
-				   fileWriter("failed.log", "   Detected: " + detected);
-		   		   fileWriter("failed.log", "    Runtime: " + runtime);
-		   		   fileWriter("failed.log", "   Subtotal: " + subtotal);
-		   		   fileWriter("failed.log", "");
+				 
+			  // Appending an Error record and updating existing Failed Counter record:
+			     if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
+			    	 counter("failed.num");
+			    	 getScreenShot(l, description, driver);
+			    	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
+			    	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
+			    	 if(fileExist("failed.try",false)) { fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
+			    	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time"))); 
+			    	 fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
+			    	 fileWriter("failed.log", "   XML Path: "  + xml);
+			    	 fileWriter("failed.log", "Error Cause: ---> " + description);
+			    	 fileWriter("failed.log", "   Location: ---> " + location);
+			    	 fileWriter("failed.log", "   Expected: ---> " + "false");
+			    	 fileWriter("failed.log", "     Actual: ---> " + b);
+			    	 fileWriter("failed.log", "   Detected: " + detected);
+			    	 fileWriter("failed.log", "    Runtime: " + runtime);
+			    	 fileWriter("failed.log", "   Subtotal: " + subtotal);
+			    	 fileWriter("failed.log", "");
 			       }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + false + "\n  Actual: " + b + "\n  Result: OK\n");

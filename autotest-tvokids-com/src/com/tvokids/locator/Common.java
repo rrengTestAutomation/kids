@@ -104,7 +104,6 @@ public class Common {
 		  return "//div[@data-tile-type" + type + "]/descendant::span[@class='tile-title']";
 		  }
 	  public static String brandTile(String type, int i) {
-		  if (type.length() > 0) { type = "='" + type + "'"; }
 		  return "//div[" + i + "]" + brandTile(type).replace("//div","");
 		  }
 	  

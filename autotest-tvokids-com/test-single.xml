@@ -17,7 +17,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testUrlRedirectCustomBrandPage"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.Banner"><methods><include name="testOnNowBubbleIsNotMovingBackAfterRotation"/></methods></class>
 
 
 <!--
