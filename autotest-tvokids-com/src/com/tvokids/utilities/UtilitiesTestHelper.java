@@ -2500,7 +2500,7 @@ public class UtilitiesTestHelper {
 			  	 // UPDATING THE FAILED COUNTER, SCREEN-SHOT AND APPEND AN ERROR RECORD:
 			  	 if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 					 if(ifCount) { counter("failed.num"); }
-					 getScreenShotOfDesktop(l, secondLine, false);
+					 getScreenShotOfDesktop(l, description, false);
 				  	 fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 				  	 fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				  	 if(fileExist("failed.try",false)) {  
@@ -2588,7 +2588,6 @@ public class UtilitiesTestHelper {
 			   	  fileWriter("failed.log", "    Runtime: " + runtime);
 			   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 			   	  fileWriter("failed.log", "");
-
 		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
@@ -2601,10 +2600,8 @@ public class UtilitiesTestHelper {
 					                 + "\n"
 							         + xml
 							         + "\n"
-				                	 + "\nStack Traces:");			 
-		   
-		}		
-		  
+				                	 + "\nStack Traces:");
+		}
 	// ################# DESCRIPTIVE END ##############################
 		   
 	// ################# SMART THROW EXCEPTION BEGIN #######################
