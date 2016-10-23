@@ -20,9 +20,9 @@
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
 <include name="testCreateVideoTileOnCustomBrandPageForFiveAndUnder"/>
-<include name="testCreateVideoTileOnCustomBrandPageForSixAndOver"/>
-<include name="testCreateVideoTileOnCharacterBrandPageForFiveAndUnder"/>
-<include name="testCreateVideoTileOnCharacterBrandPageForSixAndOver"/>
+<!-- <include name="testCreateVideoTileOnCustomBrandPageForSixAndOver"/> -->
+<!-- <include name="testCreateVideoTileOnCharacterBrandPageForFiveAndUnder"/> -->
+<!-- <include name="testCreateVideoTileOnCharacterBrandPageForSixAndOver"/> -->
 </methods></class>
 
 <!-- <class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testBrandPageBrowserTitle"/></methods></class> -->

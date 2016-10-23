@@ -2456,7 +2456,6 @@ public class UtilitiesTestHelper {
 		 * @param WebDriver driver
 		 * @throws IOException
 		 */
-		@SuppressWarnings("unused")
 		public static void getExceptionDescriptive(Throwable e, StackTraceElement l, Boolean ifCount) throws IOException {
 		   String message1 = "", message2 = "", firstLine = "", secondLine = "";
 		   String errorCause = "", location = "", exceptionThrown = "";
