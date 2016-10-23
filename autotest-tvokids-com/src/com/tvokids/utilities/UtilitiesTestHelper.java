@@ -2432,21 +2432,27 @@ public class UtilitiesTestHelper {
 							         + xml
 							         + "\n"
 				                	 + "\nStack Traces:");
-			  } catch(Exception e1) { getExceptionCause(e1, l);	}
+			  
+			  } catch(Exception e1) { getExceptionDescriptive(e, l); /*getExceptionDescriptive(getExceptionErrorCause(e), l);*/ }
 	  }
 
 	  /**
-	   * The function gets the exception cause
+	   * The function gets the exception error cause
 	   * @param Throwable e
 	   * @param StackTraceElement l
 	   * @throws IOException
 	   */
-	  public static void getExceptionCause(Exception e, StackTraceElement l) throws IOException{
-	      String s = e.toString(), m = s;
-	      if(s.contains(".") && s.contains("Exception")) {
-	     	 m = ".getCause() by " + s.substring(s.lastIndexOf(".") + 1, s.lastIndexOf("Exception")) + " Exception";
-	     	 }
-	      exceptionDescriptive(m, l);
+	  public static String getExceptionErrorCause(Exception e) throws IOException{
+          String s = e.toString();
+          if( (e.getMessage().length() == 0) && (s.contains(".") && s.contains("Exception")) ) {
+         	 s = s.substring(s.lastIndexOf(".") + 1, s.lastIndexOf("Exception"));
+         	 s = ".getCause() by \"" + s.substring(0, 72) + "\" Exception";
+         	 }
+          else {
+         	 s = e.getMessage().replace("!", "");
+         	 s = ".getCause() by \"" + s.substring(0, 72) + "\" Exception";
+         	 }
+          return s.replaceAll("  ", " ").replaceAll(" \" Exception","\" Exception");    
 	  }
 	  
 		/**
@@ -2540,14 +2546,15 @@ public class UtilitiesTestHelper {
 		}
 		
 		/**
-		 * Gets the secondary Exception error
+		 * The function create fail logs from the secondary Exception Error Cause entry
 		 * Regardless it is single or multi-line Prompt
 		 * @param e
 		 * @throws IOException
 		 */
 		   
-		public static void exceptionDescriptive(String errorCause, StackTraceElement l) throws IOException {
+		public static void getExceptionDescriptive(String errorCause, StackTraceElement l) throws IOException {
 			  String secondLine = errorCause.replace(".getCause() by ", "").replaceAll("\"", "").replace(" Exception", "") + "!";
+			  String description = secondLine.substring(0,secondLine.indexOf(":"));
 			  String location = "";
 			  String packageNameOnly, classNameOnly, xml, detected, runtime, subtotal;
 
@@ -2572,7 +2579,7 @@ public class UtilitiesTestHelper {
 		      // UPDATING THE FAILED COUNTER, SCREEN-SHOT AND APPEND AN ERROR RECORD:
 		      if( !RetryOnFail.retryOnFail() || Boolean.valueOf(fileScanner("failed.temp")) ) {
 		    	  counter("failed.num");
-		    	  getScreenShotOfDesktop(l, secondLine, false);
+		    	  getScreenShotOfDesktop(l, description, false);
 		    	  fileWriter("failed.log", "    Failure: #" + fileScanner("failed.num"));
 				  fileWriter("failed.log", "       Test: #" + fileScanner("test.num"));
 				  if(fileExist("failed.try",false)) {  
