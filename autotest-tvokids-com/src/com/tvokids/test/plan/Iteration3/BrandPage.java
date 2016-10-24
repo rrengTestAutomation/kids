@@ -1133,7 +1133,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
-	           int total = 4;
+	           int total = 3;
 	           String[] title = new String[total];
 	           String[] titleURL = new String[total];
 	           String[] description = new String[total];
@@ -1177,7 +1177,8 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
 	           // ASSERTIONS:
 	           for (int i = 1; i < total; i++) {
-	        	   helper.fileWriterPrinter("TILE TITLE: \"" + title[i] + "\"");
+	        	   if (i == 1) { helper.fileWriterPrinter(); }
+	        	   helper.fileWriterPrinter("TILE TITLE UNDER TEST: \"" + title[i] + "\"");
 		           // ASSERT TILE SIZE IS CORRECT:
 		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile((Object) title[i]));
 		           // ASSERT TILE EXIST:
@@ -1198,7 +1199,8 @@ public class BrandPage {
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
 	           // ASSERTIONS:
 	           for (int i = 1; i < total; i++) {
-	        	   helper.fileWriterPrinter("TILE TITLE: \"" + title[i] + "\"");
+	        	   if (i == 1) { helper.fileWriterPrinter(); }
+	        	   helper.fileWriterPrinter("TILE TITLE UNDER TEST: \"" + title[i] + "\"");
 		           // ASSERT TILE SIZE IS CORRECT:
 		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile((Object) title[i]));
 		           // ASSERT TILE EXIST:

@@ -134,7 +134,7 @@ public class UtilitiesTestHelper {
         if (driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1   ) {
         	throw new IOException("Sorry, unrecognized username or password");
         }
-		waitUntilElementPresence(driver, 30, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
+		waitUntilElementPresence(driver, 10, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
 	}
 	
 	/**
@@ -152,7 +152,24 @@ public class UtilitiesTestHelper {
         if (driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1   ) {
         	throw new IOException("Sorry, unrecognized username or password");
         }
-		waitUntilElementPresence(driver, 30, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
+		waitUntilElementPresence(driver, 10, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]);
+	}
+	
+	/**
+	 * @throws IOException
+	 * @throws InterruptedException 
+	 */
+	public void smartLogIn(WebDriver driver) throws IOException, InterruptedException {
+		if((driver.findElements(By.xpath(Common.logout)).size() > 0)) { logOut(driver); }
+		getUrlWaitUntil(driver, 10, Common.userLoginPage);		
+		waitUntilElementPresence(driver, 60, By.id("edit-name"), "\"Username\" ", new RuntimeException().getStackTrace()[0]);		
+		driver.findElement(By.id("edit-name")).sendKeys(Common.adminUsername());
+		driver.findElement(By.id("edit-pass")).sendKeys(Common.userPassword(Common.adminUsername()));
+		driver.findElement(By.id(Drupal.submit)).click();
+		Thread.sleep(500);
+        if ( driver.findElements(By.xpath("//*[text()='Have you forgotten your password?']")).size() == 1 ) {
+        	logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));       	
+        } else { waitUntilElementPresence(driver, 10, By.xpath(Drupal.drupalHomeIcon), "\"Home\" icon", new RuntimeException().getStackTrace()[0]); }
 	}
 	
 	/**
@@ -344,14 +361,14 @@ public class UtilitiesTestHelper {
 	       }
 		   return videoTitle;
 		}
-		
+	
 	/**
 	 * Deletes all the Contents by Content type ("" for all types) on user demand
 	 * @throws IOException
 	 */
 	public void deleteAllContent(WebDriver driver, String title, String type, String user, StackTraceElement t) throws InterruptedException, IOException{
 		try {
-			logIn(driver);
+			smartLogIn(driver);
 			if (type.length() == 0) { type = "- Any -"; }
 			fileWriterPrinter("\n" + "Delete Content Type:   " + type.replace("- ", "").replace(" -", ""));
 			fileWriterPrinter("Delete Content Title:  " + title);
@@ -3526,14 +3543,15 @@ public class UtilitiesTestHelper {
 			 * @throws IOException
 			 */
 			public void endTest() throws IOException {
-//			    try {
-//					if(Common.homeURL.contains("qa-kids.tvokids.com")){
-//						WebDriver driver = getServerName(driverHelper);
-//					    deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-//					    driver.quit();
-//					    }
-//					} catch (IllegalArgumentException | InterruptedException e) { e.printStackTrace(); }
+			    try {
+					if(Common.homeURL.contains("qa-kids.tvokids.com")){
+						WebDriver driver = getServerName(driverHelper);
+					    deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+					    driver.quit();
+					    }
+					} catch (IllegalArgumentException | InterruptedException e) { e.printStackTrace(); }
 			    }
+				
 			
 			/** Prints Test End and Sub-Total Time 
 			 * @throws IOException
