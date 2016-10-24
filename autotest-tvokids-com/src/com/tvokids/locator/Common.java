@@ -99,13 +99,17 @@ public class Common {
 	  
 	  /**********brand tile*********/
 	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";
+	  
+	  public static String brandTile(Object title)        { return brandTile + TextEntireAddToXpath(title.toString()); }
 	  public static String brandTile(String type) {
 		  if (type.length() > 0) { type = "='" + type + "'"; }
 		  return "//div[@data-tile-type" + type + "]/descendant::span[@class='tile-title']";
 		  }
-	  public static String brandTile(String type, int i) {
-		  return "//div[" + i + "]" + brandTile(type).replace("//div","");
-		  }
+	  public static String brandTile(String type, String title)        { return brandTile(type) + TextEntireAddToXpath(title); }	  
+	  public static String brandTile(String type, int i)               { return "//div[" + i + "]" + brandTile(type).replace("//div",""); }
+	  
+	  public static String brandTileImage(String title)              { return brandTile( (Object) title) + "/ancestor::a/descendant::img"; }
+	  public static String brandTileImage(String type, String title) { return brandTile(type, title)     + "/ancestor::a/descendant::img"; }
 	  
 	  /**********brand tile (video)*********/
 	  public static String brandVideoTile        = brandTile("video");

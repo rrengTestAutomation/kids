@@ -1117,9 +1117,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35459 3183</p>
+	 * <p>Test Cases: 35459 3183 878</p>
 	 */
-	@Test(groups = {"US-35459","US-3183"}, enabled = true, priority = 51)
+	@Test(groups = {"US-35459","US-3183","BUG-878","OPEN"}, enabled = true, priority = 51)
 	public void testBrandTileStructurOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1141,7 +1141,7 @@ public class BrandPage {
 	           String[] tileXpath = new String[total];
 	           long[] fingerprint = new long[total];
 	           
-	           String  tile = "", large = ""/*, actual, expected = ""*/;
+	           String  tile = "", large = "", actual, expected = "";
 	           Boolean ifPublish = false;
 	           
 	           for (int i = 0; i < total; i++) {
@@ -1168,26 +1168,44 @@ public class BrandPage {
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
-	           for (int i = 0; i < total; i++) {
-		           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
-		           Thread.sleep(1000);
-		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
-		           // NAVIGATE TO BRAND PAGE:
-		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
-		           // ASSERTIONS:
+	           // NAVIGATE TO AGE PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+	           // ASSERTIONS:
+	           for (int i = 1; i < total; i++) {
+	        	   helper.fileWriterPrinter("TILE TITLE: \"" + title[i] + "\"");
+		           // ASSERT TILE SIZE IS CORRECT:
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile((Object) title[i]));
+		           // ASSERT TILE EXIST:
+		           expected = "This is an Alternate Text of Small Tile";
+		           if (i > 1) { expected = "This is an Alternate Text of Large Tile"; } 
+		           actual = driver.findElement(By.xpath(Common.brandTileImage(title[i]))).getAttribute("alt");
+		           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		           }
-	           
+
 	           // AGE 6 AND OVER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
-	           for (int i = 0; i < total; i++) {
-		           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[i]);
-		           Thread.sleep(1000);
-		           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[i], false, false);	
-		           // NAVIGATE TO BRAND PAGE:
-		           helper.clickLinkUrlWaitUntil(driver, 15, xpath[i], new Exception().getStackTrace()[0]);
-		           // ASSERTIONS:
+	           // NAVIGATE TO AGE PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath[0]);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+	           // ASSERTIONS:
+	           for (int i = 1; i < total; i++) {
+	        	   helper.fileWriterPrinter("TILE TITLE: \"" + title[i] + "\"");
+		           // ASSERT TILE SIZE IS CORRECT:
+		           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile((Object) title[i]));
+		           // ASSERT TILE EXIST:
+		           expected = "This is an Alternate Text of Small Tile";
+		           if (i > 1) { expected = "This is an Alternate Text of Large Tile"; } 
+		           actual = driver.findElement(By.xpath(Common.brandTileImage(title[i]))).getAttribute("alt");
+		           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		           }
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }

@@ -206,10 +206,8 @@ public class All {
 public void finish() throws Exception {
 	// AFTER SUITE CLEAN-UP:
 	helper.endTest();
-	
 	// CLOSE TEST LOG RECORD:
 	logClose();
-	
 	// E-MAIL SUBJECT 
 	if (helper.fileExist("email.subj", false)) { helper.fileCleaner("email.subj"); }
 	String result = "ALL PASSED!";
