@@ -17,7 +17,10 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods><include name="testBrandTileStructureOnCustomBrandPage"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+<class name="testBadgeForTileOnCustomBrandPage"/>
+<include name="testBrandTileStructureOnCustomBrandPage"/>
+</methods></class>
 
 
 <!--

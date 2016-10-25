@@ -986,9 +986,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35413 3309</p>
+	 * <p>Test Cases: 35413 3309 35459 3183</p>
 	 */
-	@Test(groups = {"TC-35413","US-3309"}, enabled = true, priority = 50)
+	@Test(groups = {"TC-35413","US-3309","TC-35459","US-3183"}, enabled = true, priority = 50)
 	public void testBadgeForTileOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1119,7 +1119,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35459 3183 878</p>
 	 */
-	@Test(groups = {"US-35459","US-3183","BUG-878","OPEN"}, enabled = true, priority = 51)
+	@Test(groups = {"TC-35459","US-3183","BUG-878","NEW"}, enabled = true, priority = 51)
 	public void testBrandTileStructureOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
