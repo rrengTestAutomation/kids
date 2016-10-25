@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.*;
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -1209,6 +1210,82 @@ public class BrandPage {
 		           actual = driver.findElement(By.xpath(Common.brandTileImage(title[i]))).getAttribute("alt");
 		           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 		           }
+	           
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test Hero Box on Brand page ()
+	 * <p>Date Created: 2016-10-25</p>
+	 * <p>Date Modified: 2016-10-25</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35474 2079</p>
+	 */
+	@Test(groups = {"TC-35474","US-2079"}, priority = 52)
+	public void testHeroBoxOnCharacterBrandPage() throws IOException {
+		   try{
+			   // INITIALISATION:
+		       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+		       driver = helper.getServerName(driver);
+		
+		       // DECLARATION:
+		       String title, titleURL, xpath, description, actual, expected;
+	           
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+			   
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           
+	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
+	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
+	           
+	           // ASSERT "VISIBLE ON CHARACTER BANNER" DEFAULT OPTION:
+	           helper.assertBooleanFalse(driver, new Exception().getStackTrace()[0], helper.checkVisibleOnCharacterBanner(driver, false, new RuntimeException().getStackTrace()[0]));
+	           
+	           // CREATE TITLE FOR CONTENT:
+	           long fingerprint = System.currentTimeMillis();
+	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           
+	           // CREATE DESCRIPTION FOR CONTENT:
+	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+	           
+	           // CREATE CONTENT WITH BOTH AGES SELECTED:
+	           helper.createCustomBrand(driver, title, description, true, false, false, true, true, new RuntimeException().getStackTrace()[0],
+	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
+	           
+	           // LINK GENERIC XPATH:
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+	           // ASSERTIONS:
+	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:\n");
+	           int i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1 , actual.lastIndexOf("_"));
+	           expected = driver.findElement(By.xpath(Common.charBannerBubbleImage(i))).getAttribute("src");
+	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.lastIndexOf("_"));
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+	        
+	           // ASSERT SCHEDULE INFORMATION:
+	        
+	           // ASSERT THUMBNAIL: 
+	        
+	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
 	           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
