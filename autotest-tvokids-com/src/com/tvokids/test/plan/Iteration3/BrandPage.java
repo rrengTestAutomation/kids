@@ -1120,7 +1120,7 @@ public class BrandPage {
 	 * <p>Test Cases: 35459 3183 878</p>
 	 */
 	@Test(groups = {"US-35459","US-3183","BUG-878","OPEN"}, enabled = true, priority = 51)
-	public void testBrandTileStructurOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
+	public void testBrandTileStructureOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
