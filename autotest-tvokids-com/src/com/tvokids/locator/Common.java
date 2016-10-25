@@ -85,8 +85,13 @@ public class Common {
 	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
 	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
 	  public static String searchIcon            = "//a[@class='search-link']";
+	  public static String charBannerThumbnails  = "//li/div/div[contains(@class,'bubble-thumbnail')]";
+	  public static String charBannerThumbnail(int i)   { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]"; }
+	  public static String charBannerBubbleLink(int i)  { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::a[@href]";  }
+	  public static String charBannerBubbleImage(int i) { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::img[@src]"; }
 	  
 	  /**********character page elements*********/
+	  public static String brandBubble          = "//div[@class='tile-bubble']/descendant::img[@src]";
 	  public static String brandTitle           = "//div[@class='tile-bubble']/following-sibling::*/h1";
 	  public static String brandTitleFontName   = "Booster Next FY Bold";
 	  public static String brandTitleFontSize   = "18px";

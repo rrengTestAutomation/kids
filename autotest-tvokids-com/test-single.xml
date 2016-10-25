@@ -18,8 +18,7 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<class name="testBadgeForTileOnCustomBrandPage"/>
-<include name="testBrandTileStructureOnCustomBrandPage"/>
+<include name="testHeroBoxOnCharacterBrandPage"/>
 </methods></class>
 
 
