@@ -120,6 +120,23 @@ public class UtilitiesTestHelper {
 	}
 	
 	/**
+	 * Zoom browser window IN or OUT
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws NumberFormatException 
+	 */
+	public void windowZoom(WebDriver driver, double zoom, int pauseSECONDS) throws InterruptedException, NumberFormatException, IOException {
+		DecimalFormat f = new DecimalFormat("#.#");
+		String Zoom = f.format(zoom);
+		String zoomType = "OUT";
+		if (zoom > 1) { zoomType = "IN"; }
+		String script = "document.body.style.zoom=" + Zoom + ";this.blur();";
+		((JavascriptExecutor) driver).executeScript(script);
+		fileWriterPrinter("\nWINDOW ZOOM " + zoomType + " = " + ((int) (Double.valueOf(Zoom) * 100)) + "%\n");
+		Thread.sleep(pauseSECONDS * 1000);
+		}
+	
+	/**
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 */
@@ -4302,6 +4319,16 @@ public class UtilitiesTestHelper {
 		// ####################### TEST-FAILED XML CREATER END #######################
         		
         // ####################### TEST-NG XML READER-EXTRACTOR-CREATER START #######################
+        	/**
+        	 * Extracts Hidden Text from WebElement using jQuery;
+        	 */
+        	public static String getText(WebDriver driver, WebElement element){
+        	    return (String) ((JavascriptExecutor) driver).executeScript("return jQuery(arguments[0]).text();", element); 
+        	    }
+        	public static String getText(WebDriver driver, By by)         { return getText(driver, driver.findElement(by)); }
+        	public static String getText(WebDriver driver, String xpath)  { return getText(driver, By.xpath(xpath)); }
+        	public static String getText(String id, WebDriver driver)     { return getText(driver, By.id(id)); }
+        	
         	/**
         	 * Extracts selected text line number (1, 2, 3, etc.) from multi-line text
         	 */

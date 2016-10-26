@@ -92,6 +92,8 @@ public class Common {
 	  
 	  /**********character page elements*********/
 	  public static String brandBubble          = "//div[@class='tile-bubble']/descendant::img[@src]";
+	  public static String brandHeroBox         = "//div[contains(@class,'tile-hero') and contains(@id,'node')]";
+	  public static String brandHeroBoxImage    = brandHeroBox + "/descendant::div[@class='content']/descendant::img[@src]";
 	  public static String brandTitle           = "//div[@class='tile-bubble']/following-sibling::*/h1";
 	  public static String brandTitleFontName   = "Booster Next FY Bold";
 	  public static String brandTitleFontSize   = "18px";
@@ -103,8 +105,7 @@ public class Common {
 	  public static String brandDescriptionFontColour = "#000000";
 	  
 	  /**********brand tile*********/
-	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";
-	  
+	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";	  
 	  public static String brandTile(Object title)        { return brandTile + TextEntireAddToXpath(title.toString()); }
 	  public static String brandTile(String type) {
 		  if (type.length() > 0) { type = "='" + type + "'"; }
