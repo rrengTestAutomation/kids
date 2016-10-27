@@ -18,8 +18,8 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testHeroBoxOnCustomBrandPage"/>
-<include name="testHeroBoxOnCharacterBrandPage"/>
+<include name="testHeroBoxOnExistingCustomBrandPage"/>
+<include name="testHeroBoxOnExistingCharacterBrandPage"/>
 </methods></class>
 
 

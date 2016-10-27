@@ -100,6 +100,7 @@ public class Drupal{
 	  public static String keywords         = "edit-field-keywords-und";
 	  public static String noAutoVideoTiles = "edit-field-no-auto-video-tiles-und";
 
+	  public static String thumbnail  = "/descendant::span/a";
 	  public static String browse  = "/descendant::*[contains(@id, '-und-0-upload')][@class='form-file']";
 	  public static String upload  = "/descendant::*[contains(@id, '-und-0-upload')][contains(@class,'form-submit')]";
 	  public static String remove  = "/descendant::*[contains(@id, '-und-0-remove-button')][contains(@class,'form-submit')]";
@@ -122,6 +123,7 @@ public class Drupal{
 	  public static String characterBannerVerticalTab = "//ul[@class='vertical-tabs-list']/li[1]/a/strong";
 	  public static String characterBannerVisibleOn   = "edit-field-is-visible-und";
 	  public static String characterBannerFieldSet    = "//fieldset[1]/div/div";
+	  public static String characterBannerThumbnail   = characterBannerFieldSet + thumbnail;
 	  public static String characterBannerBrowse = characterBannerFieldSet + browse;
 	  public static String characterBannerUpload = characterBannerFieldSet + upload;
 	  public static String characterBannerRemove = characterBannerFieldSet + remove;
@@ -133,13 +135,15 @@ public class Drupal{
 	  /************vertical tab - hero box*********************/
 	  public static String heroBoxVerticalTab = "//ul[@class='vertical-tabs-list']/li[2]/a/strong";
 	  public static String heroBoxFieldSet    = "//fieldset[2]/div/div";
+	  public static String heroBoxThumbnail   = heroBoxFieldSet + thumbnail;
 	  public static String heroBoxBrowse      = heroBoxFieldSet + browse;
 	  public static String heroBoxUpload      = heroBoxFieldSet + upload;
 	  public static String heroBoxRemove      = heroBoxFieldSet + remove;
 	  
 	  /************vertical tab - tile*********************/
-	  public static String tileVerticalTab = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
-	  public static String tileFieldSet    = "//fieldset[3]/div/div";
+	  public static String tileVerticalTab    = "//li[@tabindex='-1']/descendant::strong[text()='Tile']";
+	  public static String tileFieldSet       = "//fieldset[3]/div/div";
+	  public static String tileSmallThumbnail = tileFieldSet + subSet1 + thumbnail;
 	  public static String tileSmallBrowse = tileFieldSet + subSet1 + browse;
 	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
 	  public static String tileSmallRemove = tileFieldSet + subSet1 + remove;
@@ -147,7 +151,8 @@ public class Drupal{
 	  public static String tileSmallDescriptionOfSize      = "Files must be less than 75 KB.";
 	  public static String tileSmallDescriptionOfFormat    = "Allowed file types: png jpg jpeg.";
 	  public static String tileSmallDescriptionOfDimension = "Images must be exactly 708x398 pixels.";
-	 
+	  
+	  public static String tileLargeThumbnail = tileFieldSet + subSet2 + thumbnail;
 	  public static String tileLargeBrowse = tileFieldSet + subSet2 + browse;
 	  public static String tileLargeUpload = tileFieldSet + subSet2 + upload;
 	  public static String tileLargeRemove = tileFieldSet + subSet2 + remove;
@@ -158,6 +163,7 @@ public class Drupal{
 	  
 	  public static String badgeBrowseText = "Open File Browser";
 	  public static String badgeBrowseXpath = Common.TextEntireAddDescToXpath(badgeBrowseText);
+	  public static String badgeThumbnail = tileFieldSet + subSet3 + thumbnail;
 	  public static String badgeBrowse = tileFieldSet + subSet3 + badgeBrowseXpath;
 	  
 	  public static String badgeUpload = tileFieldSet + subSet3 + upload;

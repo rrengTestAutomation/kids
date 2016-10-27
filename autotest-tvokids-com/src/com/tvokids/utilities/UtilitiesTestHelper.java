@@ -324,18 +324,23 @@ public class UtilitiesTestHelper {
 		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
 	}
 		
-	public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
-		reopenContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, true, t);
+	public Boolean reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
+		return reopenContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, true, t);
 	}
 	
-	public void reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t) throws InterruptedException, IOException{
+	@SuppressWarnings("finally")
+	public Boolean reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t) throws InterruptedException, IOException{
+		Boolean ifContent = false;
 		try {
 			getUrlWaitUntil(driver, 15, Common.adminContentURL);
 			filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
+			ifContent = (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0);
+			if(ifContent) {
 			waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, ifPrompt);
 			driver.findElement(By.xpath(Drupal.adminContentRowFirstEdit)).click();
 			waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", t, ifPrompt);
-		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } }
+			}
+		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } } finally { return ifContent; }
 	}
 	
 	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
@@ -734,6 +739,99 @@ public class UtilitiesTestHelper {
 	}
 	
 	/**
+	 * Read Brand Data
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 * @throws InterruptedException 
+	 */
+	public String[] readContent(WebDriver driver, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+		// DECLARATION:
+		String name, tab, thumbnail;
+		String title, description, ageGroup5, ageGroup6, assetID, noAutoVideoTiles, bannerImage, visibleOnCharacterBanner, heroImage, tileSmallImage, alternateSmall, tileLargeImage, alternateLarge, badge;
+		// TYPE:
+		String contentTypeXpath = "//h1[@class='page-title']/em[text()]";
+		String contentType = getText(driver, contentTypeXpath).replace("Edit ", "");
+		name = "CONTENT  TYPE: ";
+		fileWriterPrinter("\n" + name + padSpace(50 - name.length()) + contentType);
+		// TITLE:
+		title = driver.findElement(By.id(Drupal.title)).getAttribute("value");
+		name = "TITLE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + title);
+		// DESCRIPTION:
+		description = getText(driver, Drupal.description);
+		name = "DESCRIPTION: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + description);
+		// AGE 5 AND UNDER:
+		ageGroup5 = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.ageGroup5), false, false, t));
+		// 6 AND OVER:
+		ageGroup6 = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.ageGroup6), false, false, t));
+		// ASSET ID:
+		assetID = uploadReader("", Drupal.programTelescopeAssetId, driver);
+		name = "ASSET ID: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + assetID);
+		// NO AUTO VIDEO TILES:
+		noAutoVideoTiles = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.noAutoVideoTiles), false, false, t));
+		// BANNER IMAGE:
+		tab    = Drupal.characterBannerVerticalTab;
+		thumbnail = Drupal.characterBannerThumbnail;
+		bannerImage = uploadReader(driver, tab, thumbnail);
+		name = "BANNER IMAGE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + bannerImage);
+		// VISIBLE ON CHARACTER BANNER:
+		visibleOnCharacterBanner = checkBoxStatus(checkVisibleOnCharacterBanner(driver));
+		// HERO IMAGE:
+		tab    = Drupal.heroBoxVerticalTab;
+		thumbnail = Drupal.heroBoxThumbnail;
+		heroImage = uploadReader(driver, tab, thumbnail);
+		name = "HERO IMAGE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + heroImage);
+		// TILE SMALL IMAGE:
+		tab    = Drupal.tileVerticalTab;
+		thumbnail = Drupal.tileSmallThumbnail;
+		tileSmallImage = uploadReader(driver, tab, thumbnail);
+		name = "TILE SMALL IMAGE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + tileSmallImage);
+		// ALTERNATE TEXT (SMALL):
+		alternateSmall = uploadReader(driver, tab, Drupal.alternateSmall);
+		name = "ALTERNATE TEXT (SMALL): ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + alternateSmall);
+		// TILE LARGE IMAGE:
+		tab    = Drupal.tileVerticalTab;
+		thumbnail = Drupal.tileLargeThumbnail;
+		tileLargeImage = uploadReader(driver, tab, thumbnail);
+		name = "TILE LARGE IMAGE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + tileLargeImage);
+		// ALTERNATE TEXT (LARGE):
+		alternateLarge = uploadReader(driver, tab, Drupal.alternateLarge);
+		name = "ALTERNATE TEXT (LARGE): ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + alternateLarge);
+		// BADGE:
+		tab    = Drupal.tileVerticalTab;
+		thumbnail = Drupal.badgeThumbnail;
+		badge = uploadReader(driver, tab, thumbnail);
+		name = "BADGE: ";
+		fileWriterPrinter(name + padSpace(50 - name.length()) + badge + "\n");
+
+		String[] s = {
+				title,                    // [0]
+				description,              // [1]
+				ageGroup5,                // [2]
+				ageGroup6,                // [3]
+				assetID,                  // [4]
+				noAutoVideoTiles,         // [5]
+				bannerImage,              // [6]
+				visibleOnCharacterBanner, // [7]
+				heroImage,                // [8]
+				tileSmallImage,           // [9]
+				alternateSmall,           // [10]
+				tileLargeImage,           // [11]
+				alternateLarge,           // [12]
+				badge,                    // [13]
+				};
+		return s;
+	}
+	
+	/**
 	 * Create a Custom Brand
 	 * @throws AWTException 
 	 * @throws IOException
@@ -741,7 +839,7 @@ public class UtilitiesTestHelper {
 //	@SuppressWarnings("finally")
 	public long createCustomBrand(WebDriver driver, String title, String description, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText,
 			                      Boolean ifSubmit, Boolean ifRetry, StackTraceElement t,
-			                      String bannerImage, String heroImage, String titleSmallImage, String titleLargeImage, String badge, String tile, Boolean ifPublish
+			                      String bannerImage, String heroImage, String tileSmallImage, String tileLargeImage, String badge, String tile, Boolean ifPublish
 			                     ) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
@@ -785,19 +883,19 @@ public class UtilitiesTestHelper {
 				upload(driver, heroImage, tab, browse, upload);
 				}
 
-			if(titleSmallImage.length() > 0) {
+			if(tileSmallImage.length() > 0) {
 				tab    = Drupal.tileVerticalTab;
 				browse = Drupal.tileSmallBrowse;
 				upload = Drupal.tileSmallUpload;
-				upload(driver, titleSmallImage, tab, browse, upload);
+				upload(driver, tileSmallImage, tab, browse, upload);
 				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateSmall)).clear(); driver.findElement(By.xpath(Drupal.alternateSmall)).sendKeys(Drupal.alternateSmallText); }
 				}
 
-			if(titleLargeImage.length() > 0) {
+			if(tileLargeImage.length() > 0) {
 				tab    = Drupal.tileVerticalTab;
 				browse = Drupal.tileLargeBrowse;
 				upload = Drupal.tileLargeUpload;
-				upload(driver, titleLargeImage, tab, browse, upload);
+				upload(driver, tileLargeImage, tab, browse, upload);
 				if(ifAlternateText) { driver.findElement(By.xpath(Drupal.alternateLarge)).clear(); driver.findElement(By.xpath(Drupal.alternateLarge)).sendKeys(Drupal.alternateLargeText); }
 				}
 			
@@ -1247,7 +1345,7 @@ public class UtilitiesTestHelper {
 	 */
 	public String reFormatStringForURL(String string) {
 		  if(string.length() > 0) {
-			  string = string.toLowerCase().replaceAll(" ", "-").replaceAll("--", "-");
+			  string = string.toLowerCase().replaceAll(":", "").replaceAll("'", "").replaceAll(",", "").replaceAll("&", "").replaceAll(" ", "-").replaceAll("--", "-");
 			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
 			  }
 		  return string;
@@ -1905,6 +2003,43 @@ public class UtilitiesTestHelper {
 				  }
 			  }
 		  if(ifAdd) { ajaxProtectedClick(driver, By.id(Drupal.tilePlacementAdd), "Add", true, Common.ajaxThrobber, true, -1, false); }
+		  }
+	  
+	  /**
+	   * Image tab-clicked reader
+	   * @throws IOException 
+	   * @throws NumberFormatException 
+	   * @throws InterruptedException 
+	   */
+	  public String uploadReader(WebDriver driver, String xpathTab, By byThumbnail) throws NumberFormatException, IOException, InterruptedException {
+		  String thumbnail = "";
+		  if(xpathTab.length() > 0) {
+			  if(driver.findElements(By.xpath(xpathTab)).size() == 1) {
+				  String tabActive = xpathTab  + Drupal.verticalTabActive;
+				  By Tab = By.xpath(tabActive);		  
+				  // TAB CLICK WITH XPATH CHANGE CONTROLLER AND AJAX ERROR HANDLER:
+				  int i = 0;
+				  int size = driver.findElements(Tab).size();
+				  while ((size == 0) && (i < 5)) {
+					     // TAB CLICK WITH AJAX ERROR HANDLER:
+					     ajaxProtectedClick(driver, xpathTab, "", false, "", true, false);		     
+				         i++;		         
+				         size = driver.findElements(Tab).size();
+				         }
+				  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(xpathTab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
+			  }
+		  }
+		  // FINAL READER:
+		  if(driver.findElements(byThumbnail).size() == 1) { thumbnail = getText(driver, byThumbnail); }
+		  return thumbnail;
+      }
+	  
+	  public String uploadReader(WebDriver driver, String xpathTab, String xpathThumbnail) throws NumberFormatException, IOException, InterruptedException {
+		  return uploadReader(driver, xpathTab, By.xpath(xpathThumbnail));
+		  }
+	  
+	  public String uploadReader(String xpathTab, String idThumbnail, WebDriver driver) throws NumberFormatException, IOException, InterruptedException {
+		  return uploadReader(driver, xpathTab, By.xpath(idThumbnail));
 		  }
 	  
 	  /**

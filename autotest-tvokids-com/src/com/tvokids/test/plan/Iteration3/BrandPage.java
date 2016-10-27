@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.*;
+
 /*
 import java.awt.Robot;
 import java.io.File;
@@ -1238,9 +1240,6 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
-	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
@@ -1361,9 +1360,6 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver);
 	           
-	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
@@ -1457,249 +1453,274 @@ public class BrandPage {
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	
-//	/**
-//	 * Test Hero Box on Existing Custom Brand page
-//	 * <p>Date Created: 2016-10-25</p>
-//	 * <p>Date Modified: 2016-10-25</p>
-//	 * <p>Original Version: V1</p>
-//	 * <p>Modified Version: </p>
-//	 * <p>Xpath: 1</p>
-//	 * <p>Test Cases: 35474 2079</p>
-//	 */
-//	@Test(groups = {"TC-35474","US-2079"}, priority = 54)
-//	public void testHeroBoxOnExistingCustomBrandPage() throws IOException {
-//		   try{
-//			   // INITIALISATION:
-//		       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
-//		       driver = helper.getServerName(driver);
-//		
-//		       // DECLARATION:
-//		       String title, titleURL, xpath, description, extention, actual, expected;
-//		       int i;
-//		       
-//	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-//			   
-//	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
-//	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
-//	           
-//	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-//	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-//	           
-//	           // CREATE TITLE FOR CONTENT:
-//	           long fingerprint = System.currentTimeMillis();
-//	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-//	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-//	           
-//	           // CREATE DESCRIPTION FOR CONTENT:
-//	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-//	           
-//	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-//	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new RuntimeException().getStackTrace()[0],
-//	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
-//	           helper.logOut(driver);
-//	           
-//	           // LINK GENERIC XPATH:
-//	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-//	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
-//	           
-//	           // AGE 5 AND UNDER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
-//	           // ASSERTIONS:
-//	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
-//	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
-//	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
-//	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_"));
-//	           expected = driver.findElement(By.xpath(Common.charBannerBubbleImage(i))).getAttribute("src");
-//	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.lastIndexOf("_"));
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-//	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
-//	           expected = title;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
-//	           // ASSERT THUMBNAIL:
-//	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
-//	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
-//	           extention = actual.substring(actual.lastIndexOf("."), actual.length());
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_")) + extention;
-//	           expected = "hero.jpg";
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
-//	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
-//	           actual = helper.getText(driver, Common.brandDescription);
-//	           expected = description;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           
-//	           // AGE 6 AND OVER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
-//	           // ASSERTIONS:
-//	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
-//	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
-//	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
-//	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_"));
-//	           expected = driver.findElement(By.xpath(Common.charBannerBubbleImage(i))).getAttribute("src");
-//	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.lastIndexOf("_"));
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-//	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
-//	           expected = title;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
-//	           // ASSERT THUMBNAIL:
-//	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
-//	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
-//	           extention = actual.substring(actual.lastIndexOf("."), actual.length());
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_")) + extention;
-//	           expected = "hero.jpg";
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
-//	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
-//	           actual = helper.getText(driver, Common.brandDescription);
-//	           expected = description;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//		    		   
-//	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-//	}
-//	
-//	/**
-//	 * Test Hero Box on Existing Character Brand page
-//	 * <p>Date Created: 2016-10-25</p>
-//	 * <p>Date Modified: 2016-10-25</p>
-//	 * <p>Original Version: V1</p>
-//	 * <p>Modified Version: </p>
-//	 * <p>Xpath: 1</p>
-//	 * <p>Test Cases: 35474 2079</p>
-//	 */
-//	@Test(groups = {"TC-35474","US-2079"}, priority = 55)
-//	public void testHeroBoxOnExistingCharacterBrandPage() throws IOException {
-//		   try{
-//			   // INITIALISATION:
-//		       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
-//		       driver = helper.getServerName(driver);
-//		
-//		       // DECLARATION:
-//		       String title, titleURL, xpath, description, extention, actual, expected;
-//		       int i;
-//		       
-//	           // CLEAN-UP:
-//	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-//			   
-//	           // LOGIN TO DRUPAL AS AN ADMIN:
-//	           helper.logIn(driver);
-//	           
-//	           // NAVIGATE TO A NEW CUSTOM BRAND PAGE:
-//	           helper.getUrlWaitUntil(driver, 10, Drupal.customBrand);
-//	           
-//	           // CREATE TITLE FOR CONTENT:
-//	           long fingerprint = System.currentTimeMillis();
-//	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-//	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-//	           
-//	           // CREATE DESCRIPTION FOR CONTENT:
-//	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-//	           
-//	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-//	           helper.createCharacterBrand(driver, title, description, 2654, false, true, true, true, true, true, new RuntimeException().getStackTrace()[0]);
-//	           helper.logOut(driver);
-//	           
-//	           // LINK GENERIC XPATH:
-//	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-//	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
-//	           
-//	           // AGE 5 AND UNDER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
-//	           // ASSERTIONS:
-//	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
-//	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
-//	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
-//	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_"));
-//	           expected = driver.findElement(By.xpath(Common.charBannerBubbleImage(i))).getAttribute("src");
-//	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.lastIndexOf("_"));
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-//	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
-//	           expected = title;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
-//	           // ASSERT THUMBNAIL:
-//	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
-//	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
-//	           extention = actual.substring(actual.lastIndexOf("."), actual.length());
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_")) + extention;
-//	           expected = "hero.jpg";
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
-//	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
-//	           actual = helper.getText(driver, Common.brandDescription);
-//	           expected = description;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           
-//	           // AGE 6 AND OVER TEST:
-//	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");  
-//	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-//	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-//	           Thread.sleep(1000);
-//	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
-//	           // NAVIGATE TO BRAND PAGE:
-//	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
-//	           // ASSERTIONS:
-//	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
-//	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
-//	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
-//	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_"));
-//	           expected = driver.findElement(By.xpath(Common.charBannerBubbleImage(i))).getAttribute("src");
-//	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.lastIndexOf("_"));
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-//	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
-//	           expected = title;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
-//	           // ASSERT THUMBNAIL:
-//	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
-//	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
-//	           extention = actual.substring(actual.lastIndexOf("."), actual.length());
-//	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.lastIndexOf("_")) + extention;
-//	           expected = "hero.jpg";
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
-//	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
-//	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
-//	           actual = helper.getText(driver, Common.brandDescription);
-//	           expected = description;
-//	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
-//		    		   
-//	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
-//	}
+	/**
+	 * Test Hero Box on Existing Custom Brand page
+	 * <p>Date Created: 2016-10-25</p>
+	 * <p>Date Modified: 2016-10-25</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35474 2079</p>
+	 */
+	@Test(groups = {"TC-35474","US-2079"}, priority = 54)
+	public void testHeroBoxOnExistingCustomBrandPage() throws IOException {
+		   try{
+			   // INITIALISATION:
+		       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+		       driver = helper.getServerName(driver);
+		
+		       // DECLARATION:
+		       String title, titleURL, xpath, description, hero, actual, expected;
+		       String[] content;
+		       Boolean ifContent;
+		       int i;
+		       
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           // REOPEN EXISTING CUSTOM BRAND:
+	           ifContent = helper.reopenContent(driver, "", "Custom Brand", "", "Yes", true, false, true, new RuntimeException().getStackTrace()[0]);
+	           // CHECK IF AGE 5 AND UNDER CUSTOM BRAND PAGES EXIST:
+	           if(ifContent) {   
+	           // READ BRAND DATA:
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           helper.logOut(driver);
+	           title = content[0];
+	           description = content[1];
+	           hero = content[8];
+	           // LINK GENERIC XPATH:
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
+	           // ASSERTIONS:
+	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
+	           // ASSERT THUMBNAIL:
+	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
+	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = hero;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
+	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
+	           actual = helper.getText(driver, Common.brandDescription);
+	           expected = description;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           }
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           // REOPEN EXISTING CUSTOM BRAND:
+	           ifContent = helper.reopenContent(driver, "", "Custom Brand", "", "Yes", false, true, true, new RuntimeException().getStackTrace()[0]);
+	           // CHECK IF AGE 6 AND OVER CUSTOM BRAND PAGES EXIST:
+	           if(ifContent) {   
+	           // READ BRAND DATA:
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           helper.logOut(driver);
+	           title = content[0];
+	           description = content[1];
+	           hero = content[8];
+	           // LINK GENERIC XPATH:
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           // NAVIGATE TO AGE 6 AND OVER PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
+	           // ASSERTIONS:
+	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
+	           // ASSERT THUMBNAIL:
+	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
+	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = hero;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
+	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
+	           actual = helper.getText(driver, Common.brandDescription);
+	           expected = description;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           } 
+	           
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test Hero Box on Existing Character Brand page
+	 * <p>Date Created: 2016-10-25</p>
+	 * <p>Date Modified: 2016-10-25</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 35474 2079</p>
+	 */
+	@Test(groups = {"TC-35474","US-2079"}, priority = 55)
+	public void testHeroBoxOnExistingCharacterBrandPage() throws IOException {
+		   try{
+			   // INITIALISATION:
+		       helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+		       driver = helper.getServerName(driver);
+		
+		       // DECLARATION:
+		       String title, titleURL, xpath, description, hero, actual, expected;
+		       String[] content;
+		       Boolean ifContent;
+		       int i;
+		       
+	           // CLEAN-UP:
+	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           
+	           // AGE 5 AND UNDER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           // REOPEN EXISTING CHARACTER BRAND:
+	           ifContent = helper.reopenContent(driver, "", "Character Brand", "", "Yes", true, false, true, new RuntimeException().getStackTrace()[0]);
+	           // CHECK IF AGE 5 AND UNDER CHARACTER BRAND PAGES EXIST:
+	           if(ifContent) {   
+	           // READ BRAND DATA:
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           helper.logOut(driver);
+	           title = content[0];
+	           description = content[1];
+	           hero = content[8];
+	           // LINK GENERIC XPATH:
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
+	           // ASSERTIONS:
+	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT SCHEDULE INFORMATION: N/A FOR CHARACTER BRAND
+	           // ASSERT THUMBNAIL:
+	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
+	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = hero;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
+	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
+	           actual = helper.getText(driver, Common.brandDescription);
+	           expected = description;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           }
+	           
+	           // AGE 6 AND OVER TEST:
+	           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
+	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+	           // REOPEN EXISTING CHARACTER BRAND:
+	           ifContent = helper.reopenContent(driver, "", "Character Brand", "", "Yes", false, true, true, new RuntimeException().getStackTrace()[0]);
+	           // CHECK IF AGE 6 AND OVER CHARACTER BRAND PAGES EXIST:
+	           if(ifContent) {   
+	           // READ BRAND DATA:
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           helper.logOut(driver);
+	           title = content[0];
+	           description = content[1];
+	           hero = content[8];
+	           // LINK GENERIC XPATH:
+	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           // NAVIGATE TO AGE 6 AND OVER PAGE:
+	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+	           Thread.sleep(1000);
+	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
+	           // NAVIGATE TO BRAND PAGE:
+	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);	           
+	           // ASSERTIONS:
+	           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+	           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+	           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+	           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+	           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           expected = title;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           // ASSERT SCHEDULE INFORMATION: N/A FOR CHARACTER BRAND
+	           // ASSERT THUMBNAIL:
+	           helper.fileWriterPrinter("\n" + "ASSERT THUMBNAIL:");
+	           actual = driver.findElement(By.xpath(Common.brandHeroBoxImage)).getAttribute("src");
+	           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+	           expected = hero;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);          
+	           // ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:
+	           helper.fileWriterPrinter("ASSERT DESCRIPTION IS DESCRIPTION OF THE BRAND PAGE:");
+	           actual = helper.getText(driver, Common.brandDescription);
+	           expected = description;
+	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	           } 
+	           
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
 	
 }
