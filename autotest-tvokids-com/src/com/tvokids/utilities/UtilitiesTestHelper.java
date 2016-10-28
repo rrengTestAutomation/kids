@@ -323,11 +323,21 @@ public class UtilitiesTestHelper {
 			}
 		    } catch(Exception e) { getExceptionDescriptive(e, t, driver); }
 	}
-		
+	
+	/**
+	 * Re-oprens (edit) any Contents using built-in "Filter" function
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public Boolean reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
 		return reopenContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, true, t);
 	}
 	
+	/**
+	 * Re-oprens (edit) any Contents using built-in "Filter" function
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@SuppressWarnings("finally")
 	public Boolean reopenContent(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t) throws InterruptedException, IOException{
 		Boolean ifContent = false;
@@ -343,32 +353,49 @@ public class UtilitiesTestHelper {
 		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } } finally { return ifContent; }
 	}
 	
+	/**
+	 * Searches and Re-oprens (edit) any Brand using built-in "Filter" function and filtered out based on single user-defined acceptance criteria
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@SuppressWarnings("finally")
-	public Boolean reopenBrand(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t, int exceptanceItem, String exceptanceValue) throws InterruptedException, IOException{
+	public Boolean reopenBrand(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t,
+			int acceptanceItem, String acceptanceValue) throws InterruptedException, IOException{
 		Boolean ifContent = false;
 		try {
-			getUrlWaitUntil(driver, 15, Common.adminContentURL);
-			filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
-			ifContent = (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0);
-			if(ifContent) {
-				int i = 0;
-				Boolean ifExceptance = false;
-				while ((i < 25) && !ifExceptance) {
+			int i = 0;
+			Boolean ifExceptance = false;
+			while ((i < 25) && !ifExceptance) {
+				getUrlWaitUntil(driver, 15, Common.adminContentURL);
+				filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
+				ifContent = (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0) &&
+						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 1) ;
+				if(ifContent) {
 					waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, ifPrompt);
 					driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
 					waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", t, ifPrompt);
-					String[] content = readContent(driver, new RuntimeException().getStackTrace()[0], false);
-					ifExceptance = content[exceptanceItem].equals(exceptanceValue);
+					String[] content = readContent(driver, new RuntimeException().getStackTrace()[0], ifPrompt);
+					ifExceptance = content[acceptanceItem].equals(acceptanceValue);
 					i++;
-					}
+				} else { ifExceptance = true; }
 			}
 		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } } finally { return ifContent; }
 	}
 	
+	/**
+	 * Searches and Re-oprens (edit) any Video using built-in "Filter" function and filtered out based on user-defined Publishing criteria
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
 	   return reopenVideo(driver, title, ifPublished, true, ifAgeUnder, ifAgeOver, t);
 	}
 	
+	/**
+	 * Searches and Re-oprens (edit) any Video using built-in "Filter" function and filtered out based on user-defined Publishing criteria
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifRepublish, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
 	       // FILTER AND EDIT THE CONTENT BY "VIDEO" AND "PUBLISH" AS "YES":
 		   String videoTitle = "";
@@ -800,7 +827,7 @@ public class UtilitiesTestHelper {
 		name = "BANNER IMAGE: ";
 		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + bannerImage); }
 		// VISIBLE ON CHARACTER BANNER:
-		visibleOnCharacterBanner = checkBoxStatus(checkVisibleOnCharacterBanner(driver));
+		visibleOnCharacterBanner = checkBoxStatus(checkVisibleOnCharacterBanner(driver, false, t));
 		// HERO IMAGE:
 		tab    = Drupal.heroBoxVerticalTab;
 		thumbnail = Drupal.heroBoxThumbnail;
@@ -1369,9 +1396,10 @@ public class UtilitiesTestHelper {
 		  if(string.length() > 0) {
 			  string = string.toLowerCase().replaceAll(":", "").replaceAll("'", "").replaceAll(",", "").replaceAll("&", "");
 			  string = string.replaceAll(" the ", " ").replaceAll(" on ", " ").replaceAll(" of ", " ");
-			  string = string.replaceAll(" in ", " ").replaceAll(" a ", " "); 
 			  string = string.replaceAll("The ", "").replaceAll("On ", "").replaceAll("Of ", "");
-			  string = string.replaceAll("In ", "").replaceAll("A ", "");
+			  string = string.replaceAll(" in ", " ").replaceAll("In ", ""); 
+			  string = string.replaceAll(" a ", " ").replaceAll("A ", "");
+			  string = string.replaceAll(" for ", " ").replaceAll("For ", ""); 
 			  string = string.replaceAll(" ", "-").replaceAll("--", "-");
 			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
 			  }

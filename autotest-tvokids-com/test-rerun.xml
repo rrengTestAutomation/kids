@@ -19,6 +19,8 @@
 <!--
 COVERED BY AUTOMATED TEST: -->
 <class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
+<include name="testHeroBoxOnNewCustomBrandPage"/>
+<include name="testHeroBoxOnNewCharacterBrandPage"/>
 <include name="testHeroBoxOnExistingCustomBrandPage"/>
 <include name="testHeroBoxOnExistingCharacterBrandPage"/>
 </methods></class>

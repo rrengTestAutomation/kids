@@ -1475,32 +1475,16 @@ public class BrandPage {
 		       String[] content;
 		       Boolean ifContent;
 		       int i;
-		       long fingerprint;
 		       
 	           // CLEAN-UP:
 	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-	           
-	           // CREATE CONTENT:
-	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
-	           // AGE 5 AND UNDER:
-	           fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           helper.createCustomBrand(driver, title, description, true, false, true, true, true, new RuntimeException().getStackTrace()[0]);
-	           // AGE 6 AND OVER:
-	           fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           helper.createCustomBrand(driver, title, description, false, true, true, true, true, new RuntimeException().getStackTrace()[0]);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           // REOPEN EXISTING CUSTOM BRAND:
-	           ifContent = helper.reopenContent(driver, "", "Custom Brand", "", "Yes", true, false, true, new RuntimeException().getStackTrace()[0]);
+	           ifContent = helper.reopenBrand(driver, "", "Custom Brand", "", "Yes", true, false, false, new RuntimeException().getStackTrace()[0], 7, "CHECKED");
 	           // CHECK IF AGE 5 AND UNDER CUSTOM BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
@@ -1515,7 +1499,6 @@ public class BrandPage {
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           Thread.sleep(1000);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
@@ -1532,7 +1515,7 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
 	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           actual = helper.getText(driver, Common.brandTitle);
 	           expected = title;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
@@ -1554,7 +1537,7 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           // REOPEN EXISTING CUSTOM BRAND:
-	           ifContent = helper.reopenContent(driver, "", "Custom Brand", "", "Yes", false, true, true, new RuntimeException().getStackTrace()[0]);
+	           ifContent = helper.reopenBrand(driver, "", "Custom Brand", "", "Yes", false, true, false, new RuntimeException().getStackTrace()[0], 7, "CHECKED");
 	           // CHECK IF AGE 6 AND OVER CUSTOM BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
@@ -1569,7 +1552,6 @@ public class BrandPage {
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-	           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
 	           Thread.sleep(1000);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
@@ -1586,7 +1568,7 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
 	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           actual = helper.getText(driver, Common.brandTitle);
 	           expected = title;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
@@ -1627,32 +1609,16 @@ public class BrandPage {
 		       String[] content;
 		       Boolean ifContent;
 		       int i;
-		       long fingerprint;
 		       
 	           // CLEAN-UP:
 	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
-	           
-	           // CREATE CONTENT:
-	           helper.logIn(driver);
-	           // AGE 5 AND UNDER:
-	           fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           helper.createCharacterBrand(driver, title, description, 2654, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
-	           // AGE 6 AND OVER:
-	           fingerprint = System.currentTimeMillis();
-	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	           helper.createCharacterBrand(driver, title, description, 2654, true, false, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           // REOPEN EXISTING CHARACTER BRAND:
-	           ifContent = helper.reopenContent(driver, "", "Character Brand", "", "Yes", true, false, true, new RuntimeException().getStackTrace()[0]);
+	           ifContent = helper.reopenBrand(driver, "", "Character Brand", "", "Yes", true, false, false, new RuntimeException().getStackTrace()[0], 7, "CHECKED");
 	           // CHECK IF AGE 5 AND UNDER CHARACTER BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
@@ -1683,7 +1649,7 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
 	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           actual = helper.getText(driver, Common.brandTitle);
 	           expected = title;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
@@ -1705,7 +1671,7 @@ public class BrandPage {
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           // REOPEN EXISTING CHARACTER BRAND:
-	           ifContent = helper.reopenContent(driver, "", "Character Brand", "", "Yes", false, true, true, new RuntimeException().getStackTrace()[0]);
+	           ifContent = helper.reopenBrand(  driver, "", "Character Brand", "", "Yes", false, true, false, new RuntimeException().getStackTrace()[0], 7, "CHECKED");
 	           // CHECK IF AGE 6 AND OVER CHARACTER BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
@@ -1736,7 +1702,7 @@ public class BrandPage {
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
 	           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
-	           actual = driver.findElement(By.xpath(Common.brandTitle)).getText();
+	           actual = helper.getText(driver, Common.brandTitle);
 	           expected = title;
 	           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
 	           // ASSERT SCHEDULE INFORMATION: N/A FOR CUSTOM BRAND
