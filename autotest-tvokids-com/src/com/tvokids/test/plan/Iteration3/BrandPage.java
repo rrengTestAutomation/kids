@@ -1504,7 +1504,7 @@ public class BrandPage {
 	           // CHECK IF AGE 5 AND UNDER CUSTOM BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
-	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0], true);
 	           helper.logOut(driver);
 	           title = content[0];
 	           description = content[1];
@@ -1558,7 +1558,7 @@ public class BrandPage {
 	           // CHECK IF AGE 6 AND OVER CUSTOM BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
-	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0], true);
 	           helper.logOut(driver);
 	           title = content[0];
 	           description = content[1];
@@ -1656,7 +1656,7 @@ public class BrandPage {
 	           // CHECK IF AGE 5 AND UNDER CHARACTER BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
-	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0], true);
 	           helper.logOut(driver);
 	           title = content[0];
 	           description = content[1];
@@ -1709,7 +1709,7 @@ public class BrandPage {
 	           // CHECK IF AGE 6 AND OVER CHARACTER BRAND PAGES EXIST:
 	           if(ifContent) {   
 	           // READ BRAND DATA:
-	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0]);
+	           content = helper.readContent(driver, new RuntimeException().getStackTrace()[0], true);
 	           helper.logOut(driver);
 	           title = content[0];
 	           description = content[1];

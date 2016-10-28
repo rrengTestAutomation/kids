@@ -343,6 +343,28 @@ public class UtilitiesTestHelper {
 		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } } finally { return ifContent; }
 	}
 	
+	@SuppressWarnings("finally")
+	public Boolean reopenBrand(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t, int exceptanceItem, String exceptanceValue) throws InterruptedException, IOException{
+		Boolean ifContent = false;
+		try {
+			getUrlWaitUntil(driver, 15, Common.adminContentURL);
+			filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
+			ifContent = (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0);
+			if(ifContent) {
+				int i = 0;
+				Boolean ifExceptance = false;
+				while ((i < 25) && !ifExceptance) {
+					waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, ifPrompt);
+					driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
+					waitUntilElementPresence(driver, 15, By.id(Drupal.title), "Title", t, ifPrompt);
+					String[] content = readContent(driver, new RuntimeException().getStackTrace()[0], false);
+					ifExceptance = content[exceptanceItem].equals(exceptanceValue);
+					i++;
+					}
+			}
+		} catch(Exception e) { if(ifPrompt) { getExceptionDescriptive(e, t, driver); } } finally { return ifContent; }
+	}
+	
 	public String reopenVideo(WebDriver driver, String title, Boolean ifPublished, Boolean ifAgeUnder, Boolean ifAgeOver, StackTraceElement t) throws InterruptedException, IOException{
 	   return reopenVideo(driver, title, ifPublished, true, ifAgeUnder, ifAgeOver, t);
 	}
@@ -744,7 +766,7 @@ public class UtilitiesTestHelper {
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 */
-	public String[] readContent(WebDriver driver, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+	public String[] readContent(WebDriver driver, StackTraceElement t, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException {
 		// DECLARATION:
 		String name, tab, thumbnail;
 		String title, description, ageGroup5, ageGroup6, assetID, noAutoVideoTiles, bannerImage, visibleOnCharacterBanner, heroImage, tileSmallImage, alternateSmall, tileLargeImage, alternateLarge, badge;
@@ -752,15 +774,15 @@ public class UtilitiesTestHelper {
 		String contentTypeXpath = "//h1[@class='page-title']/em[text()]";
 		String contentType = getText(driver, contentTypeXpath).replace("Edit ", "");
 		name = "CONTENT  TYPE: ";
-		fileWriterPrinter("\n" + name + padSpace(50 - name.length()) + contentType);
+		if(ifPrompt) { fileWriterPrinter("\n" + name + padSpace(50 - name.length()) + contentType); }
 		// TITLE:
 		title = driver.findElement(By.id(Drupal.title)).getAttribute("value");
 		name = "TITLE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + title);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + title); }
 		// DESCRIPTION:
 		description = getText(driver, Drupal.description);
 		name = "DESCRIPTION: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + description);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + description); }
 		// AGE 5 AND UNDER:
 		ageGroup5 = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.ageGroup5), false, false, t));
 		// 6 AND OVER:
@@ -768,7 +790,7 @@ public class UtilitiesTestHelper {
 		// ASSET ID:
 		assetID = uploadReader("", Drupal.programTelescopeAssetId, driver);
 		name = "ASSET ID: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + assetID);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + assetID); }
 		// NO AUTO VIDEO TILES:
 		noAutoVideoTiles = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.noAutoVideoTiles), false, false, t));
 		// BANNER IMAGE:
@@ -776,7 +798,7 @@ public class UtilitiesTestHelper {
 		thumbnail = Drupal.characterBannerThumbnail;
 		bannerImage = uploadReader(driver, tab, thumbnail);
 		name = "BANNER IMAGE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + bannerImage);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + bannerImage); }
 		// VISIBLE ON CHARACTER BANNER:
 		visibleOnCharacterBanner = checkBoxStatus(checkVisibleOnCharacterBanner(driver));
 		// HERO IMAGE:
@@ -784,33 +806,33 @@ public class UtilitiesTestHelper {
 		thumbnail = Drupal.heroBoxThumbnail;
 		heroImage = uploadReader(driver, tab, thumbnail);
 		name = "HERO IMAGE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + heroImage);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + heroImage); }
 		// TILE SMALL IMAGE:
 		tab    = Drupal.tileVerticalTab;
 		thumbnail = Drupal.tileSmallThumbnail;
 		tileSmallImage = uploadReader(driver, tab, thumbnail);
 		name = "TILE SMALL IMAGE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + tileSmallImage);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + tileSmallImage); }
 		// ALTERNATE TEXT (SMALL):
 		alternateSmall = uploadReader(driver, tab, Drupal.alternateSmall);
 		name = "ALTERNATE TEXT (SMALL): ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + alternateSmall);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + alternateSmall); }
 		// TILE LARGE IMAGE:
 		tab    = Drupal.tileVerticalTab;
 		thumbnail = Drupal.tileLargeThumbnail;
 		tileLargeImage = uploadReader(driver, tab, thumbnail);
 		name = "TILE LARGE IMAGE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + tileLargeImage);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + tileLargeImage); }
 		// ALTERNATE TEXT (LARGE):
 		alternateLarge = uploadReader(driver, tab, Drupal.alternateLarge);
 		name = "ALTERNATE TEXT (LARGE): ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + alternateLarge);
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + alternateLarge); }
 		// BADGE:
 		tab    = Drupal.tileVerticalTab;
 		thumbnail = Drupal.badgeThumbnail;
 		badge = uploadReader(driver, tab, thumbnail);
 		name = "BADGE: ";
-		fileWriterPrinter(name + padSpace(50 - name.length()) + badge + "\n");
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + badge + "\n"); }
 
 		String[] s = {
 				title,                    // [0]
