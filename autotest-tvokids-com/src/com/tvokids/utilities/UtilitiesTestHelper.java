@@ -1345,7 +1345,12 @@ public class UtilitiesTestHelper {
 	 */
 	public String reFormatStringForURL(String string) {
 		  if(string.length() > 0) {
-			  string = string.toLowerCase().replaceAll(":", "").replaceAll("'", "").replaceAll(",", "").replaceAll("&", "").replaceAll(" ", "-").replaceAll("--", "-");
+			  string = string.toLowerCase().replaceAll(":", "").replaceAll("'", "").replaceAll(",", "").replaceAll("&", "");
+			  string = string.replaceAll(" the ", " ").replaceAll(" on ", " ").replaceAll(" of ", " ");
+			  string = string.replaceAll(" in ", " ").replaceAll(" a ", " "); 
+			  string = string.replaceAll("The ", "").replaceAll("On ", "").replaceAll("Of ", "");
+			  string = string.replaceAll("In ", "").replaceAll("A ", "");
+			  string = string.replaceAll(" ", "-").replaceAll("--", "-");
 			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
 			  }
 		  return string;
@@ -1368,6 +1373,32 @@ public class UtilitiesTestHelper {
 		  if(string.length() > 0) { string = string.substring(0, length); }
 		  return string;
 		  }
+	
+	/**
+	 * Get the filename without extention from path
+	 */
+	public String getFilenameFromPath(String path) {
+		if(path.contains("/")) { path = path.substring(path.lastIndexOf("/") + 1, path.length()); } 
+		return path.substring(0, path.lastIndexOf("."));
+	}
+	
+	/**
+	 * Get the dot-extention from path
+	 */
+	public String getExtentionFromPath(String path) {
+		return path.substring(path.lastIndexOf("."), path.length());
+	}
+	
+	/**
+	 * Trims a longer filename as per given shorter one
+	 */
+	public String trimLongerFilenameAsPerShorter(String pathOfLong, String pathOfShort) {
+		String  filename1 = getFilenameFromPath(pathOfLong);
+		String extention1 = getExtentionFromPath(pathOfLong);
+		String  filename2 = getFilenameFromPath(pathOfShort);
+		if(filename1.length() > filename2.length()) { filename1 = filename1.substring(0,filename2.length()); }
+	return filename1 + extention1;
+	}
 	 
 	  /**
 	   * Verify the page URL is as expected.
