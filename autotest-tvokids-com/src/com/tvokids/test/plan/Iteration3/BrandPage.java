@@ -1722,4 +1722,103 @@ public class BrandPage {
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	
+	/**
+	 * Test interactive Tile-Hover on Desktop
+	 * <p>Date Created: 2016-10-31</p>
+	 * <p>Date Modified: 2016-10-31</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36143 3258</p>
+	 */
+	@Test(groups = {"TC-36143","US-3258"}, priority = 56)
+    public void testInteractiveTileHoverOnDesktop() throws IOException, AWTException {
+	   try{
+    	   // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+         
+           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
+           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
+           
+           // DECLARATION:
+           int total = 2;
+           String[] title = new String[total];
+           String[] titleURL = new String[total];
+           String[] description = new String[total];
+           String[] xpath = new String[total];
+           String[] tileXpath = new String[total];
+           long[] fingerprint = new long[total];
+           String tile = "", scale, Scale;
+           
+           for (int i = 0; i < total; i++) {
+        	   // CREATE TITLES FOR CONTENTS:
+        	   fingerprint[i] = System.currentTimeMillis();
+        	   title[i] = String.valueOf(fingerprint[i]) + " " + (i + 1) + "-" 
+      	                + helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint[i]).length() - (" " + (i + 1) + "-").length());
+        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
+        	   // CREATE DESCRIPTION FOR CONTENT:
+        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+        	   // LINK GENERIC XPATH:
+	           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
+	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
+    		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
+	           if(i > 0) { tile = title[0]; }
+    		   helper.createCustomBrand(driver, title[i], description[i], true, true, true, true, true, new RuntimeException().getStackTrace()[0],
+    				                   "bubble.jpg", "hero.jpg", "small.jpg", "", tile, true
+    				                   );
+    		   tileXpath[i] = Common.TextEntireToXpath(title[i]) + "/ancestor::a";
+    		   helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CUSTOM BRAND\n TITLE: " + title[i] + "\n  TILE: " + tile + "\n");    
+    		   }
+       
+           // AGE 5 AND UNDER BEFORE-AFTER TILE-HOVER TEST:
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER BEFORE-AFTER TILE-HOVER TEST:");  
+           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT TILE(S) EXIST:
+           for (int i = total - 1; i > 0; i--) {
+        	   // ASSERT TILE EXIST:
+        	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], tileXpath[i]);
+        	   // MEASURE TILE SCALE BEFORE HOVER:
+        	   scale = driver.findElement(By.xpath(tileXpath[i])).getCssValue("transform");
+        	   helper.fileWriterPrinter("\nBEFORE HOWER: SCALE = " + scale);
+        	   // MEASURE TILE SCALE AFTER HOVER:
+        	   helper.hoverElement(driver, tileXpath[i]);
+        	   Thread.sleep(1000);
+        	   Scale = driver.findElement(By.xpath(tileXpath[i])).getCssValue("transform");
+        	   helper.fileWriterPrinter(" AFTER HOWER: SCALE = " + Scale);
+        	   // ASSERT TILE BEFORE AND AFTER HOVER:
+        	   helper.assertBooleanFalse(driver, new Exception().getStackTrace()[0], scale.equals(Scale));
+        	   }
+           
+           // AGE 6 AND OVER BEFORE-AFTER TILE-HOVER TEST:
+           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER BEFORE-AFTER TILE-HOVER TEST:");  
+           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath[0], false, false);	           
+           // NAVIGATE TO BRAND PAGE:
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath[0], new Exception().getStackTrace()[0]);
+           // ASSERT TILE(S) EXIST:
+           for (int i = total - 1; i > 0; i--) {
+        	   // ASSERT TILE EXIST:
+        	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], tileXpath[i]);
+        	   // MEASURE TILE SCALE BEFORE HOVER:
+        	   scale = driver.findElement(By.xpath(tileXpath[i])).getCssValue("transform");
+        	   helper.fileWriterPrinter("\nBEFORE HOWER: SCALE = " + scale);
+        	   // MEASURE TILE SCALE AFTER HOVER:
+        	   helper.hoverElement(driver, tileXpath[i]);
+        	   Thread.sleep(1000);
+        	   Scale = driver.findElement(By.xpath(tileXpath[i])).getCssValue("transform");
+        	   helper.fileWriterPrinter(" AFTER HOWER: SCALE = " + Scale);
+        	   // ASSERT TILE BEFORE AND AFTER HOVER:
+        	   helper.assertBooleanFalse(driver, new Exception().getStackTrace()[0], scale.equals(Scale));
+        	   }
+           
+	   } catch(IOException | InterruptedException /*| AWTException*/ e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
 }
