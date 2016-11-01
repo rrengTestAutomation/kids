@@ -1394,12 +1394,16 @@ public class UtilitiesTestHelper {
 	 */
 	public String reFormatStringForURL(String string) {
 		  if(string.length() > 0) {
-			  string = string.toLowerCase().replaceAll(":", "").replaceAll("'", "").replaceAll(",", "").replaceAll("&", "");
-			  string = string.replaceAll(" the ", " ").replaceAll(" on ", " ").replaceAll(" of ", " ");
-			  string = string.replaceAll("The ", "").replaceAll("On ", "").replaceAll("Of ", "");
-			  string = string.replaceAll(" in ", " ").replaceAll("In ", ""); 
-			  string = string.replaceAll(" a ", " ").replaceAll("A ", "");
-			  string = string.replaceAll(" for ", " ").replaceAll("For ", ""); 
+			  String[] charToBeSpace   = { " The "," On "," Of "," In "," A "," For ", };
+			  String[] charToBeNothing = { "The ","On ","Of ","In ","A ","For ",":","'",",","&","\\.", };			  
+			  for (int i = 0; i < charToBeSpace.length; i++) {
+				  string = string.toLowerCase().replaceAll(charToBeSpace[i], " ");
+				  string = string.toLowerCase().replaceAll(charToBeSpace[i].toLowerCase(), " ");
+				  }			  
+			  for (int i = 0; i < charToBeNothing.length; i++) {
+				  string = string.toLowerCase().replaceAll(charToBeNothing[i], "");
+				  string = string.toLowerCase().replaceAll(charToBeNothing[i].toLowerCase(), "");
+				  }			  
 			  string = string.replaceAll(" ", "-").replaceAll("--", "-");
 			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
 			  }

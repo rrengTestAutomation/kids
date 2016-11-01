@@ -745,9 +745,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220 3188 3996</p>
+	 * <p>Test Cases: 35220 3188 3996 4452</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 29)
+	@Test(groups = {"TC-35220","US-3188","US-3996","US-4452"}, priority = 29)
     public void testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -758,7 +758,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
-	           String title, titleURL, description, actual, expected, image = "small more then 75Kb.jpg";
+	           String title, titleURL, description, actual, expected, image = "small more then 100Kb.jpg";
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
@@ -898,9 +898,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35220 3188 3996</p>
+	 * <p>Test Cases: 35220 3188 3996 4452</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996"}, priority = 32)
+	@Test(groups = {"TC-35220","US-3188","US-3996","US-4452"}, priority = 32)
     public void testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -911,7 +911,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
-	           String title, titleURL, description, actual, expected, image = "large more then 100Kb.jpg";
+	           String title, titleURL, description, actual, expected, image = "large more then 125Kb.jpg";
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();

@@ -17,10 +17,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testInteractiveTileHoverOnDesktop"/>
-</methods></class>
-
+<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testBrandPageLargeTileImageUploadLargerThenMaxSizeNotAllowed"/></methods></class>
 
 <!--
    FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6

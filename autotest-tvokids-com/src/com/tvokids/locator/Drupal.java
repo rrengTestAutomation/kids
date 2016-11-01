@@ -27,13 +27,14 @@ public class Drupal{
 	  public static String messageEveryCacheCleared = "//div[@class='messages status'][contains(.,'Every cache cleared.')]";
 	  
 	  /**********common buttons*******************/
-      public static String featureTypeInDropDown                = "//*[@value='feature']";
-      public static String deleteOperationInDropDown            = "//*[@id='edit-operation']/option[text()='Delete']";
-      public static String confirmButton                        = "//*[@id='edit-submit']";
-      public static String errorConsole                         = "//div[@id='console']";
-      public static String error                                = "//*[@id='console']/div[@class='messages error']";
-      public static String errorMessage                         = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
-      
+      public static String featureTypeInDropDown     = "//*[@value='feature']";
+      public static String deleteOperationInDropDown = "//*[@id='edit-operation']/option[text()='Delete']";
+      public static String confirmButton             = "//*[@id='edit-submit']";
+      public static String errorConsole              = "//div[@id='console']";
+      public static String error                     = "//*[@id='console']/div[@class='messages error']";
+      public static String errorMessage              = "//*[@id='console']/div[@class='messages error']/descendant::*[contains(text(),'Error message')]";
+      public static int    tileSmallImageMaxSize     = 100;
+      public static int    tileLargeImageMaxSize     = 125;
       public static String errorMessageCharacterBannerWrongUploadSize(String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 25 KB."; }
       public static String errorMessageCharacterBannerWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: jpg."; }
       public static String errorMessageCharacterBannerWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 200x200 pixels."; }
@@ -42,13 +43,13 @@ public class Drupal{
       public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
       public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
       
-      public static String errorMessageSmallTileImageRequired   = "Small Tile Image field is required."; 
+      public static String errorMessageSmallTileImageRequired = "Small Tile Image field is required."; 
       public static String errorMessageSmallTileWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
-      public static String errorMessageSmallTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
+      public static String errorMessageSmallTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of " + tileSmallImageMaxSize + " KB."; }
       public static String errorMessageSmallTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
  
       public static String errorMessageLargeTileWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x836 pixels."; }
-      public static String errorMessageLargeTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 100 KB."; }
+      public static String errorMessageLargeTileWrongUploadSize (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of " + tileLargeImageMaxSize + " KB."; }
       public static String errorMessageLargeTileWrongImageFormat(String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }
       
       public static String errorAjax                            = "//div[@class='messages error'][contains(text(), 'An AJAX HTTP error occurred')]";
@@ -148,7 +149,7 @@ public class Drupal{
 	  public static String tileSmallUpload = tileFieldSet + subSet1 + upload;
 	  public static String tileSmallRemove = tileFieldSet + subSet1 + remove;
 	  public static String tileSmallDescription            = tileFieldSet + subSet1 + "/descendant::div[@class='description']";
-	  public static String tileSmallDescriptionOfSize      = "Files must be less than 75 KB.";
+	  public static String tileSmallDescriptionOfSize      = "Files must be less than " + tileSmallImageMaxSize + " KB.";
 	  public static String tileSmallDescriptionOfFormat    = "Allowed file types: png jpg jpeg.";
 	  public static String tileSmallDescriptionOfDimension = "Images must be exactly 708x398 pixels.";
 	  
@@ -156,8 +157,8 @@ public class Drupal{
 	  public static String tileLargeBrowse = tileFieldSet + subSet2 + browse;
 	  public static String tileLargeUpload = tileFieldSet + subSet2 + upload;
 	  public static String tileLargeRemove = tileFieldSet + subSet2 + remove;
-	  public static String tileLargeDescription            = tileFieldSet + subSet2 + "/descendant::div[@class='description']";
-	  public static String tileLargeDescriptionOfSize      = "Files must be less than 100 KB.";
+	  public static String tileLargeDescription            = tileFieldSet + subSet2 + "/descendant::div[@class='description']";	  
+	  public static String tileLargeDescriptionOfSize      = "Files must be less than " + tileLargeImageMaxSize + " KB.";
 	  public static String tileLargeDescriptionOfFormat    = "\nAllowed file types: png jpg jpeg.";
 	  public static String tileLargeDescriptionOfDimension = "\nImages must be exactly 708x836 pixels.";
 	  

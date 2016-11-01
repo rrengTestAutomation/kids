@@ -298,9 +298,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36113 3996</p>
+	 * <p>Test Cases: 36113 3996 4452</p>
 	 */
-	@Test(groups = {"TC-36113","US-3996"}, priority = 41)
+	@Test(groups = {"TC-36113","US-3996","US-4452"}, priority = 41)
 	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
