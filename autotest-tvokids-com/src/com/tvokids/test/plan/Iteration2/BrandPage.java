@@ -446,7 +446,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCharacterBrand(driver, title, description, 281374, false, true, true, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, "281374", false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -741,9 +741,9 @@ public class BrandPage {
 	/**
 	 * Test create Brand Tile and check the Small Tile image upload larger than 75 KB not allowed
 	 * <p>Date Created: 2016-08-29</p>
-	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Date Modified: 2016-11-01</p>
 	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
+	 * <p>Modified Version: V2</p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 4452</p>
 	 */
@@ -894,9 +894,9 @@ public class BrandPage {
 	/**
 	 * Test create Brand Tile and check the Large Tile image upload larger than 75 KB not allowed
 	 * <p>Date Created: 2016-08-29</p>
-	 * <p>Date Modified: 2016-08-29</p>
+	 * <p>Date Modified: 2016-11-01</p>
 	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
+	 * <p>Modified Version: V2</p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 4452</p>
 	 */

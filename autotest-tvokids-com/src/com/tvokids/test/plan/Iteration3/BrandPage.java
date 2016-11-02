@@ -239,7 +239,7 @@ public class BrandPage {
 	           if (i == 0) {
 	        	// CREATE A CHARACTER BRAND CONTENT WITH BOTH AGES SELECTED:
         		   helper.logIn(driver);  // LOGIN TO DRUPAL AS AN ADMIN
-    	           helper.createCharacterBrand(driver, title[i], description[i], 281374, false, true, true, false, true, true, new Exception().getStackTrace()[0]);
+    	           helper.createCharacterBrand(driver, title[i], description[i], "281374", false, true, true, false, true, true, new Exception().getStackTrace()[0]);
     	           helper.logOut(driver);
     	           helper.fileWriterPrinter("\n" + (i + 1) + " OF " + total + ": CREATED!\n  TYPE: CHARACTER BRAND\n TITLE: " + title[i] + "\n");
 	           } else {
@@ -294,9 +294,9 @@ public class BrandPage {
 	/**
 	 * Test New size of Tile Image
 	 * <p>Date Created: 2016-09-13</p>
-	 * <p>Date Modified: 2016-09-13</p>
+	 * <p>Date Modified: 2016-11-01</p>
 	 * <p>Original Version: V1</p>
-	 * <p>Modified Version: </p>
+	 * <p>Modified Version: V2</p>
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 36113 3996 4452</p>
 	 */
@@ -688,7 +688,6 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
@@ -767,7 +766,6 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
@@ -843,7 +841,6 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
@@ -851,7 +848,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
-	           helper.createCharacterBrand(driver, title, description, 2654, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, "2654", true, true, false, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -925,7 +922,6 @@ public class BrandPage {
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();
-
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           
@@ -933,7 +929,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
-	           helper.createCharacterBrand(driver, title, description, 2654, true, false, true, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, "2654", true, false, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // LINK GENERIC XPATH:
 	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
@@ -1372,7 +1368,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCharacterBrand(driver, title, description, 2654, false, true, true, true, true, true, new RuntimeException().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, "2654", false, true, true, true, true, true, new RuntimeException().getStackTrace()[0]);
 	           helper.logOut(driver);
 	           
 	           // LINK GENERIC XPATH:
@@ -1819,6 +1815,111 @@ public class BrandPage {
         	   }
            
 	   } catch(IOException | InterruptedException /*| AWTException*/ e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test view Transcript page (click on video player "View Transcript" link opens "View transcript" page where user can see transcript)
+	 * <p>Date Created: 2016-11-02</p>
+	 * <p>Date Modified: 2016-11-02</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36309 3964</p>
+	 */
+	@Test(groups = {"TC-36309","US-3964"}, priority = 57)
+    public void testViewTranscriptPage() throws IOException{
+	   try{
+    	   // DECLARATION:
+           String title, titleURL, brightcoveRefID, telescopeAssetId, description, xpath, videoTitle, actual, expected, expectedURL;
+    	   By locator;
+    	   
+           // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+
+           // LOGIN TO DRUPAL AS AN ADMIN:
+           helper.logIn(driver);
+           
+           // CREATE TITLE FOR CONTENT:
+           long fingerprint = System.currentTimeMillis();
+           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
+           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+           
+           // THIS IS SUPPLIED BY CPAD (IN ORDER FOR THE VIDEO TO PLAY):
+           brightcoveRefID = "3022354586001";
+           telescopeAssetId = "120141X";
+           
+           // CREATE DESCRIPTION FOR CONTENT:
+           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
+           
+           // CREATE CONTENT WITH AGE 5 SELECTED:
+           helper.createCharacterBrand(driver, title, description, telescopeAssetId, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
+           
+           // LINK GENERIC XPATH:
+           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+           
+           // AGE 5 AND UNDER TRANSCRIPT PAGE TEST:
+           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TRANSCRIPT PAGE TEST:"); 
+           // CREATE VIDEO WITH AGE 5 SELECTED:
+           fingerprint = System.currentTimeMillis();
+           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
+           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, brightcoveRefID, telescopeAssetId, true, false, true, true, true, new Exception().getStackTrace()[0]);
+           // ASSERT VIDEO URL:
+           expectedURL = Common.fiveAndUnderVideoURL(title, videoTitle);
+           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
+           // LOG-OUT:
+           helper.logOut(driver);
+           helper.getUrlWaitUntil(driver, 10, expectedURL, false);
+           // ASSERT TRANSCRIPT LINK:
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], By.linkText(Common.videoTranscriptLinkText));
+           // ASSERT TRANSCRIPT LINK URL:
+           expectedURL = Common.fiveAndUnderTranscriptURL(title, videoTitle, telescopeAssetId);
+           helper.checkLinkURL(driver, new Exception().getStackTrace()[0], Common.videoTranscriptLinkXpath, expectedURL);
+           // ASSERT CLICK ON TRANSCRIPT LINK OPENS TRANSCRIPT PAGE:
+           locator = By.linkText(Common.videoTranscriptLinkText);
+           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], locator, expectedURL, false, false);
+           // ASSERT TRANSCRIPT PAGE KEY-ELEMENTS APPEAR:
+           xpath = Common.transcriptPageTitleXpath;
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+           expected = Common.transcriptPageTitleText;
+           actual = driver.findElement(By.xpath(xpath)).getText();
+           actual = helper.getStringBeginning(actual, expected.length());
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+        
+           // AGE 6 AND OVER TRANSCRIPT PAGE TEST:
+           helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TRANSCRIPT PAGE TEST:");
+           // LOGIN TO DRUPAL AS AN ADMIN:
+           helper.logIn(driver);
+           // CREATE VIDEO WITH AGE 6 SELECTED:
+           fingerprint = System.currentTimeMillis();
+           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
+           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, brightcoveRefID, telescopeAssetId, false, true, true, true, true, new Exception().getStackTrace()[0]);
+           // ASSERT VIDEO URL:
+           expectedURL = Common.sixAndOverVideoURL(title, videoTitle);
+           helper.checkCurrentURL(driver, new Exception().getStackTrace()[0], expectedURL);
+           // LOG-OUT:
+           helper.logOut(driver);
+           helper.getUrlWaitUntil(driver, 10, expectedURL, false);
+           // ASSERT TRANSCRIPT LINK:
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], By.linkText(Common.videoTranscriptLinkText));
+           // ASSERT TRANSCRIPT LINK URL:
+           expectedURL = Common.sixAndOverTranscriptURL(title, videoTitle, telescopeAssetId);
+           helper.checkLinkURL(driver, new Exception().getStackTrace()[0], Common.videoTranscriptLinkXpath, expectedURL);
+           // ASSERT CLICK ON TRANSCRIPT LINK OPENS TRANSCRIPT PAGE:
+           locator = By.linkText(Common.videoTranscriptLinkText);
+           helper.clickLinkAndCheckURL(driver, new Exception().getStackTrace()[0], locator, expectedURL, false, false);
+           // ASSERT TRANSCRIPT PAGE KEY-ELEMENTS APPEAR:
+           xpath = Common.transcriptPageTitleXpath;
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+           expected = Common.transcriptPageTitleText;
+           actual = driver.findElement(By.xpath(xpath)).getText();
+           actual = helper.getStringBeginning(actual, expected.length());
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	
 }

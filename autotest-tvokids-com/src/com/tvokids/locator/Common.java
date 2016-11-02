@@ -2,8 +2,11 @@ package com.tvokids.locator;
 
 import java.io.File;
 
+import com.tvokids.utilities.UtilitiesTestHelper;
+
 public class Common {
 //	static WebDriver driver;
+	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
 	  /**********common credentiald***********/
 	  public static String adminUsername = "dev";
@@ -48,6 +51,30 @@ public class Common {
 
 	  public static String fiveAndUnderSearchURL = fiveAndUnderURL + "/search";
 	  public static String sixAndOverSearchURL   = sixAndOverURL   + "/search";
+	  
+	  public static String fiveAndUnderVideoURL(String brandTitle, String videoTitle) {
+		  return  fiveAndUnderURL + "/" +
+				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
+				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
+		  }
+	  
+	  public static String sixAndOverVideoURL(String brandTitle, String videoTitle) {
+		  return  sixAndOverURL + "/" +
+				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
+				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
+		  }
+	  
+	  public static String fiveAndUnderTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
+		  return  homeURL + "/transcript/" + telescopeAssetId + "/5-and-under/" +
+				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
+				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
+		  }
+	  
+	  public static String sixAndOverTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
+		  return  homeURL + "/transcript/" + telescopeAssetId + "/6-and-over/" +
+				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
+				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
+		  }
 	  
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
@@ -125,6 +152,14 @@ public class Common {
 	  
 	  /**********brand badge*********/
 	  public static String brandBadgeParticle = "/parent::*/parent::*/descendant::img[contains(@src,'.svg')]";
+	  
+	  /**********video page****************/
+	  public static String videoTranscriptLinkXpath = "//a[@class='transcript-link']";
+	  public static String videoTranscriptLinkText  = "View video transcript";
+	  
+	  /**********transcript page****************/
+	  public static String transcriptPageTitleXpath = "//*[@id='page-title']";
+	  public static String transcriptPageTitleText  = "Transcript: ";
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

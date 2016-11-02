@@ -727,7 +727,7 @@ public class UtilitiesTestHelper {
 	 * @throws IOException
 	 */
 //	@SuppressWarnings("finally")
-	public long createCharacterBrand(WebDriver driver, String title, String description, int assetID, Boolean ifNoAutoVideoTiles, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
+	public long createCharacterBrand(WebDriver driver, String title, String description, String assetID, Boolean ifNoAutoVideoTiles, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifAlternateText, Boolean ifSubmit, Boolean ifRetry, StackTraceElement t) throws AWTException, InterruptedException, IOException
 	  {
 	   long fingerprint = System.currentTimeMillis();
 	   String tab, browse, upload;
@@ -750,7 +750,7 @@ public class UtilitiesTestHelper {
 			driver.findElement(By.id(Drupal.keywords)).clear();
 			driver.findElement(By.id(Drupal.keywords)).sendKeys(title + " (keywords)");
 
-			if (assetID > 0) { driver.findElement(By.id(Drupal.programTelescopeAssetId)).sendKeys(String.valueOf(assetID)); }
+			if (assetID.length() > 0) { driver.findElement(By.id(Drupal.programTelescopeAssetId)).sendKeys(String.valueOf(assetID)); }
 			
 			checkBoxStatus(driver, By.id(Drupal.noAutoVideoTiles), ifNoAutoVideoTiles, false, new Exception().getStackTrace()[0]);
 			
