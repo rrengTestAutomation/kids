@@ -133,7 +133,7 @@ public class Mail {
                 time +
                 "\";TESTSTART=$(date --date=\"$TESTSTARTDATE $TESTSTARTTIME\" +%s);DIFF=$(( $TESTSTART - $CURRENT ));HOURS=$(( $DIFF/3600 ));MINUTES=$(( $(( $DIFF%3600 ))/60 ));SECONDS=$(( $DIFF%60 ));SLEEPTIME=$(( $HOURS*3600 + $MINUTES*60 + $SECONDS ));echo;echo \"Sleep time seconds: \"$SLEEPTIME\" seconds\";echo;echo \"Update Start is expected at:\";date \"+%Y-%m-%d\" -d @$(( $(date +%s) + $SLEEPTIME));date \"+%T\" -d @$(( $(date +%s) + $SLEEPTIME));echo;echo;sleep $SLEEPTIME;echo;echo;echo;cd /data/WebSites/" +
                 server +
-                "/website;git pull;git checkout " + branch + ";git pull origin " + branch + ";sh sites/all/scripts/d7-rebuild.sh " + refresh + branch + ";echo;echo;FINISH=$(date +%s);DIFF=$(( $FINISH - $TESTSTART ));HOURS=$(( $DIFF/3600 ));MINUTES=$(( $(( $DIFF%3600 ))/60 ));SECONDS=$(( $DIFF%60 ));echo;echo;echo $(date +%Y-%m-%d)\" \"$(date +%H\":\"%M\":\"%S);echo \"Update duration: \"$HOURS\" hours \"$MINUTES\" minutes \"$SECONDS\" seconds\";echo;echo;"
+                "/website;git pull;git checkout " + branch + ";git pull origin " + branch + ";sh /home/rweinbrand/d7-update.sh " + refresh + "database" + ";echo;echo;FINISH=$(date +%s);DIFF=$(( $FINISH - $TESTSTART ));HOURS=$(( $DIFF/3600 ));MINUTES=$(( $(( $DIFF%3600 ))/60 ));SECONDS=$(( $DIFF%60 ));echo;echo;echo $(date +%Y-%m-%d)\" \"$(date +%H\":\"%M\":\"%S);echo \"Update duration: \"$HOURS\" hours \"$MINUTES\" minutes \"$SECONDS\" seconds\";echo;echo;"
                 ;
 	 // System.out.println("\n" + date + "\n" + time + "\n");	
 	 // System.out.println(command);		
@@ -244,10 +244,8 @@ public class Mail {
 		public void finish() throws Exception {
 			// AFTER SUITE CLEAN-UP:
 			helper.endTest();
-			
 			// CLOSE TEST LOG RECORD:
 			logClose();
-			
 			// E-MAIL SUBJECT: 
 			if (helper.fileExist("email.subj", false)) { helper.fileCleaner("email.subj"); }
 			String result = "ALL PASSED!";
