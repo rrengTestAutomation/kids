@@ -71,7 +71,7 @@ public class BrandPage {
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
         	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-        	   // LINK GENERIC XPATH:
+        	   // BANNER BUBBLE XPATH:
 	           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
     		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
@@ -232,7 +232,7 @@ public class BrandPage {
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
         	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-        	   // LINK GENERIC XPATH:
+        	   // BANNER BUBBLE XPATH:
 	           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
         	   
@@ -482,11 +482,11 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           xpathCharTitle = Common.title + Common.TextEntireAddToXpath(title);
 	           xpathPageTitle = Common.titleBrandPage + Common.TextEntireAddToXpath(title);
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           helper.fileWriterPrinter(       "CHAR - TITLE XPATH = " + xpathCharTitle);
 	           helper.fileWriterPrinter(       "PAGE - TITLE XPATH = " + xpathPageTitle + "\n");
 	           
@@ -613,9 +613,9 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new RuntimeException().getStackTrace()[0],
 	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER EXIST TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER REDIRECT TEST:");  
@@ -697,9 +697,9 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, false, false, true, true, new RuntimeException().getStackTrace()[0],
 	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 
 	           int i = 0;
 	           Boolean ifTitle = true;
@@ -775,9 +775,9 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, false, true, false, true, true, new RuntimeException().getStackTrace()[0],
 	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 
 	           int i = 0;
 	           Boolean ifTitle = true;
@@ -850,9 +850,9 @@ public class BrandPage {
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
 	           helper.createCharacterBrand(driver, title, description, "2654", true, true, false, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // CREATE VIDEO WITH AGE 5 SELECTED:
 	           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
@@ -931,9 +931,9 @@ public class BrandPage {
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
 	           helper.createCharacterBrand(driver, title, description, "2654", true, false, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // CREATE VIDEO WITH AGE 5 SELECTED:
 	           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
@@ -1018,7 +1018,7 @@ public class BrandPage {
 	        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
 	        	   // CREATE DESCRIPTION FOR CONTENT:
 	        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	        	   // LINK GENERIC XPATH:
+	        	   // BANNER BUBBLE XPATH:
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
 		           // PUBLISH ON FIRST BRAND TILES OF OTHER BRANDS WITH BADGES:
@@ -1149,7 +1149,7 @@ public class BrandPage {
 	        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
 	        	   // CREATE DESCRIPTION FOR CONTENT:
 	        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	        	   // LINK GENERIC XPATH:
+	        	   // BANNER BUBBLE XPATH:
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
 		           // PUBLISH ON FIRST BRAND TILES OF OTHER BRANDS:
@@ -1249,9 +1249,9 @@ public class BrandPage {
 	                                   "bubble.jpg", "hero.jpg", "small.jpg", "", "", false);
 	           helper.logOut(driver);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
@@ -1371,9 +1371,9 @@ public class BrandPage {
 	           helper.createCharacterBrand(driver, title, description, "2654", false, true, true, true, true, true, new RuntimeException().getStackTrace()[0]);
 	           helper.logOut(driver);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");  
@@ -1489,14 +1489,14 @@ public class BrandPage {
 	           title = content[0];
 	           description = content[1];
 	           hero = content[8];
-	           // LINK GENERIC XPATH:
+	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
 	           Thread.sleep(1000);
-	           // BUBBLE XPATH:
-	           xpath = Common.charBannerBubble(driver.getCurrentUrl(), titleURL);
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
@@ -1543,14 +1543,14 @@ public class BrandPage {
 	           title = content[0];
 	           description = content[1];
 	           hero = content[8];
-	           // LINK GENERIC XPATH:
+	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
 	           Thread.sleep(1000);
-	           // BUBBLE XPATH:
-	           xpath = Common.charBannerBubble(driver.getCurrentUrl(), titleURL);
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
@@ -1625,10 +1625,10 @@ public class BrandPage {
 	           title = content[0];
 	           description = content[1];
 	           hero = content[8];
-	           // LINK GENERIC XPATH:
+	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
 	           Thread.sleep(1000);
@@ -1678,10 +1678,10 @@ public class BrandPage {
 	           title = content[0];
 	           description = content[1];
 	           hero = content[8];
-	           // LINK GENERIC XPATH:
+	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
 	           Thread.sleep(1000);
@@ -1760,7 +1760,7 @@ public class BrandPage {
         	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
         	   // CREATE DESCRIPTION FOR CONTENT:
         	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-        	   // LINK GENERIC XPATH:
+        	   // BANNER BUBBLE XPATH:
 	           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 	           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
     		   // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
@@ -1860,9 +1860,9 @@ public class BrandPage {
            // CREATE CONTENT WITH AGE 5 SELECTED:
            helper.createCharacterBrand(driver, title, description, telescopeAssetId, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
            
-           // LINK GENERIC XPATH:
-           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+           // BANNER BUBBLE XPATH:
+           xpath = "//img[@alt='" + title + "']/parent::a";
+           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
            
            // AGE 5 AND UNDER TRANSCRIPT PAGE TEST:
            helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TRANSCRIPT PAGE TEST:"); 
@@ -2024,10 +2024,10 @@ public class BrandPage {
            // CONTENT URL:
            titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
            
-           // LINK GENERIC XPATH:
-           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+           // BANNER BUBBLE XPATH:
+           xpath = "//img[@alt='" + title + "']/parent::a";
            url = Common.sixAndOverURL + "/" + titleURL;
-           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
            helper.fileWriterPrinter(       "               URL = " + url  );
            
            // STEP-3:

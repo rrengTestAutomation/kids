@@ -117,8 +117,8 @@ public class Common {
 	  public static String searchIcon            = "//a[@class='search-link']";
 	  public static String charBannerThumbnails  = "//li/div/div[contains(@class,'bubble-thumbnail')]";
 	  public static String charBannerThumbnail(int i)    { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]"; }
-	  public static String charBannerBubble
-	              ( String agePageUrl, String titleURL ) { return "//a[@href='" + agePageUrl.replace(homeURL,"") + "/" + titleURL +  Common.XpathEqualsEnd; }
+//	  public static String charBannerBubble
+//	              ( String agePageUrl, String titleURL ) { return "//a[@href='" + agePageUrl.replace(homeURL,"") + "/" + titleURL +  Common.XpathEqualsEnd; }
 	  public static String charBannerBubbleLink(int i)   { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::a[@href]";   }
 	  public static String charBannerBubbleImage(int i)  { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::img[@src]";  }
 	  

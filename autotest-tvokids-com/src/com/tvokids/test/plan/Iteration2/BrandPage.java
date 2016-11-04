@@ -366,8 +366,8 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -448,8 +448,8 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCharacterBrand(driver, title, description, "281374", false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -669,8 +669,8 @@ public class BrandPage {
 	        		                    "bubble.jpg", "hero.jpg", "small.jpg", "large.jpg", "Age Landing Page"
 	        		                    );
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -1177,8 +1177,8 @@ public class BrandPage {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // ADD REEDIRECTS:

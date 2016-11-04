@@ -70,9 +70,9 @@ public class Banner {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
@@ -185,9 +185,9 @@ public class Banner {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd; // + "/ancestor::li";
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
@@ -258,9 +258,9 @@ public class Banner {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	              helper.fileWriterPrinter("\n\n" + "AGE 5 AND UNDER TEST:");
@@ -419,7 +419,7 @@ public class Banner {
 	        	   titleURL[i] = helper.reFormatStringForURL(title[i], Drupal.titleMaxCharsNumber);
 	        	   // CREATE DESCRIPTION FOR CONTENT:
 	        	   description[i] = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
-	        	   // LINK GENERIC XPATH:
+	        	   // BANNER BUBBLE XPATH:
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
 	        	   if (helper.isEven(i)) {
@@ -507,9 +507,9 @@ public class Banner {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n\n" + "AGE 5 AND UNDER TEST:");
@@ -616,8 +616,8 @@ public class Banner {
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
-	           // LINK GENERIC XPATH:
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd + Common.imageParticle;
+	           // BANNER BUBBLE XPATH:
+	           xpath = "//img[@alt='" + title + "']/parent::a" + Common.imageParticle;
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
