@@ -166,7 +166,6 @@ public class Drupal{
 	  public static String badgeBrowseXpath = Common.TextEntireAddDescToXpath(badgeBrowseText);
 	  public static String badgeThumbnail = tileFieldSet + subSet3 + thumbnail;
 	  public static String badgeBrowse = tileFieldSet + subSet3 + badgeBrowseXpath;
-	  
 	  public static String badgeUpload = tileFieldSet + subSet3 + upload;
 	  public static String badgeRemove = tileFieldSet + subSet3 + remove;
 	  public static String badgeSelect = "//a[@name='sendto'][@title='Select']/span[text()='Select']";

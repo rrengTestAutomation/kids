@@ -1022,7 +1022,7 @@ public class BrandPage {
 		           xpath[i] = "//a[contains(@href,'" + titleURL[i] +  Common.XpathContainsEnd;
 		           helper.fileWriterPrinter("\n\n" + "LINK GENERIC XPATH = " + xpath[i]);
 		           // PUBLISH ON FIRST BRAND TILES OF OTHER BRANDS WITH BADGES:
-		           if(i > 0) { badge = "new-episode.svg"; tile = title[0]; ifPublish = true; }
+		           if(i > 0) { badge = "new.svg"; tile = title[0]; ifPublish = true; }
 		           // CREATE A CUSTOM BRAND CONTENT WITH BOTH AGES SELECTED:
 	    		   helper.createCustomBrand(driver, title[i], description[i], true, true, false, true, true, new RuntimeException().getStackTrace()[0],
                                            "bubble.jpg", "hero.jpg", "small.jpg", "", badge, tile, ifPublish);
@@ -1491,11 +1491,12 @@ public class BrandPage {
 	           hero = content[8];
 	           // LINK GENERIC XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
 	           Thread.sleep(1000);
+	           // BUBBLE XPATH:
+	           xpath = Common.charBannerBubble(driver.getCurrentUrl(), titleURL);
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
@@ -1544,11 +1545,12 @@ public class BrandPage {
 	           hero = content[8];
 	           // LINK GENERIC XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
-	           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
-	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
 	           Thread.sleep(1000);
+	           // BUBBLE XPATH:
+	           xpath = Common.charBannerBubble(driver.getCurrentUrl(), titleURL);
+	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
 	           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);	
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);

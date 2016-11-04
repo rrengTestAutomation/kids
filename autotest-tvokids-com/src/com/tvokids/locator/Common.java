@@ -46,8 +46,10 @@ public class Common {
 	  public static String userLoginPage   = homeURL + "/user";
 	  public static String adminURL        = homeURL + "/admin";
 	  public static String adminContentURL = adminURL + "/content";
-	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
-	  public static String sixAndOverURL   = homeURL + "/6-and-over";
+	  public static String fiveAndUnder    = "/5-and-under";
+	  public static String fiveAndUnderURL = homeURL + fiveAndUnder;
+	  public static String sixAndOver      = "/6-and-over";
+	  public static String sixAndOverURL   = homeURL + sixAndOver;
 
 	  public static String fiveAndUnderSearchURL = fiveAndUnderURL + "/search";
 	  public static String sixAndOverSearchURL   = sixAndOverURL   + "/search";
@@ -111,11 +113,14 @@ public class Common {
 	  public static String charBannerButtonRight = "//button[@class='character-banner-button-next']";
 	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
 	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
+	  
 	  public static String searchIcon            = "//a[@class='search-link']";
 	  public static String charBannerThumbnails  = "//li/div/div[contains(@class,'bubble-thumbnail')]";
-	  public static String charBannerThumbnail(int i)   { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]"; }
-	  public static String charBannerBubbleLink(int i)  { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::a[@href]";  }
-	  public static String charBannerBubbleImage(int i) { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::img[@src]"; }
+	  public static String charBannerThumbnail(int i)    { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]"; }
+	  public static String charBannerBubble
+	              ( String agePageUrl, String titleURL ) { return "//a[@href='" + agePageUrl.replace(homeURL,"") + "/" + titleURL +  Common.XpathEqualsEnd; }
+	  public static String charBannerBubbleLink(int i)   { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::a[@href]";   }
+	  public static String charBannerBubbleImage(int i)  { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::img[@src]";  }
 	  
 	  /**********character page elements*********/
 	  public static String brandBubble          = "//div[@class='tile-bubble']/descendant::img[@src]";
