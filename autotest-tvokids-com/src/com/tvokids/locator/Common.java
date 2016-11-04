@@ -2,11 +2,8 @@ package com.tvokids.locator;
 
 import java.io.File;
 
-import com.tvokids.utilities.UtilitiesTestHelper;
-
 public class Common {
 //	static WebDriver driver;
-	static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 
 	  /**********common credentiald***********/
 	  public static String adminUsername = "dev";
@@ -46,37 +43,11 @@ public class Common {
 	  public static String userLoginPage   = homeURL + "/user";
 	  public static String adminURL        = homeURL + "/admin";
 	  public static String adminContentURL = adminURL + "/content";
-	  public static String fiveAndUnder    = "/5-and-under";
-	  public static String fiveAndUnderURL = homeURL + fiveAndUnder;
-	  public static String sixAndOver      = "/6-and-over";
-	  public static String sixAndOverURL   = homeURL + sixAndOver;
+	  public static String fiveAndUnderURL = homeURL + "/5-and-under";
+	  public static String sixAndOverURL   = homeURL + "/6-and-over";
 
 	  public static String fiveAndUnderSearchURL = fiveAndUnderURL + "/search";
 	  public static String sixAndOverSearchURL   = sixAndOverURL   + "/search";
-	  
-	  public static String fiveAndUnderVideoURL(String brandTitle, String videoTitle) {
-		  return  fiveAndUnderURL + "/" +
-				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
-				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
-		  }
-	  
-	  public static String sixAndOverVideoURL(String brandTitle, String videoTitle) {
-		  return  sixAndOverURL + "/" +
-				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
-				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
-		  }
-	  
-	  public static String fiveAndUnderTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
-		  return  homeURL + "/transcript/" + telescopeAssetId + "/5-and-under/" +
-				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
-				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
-		  }
-	  
-	  public static String sixAndOverTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
-		  return  homeURL + "/transcript/" + telescopeAssetId + "/6-and-over/" +
-				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
-				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
-		  }
 	  
 	  public static String localResourceDir  = System.getProperty("user.dir") + File.separator + "resources";
 	  public static String localDriversDir   = localResourceDir + File.separator + "drivers" + File.separator;                                                 
@@ -113,19 +84,9 @@ public class Common {
 	  public static String charBannerButtonRight = "//button[@class='character-banner-button-next']";
 	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
 	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
-	  
 	  public static String searchIcon            = "//a[@class='search-link']";
-	  public static String charBannerThumbnails  = "//li/div/div[contains(@class,'bubble-thumbnail')]";
-	  public static String charBannerThumbnail(int i)    { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]"; }
-	  public static String charBannerBubble
-	              ( String agePageUrl, String titleURL ) { return "//a[@href='" + agePageUrl.replace(homeURL,"") + "/" + titleURL +  Common.XpathEqualsEnd; }
-	  public static String charBannerBubbleLink(int i)   { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::a[@href]";   }
-	  public static String charBannerBubbleImage(int i)  { return "//li[" + i + "]/div/div[contains(@class,'bubble-thumbnail')]" + "/descendant::img[@src]";  }
 	  
 	  /**********character page elements*********/
-	  public static String brandBubble          = "//div[@class='tile-bubble']/descendant::img[@src]";
-	  public static String brandHeroBox         = "//div[contains(@class,'tile-hero') and contains(@id,'node')]";
-	  public static String brandHeroBoxImage    = brandHeroBox + "/descendant::div[@class='content']/descendant::img[@src]";
 	  public static String brandTitle           = "//div[@class='tile-bubble']/following-sibling::*/h1";
 	  public static String brandTitleFontName   = "Booster Next FY Bold";
 	  public static String brandTitleFontSize   = "18px";
@@ -137,17 +98,14 @@ public class Common {
 	  public static String brandDescriptionFontColour = "#000000";
 	  
 	  /**********brand tile*********/
-	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";	  
-	  public static String brandTile(Object title)        { return brandTile + TextEntireAddToXpath(title.toString()); }
+	  public static String brandTile = "//div[@data-tile-type]/descendant::span[@class='tile-title']";
 	  public static String brandTile(String type) {
 		  if (type.length() > 0) { type = "='" + type + "'"; }
 		  return "//div[@data-tile-type" + type + "]/descendant::span[@class='tile-title']";
 		  }
-	  public static String brandTile(String type, String title)        { return brandTile(type) + TextEntireAddToXpath(title); }	  
-	  public static String brandTile(String type, int i)               { return "//div[" + i + "]" + brandTile(type).replace("//div",""); }
-	  
-	  public static String brandTileImage(String title)              { return brandTile( (Object) title) + "/ancestor::a/descendant::img"; }
-	  public static String brandTileImage(String type, String title) { return brandTile(type, title)     + "/ancestor::a/descendant::img"; }
+	  public static String brandTile(String type, int i) {
+		  return "//div[" + i + "]" + brandTile(type).replace("//div","");
+		  }
 	  
 	  /**********brand tile (video)*********/
 	  public static String brandVideoTile        = brandTile("video");
@@ -157,14 +115,6 @@ public class Common {
 	  
 	  /**********brand badge*********/
 	  public static String brandBadgeParticle = "/parent::*/parent::*/descendant::img[contains(@src,'.svg')]";
-	  
-	  /**********video page****************/
-	  public static String videoTranscriptLinkXpath = "//a[@class='transcript-link']";
-	  public static String videoTranscriptLinkText  = "View video transcript";
-	  
-	  /**********transcript page****************/
-	  public static String transcriptPageTitleXpath = "//*[@id='page-title']";
-	  public static String transcriptPageTitleText  = "Transcript: ";
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

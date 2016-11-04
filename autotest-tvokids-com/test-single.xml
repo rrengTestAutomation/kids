@@ -17,8 +17,8 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods>
-<include name="testTheSpaceFrontEnd"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.Banner"><methods><include name="testOnNowBubbleIsNotMovingBackAfterRotation"/></methods></class>
+
 
 <!--
    FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6
