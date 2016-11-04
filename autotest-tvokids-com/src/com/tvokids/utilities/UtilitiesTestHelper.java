@@ -2190,7 +2190,7 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  String remove = browse.replace("'-und-0-upload')][@class='form-file']","'-und-0-remove-button')][contains(@class,'form-submit')]");
+		  String remove = browse.replace(Drupal.browse, Drupal.remove);
 		  By Remove = By.xpath(remove);
 		  Boolean ifUpload = (driver.findElements(Remove).size() == 0);
 		  if(ifUpload) {
@@ -2226,7 +2226,7 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  String remove = browse.replace("'-und-0-upload')][@class='form-file']","'-und-0-remove-button')][contains(@class,'form-submit')]");
+		  String remove = browse.replace(Drupal.browse, Drupal.remove);
 		  By Remove = By.xpath(remove);
 		  Boolean ifUpload = (driver.findElements(Remove).size() == 0);
 		  if(ifUpload) {
