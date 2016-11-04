@@ -216,8 +216,8 @@ public class UtilitiesTestHelper {
 			String ageGroup = "- Any -";
 			if (type.length() == 0) { type = "- Any -"; }
 			if (published.length() == 0) { published = "- Any -"; }
-			if ( (ifAgeUnder) && (!ifAgeOver) ) { ageGroup = "5 and Under"; }
-			if ( (!ifAgeUnder) && (ifAgeOver) ) { ageGroup = "6 and Over"; }
+			if ( (ifAgeUnder) && (!ifAgeOver) ) { ageGroup = "Preschool"; }
+			if ( (!ifAgeUnder) && (ifAgeOver) ) { ageGroup = "School Age"; }
 
 			fileWriterPrinter("\n" + "Title     FILTER:  " + convertEmptyStringToNotAvailable(title));
 			fileWriterPrinter(       "Type      FILTER:  " + type.replace("- ", "").replace(" -", ""));

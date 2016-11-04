@@ -328,7 +328,7 @@ public class BrandPage {
 	       }
 
 	/**
-	 * Test create a Custom Brand Page on both 5 and Under & 6 and Over is located on the appropriate front end age page and navigatation link is correct
+	 * Test create a Custom Brand Page on both Preschool & School Age is located on the appropriate front end age page and navigatation link is correct
 	 * <p>Date Created: 2016-07-22</p>
 	 * <p>Date Modified: 2016-07-22</p>
 	 * <p>Original Version: V1</p>
@@ -1046,7 +1046,7 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test the ability to create a custom URL Redirect for a particular Content type - 5 and Under
+	 * Test the ability to create a custom URL Redirect for a particular Content type - Preschool
 	 * <p>Date Created: 2016-09-06</p>
 	 * <p>Date Modified: 2016-09-06</p>
 	 * <p>Original Version: V1</p>
@@ -1090,7 +1090,7 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test the ability to create a custom URL Redirect for a particular Content type - 6 and Over
+	 * Test the ability to create a custom URL Redirect for a particular Content type - School Age
 	 * <p>Date Created: 2016-09-08</p>
 	 * <p>Date Modified: 2016-09-08</p>
 	 * <p>Original Version: V1</p>

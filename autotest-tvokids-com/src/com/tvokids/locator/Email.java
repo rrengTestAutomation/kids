@@ -20,25 +20,27 @@ public class Email {
 	  public static String testerWorkEmail = "rweinbrand@tvo.org";
 	  
 	  // MANAGERS E-MAIL ADDRESSES  			  
-	  public static String managerEmail = "nweinstein@tvo.org";
+	  public static String managerEmail = managerEmail();
+	  public static String managerEmail() {
+		  String managerEmail = testerWorkEmail;
+		  if(System.getProperty("URL").contains("dev30.tvo.org"))      { managerEmail = "ukhan@tvo.org"; }
+		  if(System.getProperty("URL").contains("qa-kids.tvokids.com")){ managerEmail = "ckatz@tvo.org"; }
+		  return managerEmail;
+		  }
 			  
 	  // PRODUCTION E-MAIL ADDRESSES
-	  public static String[] toAll = { managerEmail };
-	  public static String[] ccAll = {
-		                               testerWorkEmail,
-		                               "pbandas@tvo.org",
-		                               "jroberts@tvo.org",
-		                               "aporretta@tvo.org",
-		                               "ckatz@tvo.org",
-		                               "ssrinivasan@tvo.org",
-		                               "pdrinkwater@tvo.org",
-		                               "ltrotsky@tvo.org",
-		                               "lkumar@tvo.org",
-		                               "sreeves@echidna.ca",
-		                               "ukhan@tvo.org",
-		                               "suroy@tvo.org",
-		                               "tgale@tvo.org"
-		                              };
+	  public static String[] toAll = { managerEmail(), };
+	  
+	  public static String[] ccAll = ccAll();
+	  public static String[] ccAll() { 
+		  String[] ccAll = {""};
+		  if(System.getProperty("URL").contains("dev30.tvo.org"))      { ccAll = ccDEV; }
+		  if(System.getProperty("URL").contains("qa-kids.tvokids.com")){ ccAll = ccQA; }
+		  return ccAll;
+		  }
+	  public static String[] ccDEV = { testerWorkEmail,"aporretta@tvo.org","lkumar@tvo.org","sreeves@echidna.ca" };
+	  public static String[] ccQA =  { testerWorkEmail,"ssrinivasan@tvo.org","pdrinkwater@tvo.org","ltrotsky@tvo.org","jvijaya@tvo.org","ahanda@tvo.org" };
+	  
 	  public static String[] bccAll = { /** autoTesterEmail,*/ testerHomeEmail };
 	  
 //	  // UNIT TEST E-MAIL ADDRESSES

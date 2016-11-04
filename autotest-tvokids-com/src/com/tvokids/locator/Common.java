@@ -46,9 +46,9 @@ public class Common {
 	  public static String userLoginPage   = homeURL + "/user";
 	  public static String adminURL        = homeURL + "/admin";
 	  public static String adminContentURL = adminURL + "/content";
-	  public static String fiveAndUnder    = "/5-and-under";
+	  public static String fiveAndUnder    = "/preschool";
 	  public static String fiveAndUnderURL = homeURL + fiveAndUnder;
-	  public static String sixAndOver      = "/6-and-over";
+	  public static String sixAndOver      = "/school-age";
 	  public static String sixAndOverURL   = homeURL + sixAndOver;
 
 	  public static String fiveAndUnderSearchURL = fiveAndUnderURL + "/search";
@@ -67,13 +67,13 @@ public class Common {
 		  }
 	  
 	  public static String fiveAndUnderTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
-		  return  homeURL + "/transcript/" + telescopeAssetId + "/5-and-under/" +
+		  return  homeURL + "/transcript/" + telescopeAssetId + "/preschool/" +
 				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
 				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
 		  }
 	  
 	  public static String sixAndOverTranscriptURL(String brandTitle, String videoTitle, String telescopeAssetId) {
-		  return  homeURL + "/transcript/" + telescopeAssetId + "/6-and-over/" +
+		  return  homeURL + "/transcript/" + telescopeAssetId + "/school-age/" +
 				  helper.reFormatStringForURL(brandTitle, Drupal.titleMaxCharsNumber) + "/videos/" +
 				  helper.reFormatStringForURL(videoTitle, Drupal.titleMaxCharsNumber);
 		  }
@@ -111,8 +111,8 @@ public class Common {
 	  /**********age pages elements*******************/
 	  public static String charBannerButtonLeft  = "//button[@class='character-banner-button-prev']";
 	  public static String charBannerButtonRight = "//button[@class='character-banner-button-next']";
-	  public static String charFiveAndUnderBase  = "//a[@href='/5-and-under/";
-	  public static String charSixAndOverBase    = "//a[@href='/6-and-over/";
+	  public static String charFiveAndUnderBase  = "//a[@href='/preschool/";
+	  public static String charSixAndOverBase    = "//a[@href='/school-age/";
 	  
 	  public static String searchIcon            = "//a[@class='search-link']";
 	  public static String charBannerThumbnails  = "//li/div/div[contains(@class,'bubble-thumbnail')]";
@@ -182,8 +182,8 @@ public class Common {
 	  public static String image            = "/descendant::img[@typeof='foaf:Image']";
 	  public static String filterSelected   = "/descendant::option[@selected]";
 	  
-	  public static String fiveAndUnderLinkBase = "//a[@href='/5-and-under";
-	  public static String sixAndOverLinkBase   = "//a[@href='/6-and-over";
+	  public static String fiveAndUnderLinkBase = "//a[@href='/preschool";
+	  public static String sixAndOverLinkBase   = "//a[@href='/school-age";
 	  
 	  
 	  public static String metaTag            = "//meta[@name]";
