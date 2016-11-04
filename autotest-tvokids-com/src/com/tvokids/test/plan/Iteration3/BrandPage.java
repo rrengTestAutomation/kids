@@ -1919,6 +1919,124 @@ public class BrandPage {
            actual = driver.findElement(By.xpath(xpath)).getText();
            actual = helper.getStringBeginning(actual, expected.length());
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
+	}
+	
+	/**
+	 * Test "The Space" Character Brand front-end
+	 * <p>Date Created: 2016-11-03</p>
+	 * <p>Date Modified: 2016-11-03</p>
+	 * <p>Original Version: V1</p>
+	 * <p>Modified Version: </p>
+	 * <p>Xpath: 1</p>
+	 * <p>Test Cases: 36418 3711</p>
+	 */
+	@Test(groups = {"TC-36418","US-3711"}, priority = 58)
+    public void testTheSpaceFrontEnd() throws IOException{
+	   try{
+    	   // DECLARATION:
+           String title, titleURL, xpath, tab, browse, upload, url;
+    	   Boolean ifContent, ifVisible, ifPublished;
+    	   Boolean ifBubble = false, ifHero = false, ifSmallTile = false;
+    	   
+           // INITIALISATION:
+           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
+           driver = helper.getServerName(driver);
+           
+           // ASSIGN CONTENT TITLE:
+           title = "The Space";
+           
+           // STEP-1:
+           // LOGIN TO DRUPAL AS AN ADMIN:
+           helper.logIn(driver);
+           
+           // STEP-2:
+           // RE-OPEN THE SPACE BRAND PAGE BACK-END:
+           ifContent = helper.reopenBrand( driver, title, "Character Brand", "", "", false, true, false, new RuntimeException().getStackTrace()[0], 3, "CHECKED");
+           // CHECK IF AGE 6 AND OVER CHARACTER BRAND PAGES EXIST:
+           if(ifContent) {   
+           // READ BRAND DATA:
+           String[] content = helper.readContent(driver, new RuntimeException().getStackTrace()[0], false);
+           // ASSERT TITLE:
+           String actualTitle = content[0];
+           helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], actualTitle.contains(title));
+           title = actualTitle;
+           // ASSERT AGE GROUP:
+           String expectedAgeGroup5 = "UN-CHECKED";
+           String expectedAgeGroup6 = "CHECKED";
+           String actualAgeGroup5= content[2];
+           String actualAgeGroup6= content[3];
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualAgeGroup5, expectedAgeGroup5);
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actualAgeGroup6, expectedAgeGroup6);         
+           
+           // CHECKING VISIBLE ON CHARACTER BANNER CHECK BOX AND CLCK IF REQUIRED:
+           ifVisible = content[7].equals("UN-CHECKED");
+           tab = Drupal.characterBannerVerticalTab;
+   		   helper.uploadReader(driver, tab, "");
+           helper.checkVisibleOnCharacterBanner(driver, ifVisible, new Exception().getStackTrace()[0]);
+        
+           // CHECKING BUBBLE IMAGE EXIST AND UPLOADING IT IF REQUIRED:
+           if(content[6].length() == 0) {
+        	   tab    = Drupal.characterBannerVerticalTab;
+        	   browse = Drupal.characterBannerBrowse;
+               upload = Drupal.characterBannerUpload;
+               ifBubble = helper.upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", new Exception().getStackTrace()[0]);
+               }
+           
+           // CHECKING HERO IMAGE EXIST AND UPLOADING IT IF REQUIRED:
+           if(content[8].length() == 0) {
+        	   tab    = Drupal.heroBoxVerticalTab;
+        	   browse = Drupal.heroBoxBrowse;
+               upload = Drupal.heroBoxUpload;
+               ifHero = helper.upload(driver, "hero.jpg", tab, browse, upload, "image", new Exception().getStackTrace()[0]);
+               }
+ 		  
+           // CHECKING SMALL TILE IMAGE EXIST AND UPLOADING IT IF REQUIRED:
+           if(content[9].length() == 0) {
+        	   tab    = Drupal.tileVerticalTab;
+        	   browse = Drupal.tileSmallBrowse;
+               upload = Drupal.tileSmallUpload;
+               ifSmallTile = helper.upload(driver, "small.jpg", tab, browse, upload, "image", new Exception().getStackTrace()[0]);
+               }
+ 		  
+           // CHECKING PUBLISHED ON CHARACTER BANNER CHECK BOX AND CLCK IF REQUIRED:
+ 		   ifPublished = content[14].equals("UN-CHECKED");
+           tab = Drupal.publishingOptionsVerticalTab;
+   		   helper.uploadReader(driver, tab, "");
+   		   helper.checkBoxStatus(driver, By.id(Drupal.publishingOptionsPublishedCheckBoxId), ifPublished, false, new Exception().getStackTrace()[0]);          
+           
+   		   // SUBMIT (IF REQUIRED):
+   		   if(ifVisible || ifPublished || ifBubble || ifHero || ifSmallTile) {
+   	   		   int i = 0;
+   	           Boolean ifTitle = true;
+   	           while ( (ifTitle || (i == 0)) && (i < 5) ) {
+   	        	   i = helper.contentSubmit(driver, i, helper.reFormatStringForURL(title), false);
+   	               if(title.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
+   	               }
+   	           }
+   		   
+           helper.logOut(driver);
+           } else { helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], ifContent); }
+        
+           // CONTENT URL:
+           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+           
+           // LINK GENERIC XPATH:
+           xpath = "//a[contains(@href,'" + titleURL +  Common.XpathContainsEnd;
+           url = Common.sixAndOverURL + "/" + titleURL;
+           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath);
+           helper.fileWriterPrinter(       "               URL = " + url  );
+           
+           // STEP-3:
+           // THE SPACE BUBBLE TEST:
+           helper.fileWriterPrinter("\n" + "THE SPACE BUBBLE TEST:");
+           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
+           // ASSERT BRAND PAGE BUBBLE EXIST:
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+           Thread.sleep(1000);
+           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+           
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	

@@ -680,7 +680,16 @@ public class UtilitiesTestHelper {
 	 * @throws NumberFormatException 
 	 * @throws InterruptedException 
 	 */
-	public Boolean checkBoxStatus(WebDriver driver, By element, Boolean ifCheckOn, Boolean ifAssert, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+	public Boolean checkBoxStatus(WebDriver driver, By element, Boolean ifCheckOn, Boolean ifAssert, StackTraceElement t)
+	throws NumberFormatException, IOException, InterruptedException { return checkBoxStatus(driver, element, ifCheckOn, ifAssert, true, t); }
+	
+	/**
+	 * Detects and Enforces the Check-Box to be checked
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 * @throws InterruptedException 
+	 */
+	public Boolean checkBoxStatus(WebDriver driver, By element, Boolean ifCheckOn, Boolean ifAssert, Boolean ifPrompt, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
 		Boolean status = false;
 		String name = "";
 		if ( driver.findElements(element).size() == 1) {
@@ -691,11 +700,11 @@ public class UtilitiesTestHelper {
 				  name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
 				  }
 			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-			fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + "     status:   " + checkBoxStatus(status)); 
+			if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + "     status:   " + checkBoxStatus(status)); } 
 			if ( (!status) && ifCheckOn ) { 
 				driver.findElement(element).click(); Thread.sleep(1000);
 				status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-				fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + " new status:   " + checkBoxStatus(status));
+				if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + " new status:   " + checkBoxStatus(status)); }
 				}
 			} else { if(ifAssert) { assertWebElementExist(driver, t, element); } }
 		return status;
@@ -796,7 +805,8 @@ public class UtilitiesTestHelper {
 	public String[] readContent(WebDriver driver, StackTraceElement t, Boolean ifPrompt) throws NumberFormatException, IOException, InterruptedException {
 		// DECLARATION:
 		String name, tab, thumbnail;
-		String title, description, ageGroup5, ageGroup6, assetID, noAutoVideoTiles, bannerImage, visibleOnCharacterBanner, heroImage, tileSmallImage, alternateSmall, tileLargeImage, alternateLarge, badge;
+		String title, description, ageGroup5, ageGroup6, assetID, noAutoVideoTiles, bannerImage, visibleOnCharacterBanner, 
+		       heroImage, tileSmallImage, alternateSmall, tileLargeImage, alternateLarge, badge, published;
 		// TYPE:
 		String contentTypeXpath = "//h1[@class='page-title']/em[text()]";
 		String contentType = getText(driver, contentTypeXpath).replace("Edit ", "");
@@ -860,7 +870,13 @@ public class UtilitiesTestHelper {
 		badge = uploadReader(driver, tab, thumbnail);
 		name = "BADGE: ";
 		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + badge + "\n"); }
-
+		// PUBLISHED:		
+		tab = Drupal.publishingOptionsVerticalTab;
+		uploadReader(driver, tab, "");
+		published = checkBoxStatus(checkBoxStatus(driver, By.id(Drupal.publishingOptionsPublishedCheckBoxId), false, false, false, t));
+		name = "PUBLISHING OPTIONS: ";
+		if(ifPrompt) { fileWriterPrinter(name + padSpace(50 - name.length()) + published + "\n"); }
+		
 		String[] s = {
 				title,                    // [0]
 				description,              // [1]
@@ -876,6 +892,7 @@ public class UtilitiesTestHelper {
 				tileLargeImage,           // [11]
 				alternateLarge,           // [12]
 				badge,                    // [13]
+				published,                // [14]
 				};
 		return s;
 	}
@@ -1404,9 +1421,10 @@ public class UtilitiesTestHelper {
 				  string = string.toLowerCase().replaceAll(charToBeNothing[i], "");
 				  string = string.toLowerCase().replaceAll(charToBeNothing[i].toLowerCase(), "");
 				  }			  
-			  string = string.replaceAll(" ", "-").replaceAll("--", "-");
-			  if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
-			  }
+			  string = string.replaceAll(" ", "-");
+			  while (string.contains("--")) { string = string.replaceAll("--", "-"); }
+			if(string.endsWith("-")) { string = string.substring(0, (string.length() - 1)); }
+			}
 		  return string;
 		  }
 	  
@@ -2120,7 +2138,26 @@ public class UtilitiesTestHelper {
       }
 	  
 	  public String uploadReader(WebDriver driver, String xpathTab, String xpathThumbnail) throws NumberFormatException, IOException, InterruptedException {
-		  return uploadReader(driver, xpathTab, By.xpath(xpathThumbnail));
+		  String thumbnail = "";
+		  if(xpathTab.length() > 0) {
+			  if(driver.findElements(By.xpath(xpathTab)).size() == 1) {
+				  String tabActive = xpathTab  + Drupal.verticalTabActive;
+				  By Tab = By.xpath(tabActive);		  
+				  // TAB CLICK WITH XPATH CHANGE CONTROLLER AND AJAX ERROR HANDLER:
+				  int i = 0;
+				  int size = driver.findElements(Tab).size();
+				  while ((size == 0) && (i < 5)) {
+					     // TAB CLICK WITH AJAX ERROR HANDLER:
+					     ajaxProtectedClick(driver, xpathTab, "", false, "", true, false);		     
+				         i++;		         
+				         size = driver.findElements(Tab).size();
+				         }
+			  //  if (size == 1) { fileWriterPrinter("\n" + "Successful \"" + driver.findElement(By.xpath(xpathTab)).getText().replace("(", "").replace(")", "") + "\" tab click!"); }
+			  }
+		  }
+		  // FINAL READER:
+		  if( (xpathThumbnail.length() > 0) && (driver.findElements(By.xpath(xpathThumbnail)).size() == 1) ) { thumbnail = getText(driver, xpathThumbnail); }
+		  return thumbnail;		  
 		  }
 	  
 	  public String uploadReader(String xpathTab, String idThumbnail, WebDriver driver) throws NumberFormatException, IOException, InterruptedException {
@@ -2133,7 +2170,7 @@ public class UtilitiesTestHelper {
 	   * @throws NumberFormatException 
 	   * @throws InterruptedException 
 	   */
-	  public void upload(WebDriver driver, String image, String tab, String browse, String upload) throws NumberFormatException, IOException, InterruptedException {
+	  public Boolean upload(WebDriver driver, String image, String tab, String browse, String upload) throws NumberFormatException, IOException, InterruptedException {
 	  //  String parentWindowHandle = driver.getWindowHandle();
 		  String tabActive = tab  + Drupal.verticalTabActive;
 		  By Tab = By.xpath(tabActive);
@@ -2153,8 +2190,14 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
-		  else { uploader(driver, image, Browse, Upload); }
+		  String remove = browse.substring(0,21) + Drupal.remove;
+		  By Remove = By.xpath(remove);
+		  Boolean ifUpload = (driver.findElements(Remove).size() == 0);
+		  if(ifUpload) {
+			  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
+			  else { uploader(driver, image, Browse, Upload); }
+			  }
+		  return ifUpload;
       }
 	  
 	  /**
@@ -2163,7 +2206,7 @@ public class UtilitiesTestHelper {
 	   * @throws NumberFormatException 
 	   * @throws InterruptedException 
 	   */
-	  public void upload(WebDriver driver, String image, String tab, String browse, String upload, String name, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
+	  public Boolean upload(WebDriver driver, String image, String tab, String browse, String upload, String name, StackTraceElement t) throws NumberFormatException, IOException, InterruptedException {
 //		  String parentWindowHandle = driver.getWindowHandle();
 		  String tabActive = tab  + Drupal.verticalTabActive;
 		  By Tab = By.xpath(tabActive);
@@ -2183,8 +2226,14 @@ public class UtilitiesTestHelper {
 		  
 		  // FINAL UPLOADER:
 		  String browseText = driver.findElement(Browse).getText();
-		  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
-		  else { uploader(driver, image, Browse, Upload, name, t); }
+		  String remove = browse.substring(0,21) + Drupal.remove;
+		  By Remove = By.xpath(remove);
+		  Boolean ifUpload = (driver.findElements(Remove).size() == 0);
+		  if(ifUpload) {
+			  if(browseText.equals(Drupal.badgeBrowseText)) { uploader(driver, image, Browse); }
+			  else { uploader(driver, image, Browse, Upload, name, t); }
+			  }
+		  return ifUpload;
       }
 	  
 	  /**
