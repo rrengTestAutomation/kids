@@ -29,9 +29,8 @@ public class Email {
 		  }
 			  
 	  // PRODUCTION E-MAIL ADDRESSES
-	  public static String[] toAll = { managerEmail(), };
+	  public static String[] toAll = { managerEmail, };
 	  
-	  public static String[] ccAll = ccAll();
 	  public static String[] ccAll() { 
 		  String[] ccAll = {""};
 		  if(System.getProperty("URL").contains("dev30.tvo.org"))      { ccAll = ccDEV; }
@@ -63,7 +62,7 @@ public class Email {
 	  // "CC" E-MAIL ADDRESSES LOGIC
 	  public static String[] cc() throws NumberFormatException, IOException{
 		String[] cc = ccTester;
-		if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all")) ) { cc = ccAll; }
+		if( helper.fileExist("email.all", false) && Boolean.valueOf(helper.fileScanner("email.all")) ) { cc = ccAll(); }
 	    return cc;
 	  }
 	  
