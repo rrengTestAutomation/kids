@@ -17,7 +17,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods><include name="testCreateVideoTileOnCustomBrandPageForSixAndOver"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods><include name="testCreateVideoTileOnCharacterBrandPageForFiveAndUnder"/></methods></class>
 
 
 <!--

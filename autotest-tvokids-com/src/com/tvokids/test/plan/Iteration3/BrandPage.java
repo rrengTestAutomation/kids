@@ -475,6 +475,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -606,6 +607,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -690,6 +692,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -768,6 +771,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -789,7 +793,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, true, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
@@ -843,6 +847,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -866,7 +871,7 @@ public class BrandPage {
 	           Boolean ifTitle = true;
 	           while ( (ifTitle || (i == 0)) && (i < 25) ) {
 		           // REOPEN VIDEO BY TITLE:
-		           helper.reopenContent(driver, videoTitle, "Video", "", "", false, false, true, new RuntimeException().getStackTrace()[0]);
+		           helper.reopenContent(driver, videoTitle, "Video", "", "", true, false, true, new RuntimeException().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
 		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
@@ -924,6 +929,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -947,7 +953,7 @@ public class BrandPage {
 	           Boolean ifTitle = true;
 	           while ( (ifTitle || (i == 0)) && (i < 25) ) {
 		           // REOPEN VIDEO BY TITLE:
-		           helper.reopenContent(driver, videoTitle, "Video", "", "", false, false, true, new RuntimeException().getStackTrace()[0]);
+		           helper.reopenContent(driver, videoTitle, "Video", "", "", false, true, true, new RuntimeException().getStackTrace()[0]);
 		           // PLACE VIDEO TO TILE WITH TILE PLACEMENT ASSERTION:
 		           helper.addTilePlacement(driver, Drupal.tileVerticalTab, title, true, true, false, new Exception().getStackTrace()[0]);
 		           // SUBMIT:
@@ -1240,6 +1246,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -1363,6 +1370,7 @@ public class BrandPage {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -1491,6 +1499,7 @@ public class BrandPage {
 	           hero = content[8];
 	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
 	           Thread.sleep(1000);
@@ -1545,6 +1554,7 @@ public class BrandPage {
 	           hero = content[8];
 	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
 	           helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
 	           Thread.sleep(1000);
@@ -1627,6 +1637,7 @@ public class BrandPage {
 	           hero = content[8];
 	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 5 AND UNDER PAGE:
@@ -1680,6 +1691,7 @@ public class BrandPage {
 	           hero = content[8];
 	           // BANNER BUBBLE XPATH:
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           xpath = "//img[@alt='" + title + "']/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);	           
 	           // NAVIGATE TO AGE 6 AND OVER PAGE:
@@ -1849,6 +1861,7 @@ public class BrandPage {
            long fingerprint = System.currentTimeMillis();
            title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
            titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
            
            // THIS IS SUPPLIED BY CPAD (IN ORDER FOR THE VIDEO TO PLAY):
            brightcoveRefID = "3022354586001";

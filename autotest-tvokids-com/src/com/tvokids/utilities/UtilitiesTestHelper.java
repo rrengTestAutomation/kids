@@ -405,15 +405,15 @@ public class UtilitiesTestHelper {
 		   Boolean acception = false;
 		   int i = 1;
 		   while (!acception) {
-			   if(i == 1) { filterAllContent(driver, title, "Video", "", published, ifAgeUnder, ifAgeOver, t); }
+			   filterAllContent(driver, title, "Video", "", published, ifAgeUnder, ifAgeOver, t);
 		 	   if( driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 1 ) {
 		 		   filterAllContent(driver, title, "Video", "", unpublished, ifAgeUnder, ifAgeOver, t);
 			       operateOnContent(driver, publish, !ifRepublish, t);
+			       filterAllContent(driver, title, "Video", "", published, ifAgeUnder, ifAgeOver, t);
 			       }
 		 	   try {
 		 		   // (RE)OPEN AND CHECK:
 		 		   if(ifRepublish) { i = 1; }
-		 		   getUrlWaitUntil(driver, 15, Common.adminContentURL);
 		 		   waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, false);
 				   driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
 			       waitUntilElementPresence(driver, 5, Drupal.tileVerticalTab, "Tile Vertical Tab (Video)", t, false);

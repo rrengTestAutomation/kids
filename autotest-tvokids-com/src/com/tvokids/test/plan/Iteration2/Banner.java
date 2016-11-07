@@ -63,6 +63,7 @@ public class Banner {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -178,6 +179,7 @@ public class Banner {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -251,6 +253,7 @@ public class Banner {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -500,6 +503,7 @@ public class Banner {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
@@ -609,6 +613,7 @@ public class Banner {
 	           long fingerprint = System.currentTimeMillis();
 	           title = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
 	           titleURL = helper.reFormatStringForURL(title, Drupal.titleMaxCharsNumber);
+	           helper.fileWriterPrinter("\n" + "BRAND PAGE URL END:  " + titleURL);
 	           
 	           // CREATE DESCRIPTION FOR CONTENT:
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
