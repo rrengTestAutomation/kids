@@ -36,11 +36,11 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35404 3522 3202</p>
+	 * <p>Test Cases: 35404 3522 3202 972</p>
 	 * @throws IOException 
 	 * @throws AWTException 
 	 */
-	@Test(groups = {"TC-35404","US-3522","US-3202"}, enabled = true, priority = 38)
+	@Test(groups = {"TC-35404","US-3522","US-3202 ","BUG-972","NEW"}, enabled = true, priority = 38)
     public void testSortTilesOnReorderInterface() throws IOException, AWTException {
 	   try{
     	   // INITIALISATION:
@@ -298,9 +298,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: V2</p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36113 3996 4452</p>
+	 * <p>Test Cases: 36113 3996 4452 972</p>
 	 */
-	@Test(groups = {"TC-36113","US-3996","US-4452"}, priority = 41)
+	@Test(groups = {"TC-36113","US-3996","US-4452 ","BUG-972","NEW"}, priority = 41)
 	public void testNewSizeOfTileImageDescription() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -445,9 +445,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36146 3496</p>
+	 * <p>Test Cases: 36146 3496 972</p>
 	 */
-	@Test(groups = {"TC-36146","US-3496"}, priority = 44)
+	@Test(groups = {"TC-36146","US-3496 ","BUG-972","NEW"}, priority = 44)
 	public void testDisplayTitleWhileScrolling() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -578,9 +578,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36414 4097 798</p>
+	 * <p>Test Cases: 36414 4097 798 972</p>
 	 */
-	@Test(groups = {"TC-36414","US-4097","BUG-798","CLOSED"}, enabled = true, priority = 45)
+	@Test(groups = {"TC-36414","US-4097","BUG-798 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 45)
 	public void testNewCharacterBannerVisibility() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -665,9 +665,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 4271 832</p>
+	 * <p>Test Cases: 36413 3550 4271 832 972</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 46)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 46)
 	public void testCreateVideoTileOnCustomBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -743,9 +743,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 4271 832</p>
+	 * <p>Test Cases: 36413 3550 4271 832 972</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832","CLOSED"}, enabled = true, priority = 47)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-832 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 47)
 	public void testCreateVideoTileOnCustomBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -789,7 +789,7 @@ public class BrandPage {
 		           // SUBMIT:
 		           i = helper.contentSubmit(Common.adminContentURL, driver, i);
 				   if(videoTitle.length() > 0) { ifTitle = (! driver.getCurrentUrl().startsWith(Common.adminContentURL)); }
-				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, false, new RuntimeException().getStackTrace()[0]); }
+				   if(! ifTitle) { helper.filterAllContent(driver, videoTitle, "Video", "", "Yes", false, true, new RuntimeException().getStackTrace()[0]); }
 		           }
 	           
 	           videoTitle = driver.findElement(By.xpath(Drupal.adminContentRowFirstTitle)).getText();
@@ -821,9 +821,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 4271 854</p>
+	 * <p>Test Cases: 36413 3550 4271 854 972</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","CLOSED"}, enabled = true, priority = 48)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 48)
 	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -902,9 +902,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 36413 3550 4271 854</p>
+	 * <p>Test Cases: 36413 3550 4271 854 972</p>
 	 */
-	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854","CLOSED"}, enabled = true, priority = 49)
+	@Test(groups = {"TC-36413","US-3550","US-4271","BUG-854 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 49)
 	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
@@ -983,9 +983,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35413 3309 35459 3183</p>
+	 * <p>Test Cases: 35413 3309 35459 3183 972</p>
 	 */
-	@Test(groups = {"TC-35413","US-3309","TC-35459","US-3183"}, enabled = true, priority = 50)
+	@Test(groups = {"TC-35413","US-3309","TC-35459","US-3183 ","BUG-972","NEW"}, enabled = true, priority = 50)
 	public void testBadgeForTileOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1114,9 +1114,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35459 3183 878</p>
+	 * <p>Test Cases: 35459 3183 878 972</p>
 	 */
-	@Test(groups = {"TC-35459","US-3183","BUG-878","NEW"}, enabled = true, priority = 51)
+	@Test(groups = {"TC-35459","US-3183","BUG-878 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 51)
 	public void testBrandTileStructureOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1217,9 +1217,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35474 2079</p>
+	 * <p>Test Cases: 35474 2079 972</p>
 	 */
-	@Test(groups = {"TC-35474","US-2079"}, priority = 52)
+	@Test(groups = {"TC-35474","US-2079 ","BUG-972","NEW"}, priority = 52)
 	public void testHeroBoxOnNewCustomBrandPage() throws IOException {
 		   try{
 			   // INITIALISATION:
@@ -1340,9 +1340,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35474 2079</p>
+	 * <p>Test Cases: 35474 2079 972</p>
 	 */
-	@Test(groups = {"TC-35474","US-2079"}, priority = 53)
+	@Test(groups = {"TC-35474","US-2079 ","BUG-972","NEW"}, priority = 53)
 	public void testHeroBoxOnNewCharacterBrandPage() throws IOException {
 		   try{
 			   // INITIALISATION:
@@ -1457,9 +1457,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35474 2079</p>
+	 * <p>Test Cases: 35474 2079 972</p>
 	 */
-	@Test(groups = {"TC-35474","US-2079"}, priority = 54)
+	@Test(groups = {"TC-35474","US-2079 ","BUG-972","NEW"}, priority = 54)
 	public void testHeroBoxOnExistingCustomBrandPage() throws IOException {
 		   try{
 			   // INITIALISATION:
@@ -1593,9 +1593,9 @@ public class BrandPage {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35474 2079</p>
+	 * <p>Test Cases: 35474 2079 972</p>
 	 */
-	@Test(groups = {"TC-35474","US-2079"}, priority = 55)
+	@Test(groups = {"TC-35474","US-2079 ","BUG-972","NEW"}, priority = 55)
 	public void testHeroBoxOnExistingCharacterBrandPage() throws IOException {
 		   try{
 			   // INITIALISATION:

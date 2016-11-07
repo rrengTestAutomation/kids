@@ -35,9 +35,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34144 2025 3655</p>
+	 * <p>Test Cases: 34144 2025 3655 972</p>
 	 */
-	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 15)
+	@Test(groups = {"TC-34144","US-2025","US-3655 ","BUG-972","NEW"}, priority = 15)
 	public void testDesktopCharacterBannerNavigationButtons() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -151,9 +151,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34144 2025 3655</p>
+	 * <p>Test Cases: 34144 2025 3655 972</p>
 	 */
-	@Test(groups = {"TC-34144","US-2025","US-3655"}, priority = 16)
+	@Test(groups = {"TC-34144","US-2025","US-3655 ","BUG-972","NEW"}, priority = 16)
 	public void testDesktopCharacterBannerClickAndDrugRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -225,9 +225,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34147 2024 3656</p>
+	 * <p>Test Cases: 34147 2024 3656 972</p>
 	 */
-	@Test(groups = {"TC-34147","US-2024","US-3656"}, priority = 17)
+	@Test(groups = {"TC-34147","US-2024","US-3656 ","BUG-972","NEW"}, priority = 17)
 	public void testCharacterBannerIsInfiniteLooped() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -392,9 +392,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34140 1990</p>
+	 * <p>Test Cases: 34140 1990 972</p>
 	 */
-	@Test(groups = {"TC-34140","US-1990"}, priority = 20)
+	@Test(groups = {"TC-34140","US-1990 ","BUG-972","NEW"}, priority = 20)
 	public void testTVOKidsLogoRedirectsToCorrectAgeLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -474,9 +474,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34143 2023</p>
+	 * <p>Test Cases: 34143 2023 972</p>
 	 */
-	@Test(groups = {"TC-34143","US-2023"}, priority = 21)
+	@Test(groups = {"TC-34143","US-2023 ","BUG-972","NEW"}, priority = 21)
 	public void testOnNowBubbleIsNotMovingBackAfterRotation() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -583,9 +583,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34462 2831</p>
+	 * <p>Test Cases: 34462 2831 972</p>
 	 */
-	@Test(groups = {"TC-34462","US-2831"}, priority = 22)
+	@Test(groups = {"TC-34462","US-2831 ","BUG-972","NEW"}, priority = 22)
     public void testCharacterBannerInteractivityBubblesAnimationIsCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
