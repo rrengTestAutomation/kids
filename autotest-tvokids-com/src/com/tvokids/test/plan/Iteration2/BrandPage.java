@@ -119,7 +119,7 @@ public class BrandPage {
 	 * <p>Xpath: 3</p>
 	 * <p>Test Cases: 35131 35153 2958 3229 524 528 529 823 852 972</p>
 	 */
-	@Test(groups = {"TC-35131","TC-35153","US-2958","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-823","BUG-852 ","BUG-","BUG-972","NEW"}, priority = 3)
+	@Test(groups = {"TC-35131","TC-35153","US-2958","US-3229","BUG-35502","BUG-524","BUG-528","BUG-529","BUG-823","BUG-852 ","BUG-972","NEW"}, priority = 3)
     public void testCustomBrandTitleFieldContentLimit() throws IOException, IllegalArgumentException, MalformedURLException {
        try{
     	   // INITIALISATION:
@@ -336,7 +336,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 3229 650 838 972</p>
 	 */
-	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-838 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-838 ","BUG-972","NEW"}, enabled = true, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -710,7 +710,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 707 972</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","BUG-707 ","BUG-","BUG-972","NEW"}, priority = 28)
+	@Test(groups = {"TC-35220","US-3188","BUG-707 ","BUG-972","NEW"}, priority = 28)
     public void testBrandPageSmallTileImageIsMandatory() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -842,7 +842,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 699 972</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 31)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-699 ","BUG-972","NEW"}, enabled = true, priority = 31)
     public void testBrandPageSmallTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -998,7 +998,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35220 3188 3996 708 972</p>
 	 */
-	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708 ","BUG-","BUG-972","NEW"}, enabled = true, priority = 34)
+	@Test(groups = {"TC-35220","US-3188","US-3996","BUG-708 ","BUG-972","NEW"}, enabled = true, priority = 34)
     public void testBrandPageLargeTileImageUploadNotExactDimensionsNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
