@@ -2814,6 +2814,7 @@ public class UtilitiesTestHelper {
 				  	 if(fileExist("failed.try",false)) {  
 					 fileWriter("failed.log", "     Re-Run: " + fileScanner("failed.try") + "-" + getNumberSuffix(Integer.valueOf(fileScanner("failed.try"))) + " time"); }
 				  	 fileWriter("failed.log", "      Start: "  + convertCalendarMillisecondsAsStringToDateTimeHourMinSec(fileScanner("start.time")));
+				  	 fileWriter("failed.log", "   Coverage: " + fileScanner("coverage.info"));
 				  	 fileWriter("failed.log", "   XML Path: "  + xml);			  	   
 				  	 fileWriter("failed.log", "Error Cause: ---> " + errorCause);			  	   
 				  	 fileWriter("failed.log", "Description: ---> " + secondLine);			  	   
