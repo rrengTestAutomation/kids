@@ -368,8 +368,12 @@ public class UtilitiesTestHelper {
 			while ((i < 25) && !ifExceptance) {
 				getUrlWaitUntil(driver, 15, Common.adminContentURL);
 				filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
-				ifContent = (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0) &&
-						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 1) ;
+				ifContent = ((driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0) &&
+						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 1)) ||
+						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i + 1))).size() == 1)
+						    ;
+				if((driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 0) &&
+				   (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i + 1))).size() == 1)) { i++; }
 				if(ifContent) {
 					waitUntilElementPresence(driver, 15, Drupal.adminContentRowFirstEdit, "First Row To Edit", t, ifPrompt);
 					driver.findElement(By.xpath(Drupal.adminContentRowEdit(i))).click();
