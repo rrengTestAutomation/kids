@@ -361,17 +361,22 @@ public class UtilitiesTestHelper {
 	@SuppressWarnings("finally")
 	public Boolean reopenBrand(WebDriver driver, String title, String type, String author, String published, Boolean ifAgeUnder, Boolean ifAgeOver, Boolean ifPrompt, StackTraceElement t,
 			int acceptanceItem, String acceptanceValue) throws InterruptedException, IOException{
-		Boolean ifContent = false;
+		
+		Boolean ifNoContent = true, ifContent = !ifNoContent;
 		try {
 			int i = 0;
-			Boolean ifExceptance = false;
+			Boolean ifExceptance = false; 
 			while ((i < 25) && !ifExceptance) {
 				getUrlWaitUntil(driver, 15, Common.adminContentURL);
 				filterAllContent(driver, title, type, author, published, ifAgeUnder, ifAgeOver, t);
-				ifContent = ((driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 0) &&
-						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 1)) ||
-						    (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i + 1))).size() == 1)
+				ifNoContent = ( (driver.findElements(By.xpath(Drupal.messageNoContentAvailable)).size() == 1) ||
+						        (
+						    	(driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 0) &&
+						        (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i + 1))).size() == 0)
+						        )
+						    )
 						    ;
+				ifContent = !ifNoContent;
 				if((driver.findElements(By.xpath(Drupal.adminContentRowEdit(i))).size() == 0) &&
 				   (driver.findElements(By.xpath(Drupal.adminContentRowEdit(i + 1))).size() == 1)) { i++; }
 				if(ifContent) {
@@ -647,7 +652,7 @@ public class UtilitiesTestHelper {
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	public int contentSubmit(WebDriver driver, int iteration, String URLendsWith, Boolean ifRetry) throws IOException, NumberFormatException, InterruptedException {
+	public int contentSubmit(WebDriver driver, int iteration, Boolean ifURLstartsWith, Boolean ifURLendsWith, String URL, Boolean ifRetry) throws IOException, NumberFormatException, InterruptedException {
 	   String type = driver.findElement(By.xpath("//h1[@class='page-title']")).getText();
 	   String previousURL = driver.getCurrentUrl();
 	   driver.findElement(By.id(Drupal.submit)).click();
@@ -659,9 +664,19 @@ public class UtilitiesTestHelper {
 	   String attempt =  "will try again..." + "(attempt #" + iteration + ")";
 	   if(! ifRetry ) { attempt = ""; }
 	   if (iteration > 1) { success = success + " (on " + iteration + suffix + " attempt)"; }   
-	   Boolean error = false;	   
-	   if ( URLendsWith.length() == 0 ) { error =   driver.getCurrentUrl().equals(previousURL); }
-	   else                             { error = ! driver.getCurrentUrl().endsWith(URLendsWith); }
+	   Boolean error = false;
+	   
+	   if ( URL.length() == 0 ) { error = driver.getCurrentUrl().equals(previousURL); }
+	   else                             
+	   { 
+		   if(ifURLstartsWith == ifURLendsWith) { error = ! driver.getCurrentUrl().equals(URL); }
+		   else
+		   {
+			   if(ifURLstartsWith) { error = ! driver.getCurrentUrl().startsWith(URL); }
+			   if(ifURLendsWith)   { error = ! driver.getCurrentUrl().endsWith(URL); }
+		   }
+	   }
+	   
 	   if ( error ) {
 		   fileWriterPrinter(issue + attempt);
 		   if( driver.findElements(By.xpath(Drupal.errorMessage)).size() > 0 ) {
@@ -674,6 +689,16 @@ public class UtilitiesTestHelper {
 	   } else { fileWriterPrinter(success); }
 	   return iteration;	   
 	}
+	
+	/**
+	 * Submits Content and reports result (if final URL doesn't end with String - failure condition)
+	 * @throws IOException
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public int contentSubmit(WebDriver driver, int iteration, String URLendsWith, Boolean ifRetry) throws IOException, NumberFormatException, InterruptedException {		
+	   return contentSubmit(driver, iteration, false, true, URLendsWith, ifRetry);
+	   }
 	
 	/** Converts Boolean status value into user-friendly message */
 	public String checkBoxStatus(Boolean ifChecked) { if(ifChecked) { return "CHECKED"; } else { return "UN-CHECKED"; } }
@@ -704,11 +729,11 @@ public class UtilitiesTestHelper {
 				  name = " \"" + driver.findElement(By.xpath(name)).getText() + "\" ";
 				  }
 			status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-			if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + "     status:   " + checkBoxStatus(status)); } 
+			if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 39 - name.length()) + "  status:   " + checkBoxStatus(status)); } 
 			if ( (!status) && ifCheckOn ) { 
 				driver.findElement(element).click(); Thread.sleep(1000);
 				status = Boolean.valueOf(driver.findElement(element).getAttribute("checked"));
-				if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 36 - name.length()) + " new status:   " + checkBoxStatus(status)); }
+				if(ifPrompt) { fileWriterPrinter("Check-Box" + padRight(name, 35 - name.length()) + "  new status:   " + checkBoxStatus(status)); }
 				}
 			} else { if(ifAssert) { assertWebElementExist(driver, t, element); } }
 		return status;
@@ -3459,10 +3484,15 @@ public class UtilitiesTestHelper {
 				}
 	// ################# SCREEN-SHOT END ##############################
 
-	// ################# STRING CONVERTER START #######################   
-	/* @throws IOException
-	 * @throws NumberFormatException */	   
-			public int convertStringToInt(String value) throws NumberFormatException, IOException {
+	// ################# STRING CONVERTER START #######################
+				
+	   public String convertBoolanToYesNo(Boolean b) { if(b) { return "YES"; } else { return "NO"; }}
+		
+	   /* 
+	    @throws IOException
+	    @throws NumberFormatException
+	    */  
+		public int convertStringToInt(String value) throws NumberFormatException, IOException {
 				try {
 				      return Integer.parseInt(value);
 				    } catch(NumberFormatException e) {
@@ -4282,6 +4312,17 @@ public class UtilitiesTestHelper {
 			    fileWriterPrinter(printLine);
 			}
             
+            public static void fileWriterPrinterArray(String[] content) throws NumberFormatException, IOException {
+            	fileWriterPrinter();
+            	String prefix = "", spacer;
+            	int size = String.valueOf(content.length).length(), cut;
+            	for (int i = 0; i < size; i++) { prefix = prefix + " "; }
+            	for (int j = 0; j < content.length; j++) {
+            		cut = size - String.valueOf((j + 1)).length();
+            		spacer = prefix.substring(0, cut);
+         	   fileWriterPrinter(spacer + (j + 1) + ": " + content[j]);
+         	   }
+            }
         // ####################### TESTNG-FAILED XML CONVERTER START #######################
             /**
         	 * This METHOD converts Testng-Failed XML file into pure Test-Failed XML
