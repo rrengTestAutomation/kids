@@ -1951,13 +1951,17 @@ public class BrandPage {
     public void testTheSpaceFrontEnd() throws IOException{
 	   try{
     	   // DECLARATION:
-           String title, titleURL, xpath, tab, browse, upload, url;
+           String title, titleURL, xpath, tab, browse, upload, url, actual, expected;
     	   Boolean ifContent, ifVisible, ifPublished;
     	   Boolean ifBubble = false, ifHero = false, ifSmallTile = false;
+    	   int i;
     	   
            // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
            driver = helper.getServerName(driver);
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
            
            // ASSIGN CONTENT TITLE:
            title = "The Space";
@@ -2025,7 +2029,7 @@ public class BrandPage {
            
    		   // SUBMIT (IF REQUIRED):
    		   if(ifVisible || ifPublished || ifBubble || ifHero || ifSmallTile) {
-   	   		   int i = 0;
+   	   		   i = 0;
    	           Boolean ifTitle = true;
    	           while ( (ifTitle || (i == 0)) && (i < 5) ) {
    	        	   i = helper.contentSubmit(driver, i, helper.reFormatStringForURL(title), false);
@@ -2045,17 +2049,53 @@ public class BrandPage {
            helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
            helper.fileWriterPrinter(       "               URL = " + url  );
            
-           // STEP-3:
+           // STEPS-3,4:
            // THE SPACE BUBBLE TEST:
-           helper.fileWriterPrinter("\n" + "STEP-3\n" + "THE SPACE BUBBLE TEST:");
+           helper.fileWriterPrinter("\n" + "STEPS-3,4\n" + "THE SPACE BUBBLE TEST:");
+           // NAVIGATE TO BRAND PAGE BUBBLE EXIST:
            helper.getUrlWaitUntil(driver, 15, Common.sixAndOverURL);
-           // ASSERT BRAND PAGE BUBBLE EXIST:
-           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
            Thread.sleep(1000);
            helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
-           // OPEN BRAND PAGE URL:
-           helper.getUrlWaitUntil(driver, 15, url);
+           // ASSERT BRAND PAGE BUBBLE EXIST:
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
+//         // OPEN BRAND PAGE URL:
+//         helper.getUrlWaitUntil(driver, 15, url);
+           // ASSERT BRAND PAGE URL IS CORRECT:
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], driver.getCurrentUrl(), url);
            
+           // STEP-5:
+           // THE SPACE HERO BO TEST:
+           helper.fileWriterPrinter("\n" + "STEP-5\n" + "THE SPACE HERO BOX TEST:");
+           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i); 
+           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+           expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+           expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+           helper.fileWriterPrinter("ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+           actual = helper.getText(driver, Common.brandTitle);
+           expected = title;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+           // STEP-6:
+           // ABILITY TO SEE TILES TEST:
+           helper.fileWriterPrinter("\n" + "STEP-6\n" + "ABILITY TO SEE TILES TEST:");
+           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile);
+           i = driver.findElements(By.xpath(Common.brandTile)).size();
+           if(i > 0) {
+        	   helper.fileWriterPrinter("TOTAL NUMBER OF TILES FOUND: " + i);
+        	   for (int j = 0; j < i; j++) { 
+        		   helper.fileWriterPrinter(
+        				                   "                     " + (j + 1) + " OF " + i + ": " +
+        	                               driver.findElement(By.xpath(Common.brandTile("", j + 1))).getText());
+        		   }
+        	   }
+                     
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
 	
@@ -2072,13 +2112,17 @@ public class BrandPage {
     public void testBddFrontEnd() throws IOException{
 	   try{
     	   // DECLARATION:
-           String title, titleURL, xpath, tab, browse, upload, url;
+           String title, titleURL, xpath, tab, browse, upload, url, actual, expected, bubble = "";
     	   Boolean ifContent = false, ifVisible = false, ifUnVisible, ifPublished = false, ifUnPublished;
     	   Boolean ifBubble = false, ifNoBubble, ifHero = false, ifNoHero, ifSmallTile = false, ifNoSmallTile;
+    	   int i;
     	   
            // INITIALISATION:
            helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
            driver = helper.getServerName(driver);
+           
+           // CLEAN-UP:
+           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
            
            // ASSIGN CONTENT TITLE:
            title = "GBB";
@@ -2129,7 +2173,8 @@ public class BrandPage {
         	   browse = Drupal.characterBannerBrowse;
                upload = Drupal.characterBannerUpload;
                helper.upload(driver, "bubble.jpg", tab, browse, upload, "thumbnail", new Exception().getStackTrace()[0]);
-               }
+               bubble = "bubble";
+           } else { bubble = content[6].substring(0, content[6].indexOf("."));}
            
            // CHECKING HERO IMAGE EXIST AND UPLOADING IT IF REQUIRED:
            ifNoHero = (content[8].length() == 0);
@@ -2170,7 +2215,7 @@ public class BrandPage {
    		                            helper.convertBoolanToYesNo(ifUnVisible || ifUnPublished || ifNoBubble || ifNoHero || ifNoSmallTile) +
    		                            "\n"); 		
    		   if(ifUnVisible || ifUnPublished || ifNoBubble || ifNoHero || ifNoSmallTile) {
-   	   		   int i = 0;
+   	   		   i = 0;
    	           Boolean ifTitle = true;
    	           while ( (ifTitle || (i == 0)) && (i < 5) ) {
    	        	   i = helper.contentSubmit(driver, i, true, false, Common.adminContentURL, false);
@@ -2190,16 +2235,54 @@ public class BrandPage {
            helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
            helper.fileWriterPrinter(       "               URL = " + url  );
            
-           // STEP-3:
+           // STEPS-3,4:
            // THE SPACE BUBBLE TEST:
-           helper.fileWriterPrinter("\n" + "STEP-3\n" + "THE SPACE BUBBLE TEST:");
-           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
-           // ASSERT BRAND PAGE BUBBLE EXIST:
-           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-           Thread.sleep(1000);
-           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
+           helper.fileWriterPrinter("\n" + "STEPS-3,4\n" + "THE SPACE BUBBLE TEST:");
+//           // ASSERT BRAND PAGE BUBBLE EXIST:
+//           helper.getUrlWaitUntil(driver, 15, Common.fiveAndUnderURL);
+//           helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
+//           Thread.sleep(1000);
+//           helper.clickToAppear(driver, Common.charBannerButtonLeft, Common.charBannerButtonRight, xpath, false, false);
            // OPEN BRAND PAGE URL:
            helper.getUrlWaitUntil(driver, 15, url);
+
+           // ASSERT BRAND PAGE URL IS CORRECT:
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], driver.getCurrentUrl(), url);
+           
+           // STEP-5:
+           // THE SPACE HERO BO TEST:
+           helper.fileWriterPrinter("\n" + "STEP-5\n" + "THE SPACE HERO BOX TEST:");
+           // ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:
+           helper.fileWriterPrinter("\n" + "ASSERT CHARACTER BUBBLE IS THE SAME BUBBLE DISPLAYED ON BANNER:");
+           i = driver.findElements(By.xpath(Common.charBannerThumbnails)).size();
+           helper.fileWriterPrinter("CURRENT TOTAL NUMBER OF BANNER BUBBLES: " + i);
+           actual = driver.findElement(By.xpath(Common.brandBubble)).getAttribute("src");
+           actual = actual.substring(actual.lastIndexOf("/") + 1, actual.length());
+//         expected = driver.findElement(By.xpath(xpath + "/descendant::img[@src]")).getAttribute("src");
+//         expected = expected.substring(expected.lastIndexOf("/") + 1 , expected.length());
+           expected = bubble;
+//         helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           helper.assertBooleanTrue(driver, new Exception().getStackTrace()[0], actual.contains(expected));
+
+           // ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:
+           helper.fileWriterPrinter("ASSERT CHARACTER TITLE IS THE NAME OF THE BRAND PAGE:");
+           actual = helper.getText(driver, Common.brandTitle);
+           expected = title;
+           helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
+           
+//         // STEP-6:
+//         // ABILITY TO SEE TILES TEST:
+//         helper.fileWriterPrinter("\n" + "STEP-6\n" + "ABILITY TO SEE TILES TEST:");
+//         helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.brandTile);
+//         i = driver.findElements(By.xpath(Common.brandTile)).size();
+//         if(i > 0) {
+//      	 helper.fileWriterPrinter("TOTAL NUMBER OF TILES FOUND: " + i);
+//      	 for (int j = 0; j < i; j++) { 
+//      		   helper.fileWriterPrinter(
+//      				                    "                     " + (j + 1) + " OF " + i + ": " +
+//      	                                driver.findElement(By.xpath(Common.brandTile("", j + 1))).getText());
+//      		   }
+//      	 }
            
 	   } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	}
