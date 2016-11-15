@@ -360,9 +360,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34460 2829 1021</p>
+	 * <p>Test Cases: 34460 2829 4489 1021</p>
 	 */
-	@Test(groups = {"TC-34460","US-2829","BUG-1021","NEW"}, priority = 19)
+	@Test(groups = {"TC-34460","US-2829","US-4489","BUG-1021","CLOSED"}, priority = 19)
 	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -373,17 +373,13 @@ public class Banner {
 		       helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
 		       helper.getUrlWaitUntil(driver, 10, Common.fiveAndUnderURL);		       
 		       // ASSERT:
-		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
-		       helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.fiveAndUnderSearchURL);
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.fiveAndUnderSearchURL, true, false);
+		       helper.assertWebElementNotExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
 	
 		       // AGE 6 AND OVER TEST:
 		       helper.fileWriterPrinter("\n" + "AGE 6 AND OVER TEST:");
 		       helper.getUrlWaitUntil(driver, 10, Common.sixAndOverURL);
 		       // ASSERT:
-		       helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
-		       helper.checkLinkURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.sixAndOverSearchURL);
-		       helper.clickLinkAndCheckURL(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon, Common.sixAndOverSearchURL, true, false);
+		       helper.assertWebElementNotExist(driver, new RuntimeException().getStackTrace()[0], Common.searchIcon);
 	
 	       } catch(Exception e) { helper.getExceptionDescriptive(e, new Exception().getStackTrace()[0], driver); }
 	   }
