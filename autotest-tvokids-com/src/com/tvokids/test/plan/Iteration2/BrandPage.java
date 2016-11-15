@@ -368,7 +368,7 @@ public class BrandPage {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -451,7 +451,7 @@ public class BrandPage {
 	           helper.createCharacterBrand(driver, title, description, "281374", false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -558,7 +558,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
 	           
 	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -620,7 +620,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", image, "", "");
 	           
 	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):	   
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -670,12 +670,12 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:
-	           helper.createCustomBrand(driver, titleURL, description, true, true, true, true, true, new Exception().getStackTrace()[0],
+	           helper.createCustomBrand(driver, title, description, true, true, true, true, true, new Exception().getStackTrace()[0],
 	        		                    "bubble.jpg", "hero.jpg", "small.jpg", "large.jpg", "Age Landing Page"
 	        		                    );
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -733,7 +733,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "", "");
+	           helper.createCustomBrand(driver, title, description, true, true, false, true, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "", "", "");
 	           
 	           // ASSERT ERROR MESSAGE:
 		       helper.waitUntilElementPresence(driver, 5, Drupal.errorMessage, "Error Message (Small Tile Image)", new Exception().getStackTrace()[0]);
@@ -776,7 +776,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
 	           
 	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):   
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -869,7 +869,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", image, "");
 	           
 	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -931,7 +931,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
 	           
 	           // ASSERT ERROR MESSAGE APPEARS (MORE THEN MAXIMUM SIZE IMAGE NOT ALLOWED):   
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -1024,7 +1024,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH BOTH AGES SELECTED:	           
-	           helper.createCustomBrand(driver, titleURL, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
+	           helper.createCustomBrand(driver, title, description, true, true, false, false, new RuntimeException().getStackTrace()[0], "bubble.jpg", "hero.jpg", "small.jpg", image);
 	           
 	           // ASSERT LESS THEN MINIMUM DIMENSIONS IMAGE NOT ALLOWED:
 	           helper.assertWebElementExist(driver, new RuntimeException().getStackTrace()[0], Drupal.errorUpload);
@@ -1188,7 +1188,7 @@ public class BrandPage {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a";
+	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // ADD REEDIRECTS:
