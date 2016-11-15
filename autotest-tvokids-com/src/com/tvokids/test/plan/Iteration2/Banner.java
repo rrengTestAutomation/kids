@@ -360,9 +360,9 @@ public class Banner {
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 34460 2829</p>
+	 * <p>Test Cases: 34460 2829 1021</p>
 	 */
-	@Test(groups = {"TC-34460","US-2829"}, priority = 19)
+	@Test(groups = {"TC-34460","US-2829","BUG-1021","NEW"}, priority = 19)
 	public void testSearchIcon() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
