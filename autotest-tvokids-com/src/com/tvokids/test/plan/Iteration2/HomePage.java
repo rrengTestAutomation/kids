@@ -92,7 +92,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960 3267 972</p>
 	 */
-	@Test(groups = {"TC-34960","US-3267","BUG-972","NEW"}, priority = 9)
+	@Test(groups = {"TC-34960","US-3267","BUG-972","CLOSED"}, priority = 9)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -184,7 +184,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960 3267 972</p>
 	 */
-	@Test(groups = {"TC-34960","US-3267","BUG-972","NEW"}, priority = 10)
+	@Test(groups = {"TC-34960","US-3267","BUG-972","CLOSED"}, priority = 10)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeImagesPosition() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -286,7 +286,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960 3267 972</p>
 	 */
-	@Test(groups = {"TC-34960","US-3267","BUG-972","NEW"}, priority = 11)
+	@Test(groups = {"TC-34960","US-3267","BUG-972","CLOSED"}, priority = 11)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeBlocksOccupyHalfBrowser() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -395,7 +395,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960 3267 972</p>
 	 */
-	@Test(groups = {"TC-34960","US-3267","BUG-972","NEW"}, priority = 12)
+	@Test(groups = {"TC-34960","US-3267","BUG-972","CLOSED"}, priority = 12)
 	public void testResponsiveDesktopAndMobileDevicesHomePageAgeLogoIsNotHyperlink() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -443,7 +443,7 @@ public class HomePage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 34960 3267 972</p>
 	 */
-	@Test(groups = {"TC-34960","US-3267","BUG-972","NEW"}, priority = 13)
+	@Test(groups = {"TC-34960","US-3267","BUG-972","CLOSED"}, priority = 13)
 	public void testResponsiveDesktopAndMobileDevicesHomePageClickAgeBlocksOpensCorrectLandingPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
