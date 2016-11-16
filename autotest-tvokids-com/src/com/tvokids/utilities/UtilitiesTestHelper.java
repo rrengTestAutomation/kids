@@ -7264,12 +7264,29 @@ public class UtilitiesTestHelper {
 	 * @throws IOException 
 	 * @throws NumberFormatException 
 	 */
-	public int getElementHorizontalalAlignmentLeft(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
+	public int getElementHorizontalalAlignmentLeft(WebDriver driver, String xpathUpper, String xpathLower, Boolean ifPrompt) throws NumberFormatException, IOException {
 		int X = driver.findElement(By.xpath(xpathUpper)).getLocation().getX();
 		int x = driver.findElement(By.xpath(xpathLower)).getLocation().getX();
 		int alignment = Math.abs(X - x);
+		if(ifPrompt) {
+			fileWriterPrinter(
+					"XPATH UPPER = " + xpathUpper + "\n" +
+					"XPATH LOWER = " + xpathLower + "\n" +
+					"X  (UPPER) = " + xpathUpper + "\n" +
+					"x  (LOWER) = " + xpathUpper
+					);
+		}
 		fileWriterPrinter("\n" + "HORIZONTAL ALIGNMENT = " + alignment);
 		return alignment;
+		}
+	
+	/** 
+	 * Outputs Elements Horizontal-Left borders alignment
+	 * @throws IOException 
+	 * @throws NumberFormatException 
+	 */
+	public int getElementHorizontalalAlignmentLeft(WebDriver driver, String xpathUpper, String xpathLower) throws NumberFormatException, IOException {
+		return getElementHorizontalalAlignmentLeft(driver, xpathUpper, xpathLower, false);
 		}
 	
 	/** 

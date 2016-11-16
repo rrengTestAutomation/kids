@@ -109,7 +109,7 @@ public class HomePage {
 		       helper.fileWriterPrinter("\n" + "DESKTOP:");
 		       driver.manage().window().maximize();		       
 		       // ASSERT DESKTOP AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       alignment = helper.getElementVerticalAlignmentBottom(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 		       // ASSERT DESKTOP AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
 		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
@@ -121,7 +121,7 @@ public class HomePage {
 		       // TABLET LANDSCAPE:
 		       helper.switchWindowSizeToTabletLandscape(driver);
 		       // ASSERT TABLET LANDSCAPE AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       alignment = helper.getElementVerticalAlignmentBottom(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 		       // ASSERT TABLET LANDSCAPE AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
 		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);
@@ -133,7 +133,7 @@ public class HomePage {
 		       // TABLET PORTRAIT:
 		       helper.switchWindowSizeToTabletPortrait(driver);
 		       // ASSERT TABLET PORTRAIT AGE 5 AND 6 TITLES ARE ALIGNED VERTICALLY AT THEIR TOP:
-		       alignment = helper.getElementVerticalAlignmentTop(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
+		       alignment = helper.getElementVerticalAlignmentBottom(driver, Common.homePageFiveAndUnderTitle, Common.homePageSixAndOverTitle);
 		       helper.assertBooleanTrue(driver, new RuntimeException().getStackTrace()[0], alignment <= 1);
 		       // ASSERT TABLET PORTRAIT AGE 5 TITLE AND AGE 5 BLOCK ARE ALIGNED HORIZONTALLY AT THEIR LEFT:
 		       alignment = helper.getElementHorizontalalAlignmentLeft(driver, Common.homePageFiveAndUnderTitle, Common.homePageFiveAndUnderBlock);

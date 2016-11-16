@@ -17,7 +17,7 @@
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration2.BrandPage"><methods><include name="testBrandPageSmallTileImageUploadLargerThenMaxSizeNotAllowed"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration2.HomePage"><methods><include name="testResponsiveDesktopAndMobileDevicesHomePageAgeTitlesPosition"/></methods></class>
 
 <!--
    FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6
