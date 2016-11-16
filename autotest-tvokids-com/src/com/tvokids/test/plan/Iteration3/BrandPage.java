@@ -808,6 +808,7 @@ public class BrandPage {
 	           // NAVIGATE TO BRAND PAGE:
 	           helper.clickLinkUrlWaitUntil(driver, 15, xpath, new Exception().getStackTrace()[0]);
 	           // ASSERT VIDEO ON CUSTOM BRAND PAGE EXIST:
+	           try { helper.waitUntilElementAppears(driver, 3, Common.brandVideoTile(1)); } catch (Exception e) {}
 	           actual = driver.findElement(By.xpath(Common.brandVideoTile(1))).getText();
 	           if(expected.length() > Common.brandVideoTileMaxCharsNumber){
 	        	   if(actual.endsWith("...")){ actual = actual.substring(0,actual.length() - 3); }
