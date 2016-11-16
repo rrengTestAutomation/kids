@@ -368,7 +368,7 @@ public class BrandPage {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -451,7 +451,7 @@ public class BrandPage {
 	           helper.createCharacterBrand(driver, title, description, "281374", false, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -675,7 +675,7 @@ public class BrandPage {
 	        		                    );
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -1188,7 +1188,7 @@ public class BrandPage {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt='" + title + "']/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
 	           helper.fileWriterPrinter("\n" + "LINK GENERIC XPATH = " + xpath + "\n");
 	           
 	           // ADD REEDIRECTS:
