@@ -589,15 +589,15 @@ public class BrandPage {
 	       }
 	
 	/**
-	 * Test Brand Page Upload Image for Hero Box larger than 75kb not allowed
+	 * Test Brand Page Upload Image for Hero Box larger than 100kb not allowed
 	 * <p>Date Created: 2016-08-24</p>
 	 * <p>Date Modified: 2016-08-24</p>
 	 * <p>Original Version: V1</p>
 	 * <p>Modified Version: </p>
 	 * <p>Xpath: 1</p>
-	 * <p>Test Cases: 35154 3311</p>
+	 * <p>Test Cases: 35154 3311 4503</p>
 	 */
-	@Test(groups = {"TC-35154","US-3311"}, priority = 26)
+	@Test(groups = {"TC-35154","US-3311","US-4503"}, priority = 26)
     public void testBrandPageHeroBoxImageUploadLargerThenMaxSizeNotAllowed() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:
@@ -608,7 +608,7 @@ public class BrandPage {
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
 	           
 	           // DECLARATION:
-	           String title, titleURL, description, actual, expected, image = "hero more then 75Kb.png";
+	           String title, titleURL, description, actual, expected, image = "hero more then 100Kb.png";
 	           
 	           // CREATE TITLE FOR CONTENT:
 	           long fingerprint = System.currentTimeMillis();

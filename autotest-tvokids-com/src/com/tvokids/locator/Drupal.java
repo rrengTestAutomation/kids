@@ -40,7 +40,7 @@ public class Drupal{
       public static String errorMessageCharacterBannerWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 200x200 pixels."; }
       
       public static String errorMessageHeroBoxWrongImagePixels(String image) { return "Error message\nThe specified file " + image + " could not be uploaded. The image is too small; the minimum dimensions are 708x398 pixels."; }
-      public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 75 KB."; }
+      public static String errorMessageHeroBoxWrongUploadSize   (String image, String size) { return "Error message\nThe specified file " + image + " could not be uploaded. The file is " + size + " KB exceeding the maximum file size of 100 KB."; }
       public static String errorMessageHeroBoxWrongImageFormat  (String image) { return "The selected file " + image + " cannot be uploaded. Only files with the following extensions are allowed: png, jpg, jpeg."; }     
       
       public static String errorMessageSmallTileImageRequired = "Small Tile Image field is required."; 
