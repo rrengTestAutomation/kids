@@ -336,7 +336,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35153 3229 650 838 972</p>
 	 */
-	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-838","BUG-972","NEW"}, enabled = true, priority = 6)
+	@Test(groups = {"TC-35153","US-3229","BUG-650","BUG-972","BUG-838","NEW"}, enabled = true, priority = 6)
     public void testCustomBrandBothAgesFrontEndLocationAndLinkAreCorrect() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // INITIALISATION:

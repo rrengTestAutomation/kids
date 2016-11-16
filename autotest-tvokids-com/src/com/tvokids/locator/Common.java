@@ -164,7 +164,7 @@ public class Common {
 	  
 	  /**********transcript page****************/
 	  public static String transcriptPageTitleXpath = "//*[@id='page-title']";
-	  public static String transcriptPageTitleText  = "Transcript: ";
+	  public static String[] transcriptPageTitleText  = { "Transcript: ", "Page Not Found" };
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

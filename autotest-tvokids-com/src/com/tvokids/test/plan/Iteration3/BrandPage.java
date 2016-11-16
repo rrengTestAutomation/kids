@@ -1123,7 +1123,7 @@ public class BrandPage {
 	 * <p>Xpath: 1</p>
 	 * <p>Test Cases: 35459 3183 878 972</p>
 	 */
-	@Test(groups = {"TC-35459","US-3183","BUG-878","BUG-972","NEW"}, enabled = true, priority = 51)
+	@Test(groups = {"TC-35459","US-3183","BUG-972","BUG-878","NEW"}, enabled = true, priority = 51)
 	public void testBrandTileStructureOnCustomBrandPage() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{	    	   
 	           // INITIALISATION:
@@ -1901,8 +1901,9 @@ public class BrandPage {
            // ASSERT TRANSCRIPT PAGE KEY-ELEMENTS APPEAR:
            xpath = Common.transcriptPageTitleXpath;
            helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-           expected = Common.transcriptPageTitleText;
            actual = driver.findElement(By.xpath(xpath)).getText();
+           if (actual.contains(":")) { expected = Common.transcriptPageTitleText[0]; } 
+           else { expected = Common.transcriptPageTitleText[1]; };
            actual = helper.getStringBeginning(actual, expected.length());
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
         
@@ -1931,8 +1932,9 @@ public class BrandPage {
            // ASSERT TRANSCRIPT PAGE KEY-ELEMENTS APPEAR:
            xpath = Common.transcriptPageTitleXpath;
            helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], xpath);
-           expected = Common.transcriptPageTitleText;
            actual = driver.findElement(By.xpath(xpath)).getText();
+           if (actual.contains(":")) { expected = Common.transcriptPageTitleText[0]; } 
+           else { expected = Common.transcriptPageTitleText[1]; };
            actual = helper.getStringBeginning(actual, expected.length());
            helper.assertEquals(driver, new Exception().getStackTrace()[0], actual, expected);
            
