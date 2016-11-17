@@ -7811,4 +7811,13 @@ public class UtilitiesTestHelper {
 		    return i;
 		    }
 	    // ########### ELEMENT APPEARER END ############ 
+	    
+	    // ########### ELEMENT SEARCH AND FIND START ############ 
+		public String getExistingElementXpathArrayCheck(WebDriver driver, String[] xpath) { 
+			int i = 0;
+			try { while ((driver.findElements(By.xpath(xpath[i])).size() == 0) && (i < xpath.length)) { i++; } }
+			catch (Exception e) {}
+			return xpath[i];
+			}
+	    // ########### ELEMENT SEARCH AND FIND  END  ############ 
 }

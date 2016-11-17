@@ -1,6 +1,7 @@
 package com.tvokids.locator;
 
 import java.io.File;
+import org.openqa.selenium.*;
 
 import com.tvokids.utilities.UtilitiesTestHelper;
 
@@ -163,8 +164,10 @@ public class Common {
 	  public static String videoTranscriptLinkText  = "View video transcript";
 	  
 	  /**********transcript page****************/
-	  public static String transcriptPageTitleXpath = "//*[@id='page-title']";
-	  public static String[] transcriptPageTitleText  = { "Transcript: ", "Page Not Found" };
+	  public static String[] transcriptPageTitleXpath = {"//*[@id='page-title']", "//title" };
+	  public static String transcriptPageTitleXpath(WebDriver driver) { return helper.getExistingElementXpathArrayCheck(driver, transcriptPageTitleXpath); } 
+	  
+	  public static String[] transcriptPageTitleText  = { "Transcript: ", "Page Not Found"  };
 	  
 	  /**********footer last*********************/
 	  public static String logout = "//a[text()='Log out']";

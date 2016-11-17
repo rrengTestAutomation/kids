@@ -72,7 +72,7 @@ public class Banner {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -188,7 +188,7 @@ public class Banner {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -262,7 +262,7 @@ public class Banner {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
@@ -508,7 +508,7 @@ public class Banner {
 	           helper.createCustomBrand(driver, title, description, true, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
-	           xpath = "//img[@alt=\"" + title + "\"]/parent::a[contains(@href,'" + titleURL + "')]";
+	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
 	           helper.fileWriterPrinter("\n" + "BANNER BUBBLE LINK XPATH = " + xpath);
 	           
 	           // AGE 5 AND UNDER TEST:
