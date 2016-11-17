@@ -832,11 +832,14 @@ public class BrandPage {
 	public void testCreateVideoTileOnCharacterBrandPageForFiveAndUnder() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
-	           String title, titleURL, description, xpath, videoTitle, actual, expected;
+	           String title, titleURL, description, assetID, xpath, videoTitle, brightcoveRefID, telescopeAssetId, actual, expected;
 	    	   
 	           // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
+	           assetID = "3701";
+	           brightcoveRefID = "5143702624001";
+	           telescopeAssetId = "120322X";
 	           
                // CLEAN-UP:
                helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
@@ -854,7 +857,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
-	           helper.createCharacterBrand(driver, title, description, "2654", true, true, false, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, assetID, true, true, false, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
 	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
@@ -862,7 +865,7 @@ public class BrandPage {
 	           
 	           // CREATE VIDEO WITH AGE 5 SELECTED:
 	           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, "3022354586001", "2468", true, false, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, brightcoveRefID, telescopeAssetId, true, false, true, true, true, new Exception().getStackTrace()[0]);
 	           helper.logOut(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
@@ -914,11 +917,14 @@ public class BrandPage {
 	public void testCreateVideoTileOnCharacterBrandPageForSixAndOver() throws IOException, IllegalArgumentException, MalformedURLException {
 	       try{
 	    	   // DECLARATION:
-	           String title, titleURL, description, xpath, videoTitle, actual, expected;
+	           String title, titleURL, description, assetID, xpath, videoTitle, brightcoveRefID, telescopeAssetId, actual, expected;
 	    	   
 	           // INITIALISATION:
 	           helper.printXmlPath(new RuntimeException().getStackTrace()[0]);
 	           driver = helper.getServerName(driver);
+	           assetID = "3701";
+	           brightcoveRefID = "5143702624001";
+	           telescopeAssetId = "120322X";
 	           
                // CLEAN-UP:
                helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
@@ -936,7 +942,7 @@ public class BrandPage {
 	           description = helper.randomEnglishText(helper.randomInt((Drupal.descriptionMaxCharsNumber - 30), Drupal.descriptionMaxCharsNumber));
 	           
 	           // CREATE CONTENT WITH AGE 5 SELECTED:
-	           helper.createCharacterBrand(driver, title, description, "2654", true, false, true, false, true, true, new Exception().getStackTrace()[0]);
+	           helper.createCharacterBrand(driver, title, description, assetID, true, false, true, false, true, true, new Exception().getStackTrace()[0]);
 	           
 	           // BANNER BUBBLE XPATH:
 	           xpath = "//img[@alt=\"" + title + "\"]/parent::a";
@@ -944,7 +950,7 @@ public class BrandPage {
 	           
 	           // CREATE VIDEO WITH AGE 5 SELECTED:
 	           videoTitle = String.valueOf(fingerprint) + " " +  helper.randomWord(Drupal.titleMaxCharsNumber - String.valueOf(fingerprint).length() - 1);
-	           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, "3022354586001", "2468", false, true, true, true, true, new Exception().getStackTrace()[0]);
+	           helper.createVideo(driver, videoTitle, "Short Description", "Long Description", title, brightcoveRefID, telescopeAssetId, false, true, true, true, true, new Exception().getStackTrace()[0]);
 	           helper.logOut(driver);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
