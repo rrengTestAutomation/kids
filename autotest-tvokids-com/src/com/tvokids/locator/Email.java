@@ -10,8 +10,8 @@ public class Email {
 	  static UtilitiesTestHelper helper = new UtilitiesTestHelper();
 	
 	  /**********common credentiald***********/
-	  public static String autoTesterEmail    = "selenium.automated.test.report@gmail.com";
-	  public static String autoTesterPassword = "!Puna36Rinta48!";
+	  public static String autoTesterEmail    = "rweinbrand.tvo.org@gmail.com";
+	  public static String autoTesterPassword = "!123456abcdef!";
 	  public static String autoTesterUsername = autoTesterEmail.substring(0, autoTesterEmail.indexOf("@"));
 	  
 	  /**********common email addresses***********/

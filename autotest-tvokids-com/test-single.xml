@@ -11,13 +11,13 @@
     <test verbose="1" name="test-single">
         <classes>
         
-<class name="com.tvokids.report.Log"></class>
-<!-- <class name="com.tvokids.send.Mail"></class> -->
+<!-- <class name="com.tvokids.report.Log"></class> -->
+<class name="com.tvokids.send.Mail"></class>
 <!-- <class name="com.tvokids.email.All"></class> -->
 
 <!--
 COVERED BY AUTOMATED TEST: -->
-<class name="com.tvokids.test.plan.Iteration3.BrandPage"><methods><include name="testCreateVideoTileOnCharacterBrandPageForFiveAndUnder"/></methods></class>
+<class name="com.tvokids.test.plan.Iteration3.HomePage"><methods><include name="testBackgroundColorForAgeGroups"/></methods></class>
 
 <!--
    FULL STEPS COVERAGE: 1, 2, 3, 4, 5, 6
