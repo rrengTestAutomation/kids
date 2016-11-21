@@ -16,7 +16,7 @@ public class Email {
 	  
 	  /**********common email addresses***********/
 	  // TESTERS E-MAIL ADDRESSES
-	  public static String testerHomeEmail = "roman.weinbrand@gmail.com";
+	  public static String testerHomeEmail = "rreng.ca@gmail.com";
 	  public static String testerWorkEmail = "rweinbrand@tvo.org";
 	  
 	  // MANAGERS E-MAIL ADDRESSES  			  
