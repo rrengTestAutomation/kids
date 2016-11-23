@@ -2751,6 +2751,7 @@ public class UtilitiesTestHelper {
 			   	  fileWriter("failed.log", "    Runtime: " + runtime);
 			   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 			   	  fileWriter("failed.log", "");
+			   	  fileCleaner("failed.try" ); fileOverWriter("failed.temp", "false");
 		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
@@ -2852,6 +2853,7 @@ public class UtilitiesTestHelper {
 				  	 fileWriter("failed.log", "    Runtime: " + runtime);
 				  	 fileWriter("failed.log", "   Subtotal: " + subtotal);
 				  	 fileWriter("failed.log", "");
+				  	 fileCleaner("failed.try" ); fileOverWriter("failed.temp", "false");
 			  	 }
 			      
 			     // APPEND DESCRIPTIVE RECORD:
@@ -2927,6 +2929,7 @@ public class UtilitiesTestHelper {
 			   	  fileWriter("failed.log", "    Runtime: " + runtime);
 			   	  fileWriter("failed.log", "   Subtotal: " + subtotal);
 			   	  fileWriter("failed.log", "");
+			   	  fileCleaner("failed.try" ); fileOverWriter("failed.temp", "false");
 		      }
 		      
 		      // APPEND DESCRIPTIVE RECORD:
@@ -3102,6 +3105,7 @@ public class UtilitiesTestHelper {
 					 fileWriter("failed.log", "    Runtime: " + runtime);
 					 fileWriter("failed.log", "   Subtotal: " + subtotal);
 					 fileWriter("failed.log", "");
+					 fileCleaner("failed.try" ); fileOverWriter("failed.temp", "false");
 			    	 }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + true + "\n  Actual: " + b + "\n  Result: OK\n");
@@ -3163,6 +3167,7 @@ public class UtilitiesTestHelper {
 					 fileWriter("failed.log", "    Runtime: " + runtime);
 					 fileWriter("failed.log", "   Subtotal: " + subtotal);
 					 fileWriter("failed.log", "");
+					 fileCleaner("failed.try" ); fileOverWriter("failed.temp", "false");
 					 }
 		      } else {
 		      fileWriterPrinter("\nExpected: " + expected + "\n  Actual: " + actual + "\n  Result: OK\n");
@@ -3220,6 +3225,7 @@ public class UtilitiesTestHelper {
 			    	 fileWriter("failed.log", "    Runtime: " + runtime);
 			    	 fileWriter("failed.log", "   Subtotal: " + subtotal);
 			    	 fileWriter("failed.log", "");
+			    	 fileCleaner("failed.try" );
 			       }
 		      } else {
 			  fileWriterPrinter("\nExpected: " + false + "\n  Actual: " + b + "\n  Result: OK\n");
@@ -3887,7 +3893,7 @@ public class UtilitiesTestHelper {
 			   fileCleaner("xml.log"    );
 			   fileCleaner("error.log"  );
 			   fileCleaner("reason.log" );
-			   fileCleaner("failed.try" );
+			// fileCleaner("failed.try" );
 			// fileCleaner("failed.temp");
 			// fileOverWriter("failed.temp", "false");
 			   fileOverWriter("finish.time", convertLongToString(finish));
@@ -4843,6 +4849,7 @@ public class UtilitiesTestHelper {
                 fileCleaner("failed.log" );	
                 fileCleaner("failed.num" );
                 fileCleaner("failed.try" );
+                fileOverWriter("failed.temp", "false");
 			    fileCleaner("coverage.csv");
                 fileCleaner("emailable-report.html");
                 fileCleaner("extent-test-report.html");
