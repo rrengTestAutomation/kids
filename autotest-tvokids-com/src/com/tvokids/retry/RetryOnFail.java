@@ -123,8 +123,12 @@ public class RetryOnFail implements IRetryAnalyzer {
 				     + " for the " + (retryCount + 1)  + "-" + time[retryCount] + " time:");
 				
             	helper.counter("test.num", -1);
+            	helper.counter("failed.num", -retryCount);
+            	
             	helper.fileOverWriter("failed.try", (retryCount + 1));
-            	if (retryCount == maxRetryCount - 1) { helper.fileOverWriter("failed.temp", "true"); }
+            	
+            	if (retryCount == maxRetryCount - 1) { helper.fileOverWriter("failed.temp", "true"); } 
+            	else { helper.fileOverWriter("failed.temp", "false"); } 
 				
 			} catch (NumberFormatException | IOException e) { /* TODO Auto-generated catch block */ e.printStackTrace(); }
             
