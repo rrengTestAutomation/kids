@@ -137,7 +137,7 @@ public class Email {
 	  public static String whoSent     = "This e-mail has been sent automatically by \"Selenium WebDriver\" Auto-Testing Tool combined with \"TestNG\" framework";
 	  public static String aboutTool   = "For more details and most up-to-date information please visit our website at http://www.seleniumhq.org and http://testng.org";
 	  public static String doNotReply  = "Please do not reply to this email, as we are unable to respond from this address";
-	  public static String unsubscribe = "Don't want to receive this notification anymore? Send email to \"rweinbrand@tvo.org\" with subject \"unsubscribe\"";
+	  public static String unsubscribe = "Don't want to receive this notification anymore? Send email to \"autotest1@tvo.org\" with subject \"unsubscribe\"";
 	  
 	  public static String[] header = { whoSent, aboutTool, doNotReply, unsubscribe };
 	  public static String[] footer = { whoSent, aboutTool, doNotReply, unsubscribe };
