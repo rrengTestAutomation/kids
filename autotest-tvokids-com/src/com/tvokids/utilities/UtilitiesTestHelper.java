@@ -3888,7 +3888,8 @@ public class UtilitiesTestHelper {
 			   fileCleaner("error.log"  );
 			   fileCleaner("reason.log" );
 			   fileCleaner("failed.try" );
-			   fileCleaner("failed.temp"); // fileOverWriter("failed.temp", "false");
+			// fileCleaner("failed.temp");
+			// fileOverWriter("failed.temp", "false");
 			   fileOverWriter("finish.time", convertLongToString(finish));
 			// Scanning Test Counter record:
 			   int n = 1;
