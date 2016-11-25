@@ -48,7 +48,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
          
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
            helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -214,7 +214,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
            
            // DECLARATION:
            int total = 3;
@@ -263,13 +263,13 @@ public class BrandPage {
            driver.manage().window().maximize();
            
            // FILTER BOTH AGES VISIBLE (ANY AGE VISIBLE):
-           helper.filterAllContent(driver, "147", "", "", "", true, true, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", "", true, true, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i]));
            }
            
            // FILTER AGE 5 AND UNDER ONLY VISIBLE:
-           helper.filterAllContent(driver, "147", "", "", "", true, false, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", "", true, false, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   if(i == 0) { helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i])); }
         	   else {
@@ -279,7 +279,7 @@ public class BrandPage {
            }
            
            // FILTER AGE 6 AND OVER ONLY VISIBLE:
-           helper.filterAllContent(driver, "147", "", "", "", false, true, new Exception().getStackTrace()[0]);
+           helper.filterAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", "", false, true, new Exception().getStackTrace()[0]);
            for (int i = 0; i < total; i++) {
         	   if(i == 0) { helper.assertWebElementExist(driver, new Exception().getStackTrace()[0], Common.ContentEntireToXpath(title[i])); }
         	   else {
@@ -463,7 +463,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -592,7 +592,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -680,7 +680,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -759,7 +759,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -842,7 +842,7 @@ public class BrandPage {
 	           telescopeAssetId = "120322X";
 	           
                // CLEAN-UP:
-               helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+               helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
                // LOGIN TO DRUPAL AS AN ADMIN:
                helper.logIn(driver);
@@ -927,7 +927,7 @@ public class BrandPage {
 	           telescopeAssetId = "120322X";
 	           
                // CLEAN-UP:
-               helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+               helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
                // LOGIN TO DRUPAL AS AN ADMIN:
                helper.logIn(driver);
@@ -1006,7 +1006,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -1137,7 +1137,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -1244,7 +1244,7 @@ public class BrandPage {
 		       int i;
 		       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -1368,7 +1368,7 @@ public class BrandPage {
 		       int i;
 		       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	           // LOGIN TO DRUPAL AS AN ADMIN:
 	           helper.logIn(driver);
@@ -1488,7 +1488,7 @@ public class BrandPage {
 		       int i;
 		       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
@@ -1626,7 +1626,7 @@ public class BrandPage {
 		       int i;
 		       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // AGE 5 AND UNDER TEST:
 	           helper.fileWriterPrinter("\n" + "AGE 5 AND UNDER TEST:");
@@ -1756,7 +1756,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
          
            // LOGIN TO DRUPAL AS A CONTENT EDITOR:
            helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -1859,7 +1859,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
            // LOGIN TO DRUPAL AS AN ADMIN:
            helper.logIn(driver);
@@ -1968,7 +1968,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
            
            // ASSIGN CONTENT TITLE:
            title = "The Space";
@@ -2129,7 +2129,7 @@ public class BrandPage {
            driver = helper.getServerName(driver);
            
            // CLEAN-UP:
-           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
            
            // ASSIGN CONTENT TITLE:
            title = "GBB";

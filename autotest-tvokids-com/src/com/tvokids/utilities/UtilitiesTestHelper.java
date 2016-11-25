@@ -3873,7 +3873,7 @@ public class UtilitiesTestHelper {
 			    try {
 					if(Common.homeURL.contains("qa-kids.tvokids.com")){
 						WebDriver driver = getServerName(driverHelper);
-					    deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+					    deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 					    driver.quit();
 					    }
 					} catch (IllegalArgumentException | InterruptedException e) { e.printStackTrace(); }

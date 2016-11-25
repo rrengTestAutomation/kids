@@ -131,7 +131,7 @@ public class BrandPage {
            String actualText, expectedText, expectedURLend, title, xpath;
            
 	       // CLEAN-UP:
-	       helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	       helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 			   
 	       // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	       helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -344,7 +344,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 	       
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -430,7 +430,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	           
                // CLEAN-UP:
-               helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+               helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 
                // LOGIN TO DRUPAL AS AN ADMIN:
                helper.logIn(driver);
@@ -649,7 +649,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 	       
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
@@ -1163,7 +1163,7 @@ public class BrandPage {
 	           driver = helper.getServerName(driver);
 	       
 	           // CLEAN-UP:
-	           helper.deleteAllContent(driver, "147", "", "", new RuntimeException().getStackTrace()[0]);
+	           helper.deleteAllContent(driver, String.valueOf(System.currentTimeMillis()).substring(0,3), "", "", new RuntimeException().getStackTrace()[0]);
 	           
 	           // LOGIN TO DRUPAL AS A CONTENT EDITOR:
 	           helper.logIn(driver, Common.contentEditorUsername, Common.userPassword(Common.contentEditorUsername));
